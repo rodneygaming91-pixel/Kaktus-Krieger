@@ -561,7 +561,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 #twcv{width:100%;aspect-ratio:720/420;border:3px solid var(--stl);border-radius:8px;box-shadow:inset 0 0 0 2px var(--std)}
 .card.twc{max-width:440px;gap:10px}
 .twrank{display:flex;flex-direction:column;gap:6px;background:#1c140f;border:2px solid #6b5644;border-radius:10px;padding:8px;text-align:left}
-.twrh{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.twrh b{font-family:var(--display);font-weight:400;font-size:1.1rem;color:#ffd447}.twrh span{font-size:.72rem;font-weight:800;color:#d8c8a8}
+.twrh{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.twrh b{font-family:var(--display);font-weight:400;font-size:1.1rem;color:#ffd447}.twrh b,.twrh span{white-space:nowrap}.twrh span{font-size:.72rem;font-weight:800;color:#d8c8a8}
 .twprz{display:flex;flex-direction:column;gap:2px;font-size:.74rem;font-weight:800;color:#f3e6cc}
 .twclaim{display:flex;align-items:center;justify-content:space-between;gap:8px;background:linear-gradient(#5a4a10,#3a2f08);border:2px solid #ffd447;border-radius:8px;padding:6px 8px;font-weight:800;font-size:.85rem;color:#fff2a8}
 #twFast small{display:block}
@@ -748,7 +748,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1925,8 +1925,27 @@ function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.w
 function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100)/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
   dps+=st.atk*cm.mod*(2.5/8+1/15)/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
-async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf der Netlify-Seite des Spiels.';}
+async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='boss')renderOnline();}
+// Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
+const WB_PART={kak:10,caps:10};
+const WB_PRIZE=[null,{kak:40,caps:30,bump:2,n:'🥇'},{kak:25,caps:20,bump:1,n:'🥈'},{kak:15,caps:12,bump:0,n:'🥉'}];
+function wbPrizeHtml(){const P=wb.st&&wb.st.prize;
+  const legend=`<div class="twprz"><span>Alle, die angreifen: ${WB_PART.kak} 🌵 · ${WB_PART.caps} Kapseln</span>${[1,2,3].map(r=>{const X=WB_PRIZE[r];return`<span>${X.n} zusätzlich ${X.kak} 🌵 · ${X.caps} Kapseln${X.bump?` · Teil +${X.bump} Seltenheit${X.bump>1?'en':''}`:''}</span>`;}).join('')}</div>`;
+  return`<div class="twrank"><div class="twrh"><b>🏆 Wochenbelohnung</b><span>${wbWeekLeft()}</span></div>
+    ${P?`<div class="twclaim"><span>${P.rk<=3?WB_PRIZE[P.rk].n+' Letzte Woche Platz '+P.rk:'⚔ Letzte Woche dabei (Platz '+P.rk+')'} · ${fmt(P.dmg)} Schaden</span><button class="sbtn go" type="button" id="wbClaim" ${wb.claimBusy?'disabled':''}>Abholen</button></div>`:''}
+    ${wb.prizeMsg?`<p class="hint" style="margin:0">${wb.prizeMsg}</p>`:''}
+    <p class="hint" style="margin:0">Nach Ende der Woche (Montag) kannst du hier deine Belohnung abholen.</p>${legend}</div>`;}
+function wbWeekLeft(){const n=new Date(),d=new Date(Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()));const dow=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()+7-dow);
+  const s2=(d-n)/1000,dd=Math.floor(s2/86400),hh=Math.floor(s2%86400/3600);return'Woche endet in '+(dd?dd+' T ':'')+hh+' h';}
+async function wbClaim(){if(wb.claimBusy)return;wb.claimBusy=true;renderOnline();
+  try{const r=await rpc('kk_wb_claim',{p_code:ON.code,p_key:ON.key});
+    if(r&&r.ok){let k=WB_PART.kak,c=WB_PART.caps,t2='';const X=r.rk<=3?WB_PRIZE[r.rk]:null;
+      if(X){k+=X.kak;c+=X.caps;t2=' · '+twGive(twRoll(Math.max(1,Math.floor((S.best||1)/3)),X.bump));}
+      S.kak=(S.kak||0)+k;S.caps+=c;save();lastHud='';wb.prizeMsg=`${X?X.n:'⚔'} <b>Abgeholt:</b> <em class="up">+${k} 🌵</em> · <em class="up">+${c} Kapseln</em>${t2}`;}
+    else wb.prizeMsg=(r&&r.reason)||'Keine Belohnung abzuholen';}
+  catch(e){wb.prizeMsg='Keine Verbindung.';}
+  wb.claimBusy=false;await loadWb();}
 function wbBody(){
   if(wb.err)return`<p class="hint warn">${wb.err}</p>`;
   if(!wb.st)return'<p class="hint">Lade Weltboss …</p>';
@@ -1941,6 +1960,7 @@ function wbBody(){
     <p class="hint">Diese Woche: ${wb.st.players} Spieler · dein Schaden ${fmt(wb.st.mine)} · Gesamtschaden ${fmt(wb.st.total)}</p>
     ${wb.st.top&&wb.st.top.length?`<ol class="lb wbtop">${wb.st.top.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
       <span class="rk">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</span><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}</b><small>${r.cls||''}</small></span><span class="vl">${fmt(r.dmg)}</span></button></li>`).join('')}</ol>`:''}
+    ${wbPrizeHtml()}
   </div>`;}
 function drawWb(){const cv2=$('wbcv');if(!cv2||!wb.st)return;const g=cv2.getContext('2d'),B=wbBoss(wb.st.period),A=wb.anim;
   g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,720,420);
@@ -2054,7 +2074,7 @@ async function loadGuild(){gd.err='';try{
     if(gd.my&&S.tkGuild!==gd.my){S.tkGuild=gd.my;S.tkSent=S.tk||0;save();}
     if(gd.my){gd.info=await rpc('kk_guild_info',{p_gid:gd.my});S.gBonus=gd.info?gd.info.level*2:0;S.gUpg=gd.info?gd.info.upg||{}:{};save();lastHud='';}
     else{gd.info=null;S.gBonus=0;S.gUpg={};gd.list=await rpc('kk_guild_list',{p_q:gd.q});}}
-  catch(e){gd.err='Keine Verbindung. Gilden gibt es nur auf der Netlify-Seite des Spiels.';}
+  catch(e){gd.err='Keine Verbindung. Gilden gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='gilde')renderOnline();}
 setTimeout(()=>{if(ON.code)loadGuild();},5000); // Gildenbonus beim Start auffrischen
 function guildBody(){
@@ -2131,7 +2151,7 @@ function wireGuild(){
 }
 
 let lbBy='best',lbData=null,lbErr='',lbAt=0;
-async function loadLb(){lbErr='';try{lbData=await rpc('kk_leaderboard',{p_by:lbBy,p_limit:50});lbAt=Date.now();}catch(e){lbData=null;lbErr='Keine Verbindung. Die Bestenliste gibt es nur auf der Netlify-Seite des Spiels.';}if(olOpen&&olTab==='liste')renderOnline();}
+async function loadLb(){lbErr='';try{lbData=await rpc('kk_leaderboard',{p_by:lbBy,p_limit:50});lbAt=Date.now();}catch(e){lbData=null;lbErr='Keine Verbindung. Die Bestenliste gibt es nur auf kaktus-krieger.pages.dev.';}if(olOpen&&olTab==='liste')renderOnline();}
 let pinMsg='',loginMsg='';
 const loginForm=p=>`<div class="pinrow"><input id="${p}LCode" class="oin" placeholder="Freundescode" maxlength="7" autocomplete="off" spellcheck="false" style="text-transform:uppercase">
     <input id="${p}LPin" class="oin pin" type="password" inputmode="numeric" maxlength="4" placeholder="PIN" autocomplete="current-password"></div>
@@ -2147,14 +2167,14 @@ function bindLogin(p,rerender){
       switching=true;ON={code:r.code,key:r.key,pin:true};saveOn();
       try{localStorage.setItem(KEY,JSON.stringify(r.save||Object.assign(newState(),{caps:0,gift:{caps:500,kak:50}})));}catch(e){}
       loginMsg='Geladen! Das Spiel startet neu …';rerender();setTimeout(()=>location.reload(),900);}
-    catch(e){loginMsg='Laden fehlgeschlagen: keine Verbindung. Online-Funktionen gibt es nur auf der Netlify-Seite des Spiels.';rerender();}};
+    catch(e){loginMsg='Laden fehlgeschlagen: keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.';rerender();}};
   $(p+'LGo').onclick=go;$(p+'LPin').onkeydown=e=>{if(e.key==='Enter')go();};
 }
 function renderOnline(){
   const tabs=`<div class="eqtabs" role="tablist">${[['profil','Profil'],['freunde','Freunde'],['liste','Rangliste'],['boss','Weltboss'],['gilde','Gilde']].map(([k,n])=>`<button type="button" role="tab" aria-selected="${olTab===k}" data-otab="${k}">${n}</button>`).join('')}</div>`;
   let body='';
   if(olTab==='profil'){
-    const st=onState==='ok'?`<span class="ost ok">● Online gespeichert ${agoTxt(onLast)}</span>`:onState==='off'?'<span class="ost off">● Keine Verbindung. Online-Funktionen gibt es nur auf der Netlify-Seite des Spiels.</span>':onState==='err'?`<span class="ost err">● Fehler beim Speichern: ${onMsg.replace(/</g,'&lt;')}</span>`:'<span class="ost">● Verbinde …</span>';
+    const st=onState==='ok'?`<span class="ost ok">● Online gespeichert ${agoTxt(onLast)}</span>`:onState==='off'?'<span class="ost off">● Keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.</span>':onState==='err'?`<span class="ost err">● Fehler beim Speichern: ${onMsg.replace(/</g,'&lt;')}</span>`:'<span class="ost">● Verbinde …</span>';
     body=`<div class="ocard"><small>Dein Freundescode</small><b class="ocode">${ON.code?fmtCode(ON.code):'– – –'}</b>
         <div class="eqdb"><button class="sbtn" type="button" id="oCopy" ${ON.code?'':'disabled'}>Code kopieren</button><button class="sbtn go" type="button" id="oSaveNow">Jetzt speichern</button></div>${st}</div>
       <p class="hint">Gib deinen Freundescode an Freunde weiter. Damit sehen sie dein Profil. Dein Spielstand bleibt privat.</p>
@@ -2193,6 +2213,7 @@ function renderOnline(){
   $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
   if(olTab==='gilde')wireGuild();
   {const wg=$('wbGo');if(wg)wg.onclick=wbAttack;if($('wbcv'))drawWb();}
+  {const wc=$('wbClaim');if(wc)wc.onclick=wbClaim;}
   $('card').querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{lbBy=b.dataset.lb;lbData=null;renderOnline();loadLb();});
   $('card').querySelectorAll('[data-fc]').forEach(b=>b.onclick=async()=>{friendBack=olTab==='freunde'?null:olTab;olTab='freunde';friendErr='';try{friend=await rpc('kk_profile',{p_code:b.dataset.fc});}catch(e){friend=null;friendErr='Keine Verbindung.';}renderOnline();});
   {const rb=$('lbRe');if(rb)rb.onclick=()=>{lbData=null;renderOnline();loadLb();};}
@@ -2215,7 +2236,7 @@ function renderOnline(){
   }else if(olTab==='freunde'){
     const go=async()=>{const c=normCode($('oFriend').value);if(c.length!==6){friendErr='Ein Freundescode hat 6 Zeichen.';friend=null;renderOnline();return;}
       try{const r=await rpc('kk_profile',{p_code:c});friend=r||null;friendErr=r?'':'Kein Spieler mit diesem Code gefunden.';}
-      catch(e){friend=null;friendErr='Keine Verbindung. Online-Funktionen gibt es nur auf der Netlify-Seite des Spiels.';}
+      catch(e){friend=null;friendErr='Keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.';}
       renderOnline();};
     {const fb=$('fBack');if(fb)fb.onclick=()=>{olTab=friendBack;friendBack=null;renderOnline();};}
     $('oFind').onclick=go;$('oFriend').onkeydown=e=>{if(e.key==='Enter')go();};
@@ -2269,7 +2290,7 @@ async function loadArena(){ar.err='';try{
     try{ar.day=await rpc('kk_ar_day',{p_code:ON.code||null});}catch(e){ar.day=null;}
     const real=await rpc('kk_ar_opponents',{p_code:ON.code})||[];
     ar.opp=real.concat(makeBots(Math.max(0,3-real.length),(ar.st&&ar.st.me&&ar.st.me.pts)||1000));}
-  catch(e){ar.err='Keine Verbindung. Die Arena gibt es nur auf der Netlify-Seite des Spiels.';}
+  catch(e){ar.err='Keine Verbindung. Die Arena gibt es nur auf kaktus-krieger.pages.dev.';}
   if(ar.open)renderArena();}
 function renderArena(){
   let body;
@@ -2559,7 +2580,7 @@ function twSim(f){const G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waff
   const hit=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100),net=hit/1.3-st.hp*st.reg/100,ttd=net>0?st.hp/net:1e9;
   return ttk<=30&&ttk<ttd;}
 async function twSubmit(){if(!ON.code||!ON.key)return;try{await rpc('kk_tw_submit',{p_code:ON.code,p_key:ON.key,p_floor:twFloor()-1});}catch(e){}twLoad();}
-async function twLoad(){try{twb.st=await rpc('kk_tw_board',{p_code:ON.code||null});twb.err=null;}catch(e){twb.err='Rangliste nur online (Netlify-Seite) verfügbar.';}
+async function twLoad(){try{twb.st=await rpc('kk_tw_board',{p_code:ON.code||null});twb.err=null;}catch(e){twb.err='Rangliste nur auf kaktus-krieger.pages.dev verfügbar.';}
   if(tw.open&&!tw.anim)renderTower();}
 function twBoardHtml(){
   const nx=new Date();nx.setHours(24,0,0,0);const left=(nx-Date.now())/1000,hh=Math.floor(left/3600),mm=Math.floor(left%3600/60);
@@ -2791,7 +2812,12 @@ const PATCHES=[
      ['Auswirkung:','Betrifft ▲ in der Ausrüstung und im Inventar, den Vergleich bei neuen Teilen, Auto-Öffnen und „Schlechtere markieren“.']]},
   {id:'pn23',date:'2026-11-06',title:'Fehler bei Umhängen behoben',
    hero:['🧥 Umhänge gehen wieder','Umhänge der Seltenheiten Ätherisch, Ewig und Urknall haben das Spiel hängen lassen, man konnte sie nicht ausrüsten.'],
-   items:()=>[['Behoben:','Alle Umhänge lassen sich wieder anlegen und tauschen. Die neuen Seltenheiten haben eigene Farben: Ätherisch hellblau, Ewig hellgrün, Urknall orangerot.']]}
+   items:()=>[['Behoben:','Alle Umhänge lassen sich wieder anlegen und tauschen. Die neuen Seltenheiten haben eigene Farben: Ätherisch hellblau, Ewig hellgrün, Urknall orangerot.']]},
+  {id:'pn24',date:'2026-11-06',title:'Weltboss-Belohnungen',
+   hero:['🏆 Jede Woche Beute vom Weltboss','Wer in einer Woche mindestens einmal angreift, bekommt ab Montag eine Belohnung. Die drei Stärksten bekommen mehr.'],
+   items:()=>[['Für alle, die angreifen:','10 🌵 und 10 Kapseln.'],
+     ['Top 3 zusätzlich:','🥇 40 🌵, 30 Kapseln und ein Teil zwei Seltenheiten höher · 🥈 25 🌵, 20 Kapseln, Teil eine Seltenheit höher · 🥉 15 🌵 und 12 Kapseln.'],
+     ['Abholen:','Ab Montag im Weltboss-Reiter unter Online-Profil.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
