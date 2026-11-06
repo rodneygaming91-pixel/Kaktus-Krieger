@@ -702,6 +702,11 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 @media (max-width:420px){.fbl{left:7px;bottom:5px;gap:6px}.fauto.fin{padding:3px 4px 2px}
   .fbr .mauto{line-height:1.05;padding:3px 8px 3px 18px;font-size:.66rem;text-align:left}.fbr .mauto span{display:block}}
 .foot .fst{flex:1 1 0}
+.btn.twauto{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;padding:8px 10px 8px 52px;text-align:center}
+.btn.twauto small{display:block;font-size:.68rem;opacity:.85}
+.btn.twauto .sw{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:30px;height:17px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 2px #000}
+.btn.twauto .sw i{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#8a7a6a;transition:left .15s}
+.btn.twauto.on{background:linear-gradient(#4e8a32,#2f5e1c);color:#fff6e0}.btn.twauto.on .sw{background:#7be86a}.btn.twauto.on .sw i{left:15px;background:#fff6e0}
 </style>
 
 <div class="game">
@@ -748,7 +753,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2622,11 +2627,13 @@ function renderTower(){
     <div class="twrew"><span>🌵 +${R.kak}</span><span>Kapseln +${R.caps}</span><span>1 Teil${R.bump?' <b style="color:#ffd447">(eine Seltenheit höher)</b>':''}</span></div>
     ${tw.res?`<div class="wbres">${tw.res}</div>`:''}
     <p class="hint" style="margin:0">Jeden Tag startest du bei Etage 1. Belohnungen gibt es für Etagen über deinem Rekord (<b>${S.twRec}</b>). Verlieren kostet nichts.</p>
-    <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
+    <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim||tw.auto?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
+    <button class="btn twauto${tw.auto?' on':''}" id="twAuto" type="button" aria-pressed="${!!tw.auto}"><span class="sw"><i></i></span>${tw.auto?'Auto-Kampf läuft · Stoppen':'Auto-Kampf starten'}<small>${tw.auto?'Stoppt auch automatisch bei einer Niederlage':'Kämpft Etage für Etage weiter, bis du einen Kampf verlierst'}</small></button>
     ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Etagen, die du schon geschafft hast, sofort durchziehen</small></button>`:''}
     ${twBoardHtml()}`;
-  $('twClose').onclick=()=>{if(tw.anim)return;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
+  $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
   $('twGo').onclick=twFight;drawTower();
+  $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
   {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
     S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft.${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
     renderTower();if(f>f0)twSubmit();};}
@@ -2694,8 +2701,10 @@ function twFinish(A,f){tw.anim=null;
     if(f>S.twRec){const R=twReward(f),it=twRoll(f);S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.twRec=f;const itTxt=twGive(it);
       tw.res=`<b>Etage ${f} geschafft – neuer Rekord!</b> <em class="up">+${R.kak} 🌵</em> · <em class="up">+${R.caps} Kapseln</em><br>${itTxt}`;}
     else tw.res=`<b>Etage ${f} geschafft!</b> Weiter zu Etage ${f+1}. <small>(Belohnungen gibt es ab Etage ${S.twRec+1})</small>`;
-    save();lastHud='';twSubmit();}
-  else tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span><br><small>Tipp: Werkstatt leveln, bessere Ausrüstung oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;
+    save();lastHud='';twSubmit();
+    // Auto-Kampf: nach kurzer Pause die nächste Etage starten
+    if(tw.auto){if(tw.open)renderTower();setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim)twFight();},1200);return;}}
+  else{tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span>${tw.auto?' <b>Auto-Kampf beendet.</b>':''}<br><small>Tipp: Werkstatt leveln, bessere Ausrüstung oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;tw.auto=false;}
   if(tw.open)renderTower();}
 $('twBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;twDayCheck();tw.open=true;tw.res=null;twb.msg='';twLoad();$('card').classList.add('twc');$('modal').hidden=false;lastHud='';renderTower();};
 setInterval(()=>{twDayCheck();const f=twFloor();$('twSub').textContent='Etage '+f;
@@ -2837,7 +2846,11 @@ const PATCHES=[
    hero:['✦ Astral · Prisma · Polarlicht · Sonnenkern · Allmacht','Nach Urknall geht es weiter: Die Gärtnerei geht jetzt bis <b>Lv 85</b>.'],
    items:()=>[['Freischalten:','<span style="color:#8f7bff">Astral</span> ab Lv 61, <span style="color:#6fffd8">Prisma</span> ab Lv 66, <span style="color:#4dd6ff">Polarlicht</span> ab Lv 71, <span style="color:#ffe14d">Sonnenkern</span> ab Lv 76, <span style="color:#ff5ad0">Allmacht</span> ab Lv 81.'],
      ['Stärke:','Jede neue Seltenheit ist wieder doppelt so stark wie die vorige.'],
-     ['Auto-Öffnen:','Kann jetzt auch bei den neuen Seltenheiten anhalten.']]}
+     ['Auto-Öffnen:','Kann jetzt auch bei den neuen Seltenheiten anhalten.']]},
+  {id:'pn26',date:'2026-11-06',title:'Auto-Kampf im Turm',
+   hero:['🗼 Der Turm kämpft von allein','Mit dem neuen Auto-Kampf-Knopf im Turm geht es nach jedem Sieg automatisch in die nächste Etage.'],
+   items:()=>[['Stoppen:','Tippe nochmal auf den Knopf. Der laufende Kampf wird noch zu Ende gekämpft.'],
+     ['Automatisch beendet:','Bei einer Niederlage, wenn die Zeit abläuft oder wenn du das Turm-Fenster schließt.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
