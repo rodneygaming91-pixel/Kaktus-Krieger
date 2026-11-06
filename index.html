@@ -748,7 +748,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1012,7 +1012,8 @@ const ELEM={
 const ATK_ELS=['gift','eis','feuer','blitz','schatten'];
 const elMulFor=el=>{const Wd=world();return !el?1:el===Wd.weak?1.5:el===Wd.atkEl?0.6:1;};
 const elMul=()=>elMulFor(S.gear.waffe&&S.gear.waffe.el);
-const itemScore=it=>it.v*(it.slot==='waffe'?elMulFor(it.el):1)+(it.res&&it.res.el===world().atkEl?it.res.v*it.v*.03:0);
+// „Besser“ heißt: höherer Wert. Element und Resistenz sind nur Zusatzinfos und entscheiden höchstens bei exakt gleichem Wert.
+const itemScore=it=>it.v+((it.slot==='waffe'&&elMulFor(it.el)>1)||(it.res&&it.res.el===world().atkEl)?1e-6:0);
 const elTag=el=>el?`<span class="elt" style="--ec:${ELEM[el].c}">${ELEM[el].ico} ${ELEM[el].n}</span>`:'';
 function itemExtra(it){let h='';if(it.el)h+=`<span class="ex">${elTag(it.el)}${it.el===world().weak?' <em class="up">trifft Schwäche +50 %</em>':it.el===world().atkEl?' <em class="down">Gegner resistent −40 %</em>':''}</span>`;
   if(it.res)h+=`<span class="ex">+${it.res.v} % ${elTag(it.res.el)}-Resistenz${it.res.el===world().atkEl?' <em class="up">hilft hier</em>':''}</span>`;return h;}
@@ -2783,7 +2784,11 @@ const PATCHES=[
   {id:'pn21',date:'2026-11-06',title:'Aufgeräumte Kampfbox',
    hero:['⚙ Mehr Platz','Der Auto-Schalter für die Fähigkeiten sitzt jetzt in der Kampfbox direkt neben den Fähigkeiten.'],
    items:()=>[['Auto-Schalter:','Grün mit dem Punkt rechts heißt an, grau mit dem Punkt links heißt aus.'],
-     ['Werte:','Angriff, Leben und Tempo stehen als drei Plaketten in einer Zeile, auch auf kleinen Handys.']]}
+     ['Werte:','Angriff, Leben und Tempo stehen als drei Plaketten in einer Zeile, auch auf kleinen Handys.']]},
+  {id:'pn22',date:'2026-11-06',title:'Fairer Vergleich',
+   hero:['⚖ Besser heißt wirklich besser','Neue Teile werden jetzt nur noch nach ihrem Wert verglichen. Ein schwächeres Teil gilt nicht mehr als besser, nur weil es eine Resistenz oder ein Element hat.'],
+   items:()=>[['Resistenz und Element:','Stehen weiter als Info am Teil und entscheiden nur, wenn zwei Teile exakt gleich stark sind.'],
+     ['Auswirkung:','Betrifft ▲ in der Ausrüstung und im Inventar, den Vergleich bei neuen Teilen, Auto-Öffnen und „Schlechtere markieren“.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
