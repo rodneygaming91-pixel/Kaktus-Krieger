@@ -748,7 +748,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1252,7 +1252,7 @@ function drawWeapon(g,it){const M=MAT[it.r],r=Math.min(it.r,5);
   }
   g.restore();
 }
-const CAPE=['#8a6a4a','#3f8a3a','#2f6fb8','#5a2ea8','#b8202e','#ff6a2a','#1f8a68','#6a2aa8','#f0e2b0'];
+const CAPE=['#8a6a4a','#3f8a3a','#2f6fb8','#5a2ea8','#b8202e','#ff6a2a','#1f8a68','#6a2aa8','#f0e2b0','#3ac8e0','#8ac81e','#e0401e'];   // je Seltenheit eine Farbe (12)
 function drawCape(g,sh,it,walk){const {hw,top,bot}=sh,r=Math.min(it.r,5),c1=CAPE[it.r],y0=top+hw+10,sway=Math.sin(t*3)*3+walk*2;
   g.beginPath();g.moveTo(-hw+2,y0);g.lineTo(hw-2,y0);
   g.quadraticCurveTo(hw+10,(y0+bot)/2,hw+12+sway,bot+6);
@@ -2788,7 +2788,10 @@ const PATCHES=[
   {id:'pn22',date:'2026-11-06',title:'Fairer Vergleich',
    hero:['⚖ Besser heißt wirklich besser','Neue Teile werden jetzt nur noch nach ihrem Wert verglichen. Ein schwächeres Teil gilt nicht mehr als besser, nur weil es eine Resistenz oder ein Element hat.'],
    items:()=>[['Resistenz und Element:','Stehen weiter als Info am Teil und entscheiden nur, wenn zwei Teile exakt gleich stark sind.'],
-     ['Auswirkung:','Betrifft ▲ in der Ausrüstung und im Inventar, den Vergleich bei neuen Teilen, Auto-Öffnen und „Schlechtere markieren“.']]}
+     ['Auswirkung:','Betrifft ▲ in der Ausrüstung und im Inventar, den Vergleich bei neuen Teilen, Auto-Öffnen und „Schlechtere markieren“.']]},
+  {id:'pn23',date:'2026-11-06',title:'Fehler bei Umhängen behoben',
+   hero:['🧥 Umhänge gehen wieder','Umhänge der Seltenheiten Ätherisch, Ewig und Urknall haben das Spiel hängen lassen, man konnte sie nicht ausrüsten.'],
+   items:()=>[['Behoben:','Alle Umhänge lassen sich wieder anlegen und tauschen. Die neuen Seltenheiten haben eigene Farben: Ätherisch hellblau, Ewig hellgrün, Urknall orangerot.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
