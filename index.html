@@ -384,7 +384,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .fauto:active{transform:translateY(2px)}
 .fauto:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
 @media (max-width:420px){.foot{font-size:.72rem;gap:4px 10px;flex-wrap:wrap;justify-content:flex-start}.fauto{margin-right:auto;font-size:.76rem;padding:4px 10px 4px 8px;white-space:nowrap}.foot>span{white-space:nowrap}}
-@media (max-width:380px){.foot>span:last-child{display:none}}
+@media (max-width:380px){.fst{font-size:.7rem;gap:3px;padding:3px}.fst small{display:none}}
 /* BOSS AUTO in Rot */
 #bossAutoBtn[aria-pressed="true"]{background:linear-gradient(#ff6a5a,#b8202e);color:#fff6e0;text-shadow:0 1px 0 #4a0a10;box-shadow:0 2px 0 #0009,0 0 0 2px #4a0a10,0 0 8px #ff3d4e88}
 #bossAutoBtn[aria-pressed="true"] span{color:#ffe08a}
@@ -682,6 +682,26 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .dday.big{grid-column:span 2;background:linear-gradient(#3a2f08,#1c140f);border-color:#ffd447}.dday.big .dico{font-size:1.8rem}
 .dday.now{border-color:#7fe08a;box-shadow:0 0 0 2px #7fe08a55,0 0 12px #7fe08a55;background:#1d2a17}
 .dday.done{opacity:.55}.dday.done i{position:absolute;top:2px;right:5px;font-style:normal;color:#7fe08a;font-weight:900}
+/* Kompakte Zeile: kleiner Auto-Schalter, Werte als Plaketten */
+.foot{display:flex;align-items:center;flex-wrap:nowrap;gap:6px;justify-content:flex-start}
+.fauto{flex:0 0 auto;gap:6px;padding:3px 10px 3px 4px;font-size:.78rem;font-weight:900;white-space:nowrap;color:#d8c6a8;background:#2a1f18;box-shadow:0 2px 0 #0009}
+.fauto[aria-pressed="true"]{background:linear-gradient(#4e8a32,#2f5e1c);color:#fff6e0;box-shadow:0 2px 0 #0009,0 0 0 1.5px #1e3a10}
+.fauto .sw{position:relative;width:26px;height:15px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 2px #000}
+.fauto .sw i{position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:#8a7a6a;transition:left .15s,background .15s;box-shadow:none}
+.fauto[aria-pressed="true"] .sw{background:#7be86a}.fauto[aria-pressed="true"] .sw i{left:13px;background:#fff6e0;box-shadow:0 1px 2px #0008}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.fst{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;background:#1c140f;border:2px solid #4a3a2e;border-radius:999px;padding:3px 6px;
+  font-size:.8rem;color:#f3e6cc;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fst em{font-style:normal;font-size:.8rem;color:#ff8a3d}.fst b{font-weight:900}.fst small{font-size:.65rem;color:#bfae94}
+@media (max-width:420px){.foot{font-size:.76rem;gap:5px;flex-wrap:nowrap}.fauto{margin-right:0;font-size:.74rem;padding:3px 8px 3px 4px}.fst{font-size:.74rem;padding:3px 4px}}
+/* Auto-Schalter für Fähigkeiten in der Kampfbox, direkt neben den Fähigkeiten */
+.fbl{position:absolute;left:10px;bottom:7px;display:flex;align-items:center;gap:8px}
+.fbl .mods{position:static}
+.fauto.fin{flex-direction:column;gap:2px;padding:4px 5px 3px;border-radius:10px;font-size:.55rem;letter-spacing:.06em;line-height:1}
+.fauto.fin small{font-size:.55rem;font-weight:900}
+@media (max-width:420px){.fbl{left:7px;bottom:5px;gap:6px}.fauto.fin{padding:3px 4px 2px}
+  .fbr .mauto{line-height:1.05;padding:3px 8px 3px 18px;font-size:.66rem;text-align:left}.fbr .mauto span{display:block}}
+.foot .fst{flex:1 1 0}
 </style>
 
 <div class="game">
@@ -693,14 +713,13 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
-    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="mods" id="mods" aria-label="Fähigkeiten"></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
+    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="fauto fin" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span class="sw"><i></i></span><small>AUTO</small><b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <div class="foot">
-    <button class="fauto" id="modAutoBtn" type="button" aria-pressed="true"><i></i>Auto-Fähigkeiten <b id="modAutoState">an</b></button>
-    <span>Angriff <b id="sAtk">0</b></span>
-    <span>Leben <b id="sHp">0</b></span>
-    <span>Tempo <b id="sSpd">0</b> s</span>
+    <span class="fst" title="Angriff"><em>⚔</em><b id="sAtk">0</b></span>
+    <span class="fst" title="Leben"><em style="color:#ff6fae">♥</em><b id="sHp">0</b></span>
+    <span class="fst" title="Tempo (Sekunden pro Schlag)"><em style="color:#ffd447">⏱</em><b id="sSpd">0</b><small>s</small></span>
   </div>
   <div class="caprow"><button class="capsule" id="capBtn" type="button">Samenkapsel öffnen <span class="n" id="capN">0</span></button>
     <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
@@ -729,7 +748,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2760,7 +2779,11 @@ const PATCHES=[
   {id:'pn20',date:'2026-11-06',title:'Neuer Hund: Chihuahua',
    hero:['🐕 Klein, laut und gefährlich','Der Chihuahua kläfft und zwickt alle 0,6 Sekunden und macht deinen Kaktus wütend: mehr kritische Treffer.'],
    items:()=>[['Effekt:','+1 % Krit-Chance pro Level (bis Lv 25 also +25 %). Die Krit-Chance insgesamt bleibt bei höchstens 50 %.'],
-     ['Preis:','600 Münzen, zu finden bei den Hunden zwischen Windhund und Bernhardiner.']]}
+     ['Preis:','600 Münzen, zu finden bei den Hunden zwischen Windhund und Bernhardiner.']]},
+  {id:'pn21',date:'2026-11-06',title:'Aufgeräumte Kampfbox',
+   hero:['⚙ Mehr Platz','Der Auto-Schalter für die Fähigkeiten sitzt jetzt in der Kampfbox direkt neben den Fähigkeiten.'],
+   items:()=>[['Auto-Schalter:','Grün mit dem Punkt rechts heißt an, grau mit dem Punkt links heißt aus.'],
+     ['Werte:','Angriff, Leben und Tempo stehen als drei Plaketten in einer Zeile, auch auf kleinen Handys.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
