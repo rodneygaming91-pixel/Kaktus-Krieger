@@ -734,7 +734,7 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
   <div class="autorow" id="autoRow" hidden>
     <label for="stopSel">Anhalten bei</label>
     <select id="stopSel">
-      <option value="3">Episch+</option><option value="4">Legendär+</option><option value="5">Mythisch+</option><option value="6">Uralt+</option><option value="7">Kosmisch+</option><option value="8">Göttlich+</option><option value="9">Ätherisch+</option><option value="10">Ewig+</option><option value="11">Urknall</option><option value="99">nie</option>
+      <option value="3">Episch+</option><option value="4">Legendär+</option><option value="5">Mythisch+</option><option value="6">Uralt+</option><option value="7">Kosmisch+</option><option value="8">Göttlich+</option><option value="9">Ätherisch+</option><option value="10">Ewig+</option><option value="11">Urknall+</option><option value="12">Astral+</option><option value="13">Prisma+</option><option value="14">Polarlicht+</option><option value="15">Sonnenkern+</option><option value="16">Allmacht</option><option value="99">nie</option>
     </select>
     <span class="multi" id="multiTxt"></span>
   </div>
@@ -748,7 +748,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -796,19 +796,24 @@ const RAR=[
   {n:'Göttlich',    c:'#fff2a8',m:256,pm:12},
   {n:'Ätherisch',   c:'#6ff3ff',m:512,pm:15.5},
   {n:'Ewig',        c:'#c6ff3d',m:1024,pm:20},
-  {n:'Urknall',     c:'#ff6a3d',m:2048,pm:26}
+  {n:'Urknall',     c:'#ff6a3d',m:2048,pm:26},
+  {n:'Astral',      c:'#8f7bff',m:4096,pm:34},
+  {n:'Prisma',      c:'#6fffd8',m:8192,pm:44},
+  {n:'Polarlicht',  c:'#4dd6ff',m:16384,pm:57},
+  {n:'Sonnenkern',  c:'#ffe14d',m:32768,pm:74},
+  {n:'Allmacht',    c:'#ff5ad0',m:65536,pm:96}
 ];
 // Neun Slots wie in Rogers Konzept. pct = Prozentwert (wächst langsamer), cap = Obergrenze
 const SLOTS=[
-  {id:'waffe',     n:'Waffe',      stat:'atk',  unit:'Angriff',      base:4,  names:['Holzkeule','Stachelkeule','Eisenschwert','Kristallklinge','Sonnenschwert','Blutmondklinge','Urzeitklinge','Sternenschneide','Götterschwert','Ätherklinge','Ewigkeitsklinge','Urknallschwert']},
-  {id:'helm',      n:'Helm',       stat:'hp',   unit:'Leben',        base:20, names:['Lederkappe','Stachelkappe','Eisenhelm','Hörnerhelm','Sonnenkrone','Drachenhelm','Urzeithelm','Nebelkrone','Götterkrone','Ätherkrone','Ewige Krone','Urknallhelm']},
-  {id:'ruestung',  n:'Rüstung',    stat:'hp',   unit:'Leben',        base:35, names:['Stoffweste','Lederharnisch','Eisenpanzer','Runenpanzer','Goldrüstung','Glutpanzer','Jadepanzer','Sternenrüstung','Götterharnisch','Ätherpanzer','Ewiger Panzer','Urknallrüstung']},
-  {id:'schild',    n:'Schild',     stat:'block',unit:'% Schutz',     base:3,  pct:true,cap:60,names:['Holzbrett','Rundschild','Eisenschild','Kaktuswappen','Sonnenschild','Mythenschild','Urzeitschild','Galaxieschild','Götterschild','Ätherschild','Ewiger Schild','Urknallschild']},
-  {id:'handschuhe',n:'Handschuhe', stat:'atk',  unit:'Angriff',      base:2,  names:['Stoffbinden','Lederhandschuhe','Eisenfäuste','Runenhandschuhe','Goldklauen','Feuerfäuste','Jadefäuste','Sternenhände','Götterfäuste','Ätherhände','Ewige Fäuste','Urknallfäuste']},
-  {id:'schuhe',    n:'Schuhe',     stat:'spd',  unit:'% Tempo',      base:3,  pct:true,names:['Sandalen','Lederstiefel','Eisenstiefel','Windläufer','Goldsporen','Glutstiefel','Jadestiefel','Kometenstiefel','Götterschritte','Ätherschritte','Ewige Stiefel','Urknallstiefel']},
-  {id:'umhang',    n:'Umhang',     stat:'reg',  unit:'% Heilung/s',  base:.3, pct:true,names:['Lumpenumhang','Wanderumhang','Ritterumhang','Sternenumhang','Königsumhang','Phönixumhang','Urzeitmantel','Nebelumhang','Göttermantel','Äthermantel','Ewiger Mantel','Urknallmantel']},
-  {id:'halskette', n:'Halskette',  stat:'hp',   unit:'Leben',        base:15, names:['Holzperlen','Knochenkette','Silberamulett','Kristallamulett','Sonnenamulett','Herz des Vulkans','Herz der Urzeit','Sternenherz','Götterherz','Ätherherz','Ewiges Herz','Herz des Urknalls']},
-  {id:'ring',      n:'Ring',       stat:'crit', unit:'% Krit',       base:2,  pct:true,cap:50,names:['Kupferring','Jadering','Saphirring','Amethystring','Goldring','Rubinring','Urzeitring','Kometenring','Götterring','Ätherring','Ewiger Ring','Urknallring']}
+  {id:'waffe',     n:'Waffe',      stat:'atk',  unit:'Angriff',      base:4,  names:['Holzkeule','Stachelkeule','Eisenschwert','Kristallklinge','Sonnenschwert','Blutmondklinge','Urzeitklinge','Sternenschneide','Götterschwert','Ätherklinge','Ewigkeitsklinge','Urknallschwert','Astralklinge','Prismaklinge','Polarlichtklinge','Sonnenkernklinge','Allmachtsklinge']},
+  {id:'helm',      n:'Helm',       stat:'hp',   unit:'Leben',        base:20, names:['Lederkappe','Stachelkappe','Eisenhelm','Hörnerhelm','Sonnenkrone','Drachenhelm','Urzeithelm','Nebelkrone','Götterkrone','Ätherkrone','Ewige Krone','Urknallhelm','Astralkrone','Prismakrone','Polarlichtkrone','Sonnenkernkrone','Allmachtskrone']},
+  {id:'ruestung',  n:'Rüstung',    stat:'hp',   unit:'Leben',        base:35, names:['Stoffweste','Lederharnisch','Eisenpanzer','Runenpanzer','Goldrüstung','Glutpanzer','Jadepanzer','Sternenrüstung','Götterharnisch','Ätherpanzer','Ewiger Panzer','Urknallrüstung','Astralpanzer','Prismapanzer','Polarlichtpanzer','Sonnenkernpanzer','Allmachtspanzer']},
+  {id:'schild',    n:'Schild',     stat:'block',unit:'% Schutz',     base:3,  pct:true,cap:60,names:['Holzbrett','Rundschild','Eisenschild','Kaktuswappen','Sonnenschild','Mythenschild','Urzeitschild','Galaxieschild','Götterschild','Ätherschild','Ewiger Schild','Urknallschild','Astralschild','Prismaschild','Polarlichtschild','Sonnenkernschild','Allmachtsschild']},
+  {id:'handschuhe',n:'Handschuhe', stat:'atk',  unit:'Angriff',      base:2,  names:['Stoffbinden','Lederhandschuhe','Eisenfäuste','Runenhandschuhe','Goldklauen','Feuerfäuste','Jadefäuste','Sternenhände','Götterfäuste','Ätherhände','Ewige Fäuste','Urknallfäuste','Astralfäuste','Prismafäuste','Polarlichtfäuste','Sonnenkernfäuste','Allmachtsfäuste']},
+  {id:'schuhe',    n:'Schuhe',     stat:'spd',  unit:'% Tempo',      base:3,  pct:true,names:['Sandalen','Lederstiefel','Eisenstiefel','Windläufer','Goldsporen','Glutstiefel','Jadestiefel','Kometenstiefel','Götterschritte','Ätherschritte','Ewige Stiefel','Urknallstiefel','Astralstiefel','Prismastiefel','Polarlichtstiefel','Sonnenkernstiefel','Allmachtsstiefel']},
+  {id:'umhang',    n:'Umhang',     stat:'reg',  unit:'% Heilung/s',  base:.3, pct:true,names:['Lumpenumhang','Wanderumhang','Ritterumhang','Sternenumhang','Königsumhang','Phönixumhang','Urzeitmantel','Nebelumhang','Göttermantel','Äthermantel','Ewiger Mantel','Urknallmantel','Astralmantel','Prismamantel','Polarlichtmantel','Sonnenkernmantel','Allmachtsmantel']},
+  {id:'halskette', n:'Halskette',  stat:'hp',   unit:'Leben',        base:15, names:['Holzperlen','Knochenkette','Silberamulett','Kristallamulett','Sonnenamulett','Herz des Vulkans','Herz der Urzeit','Sternenherz','Götterherz','Ätherherz','Ewiges Herz','Herz des Urknalls','Astralamulett','Prismaamulett','Polarlichtamulett','Sonnenkernamulett','Allmachtsamulett']},
+  {id:'ring',      n:'Ring',       stat:'crit', unit:'% Krit',       base:2,  pct:true,cap:50,names:['Kupferring','Jadering','Saphirring','Amethystring','Goldring','Rubinring','Urzeitring','Kometenring','Götterring','Ätherring','Ewiger Ring','Urknallring','Astralring','Prismaring','Polarlichtring','Sonnenkernring','Allmachtsring']}
 ];
 // Umstellung von den alten 4 Slots: alte Teile werden gegen Samenkapseln getauscht
 if(!S.v2){const old=Object.values(S.gear||{}).filter(Boolean).length;S.gear={};S.seen=[0];
@@ -884,20 +889,25 @@ const MODS=[
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
 let haste=0;
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
-const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60], MAX_G=60;
+const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
-  [100,75,55,40,28,20,14,10,7,  5,   4,  3,  2,  1  ],  // Gewöhnlich
-  [0,  25,32,32,30,27,22,18,14, 11,  9,  7,  6,  5  ],  // Ungewöhnlich
-  [0,  0, 13,20,24,26,24,20,18, 16,  14, 12, 10, 8  ],  // Selten
-  [0,  0, 0, 8, 13,17,19,19,19, 18,  16, 15, 13, 12 ],  // Episch
-  [0,  0, 0, 0, 5, 8, 12,15,16, 17,  17, 16, 15, 14 ],  // Legendär
-  [0,  0, 0, 0, 0, 2, 6, 9, 12, 13,  14, 15, 15, 14 ],  // Mythisch
-  [0,  0, 0, 0, 0, 0, 3, 6, 9,  11,  12, 13, 14, 14 ],  // Uralt
-  [0,  0, 0, 0, 0, 0, 0, 3, 4,  6.5, 8,  9,  10, 11 ],  // Kosmisch
-  [0,  0, 0, 0, 0, 0, 0, 0, 1,  2.5, 4,  5,  6,  8  ],  // Göttlich
-  [0,  0, 0, 0, 0, 0, 0, 0, 0,  0,   2,  3.5,5,  6  ],  // Ätherisch
-  [0,  0, 0, 0, 0, 0, 0, 0, 0,  0,   0,  1.5,3,  4.5],  // Ewig
-  [0,  0, 0, 0, 0, 0, 0, 0, 0,  0,   0,  0,  1,  2.5]   // Urknall
+  [100,75,55,40,28,20,14,10,7,5,4,3,2,1,1,0.5,0.5,0,0],  // Gewöhnlich
+  [0,25,32,32,30,27,22,18,14,11,9,7,6,5,4,3,2,2,1],  // Ungewöhnlich
+  [0,0,13,20,24,26,24,20,18,16,14,12,10,8,7,6,5,4,3],  // Selten
+  [0,0,0,8,13,17,19,19,19,18,16,15,13,12,11,10,9,8,7],  // Episch
+  [0,0,0,0,5,8,12,15,16,17,17,16,15,14,13,12,11,10,9],  // Legendär
+  [0,0,0,0,0,2,6,9,12,13,14,15,15,14,13,13,12,11,10],  // Mythisch
+  [0,0,0,0,0,0,3,6,9,11,12,13,14,14,14,13,13,12,11],  // Uralt
+  [0,0,0,0,0,0,0,3,4,6.5,8,9,10,11,12,12,12,12,12],  // Kosmisch
+  [0,0,0,0,0,0,0,0,1,2.5,4,5,6,8,9,10,10,11,11],  // Göttlich
+  [0,0,0,0,0,0,0,0,0,0,2,3.5,5,6,6.5,7,8,8.5,9],  // Ätherisch
+  [0,0,0,0,0,0,0,0,0,0,0,1.5,3,4.5,5,5.5,6,6.5,7],  // Ewig
+  [0,0,0,0,0,0,0,0,0,0,0,0,1,2.5,3,3.5,4,4.5,5],  // Urknall
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.5,2.5,3,3.5,4],  // Astral
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2.5,3,3.5],  // Prisma
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2.5,3],  // Polarlicht
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.5,2.5],  // Sonnenkern
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2]  // Allmacht
 ];
 function gWeights(L){L=Math.max(1,Math.min(MAX_G,L));let j=0;while(j<GL.length-2&&L>GL[j+1])j++;
   const f=(L-GL[j])/(GL[j+1]-GL[j]);return GT.map(r=>{const v=r[j]+(r[j+1]-r[j])*f;return v<0.05?0:v;});}
@@ -1184,7 +1194,12 @@ const MAT=[
   {m:'#fff6d8',d:'#d4a017',a:'#ffffff',l:'#ffffff'},
   {m:'#bff8ff',d:'#2aa8c4',a:'#6ff3ff',l:'#f0feff'},
   {m:'#e4ff9a',d:'#6a9a10',a:'#c6ff3d',l:'#f6ffd8'},
-  {m:'#ffb08a',d:'#a8321a',a:'#ffe14d',l:'#ffe0d0'}
+  {m:'#ffb08a',d:'#a8321a',a:'#ffe14d',l:'#ffe0d0'},
+  {m:'#c8bcff',d:'#4a3aa8',a:'#8f7bff',l:'#eeeaff'},
+  {m:'#c8fff0',d:'#1a9a7a',a:'#6fffd8',l:'#f0fffa'},
+  {m:'#bff0ff',d:'#1a6aa8',a:'#7dff9a',l:'#eafaff'},
+  {m:'#fff2a8',d:'#c47a00',a:'#ff8a3d',l:'#fffbe0'},
+  {m:'#ffc8ee',d:'#a8207a',a:'#7dfff0',l:'#fff0fa'}
 ];
 function gemAt(g,x,y,r,col){g.beginPath();g.moveTo(x,y-r);g.lineTo(x+r*.8,y);g.lineTo(x,y+r);g.lineTo(x-r*.8,y);g.closePath();olFill(g,col,1.4);
   g.fillStyle='#ffffffb0';g.fillRect(x-r*.3,y-r*.5,r*.35,r*.35);}
@@ -1252,7 +1267,7 @@ function drawWeapon(g,it){const M=MAT[it.r],r=Math.min(it.r,5);
   }
   g.restore();
 }
-const CAPE=['#8a6a4a','#3f8a3a','#2f6fb8','#5a2ea8','#b8202e','#ff6a2a','#1f8a68','#6a2aa8','#f0e2b0','#3ac8e0','#8ac81e','#e0401e'];   // je Seltenheit eine Farbe (12)
+const CAPE=['#8a6a4a','#3f8a3a','#2f6fb8','#5a2ea8','#b8202e','#ff6a2a','#1f8a68','#6a2aa8','#f0e2b0','#3ac8e0','#8ac81e','#e0401e','#6a52e0','#2ad0a8','#2aa8e0','#f0c020','#e03aa8'];   // je Seltenheit eine Farbe (17)
 function drawCape(g,sh,it,walk){const {hw,top,bot}=sh,r=Math.min(it.r,5),c1=CAPE[it.r],y0=top+hw+10,sway=Math.sin(t*3)*3+walk*2;
   g.beginPath();g.moveTo(-hw+2,y0);g.lineTo(hw-2,y0);
   g.quadraticCurveTo(hw+10,(y0+bot)/2,hw+12+sway,bot+6);
@@ -2817,7 +2832,12 @@ const PATCHES=[
    hero:['🏆 Jede Woche Beute vom Weltboss','Wer in einer Woche mindestens einmal angreift, bekommt ab Montag eine Belohnung. Die drei Stärksten bekommen mehr.'],
    items:()=>[['Für alle, die angreifen:','10 🌵 und 10 Kapseln.'],
      ['Top 3 zusätzlich:','🥇 40 🌵, 30 Kapseln und ein Teil zwei Seltenheiten höher · 🥈 25 🌵, 20 Kapseln, Teil eine Seltenheit höher · 🥉 15 🌵 und 12 Kapseln.'],
-     ['Abholen:','Ab Montag im Weltboss-Reiter unter Online-Profil.']]}
+     ['Abholen:','Ab Montag im Weltboss-Reiter unter Online-Profil.']]},
+  {id:'pn25',date:'2026-11-06',title:'Fünf neue Seltenheiten',
+   hero:['✦ Astral · Prisma · Polarlicht · Sonnenkern · Allmacht','Nach Urknall geht es weiter: Die Gärtnerei geht jetzt bis <b>Lv 85</b>.'],
+   items:()=>[['Freischalten:','<span style="color:#8f7bff">Astral</span> ab Lv 61, <span style="color:#6fffd8">Prisma</span> ab Lv 66, <span style="color:#4dd6ff">Polarlicht</span> ab Lv 71, <span style="color:#ffe14d">Sonnenkern</span> ab Lv 76, <span style="color:#ff5ad0">Allmacht</span> ab Lv 81.'],
+     ['Stärke:','Jede neue Seltenheit ist wieder doppelt so stark wie die vorige.'],
+     ['Auto-Öffnen:','Kann jetzt auch bei den neuen Seltenheiten anhalten.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
