@@ -675,6 +675,13 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .game{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .giftbox{display:flex;flex-direction:column;align-items:center;gap:2px;background:linear-gradient(#5a4a10,#3a2f08);border:3px solid #ffd447;border-radius:12px;padding:12px;box-shadow:0 0 18px #ffd44755}
 .giftbox span{font-family:var(--display);font-size:1.2rem;color:#fff2a8}.giftbox b{font-size:1.05rem;color:#fff}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.dday{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;background:#1c140f;border:2px solid #6b5644;border-radius:10px;padding:6px 3px;text-align:center;min-height:86px}
+.dday small{font-size:.62rem;font-weight:900;color:#d8c6a8;text-transform:uppercase;letter-spacing:.04em}
+.dday .dico{font-size:1.4rem;line-height:1.1}.dday b{font-size:.62rem;line-height:1.2;color:#f3e6cc}
+.dday.big{grid-column:span 2;background:linear-gradient(#3a2f08,#1c140f);border-color:#ffd447}.dday.big .dico{font-size:1.8rem}
+.dday.now{border-color:#7fe08a;box-shadow:0 0 0 2px #7fe08a55,0 0 12px #7fe08a55;background:#1d2a17}
+.dday.done{opacity:.55}.dday.done i{position:absolute;top:2px;right:5px;font-style:normal;color:#7fe08a;font-weight:900}
 </style>
 
 <div class="game">
@@ -722,7 +729,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2633,6 +2640,45 @@ $('twBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;twDayChec
 setInterval(()=>{twDayCheck();const f=twFloor();$('twSub').textContent='Etage '+f;
   if(tw.open&&!tw.anim)drawTower();},250);
 
+// ---------- Tägliche Belohnung: 7-Tage-Kalender ----------
+// Einmal pro Tag abholen. Wer am Folgetag wiederkommt, rückt einen Tag weiter; nach Tag 7 beginnt es von vorn.
+// Wer einen Tag auslässt, startet wieder bei Tag 1. Münzen wachsen mit der besten Stage.
+const DAILY=[
+  {caps:5},
+  {coins:300},
+  {kak:5},
+  {caps:10},
+  {coins:600},
+  {kak:10},
+  {caps:25,kak:20,item:1}
+];
+const dailyCoins=n=>Math.round(3*cPow(Math.max(1,S.best||1))*n);
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function dailyState(){const D=S.daily||{},today=todayStr(),y=new Date();y.setDate(y.getDate()-1);
+  if(D.last===today)return{ready:false,day:D.day,today};
+  const next=D.last===ymd(y)?(D.day%7)+1:1;return{ready:true,day:next,today,broke:!!D.last&&D.last!==ymd(y)};}
+const dailyTxt=R=>[R.caps?R.caps+' Kapseln':'',R.coins?fmt(dailyCoins(R.coins))+' Münzen':'',R.kak?R.kak+' 🌵':'',R.item?'Teil +1 Seltenheit':''].filter(Boolean).join(' · ');
+function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
+  $('card').innerHTML=`<h2>Tägliche Belohnung</h2>
+    <p style="margin:0;color:var(--muted)">Komm jeden Tag vorbei! Tag 7 bringt die große Belohnung. Lässt du einen Tag aus, geht es wieder bei Tag 1 los.</p>
+    <div class="dgrid">${DAILY.map((R,i)=>{const d=i+1,done=st.ready?d<cur:d<=cur,now=st.ready&&d===cur;
+      return`<div class="dday${done?' done':''}${now?' now':''}${d===7?' big':''}"><small>Tag ${d}</small>
+        <span class="dico">${R.item?'🎁':R.kak&&!R.caps?'🌵':R.coins?'🪙':'🌱'}</span><b>${dailyTxt(R)}</b>${done?'<i>✓</i>':''}</div>`;}).join('')}</div>
+    ${msg?`<p class="hint" style="margin:0">${msg}</p>`:''}
+    <div class="row">${st.ready?`<button class="btn" id="dlLater" type="button">Später</button><button class="btn go" id="dlGo" type="button">Tag ${cur} abholen</button>`
+      :`<button class="btn go" id="dlLater" type="button">Morgen wieder!</button>`}</div>`;
+  $('dlLater').onclick=()=>{$('modal').hidden=true;lastHud='';};
+  const g=$('dlGo');if(g)g.onclick=()=>{const s2=dailyState();if(!s2.ready)return;const R=DAILY[s2.day-1];let t2='';
+    if(R.caps)S.caps+=R.caps;if(R.kak)S.kak=(S.kak||0)+R.kak;if(R.coins)S.coins+=dailyCoins(R.coins);
+    if(R.item){const it=twRoll(Math.max(1,Math.floor((S.best||1)/3)),1);t2=' · '+twGive(it);}
+    S.daily={last:s2.today,day:s2.day};save();lastHud='';
+    banner={txt:'Tag '+s2.day+': '+dailyTxt(R),t:2.6};renderDaily('<b>Abgeholt!</b> '+dailyTxt(R)+t2);};}
+{let shown=false;const tm=setInterval(()=>{if(shown){clearInterval(tm);return;}
+  if(!S.char||editing||S.gift||!$('modal').hidden)return;
+  // erst wenn die Patch Notes durch sind (die kommen beim Start zuerst)
+  if(performance.now()<2500)return;
+  shown=true;clearInterval(tm);if(!dailyState().ready)return;$('modal').hidden=false;renderDaily();},1000);}
+
 // ---------- Startguthaben nach dem Neustart: zum Abholen ----------
 {let shown=false;const tm=setInterval(()=>{if(shown||!S.gift){clearInterval(tm);return;}
   if(!S.char||editing||!$('modal').hidden)return;shown=true;clearInterval(tm);
@@ -2699,7 +2745,13 @@ const PATCHES=[
    hero:['🌵 Dein Kaktus ganz groß','Die Ausrüstung zeigt deinen Kaktus jetzt groß in der Mitte, mit allen angelegten Teilen. Die Plätze stehen links und rechts drumherum.'],
    items:()=>[['Auf einen Blick:','Jeder Platz zeigt Teil, Seltenheitsfarbe und Wert. ▲ heißt: Im Inventar liegt etwas Besseres.'],
      ['Werkstatt, Hunde, Gärtnerei:','Die drei Knöpfe sind jetzt unten am Bildschirm festgemacht, du musst nicht mehr nach ihnen scrollen.'],
-     ['Ausrüstung öffnen:','Tippe irgendwo auf die Ausrüstung, um sie zu verwalten.']]}
+     ['Ausrüstung öffnen:','Tippe irgendwo auf die Ausrüstung, um sie zu verwalten.']]},
+  {id:'pn19',date:'2026-11-06',title:'Tägliche Belohnung',
+   hero:['🎁 Jeden Tag ein Geschenk','Beim Start wartet einmal am Tag eine Belohnung auf dich. Komm 7 Tage hintereinander, Tag 7 ist die große Belohnung.'],
+   items:()=>[['Kalender:','Tag 1: 5 Kapseln · Tag 2: Münzen · Tag 3: 5 🌵 · Tag 4: 10 Kapseln · Tag 5: viele Münzen · Tag 6: 10 🌵 · Tag 7: 25 Kapseln, 20 🌵 und ein Teil eine Seltenheit höher.'],
+     ['Dranbleiben:','Lässt du einen Tag aus, startest du wieder bei Tag 1.'],
+     ['Münzen:','Wachsen mit deiner besten Stage, damit sie immer etwas wert sind.'],
+     ['Neue Adresse:','Das Spiel ist jetzt unter kaktus-krieger.pages.dev zu finden.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
