@@ -729,7 +729,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true};
+const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -811,6 +811,7 @@ const clsM=()=>CLASSES[(S.char&&S.char.cls)||'schuetze'].m;
 const DRONES=[
   {id:'biene',   n:'Dackel',       c:'#ffd447',cost:100, act:'shot',every:1.2,dmg:.4, stat:'atk',per:2,d:'Beißt alle 1,2 s für 40 % Angriff'},
   {id:'kolibri', n:'Windhund',     c:'#3fe0c0',cost:300, act:'shot',every:.8, dmg:.25,stat:'spd',per:1.5,d:'Flinke Bisse alle 0,8 s'},
+  {id:'chihu',   n:'Chihuahua',    c:'#ff8a3d',cost:600, act:'shot',every:.6, dmg:.15,stat:'crit',per:1,d:'Kläfft und zwickt alle 0,6 s. Macht dich wütend: mehr kritische Treffer'},
   {id:'gluehw',  n:'Bernhardiner', c:'#ff6fae',cost:1000,act:'heal',every:3,  heal:3, stat:'hp', per:3,d:'Heilt alle 3 s 3 % Leben mit seinem Fässchen'},
   {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'stun',every:4,  dmg:1.2,stat:'atk',per:2,d:'Sprung alle 4 s, 120 % Angriff, wirft Gegner kurz um'}
 ];
@@ -852,7 +853,7 @@ function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it
 function heroStats(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
   return{atk:(10+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((100+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
-    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')),res:resSum()};
+    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')+drBonus('crit')),res:resSum()};
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
 // Sie zünden automatisch, sobald ein Gegner in Reichweite ist; antippen zündet sofort, wenn bereit
@@ -1345,6 +1346,7 @@ const HATS={bluete:'Blüte',strohhut:'Strohhut',kranz:'Blumenkranz',muetze:'Müt
 const DOGLOOK={
   biene:  {body:'#b0632e',dark:'#6e3a1a',belly:'#d99a62',len:15,h:7, leg:4, ear:'flop',snout:5},   // Dackel
   kolibri:{body:'#c9c0b4',dark:'#8a8278',belly:'#ece6dc',len:13,h:6, leg:9, ear:'fold',snout:6},   // Windhund
+  chihu:  {body:'#e0b07a',dark:'#a8743e',belly:'#f6dcb4',len:10,h:6, leg:5, ear:'big', snout:3},   // Chihuahua
   gluehw: {body:'#f4ede2',dark:'#9a5a2a',belly:'#ffffff',len:15,h:10,leg:6, ear:'flop',snout:4,patch:true,barrel:true}, // Bernhardiner
   eule:   {body:'#2e2620',dark:'#1c140e',belly:'#c98a4a',len:14,h:8, leg:7, ear:'up',snout:5,tan:true} // Schäferhund
 };
@@ -1375,6 +1377,9 @@ function drawDog(g,D,x,y,s,o){o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o
   g.beginPath();g.roundRect(hx+2,hy-1,L.snout,4,2);g.fillStyle=L.tan||L.patch?L.belly:L.body;g.fill();g.lineWidth=1.6;g.stroke();
   g.fillStyle=OL;g.beginPath();g.arc(hx+2+L.snout,hy,1.5,0,7);g.fill();
   if(L.ear==='up'){g.beginPath();g.moveTo(hx-3,hy-3);g.lineTo(hx-1,hy-10);g.lineTo(hx+1.5,hy-4);g.closePath();g.fillStyle=L.dark;g.fill();g.lineWidth=1.4;g.strokeStyle=OL;g.stroke();}
+  if(L.ear==='big'){for(const [dx,k] of [[-3,1],[1,0]]){g.beginPath();g.moveTo(hx+dx-2,hy-3);g.lineTo(hx+dx-3.5,hy-12);g.lineTo(hx+dx+3,hy-4);g.closePath();
+      g.fillStyle=k?L.dark:L.body;g.fill();g.lineWidth=1.4;g.strokeStyle=OL;g.stroke();
+      if(!k){g.beginPath();g.moveTo(hx+dx-1.2,hy-4);g.lineTo(hx+dx-2.3,hy-9.5);g.lineTo(hx+dx+1.3,hy-4.5);g.closePath();g.fillStyle='#f2a0a0';g.fill();}}}
   if(L.ear==='fold'){g.beginPath();g.moveTo(hx-3,hy-3);g.quadraticCurveTo(hx-6,hy-7,hx-7,hy-2);g.lineWidth=2.4;g.strokeStyle=L.dark;g.stroke();}
   if(L.ear==='flop'&&!L.patch){g.beginPath();g.ellipse(hx-1,hy+.5,2.2,4.2,.15,0,7);g.fillStyle=L.dark;g.fill();g.lineWidth=1.3;g.strokeStyle=OL;g.stroke();}
   // Auge (böse, passend zum Kaktus)
@@ -1639,7 +1644,7 @@ function renderDrones(){
   $('card').innerHTML=`<h2>Hunde <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
     <p style="margin:0;color:var(--muted)">Eingesetzte Hunde laufen vor dir her, kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 wird ab Stage 10 frei.':''}</p>
     <div class="dlist">${DRONES.map(D=>{const o=S.dr[D.id],eq=S.drEq.includes(D.id),lv=o?o.lv:0;
-      const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben'}[D.stat];
+      const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit'}[D.stat];
       let btns;
       if(!o)btns=`<button class="btn go" type="button" data-buy="${D.id}" data-cost="${D.cost}">Kaufen · ${fmt(D.cost)}</button>`;
       else btns=`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
@@ -2751,7 +2756,11 @@ const PATCHES=[
    items:()=>[['Kalender:','Tag 1: 5 Kapseln · Tag 2: Münzen · Tag 3: 5 🌵 · Tag 4: 10 Kapseln · Tag 5: viele Münzen · Tag 6: 10 🌵 · Tag 7: 25 Kapseln, 20 🌵 und ein Teil eine Seltenheit höher.'],
      ['Dranbleiben:','Lässt du einen Tag aus, startest du wieder bei Tag 1.'],
      ['Münzen:','Wachsen mit deiner besten Stage, damit sie immer etwas wert sind.'],
-     ['Neue Adresse:','Das Spiel ist jetzt unter kaktus-krieger.pages.dev zu finden.']]}
+     ['Neue Adresse:','Das Spiel ist jetzt unter kaktus-krieger.pages.dev zu finden.']]},
+  {id:'pn20',date:'2026-11-06',title:'Neuer Hund: Chihuahua',
+   hero:['🐕 Klein, laut und gefährlich','Der Chihuahua kläfft und zwickt alle 0,6 Sekunden und macht deinen Kaktus wütend: mehr kritische Treffer.'],
+   items:()=>[['Effekt:','+1 % Krit-Chance pro Level (bis Lv 25 also +25 %). Die Krit-Chance insgesamt bleibt bei höchstens 50 %.'],
+     ['Preis:','600 Münzen, zu finden bei den Hunden zwischen Windhund und Bernhardiner.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
