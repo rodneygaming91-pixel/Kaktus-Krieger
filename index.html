@@ -675,6 +675,22 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .game{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .giftbox{display:flex;flex-direction:column;align-items:center;gap:2px;background:linear-gradient(#5a4a10,#3a2f08);border:3px solid #ffd447;border-radius:12px;padding:12px;box-shadow:0 0 18px #ffd44755}
 .giftbox span{font-family:var(--display);font-size:1.2rem;color:#fff2a8}.giftbox b{font-size:1.05rem;color:#fff}
+/* Einführung für neue Spieler */
+.tut{position:fixed;inset:0;z-index:25;pointer-events:none}
+.tut .tblk{position:fixed;pointer-events:auto;background:transparent}
+.tut .tspot{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(10,6,14,.72);border:3px solid #ffd447;transition:all .25s ease;pointer-events:none}
+.tut .tspot.pulse{animation:tpulse 1.1s ease-in-out infinite}
+.tut .tspot.none{width:0;height:0;border:0;left:50%;top:50%}
+@keyframes tpulse{0%,100%{border-color:#ffd447;box-shadow:0 0 0 9999px rgba(10,6,14,.72),0 0 0 0 #ffd44799}50%{border-color:#fff2a8;box-shadow:0 0 0 9999px rgba(10,6,14,.72),0 0 0 10px #ffd44700}}
+.tut .tbub{position:fixed;left:50%;transform:translateX(-50%);width:min(92vw,420px);pointer-events:auto;display:flex;gap:10px;align-items:flex-start;
+  background:linear-gradient(#4a3a26,#2e2416);border:3px solid #c9a46a;border-radius:14px;padding:12px 12px 10px;box-shadow:0 8px 24px #000a;color:#fff3dc;transition:top .25s ease}
+.tut .tava{flex:0 0 46px;height:46px;border-radius:50%;background:#2f5a2a;border:2px solid #9be07a;display:grid;place-items:center;font-size:28px}
+.tut .ttx{flex:1;min-width:0}.tut .ttx b.tn{display:block;font-family:var(--display);color:#ffd447;font-size:1rem;margin-bottom:2px}
+.tut .ttx p{margin:0 0 8px;font-size:.95rem;line-height:1.35}
+.tut .trow{display:flex;align-items:center;gap:8px}.tut .trow small{color:#c9b593;flex:1}
+.tut .tskip{background:none;border:0;color:#c9b593;text-decoration:underline;font:inherit;font-size:.85rem;padding:6px 4px;cursor:pointer}
+.tut .tnext{background:linear-gradient(#7ad04a,#4aa42a);border:2px solid #2c6a18;color:#fff;font:inherit;font-weight:800;border-radius:10px;padding:7px 14px;cursor:pointer}
+.tut .tdo{color:#ffd447;font-weight:800;font-size:.9rem}
 .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .dday{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;background:#1c140f;border:2px solid #6b5644;border-radius:10px;padding:6px 3px;text-align:center;min-height:86px}
 .dday small{font-size:.62rem;font-weight:900;color:#d8c6a8;text-transform:uppercase;letter-spacing:.04em}
@@ -726,7 +742,7 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
-    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="fauto fin" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span class="sw"><i></i></span><small>AUTO</small><b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
+    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="fauto fin" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span class="sw"><i></i></span><small>AUTO</small><b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <div class="foot">
@@ -761,7 +777,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -771,6 +787,8 @@ if(!oldSave)S=newState();
 // Neustart r2 (06.11.2026): alle fangen wieder bei null an. Aussehen und Name bleiben, dazu gibt es ein Startguthaben zum Abholen.
 // Neustart r3 (07.11.2026): 12 Welten und neue Balance, alle fangen wieder bei null an. Startguthaben 500 Kapseln und 20 Kakteen.
 if(oldSave&&!oldSave.r3){const keep=oldSave.char||null;S=Object.assign(newState(),{char:keep,caps:0,gift:{caps:500,kak:20}});try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+// Einführung (07.11.2026): nur für ganz neue Spieler. Wer schon einen Kaktus hatte, bekommt sie nicht.
+if(oldSave&&oldSave.char&&!S.tutDone)S.tutDone=1;
 const AWAY_SINCE=S.last||0; // wann zuletzt gespielt wurde (für den Offline-Fortschritt)
 let switching=false;   // true, sobald ein anderes Konto geladen wird: dann nichts mehr lokal überschreiben
 function save(){if(switching)return;S.last=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -2791,10 +2809,73 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
     S.daily={last:s2.today,day:s2.day};save();lastHud='';
     banner={txt:'Tag '+s2.day+': '+dailyTxt(R),t:2.6};renderDaily('<b>Abgeholt!</b> '+dailyTxt(R)+t2);};}
 {let shown=false;const tm=setInterval(()=>{if(shown){clearInterval(tm);return;}
-  if(!S.char||editing||S.gift||!$('modal').hidden)return;
+  if(!S.char||editing||S.gift||tut.on||!S.tutDone||!$('modal').hidden)return;
   // erst wenn die Patch Notes durch sind (die kommen beim Start zuerst)
   if(performance.now()<2500)return;
   shown=true;clearInterval(tm);if(!dailyState().ready)return;$('modal').hidden=false;renderDaily();},1000);}
+
+// ---------- Einführung für neue Spieler ----------
+// Opa Stachel zeigt die wichtigsten Knöpfe. Ein Spotlight hebt das Ziel hervor, der Rest ist abgedunkelt.
+const TUT=[
+  {t:'Willkommen, {name}! Ich bin Opa Stachel. Ich zeige dir kurz, wie das Kaktus-Leben so läuft.'},
+  {el:'cv',t:'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.'},
+  {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
+  {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Samenkapsel öffnen“!'},
+  {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
+  {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Ist AUTO an, setzt er sie von selbst ein.'},
+  {el:'hqBtn',t:'In der Werkstatt steckst du Münzen in Angriff, Leben, Panzer und Tempo deines Kaktus.'},
+  {el:'gBtn',t:'Baust du die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
+  {el:'dBtn',t:'Hunde begleiten dich in den Kampf und geben dir Boni. Den ersten kannst du bald freischalten.'},
+  {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
+  {el:'onBtn',t:'Im Online-Profil findest du Freunde, Gilden, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
+  {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
+];
+const tut={on:false,i:0,wait:false,box:null};
+function tutVisible(e){if(!e||e.hidden)return false;const r=e.getBoundingClientRect();return r.width>4&&r.height>4&&getComputedStyle(e).visibility!=='hidden';}
+function tutStart(){if(tut.on)return;tut.on=true;tut.i=0;tut.wait=false;
+  const b=document.createElement('div');b.className='tut';b.id='tut';
+  b.innerHTML='<div class="tblk"></div><div class="tblk"></div><div class="tblk"></div><div class="tblk"></div><div class="tspot none"></div><div class="tbub"></div>';
+  document.body.appendChild(b);tut.box=b;tutShow();}
+function tutEnd(skipped){if(!tut.on)return;tut.on=false;if(tut.box)tut.box.remove();tut.box=null;S.tutDone=1;
+  if(!skipped){S.caps+=5;banner={txt:'+5 Samenkapseln · Starthilfe',t:2.4};}save();lastHud='';}
+function tutNext(){tut.i++;while(tut.i<TUT.length&&TUT[tut.i].el&&!tutVisible($(TUT[tut.i].el)))tut.i++;
+  if(tut.i>=TUT.length){tutEnd(false);return;}tutShow();}
+function tutShow(){const st=TUT[tut.i],b=tut.box;if(!b)return;
+  if(st.act==='cap'&&S.caps<1){S.caps=1;lastHud='';}
+  const n=(S.char&&S.char.name)||'Kaktus',total=TUT.length;
+  b.querySelector('.tbub').innerHTML=`<div class="tava">🌵</div><div class="ttx"><b class="tn">Opa Stachel</b><p>${st.t.replace('{name}',n)}</p>
+    ${st.d?`<p class="tdo">${st.d}</p>`:''}
+    <div class="trow"><small>${tut.i+1} / ${total}</small>${st.last?'':'<button class="tskip" type="button">Überspringen</button>'}
+    ${st.act?'':`<button class="tnext" type="button">${st.last?'Los geht’s!':'Weiter ›'}</button>`}</div></div>`;
+  const nx=b.querySelector('.tnext');if(nx)nx.onclick=e=>{e.stopPropagation();tutNext();};
+  const sk=b.querySelector('.tskip');if(sk)sk.onclick=e=>{e.stopPropagation();tutEnd(true);};
+  tutPlace();}
+function tutPlace(){const b=tut.box;if(!b)return;const st=TUT[tut.i],sp=b.querySelector('.tspot'),bub=b.querySelector('.tbub'),bl=b.querySelectorAll('.tblk');
+  const W=innerWidth,H=innerHeight,e=st.el?$(st.el):null;
+  // während eine Kapsel aufgeht (Fenster offen), tritt die Einführung zur Seite
+  const hide=!$('modal').hidden;b.style.display=hide?'none':'';if(hide)return;
+  if(!e){sp.className='tspot none';sp.style.cssText='';bl[0].style.cssText='left:0;top:0;width:100%;height:100%';for(let k=1;k<4;k++)bl[k].style.cssText='display:none';
+    bub.style.top=Math.max(16,H/2-bub.offsetHeight/2)+'px';return;}
+  const r=e.getBoundingClientRect(),pad=6;let x=r.left-pad,y=r.top-pad,w=r.width+2*pad,h=r.height+2*pad;
+  if(y<4){h+=y-4;y=4;}if(y+h>H-4)h=H-4-y;
+  // nicht unter die feste Leiste unten (Werkstatt, Hunde, Gärtnerei) ragen
+  {const A=document.querySelector('.actions');if(A&&!A.contains(e)){const at=A.getBoundingClientRect().top;if(y+h>at-4)h=Math.max(30,at-4-y);}}
+  sp.className='tspot'+(st.act?' pulse':'');sp.style.left=x+'px';sp.style.top=y+'px';sp.style.width=w+'px';sp.style.height=h+'px';
+  // Klicks nur auf das Ziel durchlassen, wenn der Spieler es antippen soll; sonst alles blockieren
+  if(st.act){bl[0].style.cssText=`left:0;top:0;width:100%;height:${y}px`;bl[1].style.cssText=`left:0;top:${y+h}px;width:100%;height:${Math.max(0,H-y-h)}px`;
+    bl[2].style.cssText=`left:0;top:${y}px;width:${x}px;height:${h}px`;bl[3].style.cssText=`left:${x+w}px;top:${y}px;width:${Math.max(0,W-x-w)}px;height:${h}px`;}
+  else{bl[0].style.cssText='left:0;top:0;width:100%;height:100%';for(let k=1;k<4;k++)bl[k].style.cssText='display:none';}
+  // Sprechblase dorthin, wo mehr Platz ist
+  const bh=bub.offsetHeight,below=H-(y+h),above=y;
+  let top=below>=above?y+h+12:y-bh-12;top=Math.max(8,Math.min(H-bh-8,top));bub.style.top=top+'px';}
+// Kapsel-Schritt: weiter, sobald die Kapsel geöffnet und das Fenster wieder zu ist
+let tutCapSeen=false;
+setInterval(()=>{if(!tut.on){
+    if(!S.tutDone&&S.char&&!editing&&!S.gift&&$('modal').hidden&&!(maint.on&&!maint.dev))tutStart();return;}
+  const st=TUT[tut.i];
+  if(st.act==='cap'){if(!$('modal').hidden||pending)tutCapSeen=true;else if(tutCapSeen){tutCapSeen=false;tutNext();return;}}
+  tutPlace();},250);
+addEventListener('resize',()=>{if(tut.on)tutPlace();});
 
 // ---------- Startguthaben nach dem Neustart: zum Abholen ----------
 {let shown=false;const tm=setInterval(()=>{if(shown||!S.gift){clearInterval(tm);return;}
@@ -2906,7 +2987,12 @@ const PATCHES=[
      ['Kakteen:','Ein Boss gibt 1 🌵 auf Leicht, 2 auf Normal, 3 auf Schwer und 4 auf Ultra schwer.'],
      ['Werkstatt und Gärtnerei:','Werden deutlich teurer. In der Werkstatt kostet jedes 10. Level zusätzlich Kakteen.'],
      ['Turm:','Etagen werden langsamer schwerer, geben aber 1 🌵 und 2 Kapseln. Bessere Teile gibt es nur noch jede 10. Etage.'],
-     ['Neustart:','Name und Aussehen bleiben. Als Wiedergutmachung gibt es ein Startguthaben von <b>500 Kapseln und 20 🌵</b> zum Abholen.']]}
+     ['Neustart:','Name und Aussehen bleiben. Als Wiedergutmachung gibt es ein Startguthaben von <b>500 Kapseln und 20 🌵</b> zum Abholen.']]},
+  {id:'pn28',date:'2026-11-07',title:'Einführung für neue Spieler',
+   hero:['🌵 Opa Stachel zeigt dir alles','Neue Spieler werden nach dem Erstellen ihres Kaktus Schritt für Schritt durchs Spiel geführt.'],
+   items:()=>[['Mitmachen:','Die erste Samenkapsel öffnet man selbst, danach werden Ausrüstung, Fähigkeiten, Werkstatt, Gärtnerei, Hunde und Online-Profil erklärt.'],
+     ['Starthilfe:','Wer die Einführung bis zum Ende ansieht, bekommt 5 Samenkapseln.'],
+     ['Bisherige Spieler:','Wer schon einen Kaktus hat, sieht die Einführung nicht.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
