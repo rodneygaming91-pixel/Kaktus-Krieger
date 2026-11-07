@@ -743,6 +743,10 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 .foot .fst{flex:1 1 0}
 .btn.twauto{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;padding:8px 10px 8px 52px;text-align:center}
 .btn.twauto small{display:block;font-size:.68rem;opacity:.85}
+.twhead{gap:8px;align-items:center}.twhead span{margin-left:auto;white-space:nowrap}.twhead b{white-space:nowrap}
+@media(max-width:400px){.twhead b{font-size:1.1rem}.twhead span{font-size:.8rem}}
+.twx2{white-space:nowrap;background:#2a1d12;border:2px solid #5a4430;color:#c9b593;border-radius:999px;font:inherit;font-weight:900;font-size:.85rem;padding:4px 11px;cursor:pointer}
+.twx2.on{background:linear-gradient(#ffd447,#e0a020);border-color:#7a5410;color:#3a2410;box-shadow:0 0 0 3px #ffd44733}
 .btn.twauto .sw{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:30px;height:17px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 2px #000}
 .btn.twauto .sw i{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#8a7a6a;transition:left .15s}
 .btn.twauto.on{background:linear-gradient(#4e8a32,#2f5e1c);color:#fff6e0}.btn.twauto.on .sw{background:#7be86a}.btn.twauto.on .sw i{left:15px;background:#fff6e0}
@@ -800,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2727,7 +2731,7 @@ function twBoardHtml(){
   </div>`;}
 function renderTower(){
   const f=twFloor(),G=twGuard(f),R=twReward(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
-  $('card').innerHTML=`<div class="twhead"><b>🗼 Turm · Etage ${f}</b><span>Rekord: ${S.twRec}</span></div>
+  $('card').innerHTML=`<div class="twhead"><b>🗼 Turm · Etage ${f}</b><span>Rekord: ${S.twRec}</span><button class="twx2${S.twX2?' on':''}" id="twX2" type="button" aria-pressed="${!!S.twX2}" title="Doppelte Geschwindigkeit">⏩ ×2</button></div>
     <canvas id="twcv" width="720" height="420"></canvas>
     <div class="wbel"><span>${G.keeper?'★ Wächter-Etage · ':''}${G.ty.n}</span><span>Greift an mit ${elTag(G.Wd.atkEl)}</span><span>Schwach gegen ${elTag(G.Wd.weak)}</span>
       <span>Deine Waffe: ${el?elTag(el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
@@ -2740,6 +2744,7 @@ function renderTower(){
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
   $('twGo').onclick=twFight;drawTower();
+  $('twX2').onclick=()=>{S.twX2=!S.twX2;save();const b=$('twX2');b.classList.toggle('on',S.twX2);b.setAttribute('aria-pressed',S.twX2);};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
   {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
     S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft.${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
@@ -2786,7 +2791,8 @@ function twFight(){if(tw.anim)return;
   tw.res=null;tw.anim={left:30,php:st.hp,pmax:st.hp,bhp:G.hp,bmax:G.hp,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,throwT:.3,bossT:1.3,reg:st.hp*st.reg/100};
   renderTower();
   let last=performance.now();
-  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=tw.anim;if(!A)return;
+  // ×2: pro Bild wird der Kampf zweimal weitergerechnet, alles läuft doppelt so schnell
+  const tick=(A,dt)=>{
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
@@ -2799,7 +2805,9 @@ function twFight(){if(tw.anim)return;
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.bhp<=0){A.end='boss';A.bhp=0;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
-    A.bhit=Math.max(0,A.bhit-dt);A.phit=Math.max(0,A.phit-dt);for(const fl of A.fl){fl.y-=30*dt;fl.t-=dt;}A.fl=A.fl.filter(fl=>fl.t>0);
+    A.bhit=Math.max(0,A.bhit-dt);A.phit=Math.max(0,A.phit-dt);for(const fl of A.fl){fl.y-=30*dt;fl.t-=dt;}A.fl=A.fl.filter(fl=>fl.t>0);};
+  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=tw.anim;if(!A)return;
+    for(let k=0,n=S.twX2?2:1;k<n;k++)tick(A,dt);
     drawTower();
     if(tw.open&&$('twcv')&&!(A.end&&A.endT>1.6))requestAnimationFrame(step);else twFinish(A,f);};
   requestAnimationFrame(step);}
@@ -2810,7 +2818,7 @@ function twFinish(A,f){tw.anim=null;
     else tw.res=`<b>Etage ${f} geschafft!</b> Weiter zu Etage ${f+1}. <small>(Belohnungen gibt es ab Etage ${S.twRec+1})</small>`;
     save();lastHud='';twSubmit();
     // Auto-Kampf: nach kurzer Pause die nächste Etage starten
-    if(tw.auto){if(tw.open)renderTower();setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim)twFight();},1200);return;}}
+    if(tw.auto){if(tw.open)renderTower();setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim)twFight();},S.twX2?600:1200);return;}}
   else{tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span>${tw.auto?' <b>Auto-Kampf beendet.</b>':''}<br><small>Tipp: Werkstatt leveln, bessere Ausrüstung oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;tw.auto=false;}
   if(tw.open)renderTower();}
 $('twBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;twDayCheck();tw.open=true;tw.res=null;twb.msg='';twLoad();$('card').classList.add('twc');$('modal').hidden=false;lastHud='';renderTower();};
@@ -3118,7 +3126,11 @@ const PATCHES=[
    hero:['🌵 Der Kaktus-Krieger auf deinem Startbildschirm','Das Spiel hat jetzt ein eigenes App-Symbol: der Wüstenkrieger mit Blüte und Schwert im Sonnenuntergang.'],
    items:()=>[['iPhone:','In Safari auf „Teilen“ und dann „Zum Home-Bildschirm“ tippen.'],
      ['Android:','In Chrome im Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.'],
-     ['Schon hinzugefügt?','Dann zuerst unter Online-Profil eine PIN setzen und dir deinen Freundescode merken. Danach das alte Symbol löschen und neu hinzufügen. Falls dein Spielstand danach fehlt, lädst du ihn mit Freundescode und PIN wieder.']]}
+     ['Schon hinzugefügt?','Dann zuerst unter Online-Profil eine PIN setzen und dir deinen Freundescode merken. Danach das alte Symbol löschen und neu hinzufügen. Falls dein Spielstand danach fehlt, lädst du ihn mit Freundescode und PIN wieder.']]},
+  {id:'pn35',date:'2026-11-07',title:'Turm mit ×2',
+   hero:['⏩ Doppelt so schnell nach oben','Im Turm gibt es jetzt oben rechts einen ×2-Knopf.'],
+   items:()=>[['Schneller:','Turmkämpfe laufen doppelt so schnell, auch im Auto-Kampf.'],
+     ['Kostenlos:','Ganz ohne Video. Einfach antippen, die Einstellung bleibt gespeichert.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
