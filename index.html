@@ -3,6 +3,7 @@
 <meta name="theme-color" content="#1c140f">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Kaktus-Krieger">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">
 <style>*,*::before,*::after{box-sizing:border-box}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 </head><body><title>Kaktus-Krieger</title>
@@ -799,7 +800,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3112,7 +3113,12 @@ const PATCHES=[
    hero:['✉ Post für dich','Oben links gibt es jetzt den Knopf ✉ Post. Dort kommen Briefe mit Geschenken an.'],
    items:()=>[['Erster Brief:','Jeder Spieler bekommt <b>500 Samenkapseln</b> zum Abholen.'],
      ['Neue Briefe:','Leuchtet der Knopf gelb mit einer roten Zahl, wartet ein Geschenk auf dich.'],
-     ['Optionen:','Die Optionen mit dem Energiesparmodus findest du jetzt unter ⚙ direkt daneben.']]}
+     ['Optionen:','Die Optionen mit dem Energiesparmodus findest du jetzt unter ⚙ direkt daneben.']]},
+  {id:'pn34',date:'2026-11-07',title:'Neues App-Symbol',
+   hero:['🌵 Der Kaktus-Krieger auf deinem Startbildschirm','Das Spiel hat jetzt ein eigenes App-Symbol: der Wüstenkrieger mit Blüte und Schwert im Sonnenuntergang.'],
+   items:()=>[['iPhone:','In Safari auf „Teilen“ und dann „Zum Home-Bildschirm“ tippen.'],
+     ['Android:','In Chrome im Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.'],
+     ['Schon hinzugefügt?','Dann zuerst unter Online-Profil eine PIN setzen und dir deinen Freundescode merken. Danach das alte Symbol löschen und neu hinzufügen. Falls dein Spielstand danach fehlt, lädst du ihn mit Freundescode und PIN wieder.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
