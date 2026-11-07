@@ -707,6 +707,14 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .btn.twauto .sw{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:30px;height:17px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 2px #000}
 .btn.twauto .sw i{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#8a7a6a;transition:left .15s}
 .btn.twauto.on{background:linear-gradient(#4e8a32,#2f5e1c);color:#fff6e0}.btn.twauto.on .sw{background:#7be86a}.btn.twauto.on .sw i{left:15px;background:#fff6e0}
+.maint{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(14,10,7,.88);backdrop-filter:blur(3px)}
+.maintcard{max-width:360px;width:100%;text-align:center;background:linear-gradient(#4a3828,#2e2219);border:4px solid var(--frame);border-radius:16px;box-shadow:inset 0 0 0 2px var(--frameD),0 10px 30px #000c;padding:22px 20px;display:flex;flex-direction:column;gap:10px;color:#f3e6cc}
+.maintcard h2{margin:0;font-family:var(--display);font-weight:400;font-size:1.8rem;color:#ffd447;text-shadow:0 2px 0 #000}
+.maintcard p{margin:0;line-height:1.4}.maintcard .msmall{font-size:.8rem;color:#bfae94}
+.mico{font-size:2.6rem;animation:mwob 1.6s ease-in-out infinite}@keyframes mwob{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+.mdots{display:flex;justify-content:center;gap:6px}.mdots i{width:8px;height:8px;border-radius:50%;background:#7fe08a;animation:mdot 1.2s infinite}.mdots i:nth-child(2){animation-delay:.2s}.mdots i:nth-child(3){animation-delay:.4s}
+@keyframes mdot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.devtag{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:90;background:#ffd447;color:#2a1d10;font-weight:900;font-size:.7rem;padding:2px 10px;border-radius:0 0 8px 8px;box-shadow:0 2px 6px #0008}
 </style>
 
 <div class="game">
@@ -2710,6 +2718,22 @@ $('twBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;twDayChec
 setInterval(()=>{twDayCheck();const f=twFloor();$('twSub').textContent='Etage '+f;
   if(tw.open&&!tw.anim)drawTower();},250);
 
+// ---------- Wartungsmodus: wird in der Datenbank ein- und ausgeschaltet ----------
+// Ist er an, zeigt das Spiel einen Hinweis und pausiert. Alle 30 s wird nachgeschaut, ob die Wartung vorbei ist.
+// Entwickler-Zugang zum Testen: Seite mit ?dev=1 öffnen.
+const maint={on:false,msg:'',dev:/[?&]dev=1/.test(location.search)};
+function maintShow(){let el=$('maintBox');
+  if(maint.on&&!maint.dev){if(!el){el=document.createElement('div');el.id='maintBox';el.className='maint';document.body.appendChild(el);}
+    el.innerHTML=`<div class="maintcard"><div class="mico">🛠️</div><h2>Wartungsmodus</h2>
+      <p>${maint.msg?String(maint.msg).replace(/</g,'&lt;'):'Wir arbeiten gerade am Kaktus-Krieger und bringen neue Inhalte. Gleich geht es weiter!'}</p>
+      <p class="msmall">Dein Spielstand ist sicher. Das Spiel startet von selbst wieder, sobald die Wartung vorbei ist.</p>
+      <div class="mdots"><i></i><i></i><i></i></div></div>`;}
+  else if(el){el.remove();lastHud='';}
+  const tag=$('devTag');if(maint.on&&maint.dev&&!tag){const d=document.createElement('div');d.id='devTag';d.className='devtag';d.textContent='🛠 Wartung aktiv · Entwickler-Zugang';document.body.appendChild(d);}
+  else if(!(maint.on&&maint.dev)&&tag)tag.remove();}
+async function maintCheck(){try{const r=await rpc('kk_status',{});maint.on=!!(r&&r.maintenance);maint.msg=(r&&r.message)||'';}catch(e){}maintShow();}
+maintCheck();setInterval(maintCheck,30000);
+
 // ---------- Tägliche Belohnung: 7-Tage-Kalender ----------
 // Einmal pro Tag abholen. Wer am Folgetag wiederkommt, rückt einen Tag weiter; nach Tag 7 beginnt es von vorn.
 // Wer einen Tag auslässt, startet wieder bei Tag 1. Münzen wachsen mit der besten Stage.
@@ -2909,6 +2933,7 @@ let last=performance.now();
 function loop(now){
   let dt=Math.min(0.05,(now-last)/1000);last=now;
   if(editing||offShow){t+=dt;drawPreview();}
+  else if(maint.on&&!maint.dev){t+=dt;}
   else{gardenTick();autoTick(dt);const sp=x2Active()&&S.x2On!==false?2:1;for(let k=0;k<sp;k++)update(dt);}
   draw();hud();if(eqOpen)drawEqHero();else drawDoll();
   requestAnimationFrame(loop);
