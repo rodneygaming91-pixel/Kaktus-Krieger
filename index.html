@@ -761,7 +761,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -769,7 +769,8 @@ let oldSave=null;try{const raw=localStorage.getItem(KEY);if(raw){oldSave=JSON.pa
 // Neustart v7 (05.11.2026): alle fangen von vorne an und bekommen 500 Samenkapseln als Wiedergutmachung
 if(!oldSave)S=newState();
 // Neustart r2 (06.11.2026): alle fangen wieder bei null an. Aussehen und Name bleiben, dazu gibt es ein Startguthaben zum Abholen.
-if(oldSave&&!oldSave.r2){const keep=oldSave.char||null;S=Object.assign(newState(),{char:keep,caps:0,gift:{caps:500,kak:50}});try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+// Neustart r3 (07.11.2026): 12 Welten und neue Balance, alle fangen wieder bei null an. Startguthaben 500 Kapseln und 20 Kakteen.
+if(oldSave&&!oldSave.r3){const keep=oldSave.char||null;S=Object.assign(newState(),{char:keep,caps:0,gift:{caps:500,kak:20}});try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const AWAY_SINCE=S.last||0; // wann zuletzt gespielt wurde (für den Offline-Fortschritt)
 let switching=false;   // true, sobald ein anderes Konto geladen wird: dann nichts mehr lokal überschreiben
 function save(){if(switching)return;S.last=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -779,42 +780,43 @@ function save(){if(switching)return;S.last=Date.now();try{localStorage.setItem(K
 // damit die Seltenheit wichtiger ist als die Stage, in der ein Teil gefunden wurde.
 // Schwierigkeitsstufen: je 100 Stages (5 Welten × 20). Leicht 1–100, Normal 101–200, Schwer 201–300, Ultra schwer ab 301.
 const DIFFS=[{n:'Leicht',c:'#7fe08a'},{n:'Normal',c:'#4fb8ff'},{n:'Schwer',c:'#ffae00'},{n:'Ultra schwer',c:'#ff3d4e'}];
-const STAGES_PER_DIFF=100;
+const STAGES_PER_DIFF=240;   // 12 Welten × 20 Stages
 const diffIdx=st=>Math.floor((Math.max(1,st)-1)/STAGES_PER_DIFF);
 const diffOf=st=>{const d=diffIdx(st);return d<DIFFS.length?DIFFS[d]:{n:'Ultra schwer '+['II','III','IV','V','VI','VII','VIII','IX','X'][Math.min(8,d-DIFFS.length)],c:'#ff3dff'};};
 const inDiff=st=>((Math.max(1,st)-1)%STAGES_PER_DIFF)+1;
-// Gegnerstärke: auf Leicht +6,5 % pro Stage. Danach springt sie mit jeder Schwierigkeit ×2 und wächst nur noch um 3 % pro Stage.
-const pow=st=>st<=STAGES_PER_DIFF?Math.pow(1.065,st-1):Math.pow(1.065,STAGES_PER_DIFF-1)*Math.pow(1.03,st-STAGES_PER_DIFF)*Math.pow(2,diffIdx(st));
-const cPow=st=>Math.pow(1.12,st-1);                 // Münzen
+// Gegnerstärke: +5 % pro Stage, mit jeder neuen Schwierigkeit zusätzlich ×3.
+const pow=st=>Math.pow(1.05,st-1)*Math.pow(3,diffIdx(st));
+const cPow=st=>Math.pow(1.05,st-1)*Math.pow(0.8,diffIdx(st));   // Münzen: wachsen wie die Gegner, auf höheren Schwierigkeiten etwas knapper
 // Stufenbonus ist nach oben begrenzt: ein Teil wird durch die Stufe höchstens ×1,75 (Prozentwerte ×1,14) stärker.
 // Die nächste Seltenheit ist immer mindestens ×1,9 (Prozent ×1,27) stärker – damit schlägt grün nie blau, blau nie lila usw.
 const lvlCurve=l=>1-Math.pow(0.985,Math.max(1,l)-1);
-const itemScale=l=>1+0.75*lvlCurve(l);
-const pctScale=l=>1+0.14*lvlCurve(l);
-const ROLL_LO=.95,ROLL_HI=1.05;   // Zufallsschwankung beim Fund
+const itemScale=l=>1+0.3*lvlCurve(l);
+const pctScale=l=>1+0.1*lvlCurve(l);
+const ROLL_LO=.97,ROLL_HI=1.03;   // Zufallsschwankung beim Fund
 const stageShort=st=>{const wi=worldIdx(st);return WORLDS[wi].n+' '+(wi+1)+'-'+(inDiff(st)-wi*STAGES_PER_WORLD);};
 const stageName=st=>diffOf(st).n+' · '+stageShort(st);
 
 // ---------- Ausrüstung ----------
 // Seltenheiten: Chance (Gewicht) und Stärke-Multiplikator
+// Balance v4: jede Seltenheit ×1,5 stärker (Prozentwerte ×1,2). Die Stufe bringt höchstens ×1,3 (Prozent ×1,1).
 const RAR=[
-  {n:'Gewöhnlich',  c:'#c2c6d4',m:1, pm:1},
-  {n:'Ungewöhnlich',c:'#5fd35f',m:2, pm:1.5},
-  {n:'Selten',      c:'#4fb8ff',m:4, pm:2.2},
-  {n:'Episch',      c:'#b46bff',m:8, pm:3},
-  {n:'Legendär',    c:'#ffae00',m:16,pm:4},
-  {n:'Mythisch',    c:'#ff3d4e',m:32,pm:5.5},
-  {n:'Uralt',       c:'#00e0a0',m:64,pm:7},
-  {n:'Kosmisch',    c:'#ff4dff',m:128,pm:9},
-  {n:'Göttlich',    c:'#fff2a8',m:256,pm:12},
-  {n:'Ätherisch',   c:'#6ff3ff',m:512,pm:15.5},
-  {n:'Ewig',        c:'#c6ff3d',m:1024,pm:20},
-  {n:'Urknall',     c:'#ff6a3d',m:2048,pm:26},
-  {n:'Astral',      c:'#8f7bff',m:4096,pm:34},
-  {n:'Prisma',      c:'#6fffd8',m:8192,pm:44},
-  {n:'Polarlicht',  c:'#4dd6ff',m:16384,pm:57},
-  {n:'Sonnenkern',  c:'#ffe14d',m:32768,pm:74},
-  {n:'Allmacht',    c:'#ff5ad0',m:65536,pm:96}
+  {n:'Gewöhnlich',   c:'#c2c6d4',m:1,pm:1},
+  {n:'Ungewöhnlich', c:'#5fd35f',m:1.5,pm:1.2},
+  {n:'Selten',       c:'#4fb8ff',m:2.25,pm:1.44},
+  {n:'Episch',       c:'#b46bff',m:3.375,pm:1.728},
+  {n:'Legendär',     c:'#ffae00',m:5.0625,pm:2.074},
+  {n:'Mythisch',     c:'#ff3d4e',m:7.5938,pm:2.488},
+  {n:'Uralt',        c:'#00e0a0',m:11.3906,pm:2.986},
+  {n:'Kosmisch',     c:'#ff4dff',m:17.0859,pm:3.583},
+  {n:'Göttlich',     c:'#fff2a8',m:25.6289,pm:4.3},
+  {n:'Ätherisch',    c:'#6ff3ff',m:38.4434,pm:5.16},
+  {n:'Ewig',         c:'#c6ff3d',m:57.665,pm:6.192},
+  {n:'Urknall',      c:'#ff6a3d',m:86.4976,pm:7.43},
+  {n:'Astral',       c:'#8f7bff',m:129.746,pm:8.916},
+  {n:'Prisma',       c:'#6fffd8',m:194.619,pm:10.699},
+  {n:'Polarlicht',   c:'#4dd6ff',m:291.929,pm:12.839},
+  {n:'Sonnenkern',   c:'#ffe14d',m:437.894,pm:15.407},
+  {n:'Allmacht',     c:'#ff5ad0',m:656.841,pm:18.488}
 ];
 // Neun Slots wie in Rogers Konzept. pct = Prozentwert (wächst langsamer), cap = Obergrenze
 const SLOTS=[
@@ -861,20 +863,20 @@ const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===
 // Angriff und Leben haben keine Obergrenze und wachsen je Level um 2,5 % (aufeinander aufbauend) –
 // sie tragen den Großteil des Wachstums, seit Ausrüstung vor allem über die Seltenheit stärker wird.
 const WS=[
-  {id:'atk',  n:'Stachelschliff',ico:'⚔',c:'#ff8a3d',d:'Schärfere Stacheln',       kind:'mul',per:2.5,unit:'% Angriff',          base:60, g:1.12},
-  {id:'hp',   n:'Saftspeicher',  ico:'♥',c:'#ff6fae',d:'Mehr Wasser im Stamm',     kind:'mul',per:2.5,unit:'% Leben',            base:60, g:1.12},
-  {id:'armor',n:'Panzerrinde',   ico:'⛨',c:'#c49a6c',d:'Dickere Rinde',            kind:'add',per:1,  unit:'% weniger Schaden',  base:200,g:1.2, max:40},
-  {id:'spd',  n:'Sonnenkraft',   ico:'☀',c:'#ffd447',d:'Schnellere Schläge',       kind:'add',per:1,  unit:'% Tempo',            base:200,g:1.18,max:50}
+  {id:'atk',  n:'Stachelschliff',ico:'⚔',c:'#ff8a3d',d:'Schärfere Stacheln',       kind:'mul',per:2.5,unit:'% Angriff',          base:1200,g:1.029},
+  {id:'hp',   n:'Saftspeicher',  ico:'♥',c:'#ff6fae',d:'Mehr Wasser im Stamm',     kind:'mul',per:2.5,unit:'% Leben',            base:1200,g:1.029},
+  {id:'armor',n:'Panzerrinde',   ico:'⛨',c:'#c49a6c',d:'Dickere Rinde',            kind:'add',per:1,  unit:'% weniger Schaden',  base:2000,g:1.2, max:40},
+  {id:'spd',  n:'Sonnenkraft',   ico:'☀',c:'#ffd447',d:'Schnellere Schläge',       kind:'add',per:1,  unit:'% Tempo',            base:2000,g:1.18,max:50}
 ];
 const wsLv=id=>(S.ws&&S.ws[id])||0;
 const wsDef=id=>WS.find(w=>w.id===id);
 const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.per*lv;};   // Bonus in %
 const wsCost=(W,lv=wsLv(W.id))=>Math.round(W.base*Math.pow(W.g,lv));
-const wsKak=(W,lv=wsLv(W.id))=>(lv+1)%10===0?(lv+1)/5:0;                                                      // Lv 10: 2, Lv 20: 4 …
+const wsKak=(W,lv=wsLv(W.id))=>(lv+1)%10===0?1+Math.floor(lv/100):0;                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
 const wsMax=W=>W.max&&wsLv(W.id)>=W.max;
 const wsTotal=()=>WS.reduce((a,W)=>a+wsLv(W.id),0);
 // Kakteen: für jeden gewonnenen Bosskampf, mehr auf höheren Stages
-const kakFor=st=>1+Math.floor(st/10);
+const kakFor=st=>1+diffIdx(st);
 // Gilden-Upgrades (Stufen werden aus der Gilde geladen und hier zwischengespeichert)
 const GUPG=[
   {id:'atk', n:'Kriegstrommel',  ico:'⚔',per:3,unit:'% Angriff',   base:5000,d:'Mehr Angriff für alle Mitglieder'},
@@ -925,7 +927,7 @@ const GT=[
 function gWeights(L){L=Math.max(1,Math.min(MAX_G,L));let j=0;while(j<GL.length-2&&L>GL[j+1])j++;
   const f=(L-GL[j])/(GL[j+1]-GL[j]);return GT.map(r=>{const v=r[j]+(r[j+1]-r[j])*f;return v<0.05?0:v;});}
 const gUnlock=i=>{for(let L=1;L<=MAX_G;L++)if(gWeights(L)[i]>0)return L;return 99;};
-const gCost=L=>Math.round(40*Math.pow(1.55,Math.min(L,40)-1)*Math.pow(1.25,Math.max(0,L-40)));   // Münzen, ab Lv 40 flacher
+const gCost=L=>Math.round(2000*Math.pow(1.7,L-1));   // Münzen
 const gTime=L=>Math.round(Math.min(L>=20?4*3600+(L-20)*1800:4*3600,10*Math.pow(1.75,L-1)));    // Wachstumszeit in s, ab Lv 20 länger
 function rollItem(){
   const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
@@ -1013,18 +1015,39 @@ const WORLDS=[
   {n:'Dornental',atkEl:'gift',weak:'feuer',sky:['#1d1238','#5a2f6b'],mesa:'#3b2257',flora:'#2b4a3a',ground:['#c98f52','#a8703c','#e0a866'],moon:'#ffe7b8',
    e:[{n:'Sandkäfer',col:'#c98a3e',hp:1,atk:1,sp:60,r:13,kind:'bug'},{n:'Skorpion',col:'#d9553c',hp:1.4,atk:1.3,sp:48,r:15,kind:'scorp'},{n:'Geier',col:'#8a7aa8',hp:.8,atk:1.1,sp:80,r:13,kind:'bird'}],
    boss:{n:'Steppenwurm',col:'#ff6fae',hp:12,atk:2.5,sp:30,r:30,kind:'worm'}},
-  {n:'Salzsee',atkEl:'eis',weak:'blitz',sky:['#10223d','#3d6f8f'],mesa:'#2c4a66',flora:'#5f8a8f',ground:['#dfe6ea','#b8c6cf','#ffffff'],moon:'#e8f6ff',
+  {n:'Salzsee',deco:'salt',atkEl:'eis',weak:'blitz',sky:['#10223d','#3d6f8f'],mesa:'#2c4a66',flora:'#5f8a8f',ground:['#dfe6ea','#b8c6cf','#ffffff'],moon:'#e8f6ff',
    e:[{n:'Salzkrebs',col:'#ff9a7a',hp:1.3,atk:1,sp:50,r:14,kind:'crab'},{n:'Eiskäfer',col:'#7fd0ff',hp:1,atk:1.1,sp:62,r:13,kind:'bug'},{n:'Möwe',col:'#d8e2f0',hp:.8,atk:1.2,sp:85,r:13,kind:'bird'}],
    boss:{n:'Krebskönig',col:'#ff6a4a',hp:13,atk:2.6,sp:28,r:30,kind:'crab'}},
-  {n:'Vulkanwüste',atkEl:'feuer',weak:'eis',sky:['#1a0a0f','#6b1f1a'],mesa:'#3a1214',flora:'#2a1a16',ground:['#4a2a24','#2e1714','#ff6a2a'],moon:'#ff9a5a',
+  {n:'Vulkanwüste',deco:'volcano',atkEl:'feuer',weak:'eis',sky:['#1a0a0f','#6b1f1a'],mesa:'#3a1214',flora:'#2a1a16',ground:['#4a2a24','#2e1714','#ff6a2a'],moon:'#ff9a5a',
    e:[{n:'Glutkäfer',col:'#ff6a2a',hp:1.1,atk:1.3,sp:62,r:13,kind:'bug'},{n:'Lavaskorpion',col:'#ffb020',hp:1.5,atk:1.4,sp:48,r:15,kind:'scorp'},{n:'Aschefalke',col:'#6a5a5a',hp:.9,atk:1.3,sp:88,r:13,kind:'bird'}],
    boss:{n:'Magmawurm',col:'#ff4020',hp:14,atk:2.8,sp:30,r:32,kind:'worm'}},
-  {n:'Kristallschlucht',atkEl:'blitz',weak:'gift',sky:['#0e0a2a','#3a2a7a'],mesa:'#251a55',flora:'#3a7a8a',ground:['#6a5aa8','#4a3a88','#b8a8ff'],moon:'#d8ccff',
+  {n:'Kristallschlucht',deco:'crystal',atkEl:'blitz',weak:'gift',sky:['#0e0a2a','#3a2a7a'],mesa:'#251a55',flora:'#3a7a8a',ground:['#6a5aa8','#4a3a88','#b8a8ff'],moon:'#d8ccff',
    e:[{n:'Splitterkrebs',col:'#9ae8ff',hp:1.4,atk:1.2,sp:52,r:14,kind:'crab'},{n:'Kristallskorpion',col:'#d68aff',hp:1.5,atk:1.4,sp:50,r:15,kind:'scorp'},{n:'Prismafalter',col:'#ff9ae8',hp:.8,atk:1.4,sp:90,r:12,kind:'bird'}],
    boss:{n:'Kristallskorpion-Fürst',col:'#b46bff',hp:15,atk:3,sp:28,r:30,kind:'scorp'}},
-  {n:'Sternendüne',atkEl:'schatten',weak:'licht',sky:['#05030f','#1a1440'],mesa:'#120d30',flora:'#2a2a5a',ground:['#2a2250','#1a1438','#ffd447'],moon:'#fff6d8',
+  {n:'Sternendüne',deco:'stars',atkEl:'schatten',weak:'licht',sky:['#05030f','#1a1440'],mesa:'#120d30',flora:'#2a2a5a',ground:['#2a2250','#1a1438','#ffd447'],moon:'#fff6d8',
    e:[{n:'Sternkäfer',col:'#ffd447',hp:1.3,atk:1.4,sp:66,r:13,kind:'bug'},{n:'Nachtkrebs',col:'#7a8aff',hp:1.5,atk:1.3,sp:54,r:14,kind:'crab'},{n:'Kometenvogel',col:'#ff6fae',hp:1,atk:1.5,sp:95,r:13,kind:'bird'}],
-   boss:{n:'Sternenwächter',col:'#ffd447',hp:16,atk:3.2,sp:30,r:32,kind:'bird'}}
+   boss:{n:'Sternenwächter',col:'#ffd447',hp:16,atk:3.2,sp:30,r:32,kind:'bird'}},
+  {n:'Pilzsumpf',atkEl:'gift',weak:'blitz',sky:['#0c1a12','#2f5a3a'],mesa:'#1a3a26',flora:'#6a3a8a',ground:['#3a5a2a','#26401c','#b8ff6a'],moon:'#d8ffb0',
+   e:[{n:'Sporenkäfer',col:'#b86aff',hp:1.2,atk:1.3,sp:58,r:13,kind:'bug'},{n:'Sumpfkrebs',col:'#6a9a4a',hp:1.6,atk:1.2,sp:46,r:15,kind:'crab'},{n:'Moorkrähe',col:'#4a5a3a',hp:.9,atk:1.4,sp:86,r:13,kind:'bird'}],
+   boss:{n:'Riesenpilzwurm',col:'#d86aff',hp:16,atk:3.2,sp:28,r:32,kind:'worm'}},
+  {n:'Frostgipfel',deco:'salt',atkEl:'eis',weak:'feuer',sky:['#0a1830','#4a7ab0'],mesa:'#2a4a7a',flora:'#a8d8ff',ground:['#e8f4ff','#b8d4ee','#ffffff'],moon:'#ffffff',
+   e:[{n:'Frostskorpion',col:'#8fdcff',hp:1.5,atk:1.4,sp:48,r:15,kind:'scorp'},{n:'Eiskrebs',col:'#bfe8ff',hp:1.6,atk:1.2,sp:50,r:14,kind:'crab'},{n:'Schneeeule',col:'#f0f6ff',hp:1,atk:1.5,sp:84,r:13,kind:'bird'}],
+   boss:{n:'Gletscherwurm',col:'#7fd0ff',hp:17,atk:3.3,sp:28,r:33,kind:'worm'}},
+  {n:'Gewittersteppe',atkEl:'blitz',weak:'eis',sky:['#141420','#4a4a6a'],mesa:'#2a2a3a',flora:'#8a8a3a',ground:['#8a7a4a','#6a5a34','#ffe14d'],moon:'#fff6a0',
+   e:[{n:'Funkenkäfer',col:'#ffe14d',hp:1.3,atk:1.5,sp:66,r:13,kind:'bug'},{n:'Donnerskorpion',col:'#c8b84a',hp:1.6,atk:1.5,sp:50,r:15,kind:'scorp'},{n:'Sturmfalke',col:'#8a8aa8',hp:1,atk:1.6,sp:96,r:13,kind:'bird'}],
+   boss:{n:'Donnervogel',col:'#ffd447',hp:17,atk:3.4,sp:30,r:33,kind:'bird'}},
+  {n:'Knochenwüste',deco:'crystal',atkEl:'schatten',weak:'licht',sky:['#120a0a','#3a2a2a'],mesa:'#2a1a1a',flora:'#d8d0c0',ground:['#c8b89a','#a8987a','#f0e6d0'],moon:'#ffe8d0',
+   e:[{n:'Knochenkäfer',col:'#e8dcc8',hp:1.4,atk:1.5,sp:60,r:13,kind:'bug'},{n:'Schattenskorpion',col:'#5a3a6a',hp:1.7,atk:1.5,sp:48,r:15,kind:'scorp'},{n:'Aasgeier',col:'#6a4a3a',hp:1.1,atk:1.6,sp:84,r:14,kind:'bird'}],
+   boss:{n:'Knochenwurm',col:'#f0e6d0',hp:18,atk:3.5,sp:28,r:34,kind:'worm'}},
+  {n:'Glutcanyon',deco:'volcano',atkEl:'feuer',weak:'gift',sky:['#200a05','#8a3a10'],mesa:'#4a1a0a',flora:'#3a1a0a',ground:['#6a2a14','#4a1a0a','#ffb020'],moon:'#ffd08a',
+   e:[{n:'Flammenkrebs',col:'#ff6a2a',hp:1.7,atk:1.5,sp:50,r:15,kind:'crab'},{n:'Glutskorpion',col:'#ffb020',hp:1.6,atk:1.6,sp:50,r:15,kind:'scorp'},{n:'Feuerphönix',col:'#ff8a3d',hp:1.1,atk:1.7,sp:92,r:14,kind:'bird'}],
+   boss:{n:'Lavakönig',col:'#ff4020',hp:19,atk:3.6,sp:28,r:34,kind:'crab'}},
+  {n:'Nebelküste',deco:'salt',atkEl:'eis',weak:'blitz',sky:['#1a2430','#6a7a8a'],mesa:'#3a4a5a',flora:'#7a9aa8',ground:['#a8b4bc','#8a96a0','#e8f0f4'],moon:'#e8f0ff',
+   e:[{n:'Nebelkrebs',col:'#c8d4dc',hp:1.7,atk:1.5,sp:50,r:15,kind:'crab'},{n:'Muschelkäfer',col:'#ffb8c8',hp:1.5,atk:1.6,sp:62,r:14,kind:'bug'},{n:'Sturmmöwe',col:'#e8eef4',hp:1.1,atk:1.7,sp:94,r:13,kind:'bird'}],
+   boss:{n:'Kraken der Tiefe',col:'#8a7aff',hp:19,atk:3.7,sp:26,r:35,kind:'worm'}},
+  {n:'Kaktusthron',deco:'stars',atkEl:'schatten',weak:'licht',sky:['#0a0614','#3a1a4a'],mesa:'#1a0a2a',flora:'#2b8a3a',ground:['#3a2a1a','#2a1a10','#ffd447'],moon:'#ffd447',
+   e:[{n:'Dornenritter',col:'#63c74d',hp:1.8,atk:1.7,sp:54,r:15,kind:'scorp'},{n:'Schattenkäfer',col:'#7a4aa8',hp:1.6,atk:1.7,sp:64,r:14,kind:'bug'},{n:'Nachtadler',col:'#3a2a5a',hp:1.2,atk:1.8,sp:96,r:14,kind:'bird'}],
+   boss:{n:'Kaktuskaiser',col:'#ffd447',hp:20,atk:3.8,sp:28,r:36,kind:'worm'}}
 ];
 const STAGES_PER_WORLD=20;
 // ---------- Schadenstypen ----------
@@ -1159,27 +1182,27 @@ function drawBg(){
   c.fillStyle=Wd.moon;c.beginPath();c.arc(400,52,20,0,7);c.fill();
   c.fillStyle=Wd.sky[1]+'55';c.beginPath();c.arc(392,48,5,0,7);c.arc(406,60,3,0,7);c.fill();
   // Sterne (in der Sternendüne viel mehr)
-  c.fillStyle='#fff';const nS=wi===4?70:26;for(let i=0;i<nS;i++){const x=(i*73)%W,y=(i*37)%(wi===4?180:120)+6;c.globalAlpha=.3+.4*Math.abs(Math.sin(t*1.5+i));c.fillRect(x,y,1.5,1.5);}c.globalAlpha=1;
+  c.fillStyle='#fff';const dk=WORLDS[wi].deco,nS=dk==='stars'?70:26;for(let i=0;i<nS;i++){const x=(i*73)%W,y=(i*37)%(dk==='stars'?180:120)+6;c.globalAlpha=.3+.4*Math.abs(Math.sin(t*1.5+i));c.fillRect(x,y,1.5,1.5);}c.globalAlpha=1;
   // Berge im Hintergrund (Parallax)
   c.fillStyle=Wd.mesa;const o1=-(scroll*.2)%320;
   for(let k=0;k<3;k++){const x=o1+k*320;c.beginPath();
-    if(wi===2){c.moveTo(x,GROUND);c.lineTo(x+90,120);c.lineTo(x+120,120);c.lineTo(x+220,GROUND);c.fill();
+    if(dk==='volcano'){c.moveTo(x,GROUND);c.lineTo(x+90,120);c.lineTo(x+120,120);c.lineTo(x+220,GROUND);c.fill();
       c.fillStyle='#ff6a2a';c.globalAlpha=.6+.3*Math.sin(t*3);c.beginPath();c.moveTo(x+92,122);c.lineTo(x+118,122);c.lineTo(x+112,140);c.lineTo(x+98,140);c.fill();c.globalAlpha=1;c.fillStyle=Wd.mesa;}
     else{c.moveTo(x,GROUND);c.lineTo(x+30,150);c.lineTo(x+130,150);c.lineTo(x+150,180);c.lineTo(x+210,180);c.lineTo(x+240,GROUND);c.fill();}}
   // Pflanzen oder Kristalle im Mittelgrund
   c.fillStyle=Wd.flora;const o2=-(scroll*.5)%200;
   for(let k=0;k<4;k++){const x=o2+k*200+60;
-    if(wi===3){c.beginPath();c.moveTo(x,GROUND);c.lineTo(x+6,GROUND-50);c.lineTo(x+12,GROUND);c.moveTo(x+10,GROUND);c.lineTo(x+20,GROUND-30);c.lineTo(x+26,GROUND);c.fill();}
-    else if(wi===1){c.fillRect(x,GROUND-10,30,10);c.fillRect(x+8,GROUND-18,14,8);}
+    if(dk==='crystal'){c.beginPath();c.moveTo(x,GROUND);c.lineTo(x+6,GROUND-50);c.lineTo(x+12,GROUND);c.moveTo(x+10,GROUND);c.lineTo(x+20,GROUND-30);c.lineTo(x+26,GROUND);c.fill();}
+    else if(dk==='salt'){c.fillRect(x,GROUND-10,30,10);c.fillRect(x+8,GROUND-18,14,8);}
     else{c.fillRect(x,GROUND-46,8,46);c.fillRect(x-10,GROUND-32,6,16);c.fillRect(x-10,GROUND-32,12,5);c.fillRect(x+12,GROUND-38,6,18);c.fillRect(x+6,GROUND-24,12,5);}}
   // Boden
   c.fillStyle=Wd.ground[0];c.fillRect(0,GROUND,W,H-GROUND);
   c.fillStyle=Wd.ground[1];const o3=-(scroll)%40;for(let x=o3;x<W;x+=40){c.fillRect(x,GROUND+14,14,3);c.fillRect(x+20,GROUND+34,8,3);}
   c.fillStyle=Wd.ground[2];c.fillRect(0,GROUND,W,3);
   // Glut steigt in der Vulkanwüste auf
-  if(wi===2){c.fillStyle='#ffb020';for(let i=0;i<14;i++){const k=(t*.25+i/14)%1;c.globalAlpha=(1-k)*.8;c.fillRect((i*67+Math.sin(t+i)*10)%W,GROUND-k*200,2,2);}c.globalAlpha=1;}
+  if(dk==='volcano'){c.fillStyle='#ffb020';for(let i=0;i<14;i++){const k=(t*.25+i/14)%1;c.globalAlpha=(1-k)*.8;c.fillRect((i*67+Math.sin(t+i)*10)%W,GROUND-k*200,2,2);}c.globalAlpha=1;}
   // Salzkristalle glitzern am Salzsee
-  if(wi===1){c.fillStyle='#ffffff';for(let i=0;i<10;i++){c.globalAlpha=Math.max(0,Math.sin(t*2+i*1.7));c.fillRect((i*53-scroll)%W+W*(((i*53-scroll)%W)<0),GROUND+8+(i*13)%40,2,2);}c.globalAlpha=1;}
+  if(dk==='salt'){c.fillStyle='#ffffff';for(let i=0;i<10;i++){c.globalAlpha=Math.max(0,Math.sin(t*2+i*1.7));c.fillRect((i*53-scroll)%W+W*(((i*53-scroll)%W)<0),GROUND+8+(i*13)%40,2,2);}c.globalAlpha=1;}
 }
 // ---------- Kaktus zeichnen: Chibi-Stil mit dicken Umrisslinien (nach Rogers Konzeptbildern) ----------
 // Spiel, Editor-Vorschau und Hauptquartier nutzen dieselbe Funktion
@@ -2193,7 +2216,7 @@ function bindLogin(p,rerender){
     try{const r=await rpc('kk_pin_login',{p_code:code,p_pin:pin});
       if(!r||!r.ok){loginMsg=(r&&r.reason)||'Anmelden fehlgeschlagen.';rerender();return;}
       switching=true;ON={code:r.code,key:r.key,pin:true};saveOn();
-      try{localStorage.setItem(KEY,JSON.stringify(r.save||Object.assign(newState(),{caps:0,gift:{caps:500,kak:50}})));}catch(e){}
+      try{localStorage.setItem(KEY,JSON.stringify(r.save||Object.assign(newState(),{caps:0,gift:{caps:500,kak:20}})));}catch(e){}
       loginMsg='Geladen! Das Spiel startet neu …';rerender();setTimeout(()=>location.reload(),900);}
     catch(e){loginMsg='Laden fehlgeschlagen: keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.';rerender();}};
   $(p+'LGo').onclick=go;$(p+'LPin').onkeydown=e=>{if(e.key==='Enter')go();};
@@ -2577,7 +2600,7 @@ function renderDiffRow(){const cur=diffIdx(S.stage),sig=cur+'|'+S.best;if(sig===
   $('diffRow').innerHTML=DIFFS.map((D,d)=>{const open=S.best>d*STAGES_PER_DIFF;
     return`<button type="button" class="dchip${open?'':' locked'}${d===Math.min(cur,DIFFS.length-1)?' on':''}" data-diff="${d}" style="--dc:${D.c}" aria-disabled="${!open}">${open?'':'🔒 '}${D.n}</button>`;}).join('');
   $('diffRow').querySelectorAll('[data-diff]').forEach(b=>b.onclick=()=>{const d=+b.dataset.diff,open=S.best>d*STAGES_PER_DIFF,h=$('diffHint');
-    if(!open){h.textContent='🔒 '+DIFFS[d].n+': Schaffe zuerst '+DIFFS[d-1].n+' · Sternendüne\u00a05\u201120, um diese Stufe freizuschalten.';h.hidden=false;diffHintT=3.5;return;}
+    if(!open){h.textContent='🔒 '+DIFFS[d].n+': Schaffe zuerst '+DIFFS[d-1].n+' · '+WORLDS[WORLDS.length-1].n+'\u00a0'+WORLDS.length+'\u201120, um diese Stufe freizuschalten.';h.hidden=false;diffHintT=3.5;return;}
     if(d===diffIdx(S.stage)||boss)return;
     const target=Math.min(S.best,(d+1)*STAGES_PER_DIFF);S.stage=Math.max(d*STAGES_PER_DIFF+1,target);S.kills=0;enemies=[];resetHero();save();lastHud='';diffSig='';
     banner={txt:DIFFS[d].n+' · '+stageShort(S.stage),t:2};h.hidden=true;renderDiffRow();});}
@@ -2592,9 +2615,9 @@ function twDayCheck(){let ch=false;if(S.twRec==null){S.twRec=Math.max(0,(S.tower
 twDayCheck();
 const twFloor=()=>S.tower||1;
 const TW_PRIZE=[null,{kak:30,caps:20,bump:2,n:'🥇'},{kak:20,caps:12,bump:1,n:'🥈'},{kak:10,caps:8,bump:0,n:'🥉'}];
-const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=3*f,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
-  return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.8,keeper:f%5===0};};
-const twReward=f=>({kak:2+Math.floor(f/5),caps:2+Math.floor(f/10),item:true,bump:f%5===0});
+const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
+  return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.8,keeper:f%10===0};};
+const twReward=f=>({kak:1+Math.floor(f/25),caps:2,item:true,bump:f%10===0});
 let twb={st:null,err:null,busy:false,msg:''};
 let tw={open:false,anim:null,res:null};
 function twRoll(f,n){if(n==null)n=twReward(f).bump?1:0;let it=rollItem();
@@ -2777,7 +2800,7 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
 {let shown=false;const tm=setInterval(()=>{if(shown||!S.gift){clearInterval(tm);return;}
   if(!S.char||editing||!$('modal').hidden)return;shown=true;clearInterval(tm);
   $('card').innerHTML=`<h2>Neustart!</h2>
-    <p style="margin:0">Alle Spielstände wurden auf Anfang gesetzt, damit alle mit den neuen Features gleich starten. Dein Kaktus, dein Name, dein Freundescode und deine Gilde bleiben.</p>
+    <p style="margin:0">Mit 12 Welten pro Schwierigkeit und neuer Balance fangen alle wieder bei null an. Dein Kaktus, dein Name, dein Freundescode und deine Gilde bleiben.</p>
     <div class="giftbox"><span>🎁 Startguthaben</span><b>${S.gift.caps} Samenkapseln</b><b>${S.gift.kak} Kakteen 🌵</b></div>
     <div class="row"><button class="btn go" id="giftGo" type="button">Abholen</button></div>`;
   $('modal').hidden=false;
@@ -2874,7 +2897,16 @@ const PATCHES=[
   {id:'pn26',date:'2026-11-06',title:'Auto-Kampf im Turm',
    hero:['🗼 Der Turm kämpft von allein','Mit dem neuen Auto-Kampf-Knopf im Turm geht es nach jedem Sieg automatisch in die nächste Etage.'],
    items:()=>[['Stoppen:','Tippe nochmal auf den Knopf. Der laufende Kampf wird noch zu Ende gekämpft.'],
-     ['Automatisch beendet:','Bei einer Niederlage, wenn die Zeit abläuft oder wenn du das Turm-Fenster schließt.']]}
+     ['Automatisch beendet:','Bei einer Niederlage, wenn die Zeit abläuft oder wenn du das Turm-Fenster schließt.']]},
+  {id:'pn27',date:'2026-11-07',title:'12 Welten, neue Balance und Neustart',
+   hero:['🌵 Ein langes Abenteuer','Jede Schwierigkeit hat jetzt <b>12 Welten</b> statt 5. Alles ist neu abgestimmt, damit das Spiel deutlich länger dauert. Darum fangen alle wieder bei null an.'],
+   items:()=>[['Neue Welten:','Pilzsumpf, Frostgipfel, Gewittersteppe, Knochenwüste, Glutcanyon, Nebelküste und ganz am Ende der Kaktusthron mit dem Kaktuskaiser. 240 Stages pro Schwierigkeit.'],
+     ['Ausrüstung:','Jede Seltenheit ist jetzt 1,5-mal so stark wie die vorige statt doppelt so stark. Die Fundstufe bringt höchstens ×1,3.'],
+     ['Gegner und Münzen:','Gegner werden pro Stage 5 % stärker, jede neue Schwierigkeit ×3. Münzen wachsen im gleichen Tempo mit.'],
+     ['Kakteen:','Ein Boss gibt 1 🌵 auf Leicht, 2 auf Normal, 3 auf Schwer und 4 auf Ultra schwer.'],
+     ['Werkstatt und Gärtnerei:','Werden deutlich teurer. In der Werkstatt kostet jedes 10. Level zusätzlich Kakteen.'],
+     ['Turm:','Etagen werden langsamer schwerer, geben aber 1 🌵 und 2 Kapseln. Bessere Teile gibt es nur noch jede 10. Etage.'],
+     ['Neustart:','Name und Aussehen bleiben. Als Wiedergutmachung gibt es ein Startguthaben von <b>500 Kapseln und 20 🌵</b> zum Abholen.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
