@@ -777,7 +777,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -787,8 +787,9 @@ if(!oldSave)S=newState();
 // Neustart r2 (06.11.2026): alle fangen wieder bei null an. Aussehen und Name bleiben, dazu gibt es ein Startguthaben zum Abholen.
 // Neustart r3 (07.11.2026): 12 Welten und neue Balance, alle fangen wieder bei null an. Startguthaben 500 Kapseln und 20 Kakteen.
 if(oldSave&&!oldSave.r3){const keep=oldSave.char||null;S=Object.assign(newState(),{char:keep,caps:0,gift:{caps:500,kak:20}});try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
-// Einführung (07.11.2026): nur für ganz neue Spieler. Wer schon einen Kaktus hatte, bekommt sie nicht.
-if(oldSave&&oldSave.char&&!S.tutDone)S.tutDone=1;
+// Einführung (07.11.2026): alle Spieler sehen sie einmal, auch die bisherigen (Merker tut2).
+// Kaktus neu erstellen (07.11.2026): alle bisherigen Spieler wählen Name, Aussehen und Klasse noch einmal neu (Merker cnew).
+if(oldSave&&!oldSave.cnew){S.char=null;S.cnew=true;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const AWAY_SINCE=S.last||0; // wann zuletzt gespielt wurde (für den Offline-Fortschritt)
 let switching=false;   // true, sobald ein anderes Konto geladen wird: dann nichts mehr lokal überschreiben
 function save(){if(switching)return;S.last=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -2809,7 +2810,7 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
     S.daily={last:s2.today,day:s2.day};save();lastHud='';
     banner={txt:'Tag '+s2.day+': '+dailyTxt(R),t:2.6};renderDaily('<b>Abgeholt!</b> '+dailyTxt(R)+t2);};}
 {let shown=false;const tm=setInterval(()=>{if(shown){clearInterval(tm);return;}
-  if(!S.char||editing||S.gift||tut.on||!S.tutDone||!$('modal').hidden)return;
+  if(!S.char||editing||S.gift||tut.on||!S.tut2||!$('modal').hidden)return;
   // erst wenn die Patch Notes durch sind (die kommen beim Start zuerst)
   if(performance.now()<2500)return;
   shown=true;clearInterval(tm);if(!dailyState().ready)return;$('modal').hidden=false;renderDaily();},1000);}
@@ -2836,7 +2837,7 @@ function tutStart(){if(tut.on)return;tut.on=true;tut.i=0;tut.wait=false;
   const b=document.createElement('div');b.className='tut';b.id='tut';
   b.innerHTML='<div class="tblk"></div><div class="tblk"></div><div class="tblk"></div><div class="tblk"></div><div class="tspot none"></div><div class="tbub"></div>';
   document.body.appendChild(b);tut.box=b;tutShow();}
-function tutEnd(skipped){if(!tut.on)return;tut.on=false;if(tut.box)tut.box.remove();tut.box=null;S.tutDone=1;
+function tutEnd(skipped){if(!tut.on)return;tut.on=false;if(tut.box)tut.box.remove();tut.box=null;S.tut2=1;
   if(!skipped){S.caps+=5;banner={txt:'+5 Samenkapseln · Starthilfe',t:2.4};}save();lastHud='';}
 function tutNext(){tut.i++;while(tut.i<TUT.length&&TUT[tut.i].el&&!tutVisible($(TUT[tut.i].el)))tut.i++;
   if(tut.i>=TUT.length){tutEnd(false);return;}tutShow();}
@@ -2871,7 +2872,7 @@ function tutPlace(){const b=tut.box;if(!b)return;const st=TUT[tut.i],sp=b.queryS
 // Kapsel-Schritt: weiter, sobald die Kapsel geöffnet und das Fenster wieder zu ist
 let tutCapSeen=false;
 setInterval(()=>{if(!tut.on){
-    if(!S.tutDone&&S.char&&!editing&&!S.gift&&$('modal').hidden&&!(maint.on&&!maint.dev))tutStart();return;}
+    if(!S.tut2&&performance.now()>3000&&S.char&&!editing&&!S.gift&&$('modal').hidden&&!(maint.on&&!maint.dev))tutStart();return;}
   const st=TUT[tut.i];
   if(st.act==='cap'){if(!$('modal').hidden||pending)tutCapSeen=true;else if(tutCapSeen){tutCapSeen=false;tutNext();return;}}
   tutPlace();},250);
@@ -2992,7 +2993,7 @@ const PATCHES=[
    hero:['🌵 Opa Stachel zeigt dir alles','Neue Spieler werden nach dem Erstellen ihres Kaktus Schritt für Schritt durchs Spiel geführt.'],
    items:()=>[['Mitmachen:','Die erste Samenkapsel öffnet man selbst, danach werden Ausrüstung, Fähigkeiten, Werkstatt, Gärtnerei, Hunde und Online-Profil erklärt.'],
      ['Starthilfe:','Wer die Einführung bis zum Ende ansieht, bekommt 5 Samenkapseln.'],
-     ['Bisherige Spieler:','Wer schon einen Kaktus hat, sieht die Einführung nicht.']]}
+     ['Für alle:','Auch wer schon spielt, erstellt beim nächsten Start seinen Kaktus neu und sieht danach die Einführung. Der Spielstand bleibt erhalten.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
