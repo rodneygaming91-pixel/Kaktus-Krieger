@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1676,6 +1676,8 @@ function hud(){
        <span class="dst"><span>⚔ ${fmt(st.atk)}</span><span>♥ ${fmt(st.hp)}</span><span>🛡 ${st.block.toFixed(0)}%</span><span>✦ ${st.crit.toFixed(0)}%</span></span></span>
      <span class="dcol">${RIGHT.map(cell).join('')}<span class="dslot dinv"><span class="dl">Inventar</span><b>${S.inv.length}</b><small>/ ${invMax()}</small></span></span>`;}
   $('gear').querySelectorAll('canvas[data-gicon]').forEach(cv2=>{const it=S.gear[cv2.dataset.gicon];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});
+  // neue, leere Figur sofort zeichnen (sonst blitzt sie im Energiesparmodus kurz leer auf)
+  drawDoll();
   $('coins').textContent=fmt(S.coins);$('kak').textContent=fmt(S.kak||0);
   $('stageName').textContent=stageShort(S.stage);{const D=diffOf(S.stage),t2=$('diffTag');t2.textContent=D.n;t2.style.setProperty('--dc',D.c);}
   {const Wd=world(),w=S.gear.waffe,rs=heroStats().res[Wd.atkEl]||0;
@@ -3143,7 +3145,10 @@ const PATCHES=[
   {id:'pn37',date:'2026-11-07',title:'Doppelte Münzen',
    hero:['🪙 Mehr Münzen für alle','Gegner und Bosse geben jetzt doppelt so viele Münzen.'],
    items:()=>[['Kämpfen:','Jeder besiegte Gegner und jeder Boss bringt doppelt so viele Münzen wie vorher.'],
-     ['Offline:','Auch die Münzen, die du offline sammelst, verdoppeln sich.']]}
+     ['Offline:','Auch die Münzen, die du offline sammelst, verdoppeln sich.']]},
+  {id:'pn38',date:'2026-11-07',title:'Flackern behoben',
+   hero:['🔋 Ruhiges Bild im Energiesparmodus','Im Energiesparmodus ist der Kaktus in der Ausrüstungsanzeige manchmal kurz verschwunden. Das ist behoben.'],
+   items:()=>[['Ausrüstung:','Der Kaktus wird jetzt sofort neu gezeichnet, wenn sich ein Wert ändert.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
