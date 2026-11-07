@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1132,7 +1132,7 @@ const front=()=>alive().reduce((a,e)=>!a||e.x<a.x?e:a,null);
 // ---------- Logik ----------
 function update(dt){
   t+=dt;
-  const f=front(),engaged=f&&f.x<HX+150;
+  const f=front(),engaged=isEngaged(f);
   if(!engaged)scroll+=dt*60;
   // Gegner nachschieben
   if(!boss&&alive().length===0){spawnT-=dt;if(spawnT<=0){spawnWave();spawnT=0.8;}}
@@ -1154,7 +1154,7 @@ function update(dt){
     e.hit=Math.max(0,e.hit-dt*5);
     if(e.dying){e.dying-=dt;continue;}
     if(e.stun>0){e.stun-=dt;continue;}
-    const stop=HX+28+e.ty.r+(S.drEq.length?14+S.drEq.length*27:0);
+    const stop=stopX(e);
     if(e.x>stop)e.x-=e.ty.sp*dt*(engaged?1:1.6);
     else{e.atkT-=dt;if(e.atkT<=0){e.atkT=1.3;hurtHero(e.atk);e.lunge=1;}}
     e.lunge=Math.max(0,(e.lunge||0)-dt*4);
@@ -1496,6 +1496,10 @@ const DOGLOOK={
   eule:   {body:'#2e2620',dark:'#1c140e',belly:'#c98a4a',len:14,h:8, leg:7, ear:'up',snout:5,tan:true} // Schäferhund
 };
 const dogPos=i=>({x:HX+34+i*27,y:GROUND});
+// Wo ein Gegner stehen bleibt (hinter Kaktus und Hunden) und ab wann gekämpft wird.
+// Große Bosse mit 3 Hunden stehen weiter weg als 150 px, darum zählt auch die eigene Kampfposition.
+function stopX(e){return HX+28+e.ty.r+(S.drEq.length?14+S.drEq.length*27:0);}
+function isEngaged(f){return !!f&&f.x<Math.max(HX+150,stopX(f)+12);}
 const dogSt={};
 function drawDog(g,D,x,y,s,o){o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o.run??0,ph=t*14+(o.ph||0);
   g.save();g.translate(x,y);g.scale(s,s);
@@ -1538,7 +1542,7 @@ function drawDog(g,D,x,y,s,o){o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o
 const drawDrone=(g,D,x,y,s)=>drawDog(g,D,x,y+9*s,s*1.05,{run:0});
 const DEFAULT_CH={name:'Stachel',shape:'saeule',color:'#63c74d',eyes:'entschlossen',hat:'bluete',cls:'schuetze'};
 function drawHero(){
-  const walk=!(front()&&front().x<HX+150);
+  const walk=!isEngaged(front());
   const rc=id=>S.gear[id]?RAR[S.gear[id].r].c:null;
   drawCactus(c,S.char||DEFAULT_CH,{x:HX,y:GROUND,walk,bob:walk?Math.abs(Math.sin(t*12))*-2:Math.sin(t*3),squash:hero.squash,hit:hero.hit>0,
     gear:S.gear});
@@ -1639,7 +1643,7 @@ function draw(){
     c.beginPath();c.moveTo(p.col?-3:-6,0);c.lineTo(p.col?3:6,0);c.stroke();c.restore();}
   // Drohnen
   S.drEq.forEach((id,i)=>{const D=DRONES.find(d=>d.id===id);if(!D)return;const p=dogPos(i),st=dogSt[id]||{j:0},k=Math.sin(st.j*Math.PI),
-    walk=!(front()&&front().x<HX+150);drawDog(c,D,p.x+(st.tx||0)*k,p.y-k*16,1.4,{run:walk||st.j>0?1:0,ph:i*1.7,bite:st.j>0&&st.j<.6});});
+    walk=!isEngaged(front());drawDog(c,D,p.x+(st.tx||0)*k,p.y-k*16,1.4,{run:walk||st.j>0?1:0,ph:i*1.7,bite:st.j>0&&st.j<.6});});
   for(const p of parts){c.globalAlpha=Math.min(1,p.t*3);c.fillStyle=p.col;c.fillRect(p.x,p.y,4,4);}c.globalAlpha=1;
   c.font='800 13px Nunito, system-ui, sans-serif';c.textAlign='center';
   for(const f of floats){c.globalAlpha=Math.min(1,f.t*2);c.fillStyle='#170f2e';c.fillText(f.txt,f.x+1,f.y+1);c.fillStyle=f.col;c.fillText(f.txt,f.x,f.y);}c.globalAlpha=1;
@@ -3130,7 +3134,12 @@ const PATCHES=[
   {id:'pn35',date:'2026-11-07',title:'Turm mit ×2',
    hero:['⏩ Doppelt so schnell nach oben','Im Turm gibt es jetzt oben rechts einen ×2-Knopf.'],
    items:()=>[['Schneller:','Turmkämpfe laufen doppelt so schnell, auch im Auto-Kampf.'],
-     ['Kostenlos:','Ganz ohne Video. Einfach antippen, die Einstellung bleibt gespeichert.']]}
+     ['Kostenlos:','Ganz ohne Video. Einfach antippen, die Einstellung bleibt gespeichert.']]},
+  {id:'pn36',date:'2026-11-07',title:'Fehler im Bosskampf behoben',
+   hero:['🐾 Volle Kraft gegen Bosse','Mit 3 Hunden haben im Bosskampf die Fähigkeiten und die Hunde nicht mitgekämpft. Das ist jetzt behoben.'],
+   items:()=>[['Fähigkeiten:','Werden mit AUTO jetzt auch gegen große Bosse ausgelöst.'],
+     ['Hunde:','Greifen den Boss jetzt ebenfalls an.'],
+     ['Hintergrund:','Läuft im Bosskampf nicht mehr weiter.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
