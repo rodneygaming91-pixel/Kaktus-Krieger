@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1174,7 +1174,9 @@ function update(dt){
     if(drT[id]>0||!f)return;
     const pos=dogPos(i);
     if(D.act==='heal'){if(hero.hp>=hero.max)return;drT[id]=D.every;const h=hero.max*D.heal/100*drScale(o.lv);
-      hero.hp=Math.min(hero.max,hero.hp+h);floats.push({x:pos.x,y:pos.y-26,txt:'♥ +'+fmt(h),col:'#ff8ac0',t:.8});return;}
+      hero.hp=Math.min(hero.max,hero.hp+h);
+      // gut sichtbar: grüne Zahl mit Pfote über dem Kaktus, der Hund hüpft dabei auf der Stelle
+      floats.push({x:HX,y:GROUND-104,txt:'🐾 +'+fmt(h),col:'#7be86a',t:1.1});st.j=1;st.hit=true;st.e=null;st.tx=0;return;}
     if(!engaged||f.x>W-10)return;
     drT[id]=D.every;st.j=1;st.hit=false;st.e=f;st.tx=f.x-f.ty.r-pos.x;
   });
@@ -3153,7 +3155,10 @@ const PATCHES=[
    hero:['🐕 Der Schäferhund heilt jetzt','Statt anzugreifen kümmert sich der Schäferhund jetzt um deine Gesundheit.'],
    items:()=>[['Fähigkeit:','Heilt alle 6 s 8 % Leben. Die Heilung wartet, bis du verletzt bist, und wird mit jedem Level stärker.'],
      ['Dauerbonus:','Statt mehr Angriff gibt er +0,05 % Regeneration pro Sekunde je Level.'],
-     ['Unverändert:','Preis und Level bleiben, wie sie sind.']]}
+     ['Unverändert:','Preis und Level bleiben, wie sie sind.']]},
+  {id:'pn40',date:'2026-11-07',title:'Hunde-Heilung besser sichtbar',
+   hero:['🐾 Man sieht jetzt, wer heilt','Die Heilung von Schäferhund und Bernhardiner war kaum zu erkennen.'],
+   items:()=>[['Neu:','Heilt ein Hund, erscheint eine grüne Zahl mit Pfote über deinem Kaktus, und der Hund macht einen kleinen Hüpfer.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
