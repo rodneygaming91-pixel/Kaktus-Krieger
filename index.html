@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -900,7 +900,7 @@ const DRONES=[
   {id:'kolibri', n:'Windhund',     c:'#3fe0c0',cost:300, act:'shot',every:.8, dmg:.25,stat:'spd',per:1.5,d:'Flinke Bisse alle 0,8 s'},
   {id:'chihu',   n:'Chihuahua',    c:'#ff8a3d',cost:600, act:'shot',every:.6, dmg:.15,stat:'crit',per:1,d:'Kläfft und zwickt alle 0,6 s. Macht dich wütend: mehr kritische Treffer'},
   {id:'gluehw',  n:'Bernhardiner', c:'#ff6fae',cost:1000,act:'heal',every:3,  heal:3, stat:'hp', per:3,d:'Heilt alle 3 s 3 % Leben mit seinem Fässchen'},
-  {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'stun',every:4,  dmg:1.2,stat:'atk',per:2,d:'Sprung alle 4 s, 120 % Angriff, wirft Gegner kurz um'}
+  {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'heal',every:6,  heal:8, stat:'reg',per:.05,d:'Sanitätshund: heilt alle 6 s 8 % Leben und stärkt deine Regeneration'}
 ];
 const DR_MAX=25;                                                    // Höchststufe der Hunde
 const drUp=(D,lv)=>Math.round(D.cost*Math.pow(1.85,lv));          // Kosten für das nächste Level
@@ -940,7 +940,7 @@ function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it
 function heroStats(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
   return{atk:(25+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((300+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
-    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')+drBonus('crit')),res:resSum()};
+    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')+drBonus('crit')),res:resSum()};
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
 // Sie zünden automatisch, sobald ein Gegner in Reichweite ist; antippen zündet sofort, wenn bereit
@@ -1795,14 +1795,14 @@ function renderDrones(){
   $('card').innerHTML=`<h2>Hunde <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
     <p style="margin:0;color:var(--muted)">Eingesetzte Hunde laufen vor dir her, kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 wird ab Stage 10 frei.':''}</p>
     <div class="dlist">${DRONES.map(D=>{const o=S.dr[D.id],eq=S.drEq.includes(D.id),lv=o?o.lv:0;
-      const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit'}[D.stat];
+      const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration pro s'}[D.stat];
       let btns;
       if(!o)btns=`<button class="btn go" type="button" data-buy="${D.id}" data-cost="${D.cost}">Kaufen · ${fmt(D.cost)}</button>`;
       else btns=`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
         ${lv>=DR_MAX?'<button class="btn" type="button" disabled>Max</button>':`<button class="btn" type="button" data-up="${D.id}" data-cost="${drUp(D,lv)}">Lv ${lv+1} · ${fmt(drUp(D,lv))}</button>`}`;
       return`<div class="drow${eq?' eq':''}" style="--dc:${D.c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas>
         <div><b style="color:${D.c}">${D.n}${o?`<em>Lv ${lv}</em>`:''}</b><small>${D.d}${o&&lv>1?` (×${drScale(lv).toFixed(2)})`:''}</small>
-        <span class="bon">+${+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(1)} ${unit}${o?'':' ab Lv 1'}</span></div><div class="dbtns">${btns}</div></div>`;}).join('')}</div>
+        <span class="bon">+${(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2)).toLocaleString('de-DE')} ${unit}${o?'':' ab Lv 1'}</span></div><div class="dbtns">${btns}</div></div>`;}).join('')}</div>
     <div class="row"><button class="btn" id="dClose" type="button">Schließen</button></div>`;
   $('card').querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{const D=DRONES.find(d=>d.id===b.dataset.buy);if(S.coins<D.cost)return;
     S.coins-=D.cost;S.dr[D.id]={lv:1};if(S.drEq.length<drSlots())S.drEq.push(D.id);save();lastHud='';renderDrones();});
@@ -3148,7 +3148,12 @@ const PATCHES=[
      ['Offline:','Auch die Münzen, die du offline sammelst, verdoppeln sich.']]},
   {id:'pn38',date:'2026-11-07',title:'Flackern behoben',
    hero:['🔋 Ruhiges Bild im Energiesparmodus','Im Energiesparmodus ist der Kaktus in der Ausrüstungsanzeige manchmal kurz verschwunden. Das ist behoben.'],
-   items:()=>[['Ausrüstung:','Der Kaktus wird jetzt sofort neu gezeichnet, wenn sich ein Wert ändert.']]}
+   items:()=>[['Ausrüstung:','Der Kaktus wird jetzt sofort neu gezeichnet, wenn sich ein Wert ändert.']]},
+  {id:'pn39',date:'2026-11-07',title:'Schäferhund wird Sanitätshund',
+   hero:['🐕 Der Schäferhund heilt jetzt','Statt anzugreifen kümmert sich der Schäferhund jetzt um deine Gesundheit.'],
+   items:()=>[['Fähigkeit:','Heilt alle 6 s 8 % Leben. Die Heilung wartet, bis du verletzt bist, und wird mit jedem Level stärker.'],
+     ['Dauerbonus:','Statt mehr Angriff gibt er +0,05 % Regeneration pro Sekunde je Level.'],
+     ['Unverändert:','Preis und Level bleiben, wie sie sind.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
