@@ -679,6 +679,19 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 header .hl{justify-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
 .setbtn{background:#2a1d12;border:2px solid #5a4430;color:#e8d4b0;border-radius:999px;font:inherit;font-size:.72rem;font-weight:700;padding:3px 9px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .setbtn i{font-style:normal}
+.hbtns{display:flex;gap:5px}
+.setbtn{font-size:.8rem;padding:3px 9px}
+.mailbtn{position:relative}
+.mailbtn.new{border-color:#ffd447;color:#fff2a8;animation:mailpulse 1.6s ease-in-out infinite}
+@keyframes mailpulse{0%,100%{box-shadow:0 0 0 0 #ffd44700}50%{box-shadow:0 0 0 4px #ffd44755}}
+.mailbtn em{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;background:#e0283a;color:#fff;font-style:normal;font-size:.68rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #1c140e}
+.mlist{display:flex;flex-direction:column;gap:10px;max-height:60vh;overflow:auto;text-align:left}
+.mletter{background:linear-gradient(#f3e4c0,#e2cc98);color:#3a2a14;border:3px solid #8a6a3a;border-radius:12px;padding:12px;position:relative}
+.mletter.done{opacity:.6;filter:saturate(.5)}
+.mletter h3{margin:0 0 2px;font-size:1.05rem;display:flex;gap:6px;align-items:center}.mletter time{font-size:.75rem;color:#7a5a30}
+.mletter p{margin:6px 0 8px;font-size:.92rem;line-height:1.35}
+.mrew{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.mrew span{background:#3a2a14;color:#ffe9a8;border-radius:999px;padding:3px 10px;font-weight:800;font-size:.85rem}
+.mletter .btn{width:100%}
 .optrow{display:flex;align-items:center;gap:12px;background:#2a1d12;border:2px solid #5a4430;border-radius:12px;padding:12px;text-align:left;cursor:pointer;width:100%;color:inherit;font:inherit}
 .optrow .ot{flex:1;min-width:0}.optrow b{display:block;font-size:1rem}.optrow small{display:block;color:#c9b593;font-size:.82rem;line-height:1.3;margin-top:2px}
 .tgl{flex:0 0 46px;height:26px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 3px #000;position:relative;transition:background .2s}
@@ -744,7 +757,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 
 <div class="game">
   <header>
-    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><button class="setbtn" id="setBtn" type="button" title="Optionen">⚙ Optionen<i id="ecoTag" hidden>🔋</i></button></div>
+    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉ Post<em id="mailN" hidden>0</em></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="res"><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div></div>
@@ -786,7 +799,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2868,6 +2881,34 @@ function renderOpts(){
   $('optOk').onclick=()=>{$('modal').hidden=true;};}
 $('setBtn').onclick=()=>{if(!$('modal').hidden)return;$('modal').hidden=false;renderOpts();};
 
+// ---------- Poststelle: Briefe vom Server, an alle oder an einzelne Spieler, mit Geschenk zum Abholen ----------
+const mail={list:[],loaded:false,open:false,busy:false};
+const mailRewTxt=R=>[R.coins?`🪙 ${Number(R.coins).toLocaleString('de-DE')} Münzen`:'',R.caps?`🌱 ${R.caps} Samenkapseln`:'',R.kak?`🌵 ${R.kak} Kakteen`:''].filter(Boolean);
+function mailBadge(){const n=mail.list.filter(m=>!m.claimed&&m.reward&&Object.keys(m.reward).length).length,e=$('mailN');
+  e.hidden=!n;e.textContent=n;$('mailBtn').classList.toggle('new',n>0);}
+async function mailLoad(){if(!S.char)return;try{if(!(await onEnsure()))return;const r=await rpc('kk_mail_list',{p_code:ON.code,p_key:ON.key});
+  mail.list=Array.isArray(r)?r:[];mail.loaded=true;}catch(e){}mailBadge();if(mail.open)renderMail();}
+function renderMail(){
+  const L=mail.list,d=x=>new Date(x).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+  $('card').innerHTML=`<h2>✉ Poststelle</h2>
+    ${!mail.loaded?'<p class="hint">Die Post wird geladen … Briefe gibt es nur mit Internet.</p>':!L.length?'<p class="hint">Keine Briefe da. Schau später wieder vorbei!</p>':''}
+    <div class="mlist">${L.map(m=>{const rw=mailRewTxt(m.reward||{});return`<div class="mletter${m.claimed?' done':''}">
+      <h3>${m.claimed?'📭':'📬'} ${m.title}</h3><time>${d(m.at)}</time>${m.body?`<p>${m.body}</p>`:''}
+      ${rw.length?`<div class="mrew">${rw.map(x=>`<span>${x}</span>`).join('')}</div>
+      ${m.claimed?'<button class="btn" type="button" disabled>✓ Abgeholt</button>':`<button class="btn go" type="button" data-mid="${m.id}">Abholen</button>`}`:''}</div>`;}).join('')}</div>
+    <div class="row"><button class="btn" id="mailX" type="button">Schließen</button></div>`;
+  $('card').querySelectorAll('[data-mid]').forEach(b=>b.onclick=()=>mailClaim(+b.dataset.mid,b));
+  $('mailX').onclick=()=>{mail.open=false;$('modal').hidden=true;};}
+async function mailClaim(id,btn){if(mail.busy)return;mail.busy=true;btn.disabled=true;btn.textContent='…';
+  try{const r=await rpc('kk_mail_claim',{p_code:ON.code,p_key:ON.key,p_id:id});
+    if(r&&r.ok){const R=r.reward||{};if(R.caps)S.caps+=+R.caps;if(R.kak)S.kak=(S.kak||0)+(+R.kak);if(R.coins)S.coins+=+R.coins;save();lastHud='';
+      banner={txt:'Post: '+mailRewTxt(R).join(' · '),t:2.6};}
+    const m=mail.list.find(x=>x.id===id);if(m)m.claimed=true;}
+  catch(e){banner={txt:'Keine Verbindung, versuch es gleich nochmal.',t:2.2};}
+  finally{mail.busy=false;mailBadge();if(mail.open)renderMail();}}
+$('mailBtn').onclick=()=>{if(!$('modal').hidden)return;mail.open=true;$('modal').hidden=false;renderMail();mailLoad();};
+setTimeout(mailLoad,5000);setInterval(mailLoad,120000);
+
 // ---------- Einführung für neue Spieler ----------
 // Opa Stachel zeigt die wichtigsten Knöpfe. Ein Spotlight hebt das Ziel hervor, der Rest ist abgedunkelt.
 const TUT=[
@@ -3066,7 +3107,12 @@ const PATCHES=[
   {id:'pn32',date:'2026-11-07',title:'Energiesparmodus',
    hero:['🔋 Kühleres Handy, längerer Akku','Unter ⚙ Optionen oben links gibt es jetzt einen Energiesparmodus.'],
    items:()=>[['Was er macht:','Weniger Bilder pro Sekunde, halbe Auflösung im Kampf und weniger Effekte. Das Spiel braucht damit nur etwa ein Fünftel der Rechenleistung.'],
-     ['Kein Nachteil:','Dein Kaktus kämpft genauso schnell weiter wie vorher.']]}
+     ['Kein Nachteil:','Dein Kaktus kämpft genauso schnell weiter wie vorher.']]},
+  {id:'pn33',date:'2026-11-07',title:'Die Poststelle',
+   hero:['✉ Post für dich','Oben links gibt es jetzt den Knopf ✉ Post. Dort kommen Briefe mit Geschenken an.'],
+   items:()=>[['Erster Brief:','Jeder Spieler bekommt <b>500 Samenkapseln</b> zum Abholen.'],
+     ['Neue Briefe:','Leuchtet der Knopf gelb mit einer roten Zahl, wartet ein Geschenk auf dich.'],
+     ['Optionen:','Die Optionen mit dem Energiesparmodus findest du jetzt unter ⚙ direkt daneben.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
