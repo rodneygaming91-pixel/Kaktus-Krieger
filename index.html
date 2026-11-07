@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1121,7 +1121,7 @@ function makeEnemy(isBoss){
   const W0=world(),ty=isBoss?W0.boss:W0.e[Math.floor(Math.random()*W0.e.length)];
   const p=pow(S.stage),max=24*ty.hp*p;
   return{ty,boss:isBoss,x:W+30+rnd(0,40),y:ty.kind==='bird'?GROUND-(isBoss?80:60+rnd(0,20)):GROUND,hp:max,max,atk:6*ty.atk*p*(isBoss?.56:1),   // Balance v5: Bosse treffen 30 % schwächer
-    atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(3*cPow(S.stage)*(isBoss?15:1))};
+    atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(6*cPow(S.stage)*(isBoss?15:1))};   // Balance v6: doppelt so viele Münzen pro Gegner
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
 function startBoss(){boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
@@ -2611,7 +2611,7 @@ const OFFLINE_CAP=8*3600,OFF_EFF=0.6;
 let offPending=null;
 function offlineGain(sec){
   sec=Math.min(OFFLINE_CAP,sec);if(sec<60||!S.char)return;
-  const kills=Math.floor(sec/3),coinPer=Math.ceil(3*cPow(S.stage));
+  const kills=Math.floor(sec/3),coinPer=Math.ceil(6*cPow(S.stage));
   const coins=Math.round(kills*coinPer*OFF_EFF*coinMul()),caps=Math.floor(kills*0.05);
   const prog=Math.min(KILL_GOAL-S.kills,kills);
   offPending={sec,kills,coins,caps,prog};
@@ -3139,7 +3139,11 @@ const PATCHES=[
    hero:['🐾 Volle Kraft gegen Bosse','Mit 3 Hunden haben im Bosskampf die Fähigkeiten und die Hunde nicht mitgekämpft. Das ist jetzt behoben.'],
    items:()=>[['Fähigkeiten:','Werden mit AUTO jetzt auch gegen große Bosse ausgelöst.'],
      ['Hunde:','Greifen den Boss jetzt ebenfalls an.'],
-     ['Hintergrund:','Läuft im Bosskampf nicht mehr weiter.']]}
+     ['Hintergrund:','Läuft im Bosskampf nicht mehr weiter.']]},
+  {id:'pn37',date:'2026-11-07',title:'Doppelte Münzen',
+   hero:['🪙 Mehr Münzen für alle','Gegner und Bosse geben jetzt doppelt so viele Münzen.'],
+   items:()=>[['Kämpfen:','Jeder besiegte Gegner und jeder Boss bringt doppelt so viele Münzen wie vorher.'],
+     ['Offline:','Auch die Münzen, die du offline sammelst, verdoppeln sich.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
