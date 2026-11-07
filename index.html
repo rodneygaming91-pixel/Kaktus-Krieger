@@ -777,7 +777,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -912,7 +912,7 @@ const coinMul=()=>1+((S.gBonus||0)+gUp('coin')*3)/100;
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
-  return{atk:(10+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((100+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
+  return{atk:(25+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((300+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
     armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')+drBonus('crit')),res:resSum()};
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
@@ -1089,7 +1089,7 @@ const world=()=>WORLDS[worldIdx(S.stage)];
 function makeEnemy(isBoss){
   const W0=world(),ty=isBoss?W0.boss:W0.e[Math.floor(Math.random()*W0.e.length)];
   const p=pow(S.stage),max=24*ty.hp*p;
-  return{ty,boss:isBoss,x:W+30+rnd(0,40),y:ty.kind==='bird'?GROUND-(isBoss?80:60+rnd(0,20)):GROUND,hp:max,max,atk:6*ty.atk*p*(isBoss?.8:1),
+  return{ty,boss:isBoss,x:W+30+rnd(0,40),y:ty.kind==='bird'?GROUND-(isBoss?80:60+rnd(0,20)):GROUND,hp:max,max,atk:6*ty.atk*p*(isBoss?.56:1),   // Balance v5: Bosse treffen 30 % schwächer
     atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(3*cPow(S.stage)*(isBoss?15:1))};
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
@@ -1992,7 +1992,10 @@ async function onEnsure(){
 let onBusy=false;
 async function onSave(){
   if(onBusy||switching||!S.char)return;onBusy=true;
-  try{await onEnsure();const ok=await rpc('kk_save',{p_code:ON.code,p_key:ON.key,p_name:S.char.name,p_cls:CLASSES[S.char.cls].n,
+  try{await onEnsure();
+    // Einzel-Neustart: hat der Server für dieses Konto einen Neustart angeordnet, fängt der Spieler wie neu an
+    {const rn=await rpc('kk_reset_check',{p_code:ON.code,p_key:ON.key});if(rn&&rn>(S.rsN||0)){playerReset(rn);return;}}
+    const ok=await rpc('kk_save',{p_code:ON.code,p_key:ON.key,p_name:S.char.name,p_cls:CLASSES[S.char.cls].n,
       p_stage:S.stage,p_best:S.best,p_power:powerNow(),p_card:cardNow(),p_save:S});
     if(ok===false){onState='err';onMsg='Dein Konto wurde auf einem anderen Gerät geladen. Melde dich unten mit Freundescode und PIN wieder an.';}else{onState='ok';onLast=Date.now();onMsg='';}
     try{await rpc('kk_ar_update',{p_code:ON.code,p_key:ON.key,p_stats:arStats()});}catch(e){}
@@ -2002,6 +2005,9 @@ async function onSave(){
   catch(e){onState=/Failed to fetch|NetworkError|abort|Load failed/i.test(String(e))?'off':'err';onMsg=String(e.message||e).slice(0,120);}
   finally{onBusy=false;renderOnBadge();if(olOpen&&olTab==='profil')renderOnline();}
 }
+function playerReset(rn){switching=true;const fresh=Object.assign(newState(),{rsN:rn});
+  try{localStorage.setItem(KEY,JSON.stringify(fresh));}catch(e){}location.reload();}
+setTimeout(()=>{if(ON.code&&ON.key)onSave();},4000);
 function renderOnBadge(){const b=$('onBtn');if(!b)return;
   b.dataset.st=onState;$('onSub').textContent=onState==='ok'?fmtCode(ON.code):onState==='off'?'offline':onState==='err'?'Fehler':'verbinde …';}
 // alle 60 s und beim Verlassen der Seite online sichern
@@ -2659,7 +2665,7 @@ twDayCheck();
 const twFloor=()=>S.tower||1;
 const TW_PRIZE=[null,{kak:30,caps:20,bump:2,n:'🥇'},{kak:20,caps:12,bump:1,n:'🥈'},{kak:10,caps:8,bump:0,n:'🥉'}];
 const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
-  return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.8,keeper:f%10===0};};
+  return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.56,keeper:f%10===0};};
 const twReward=f=>({kak:1+Math.floor(f/25),caps:2,item:true,bump:f%10===0});
 let twb={st:null,err:null,busy:false,msg:''};
 let tw={open:false,anim:null,res:null};
@@ -3028,7 +3034,12 @@ const PATCHES=[
      ['Ändern:','Tippe oben auf deinen Namen, dann kannst du dein Aussehen jederzeit anpassen.']]},
   {id:'pn30',date:'2026-11-07',title:'5.000 Münzen für alle',
    hero:['🎁 Geschenk zum Start','Jeder Spieler bekommt einmalig 5.000 Münzen als Starthilfe, auch wer schon spielt.'],
-   items:()=>[['Abholen:','Das Geschenk-Fenster erscheint beim nächsten Start. Neue Spieler bekommen es direkt nach dem Erstellen ihres Kaktus.']]}
+   items:()=>[['Abholen:','Das Geschenk-Fenster erscheint beim nächsten Start. Neue Spieler bekommen es direkt nach dem Erstellen ihres Kaktus.']]},
+  {id:'pn31',date:'2026-11-07',title:'Leichterer Einstieg',
+   hero:['🌵 Mehr Kraft am Anfang','Der Start war zu schwer. Jetzt geht es am Anfang flüssiger voran, das Spiel dauert aber trotzdem lange.'],
+   items:()=>[['Grundwerte:','Dein Kaktus hat jetzt von Haus aus 25 statt 10 Angriff und 300 statt 100 Leben.'],
+     ['Bosse:','Bosse und Turmwächter treffen 30 % schwächer.'],
+     ['Unverändert:','Seltenheiten, Werkstatt, Gärtnerei und Kakteen bleiben, wie sie sind.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
