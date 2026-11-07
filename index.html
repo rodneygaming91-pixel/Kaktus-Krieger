@@ -675,6 +675,15 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .game{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 .giftbox{display:flex;flex-direction:column;align-items:center;gap:2px;background:linear-gradient(#5a4a10,#3a2f08);border:3px solid #ffd447;border-radius:12px;padding:12px;box-shadow:0 0 18px #ffd44755}
 .giftbox span{font-family:var(--display);font-size:1.2rem;color:#fff2a8}.giftbox b{font-size:1.05rem;color:#fff}
+/* Optionen und Energiesparmodus */
+header .hl{justify-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.setbtn{background:#2a1d12;border:2px solid #5a4430;color:#e8d4b0;border-radius:999px;font:inherit;font-size:.72rem;font-weight:700;padding:3px 9px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.setbtn i{font-style:normal}
+.optrow{display:flex;align-items:center;gap:12px;background:#2a1d12;border:2px solid #5a4430;border-radius:12px;padding:12px;text-align:left;cursor:pointer;width:100%;color:inherit;font:inherit}
+.optrow .ot{flex:1;min-width:0}.optrow b{display:block;font-size:1rem}.optrow small{display:block;color:#c9b593;font-size:.82rem;line-height:1.3;margin-top:2px}
+.tgl{flex:0 0 46px;height:26px;border-radius:999px;background:#1c140e;box-shadow:inset 0 1px 3px #000;position:relative;transition:background .2s}
+.tgl::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#8a7560;transition:all .2s}
+.optrow[aria-pressed="true"] .tgl{background:#3a8a1f}.optrow[aria-pressed="true"] .tgl::after{left:23px;background:#fff}
 /* Einführung für neue Spieler */
 .tut{position:fixed;inset:0;z-index:25;pointer-events:none}
 .tut .tblk{position:fixed;pointer-events:auto;background:transparent}
@@ -735,7 +744,7 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 
 <div class="game">
   <header>
-    <h1>Kaktus<span>-</span>Krieger</h1>
+    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><button class="setbtn" id="setBtn" type="button" title="Optionen">⚙ Optionen<i id="ecoTag" hidden>🔋</i></button></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="res"><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div></div>
@@ -777,7 +786,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -971,6 +980,10 @@ const fmtV=(sl,v)=>sl.pct?v.toFixed(1):fmt(v);
 const cv=document.getElementById('cv'),c=cv.getContext('2d');
 const W=480,H=300,GROUND=238,HX=90;
 c.scale(2,2);
+let eco=!!S.eco;const ECO_MS=40;
+function applyEco(){const k=eco?1:2;if(cv.width!==480*k){cv.width=480*k;cv.height=300*k;c.setTransform(k,0,0,k,0,0);}
+  const tg=document.getElementById('ecoTag');if(tg)tg.hidden=!eco;}
+applyEco();
 const $=id=>document.getElementById(id);
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const FMT_U=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','Ud','Dd','Td','Qad','Qid'];
@@ -1163,7 +1176,7 @@ function hitEnemy(e,dmg,crit){
     S.tk=(S.tk||0)+1; // alle Kills zählen fürs Gilden-Wochenziel
     const gain=Math.ceil(e.coin*coinMul());
     e.dying=.35;S.coins+=gain;floats.push({x:e.x,y:e.y-e.ty.r*2-20,txt:'+'+fmt(gain),col:'#f0b866',t:1});
-    for(let i=0;i<10;i++)parts.push({x:e.x,y:e.y-e.ty.r,vx:rnd(-120,120),vy:rnd(-220,-60),t:rnd(.3,.6),col:e.ty.col});
+    for(let i=0;i<(eco?3:10);i++)parts.push({x:e.x,y:e.y-e.ty.r,vx:rnd(-120,120),vy:rnd(-220,-60),t:rnd(.3,.6),col:e.ty.col});
     if(e.boss){boss=false;const kk=kakFor(S.stage);S.kak=(S.kak||0)+kk;floats.push({x:e.x,y:e.y-60,txt:'+'+kk+' 🌵',col:'#7fe08a',t:1.4});const firstTime=S.stage+1>S.best;S.stage++;S.kills=0;S.best=Math.max(S.best,S.stage);S.caps+=3;const nd=diffIdx(S.stage)>diffIdx(S.stage-1),nw=!nd&&(S.stage-1)%STAGES_PER_WORLD===0&&worldIdx(S.stage)>worldIdx(S.stage-1);banner={txt:nd?diffOf(S.stage).n+(firstTime?' freigeschaltet!':'!'):nw?'Neue Welt: '+world().n+' ('+ELEM[world().atkEl].n+')':'Stage geschafft! +3 Kapseln · +'+kk+' Kakteen',t:nd?3.5:nw?3:2.2};shake=nd?10:6;}
     else if(!boss){S.kills=Math.min(KILL_GOAL,S.kills+1);if(S.kills>=KILL_GOAL&&S.bossAuto!==false)startBoss();}
     if(!e.boss&&Math.random()<0.12){S.caps++;floats.push({x:e.x,y:e.y-e.ty.r*2-34,txt:'+1 Kapsel',col:'#63c74d',t:1.1});}
@@ -1587,7 +1600,7 @@ function drawEnemy(e,g){
 function shade(hex,k){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=v=>Math.round(k<0?v*(1+k):v+(255-v)*k);return'rgb('+f(r)+','+f(g)+','+f(b)+')';}
 function bar(x,y,w,h,p,col){c.fillStyle='#00000080';c.fillRect(x,y,w,h);c.fillStyle=col;c.fillRect(x,y,w*Math.max(0,p),h);}
 function draw(){
-  c.save();if(shake)c.translate(rnd(-shake,shake),rnd(-shake,shake));
+  c.save();if(shake&&!eco)c.translate(rnd(-shake,shake),rnd(-shake,shake));
   drawBg();
   // Wurzelfalle: Wurzeln wachsen um betäubte Gegner
   for(const x of fx)if(x.kind==='root'&&!x.e.dying){const k=Math.min(1,(2-x.t)*5),r=x.e.ty.r;
@@ -2845,6 +2858,16 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
   if(performance.now()<2500)return;
   shown=true;clearInterval(tm);if(!dailyState().ready)return;$('modal').hidden=false;renderDaily();},1000);}
 
+// ---------- Optionen: Energiesparmodus ----------
+function renderOpts(){
+  $('card').innerHTML=`<h2>Optionen</h2>
+    <button class="optrow" id="optEco" type="button" aria-pressed="${eco}"><span class="ot"><b>🔋 Energiesparmodus</b>
+      <small>Weniger Bilder pro Sekunde, halbe Auflösung im Kampf und weniger Effekte. Dein Kaktus kämpft ganz normal weiter, das Handy bleibt aber kühler und der Akku hält länger.</small></span><span class="tgl"></span></button>
+    <div class="row"><button class="btn go" id="optOk" type="button">Fertig</button></div>`;
+  $('optEco').onclick=()=>{eco=!eco;S.eco=eco;save();applyEco();renderOpts();banner={txt:eco?'🔋 Energiesparmodus an':'Energiesparmodus aus',t:1.6};};
+  $('optOk').onclick=()=>{$('modal').hidden=true;};}
+$('setBtn').onclick=()=>{if(!$('modal').hidden)return;$('modal').hidden=false;renderOpts();};
+
 // ---------- Einführung für neue Spieler ----------
 // Opa Stachel zeigt die wichtigsten Knöpfe. Ein Spotlight hebt das Ziel hervor, der Rest ist abgedunkelt.
 const TUT=[
@@ -3039,7 +3062,11 @@ const PATCHES=[
    hero:['🌵 Mehr Kraft am Anfang','Der Start war zu schwer. Jetzt geht es am Anfang flüssiger voran, das Spiel dauert aber trotzdem lange.'],
    items:()=>[['Grundwerte:','Dein Kaktus hat jetzt von Haus aus 25 statt 10 Angriff und 300 statt 100 Leben.'],
      ['Bosse:','Bosse und Turmwächter treffen 30 % schwächer.'],
-     ['Unverändert:','Seltenheiten, Werkstatt, Gärtnerei und Kakteen bleiben, wie sie sind.']]}
+     ['Unverändert:','Seltenheiten, Werkstatt, Gärtnerei und Kakteen bleiben, wie sie sind.']]},
+  {id:'pn32',date:'2026-11-07',title:'Energiesparmodus',
+   hero:['🔋 Kühleres Handy, längerer Akku','Unter ⚙ Optionen oben links gibt es jetzt einen Energiesparmodus.'],
+   items:()=>[['Was er macht:','Weniger Bilder pro Sekunde, halbe Auflösung im Kampf und weniger Effekte. Das Spiel braucht damit nur etwa ein Fünftel der Rechenleistung.'],
+     ['Kein Nachteil:','Dein Kaktus kämpft genauso schnell weiter wie vorher.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
@@ -3095,13 +3122,20 @@ $('x2Btn').onclick=()=>{if(!$('modal').hidden||editing)return;
 
 // ---------- Schleife ----------
 let last=performance.now();
-function loop(now){
-  let dt=Math.min(0.05,(now-last)/1000);last=now;
+function gameStep(dt){
   if(editing||offShow){t+=dt;drawPreview();}
   else if(maint.on&&!maint.dev){t+=dt;}
   else{gardenTick();autoTick(dt);const sp=x2Active()&&S.x2On!==false?2:1;for(let k=0;k<sp;k++)update(dt);}
-  draw();hud();if(eqOpen)drawEqHero();else drawDoll();
-  requestAnimationFrame(loop);
+}
+// Energiesparmodus: das Spiel läuft genauso weiter, wird aber nur ~20-mal pro Sekunde in halber Auflösung gezeichnet,
+// mit weniger Partikeln, ohne Wackeln, und die Figur in der Ausrüstung nur 4-mal pro Sekunde
+let dollAcc=0;
+function loop(now){
+  const raw=Math.min(0.25,Math.max(0,(now-last)/1000));last=now;
+  if(eco){let r=raw;while(r>1e-4){const d=Math.min(0.05,r);gameStep(d);r-=d;}
+    draw();hud();dollAcc+=raw;if(dollAcc>=0.25){dollAcc=0;if(eqOpen)drawEqHero();else drawDoll();}
+    setTimeout(()=>requestAnimationFrame(loop),ECO_MS);}
+  else{gameStep(Math.min(0.05,raw));draw();hud();if(eqOpen)drawEqHero();else drawDoll();requestAnimationFrame(loop);}
 }
 requestAnimationFrame(loop);
 setInterval(save,5000);
