@@ -78,6 +78,7 @@ h1 span{color:var(--bloom)}
 @keyframes wsnr{50%{transform:translateX(4px)}}@keyframes wsnl{50%{transform:translateX(-4px)}}
 .wsdots{display:flex;justify-content:center;gap:6px;margin:8px 0 2px}.wsdots i{width:8px;height:8px;border-radius:50%;background:#6b5644}.wsdots i.on{background:var(--sand)}
 .brow b em.skpas{color:#9ad0ff}
+.brow.sksoon{opacity:.55;filter:grayscale(.6)}.skbald{color:var(--sand)!important;font-weight:800;text-align:center;font-size:.72rem!important}
 .skon{font-size:.85rem;color:var(--muted)}.skon b{color:var(--sand)}.skon small{font-size:.75rem}
 .brow:not(.skact){opacity:.8}.brow.skact{box-shadow:inset 0 0 10px #0008,0 0 0 2px var(--bc)}
 .sktog{align-self:flex-start;margin:3px 0 1px;border:2px solid #6b5644;background:#2b2019;color:var(--muted);border-radius:999px;padding:2px 10px;font:inherit;font-size:.74rem;font-weight:800;cursor:pointer}
@@ -898,7 +899,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1043,23 +1044,22 @@ function heroStats(){
 const MODS=[
   {id:'regen',n:'Stachelregen',ico:'✶',c:'#fff6d8',cd:8, unlock:1,d:'Trifft alle Gegner mit 250 % Angriff'},
   {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',cd:12,unlock:3,d:'Heilt 25 % Leben, 4 s lang +30 % Tempo'},
-  {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'},
-  // 08.11.2026: Ausweichen und Betäuben sind aktive Fähigkeiten mit Abklingzeit
-  {id:'dodge',n:'Ausweichen',ico:'💨',c:'#9ad0ff',cd:20,unlock:1,d:'Ein paar Sekunden lang allen Treffern ausweichen'},
-  {id:'stun', n:'Betäuben',  ico:'💫',c:'#ffe066',cd:18,unlock:1,d:'Betäubt alle Gegner ein paar Sekunden'}
+  {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'}
 ];
 // Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
 const SK=[
   {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+5*lv} %</b> Angriff`},
   {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> Leben, 4 s lang +30 % Tempo`},
   {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> Angriff an alle, betäubt <b>${(2+.02*lv).toFixed(2).replace('.',',')} s</b>`},
-  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',act:1,txt:lv=>`Weicht <b>${(2+.04*lv).toFixed(2).replace('.',',')} s</b> lang allen Treffern aus`},
-  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',act:1,txt:lv=>`Betäubt alle Gegner <b>${(1.5+.025*lv).toFixed(2).replace('.',',')} s</b> lang`}
+  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',soon:1,txt:()=>'Passiv: wirkt immer, ohne einen der 3 Plätze zu belegen'},
+  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',soon:1,txt:()=>'Passiv: wirkt immer, ohne einen der 3 Plätze zu belegen'}
 ];
 // 08.11.2026: bis Lv 100, kleinere Schritte pro Level, teurer (Start 5.000, jedes Level +14 %)
 const SK_MAX=100,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(5000*Math.pow(1.14,lv));
 // Höchstens 3 der 5 Fähigkeiten sind aktiv (08.11.2026), der Spieler wählt sie in der Werkstatt aus
-const SK_ON=3,skOn=()=>Array.isArray(S.skOn)?S.skOn.filter(id=>SK.some(k=>k.id===id)).slice(0,SK_ON):['regen','sonne','falle'],skActive=id=>skOn().includes(id);
+const SK_ON=3,skOn=()=>Array.isArray(S.skOn)?S.skOn.filter(id=>SK.some(k=>k.id===id&&!k.soon)).slice(0,SK_ON):['regen','sonne','falle'],skActive=id=>skOn().includes(id);
+// Höchstes Fähigkeits-Level hängt an der freigeschalteten Schwierigkeit: Leicht 25, Normal 50, Schwer 75, Ultra schwer 100
+const skCap=()=>[25,50,75,100][Math.min(3,diffIdx(S.best))];
 const dodgeDur=()=>2+.04*skLv('dodge'),stunDur=()=>1.5+.025*skLv('stun');
 // In Turm, Dungeon und Bosskämpfen (dort gibt es keine Knöpfe) lösen Ausweichen und Betäuben nach ihrer Abklingzeit von selbst aus
 function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;
@@ -1176,6 +1176,8 @@ if(!S.v9){
 }
 resetHero();
 let v2Note=S.v2msg||0;delete S.v2msg;
+if(!S.skRf){S.skRf=1;let back=0;for(const id in (S.sk||{}))for(let l=0;l<(S.sk[id]||0);l++)back+=skCost(l);
+  S.sk={};S.skOn=null;if(back>0){S.coins+=back;banner={txt:'Fähigkeiten zurückgesetzt: +'+fmt(back)+' Münzen erstattet',t:4};}}
 const v3Note=S.v3msg||null;delete S.v3msg;if(v2Note)banner={txt:'Neue Ausrüstung! +'+v2Note+' Kapseln',t:4};
 
 // Welten: je 10 Stages, eigene Farben, Gegner und Boss (wie die Planeten in Scrap Star)
@@ -1993,14 +1995,15 @@ function renderWS(){
         <small>jetzt +${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
         ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`;
   const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
-    <p style="margin:0;color:var(--muted)">Level deine Fähigkeiten mit Münzen (bis Lv ${SK_MAX}). Nur <b style="color:var(--sand)">${SK_ON} aktive</b> Fähigkeiten wirken im Kampf, auch in Turm, Dungeon und bei den Bossen.</p>
+    <p style="margin:0;color:var(--muted)">Level deine Fähigkeiten mit Münzen. Höchstes Level: Leicht 25 · Normal 50 · Schwer 75 · Ultra schwer 100 (jetzt <b style="color:var(--sand)">${skCap()}</b>). Nur <b style="color:var(--sand)">${SK_ON} aktive</b> Fähigkeiten wirken im Kampf, auch in Turm, Dungeon und bei den Bossen.</p>
     <div class="skon">Aktiv: <b>${skOn().length} / ${SK_ON}</b>${skOn().length>=SK_ON?' <small>– zum Tauschen erst eine abwählen</small>':''}</div>
-    <div class="blist">${SK.map(K=>{const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=SK_MAX,c=skCost(lv),ok=!lock&&S.coins>=c;
-      return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}<em>Lv ${lv} / ${SK_MAX}</em>${K.act?'':'<em class="skpas">passiv</em>'}</b>
+    <div class="blist">${SK.map(K=>{if(K.soon)return`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}<em class="skpas">passiv</em></b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald<br>verfügbar</small></div>`;
+      const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=skCap(),c=skCost(lv),ok=!lock&&S.coins>=c;
+      return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}<em>Lv ${lv} / ${skCap()}</em>${K.act?'':'<em class="skpas">passiv</em>'}</b>
         <button class="sktog${on?' on':''}" type="button" data-skon="${K.id}" ${full?'disabled':''}>${on?'✓ Aktiv':'Aktivieren'}</button>
         <small>${K.txt(lv)}${max?'':` → <span style="color:#7fe08a">${(K.txt(lv+1).match(/<b>[^<]*<\/b>/g)||[]).join(' · ').replace(/<\/?b>/g,'')}</span>`}</small>
         ${M?`<small>Abklingzeit ${M.cd} s${lock?` · <span style="color:#ff8a7a">frei ab Stage ${M.unlock}</span>`:''}</small>`:''}</div>
-        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}</div>`;
+        ${max?`<small style="color:var(--sand);font-weight:800;text-align:center">Max${lv<SK_MAX?'<br><span style="font-size:.68rem;color:var(--muted)">mehr ab '+DIFFS[skCap()/25].n+'</span>':''}</small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}</div>`;
   $('card').innerHTML=`<div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
     <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
     <div class="row"><button class="btn" id="hqClose" type="button">Schließen</button></div>`;
@@ -2011,9 +2014,9 @@ function renderWS(){
    pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(dx<0?1:0);});}
   $('card').querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{const id=b.dataset.sk,lv=skLv(id),c=skCost(lv),M=MODS.find(m=>m.id===id);
-    if(lv>=SK_MAX||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderModBar();renderWS();});
+    if(lv>=skCap()||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderModBar();renderWS();});
   $('card').querySelectorAll('[data-skon]').forEach(b=>b.onclick=()=>{const id=b.dataset.skon,on=skOn();
-    if(on.includes(id))S.skOn=on.filter(x=>x!==id);else if(on.length<SK_ON)S.skOn=[...on,id];else return;save();renderModBar();renderWS();});
+    if(SK.find(k=>k.id===id).soon)return;if(on.includes(id))S.skOn=on.filter(x=>x!==id);else if(on.length<SK_ON)S.skOn=[...on,id];else return;save();renderModBar();renderWS();});
   $('card').querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
     if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
     if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};renderWS();});
@@ -3746,7 +3749,13 @@ const PATCHES=[
    items:()=>[['💨 Ausweichen:','Alle 20 s: 2 s lang allen Treffern ausweichen, pro Level +0,04 s (Lv 100: 6 s). Dein Kaktus leuchtet dabei blau.'],
      ['💫 Betäuben:','Alle 18 s: alle Gegner 1,5 s betäuben, pro Level +0,025 s (Lv 100: 4 s).'],
      ['Auslösen:','Automatisch oder per Tipp in der Kampfbox. In Turm, Dungeon und bei den Bossen lösen sie von selbst aus.'],
-     ['SKILLS AUTO:','Der Auto-Knopf für die Fähigkeiten hat keinen Schieberegler mehr. Er ist jetzt einfach an (grün) oder aus, wie BOSS AUTO.']]}
+     ['SKILLS AUTO:','Der Auto-Knopf für die Fähigkeiten hat keinen Schieberegler mehr. Er ist jetzt einfach an (grün) oder aus, wie BOSS AUTO.']]},
+  {id:'pn65',date:'2026-11-08',title:'Fähigkeiten zurückgesetzt',
+   hero:['↩ Münzen zurück','Alle Fähigkeits-Level wurden zurückgesetzt. Jede Münze, die du hineingesteckt hast, bekommst du zurück.'],
+   items:()=>[['Warum?','Man konnte die Fähigkeiten viel zu schnell auf Lv 100 bringen.'],
+     ['Neu:','Das höchste Level hängt an deiner Schwierigkeit: Leicht 25, Normal 50, Schwer 75, Ultra schwer 100.'],
+     ['Ausweichen und Betäuben:','Sind noch gesperrt („Bald verfügbar“). Später wirken sie passiv und immer, ohne einen der 3 Plätze zu belegen.'],
+     ['SKILLS AUTO:','Bleibt wie es ist: einfach an oder aus.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
