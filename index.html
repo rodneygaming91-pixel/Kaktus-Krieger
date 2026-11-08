@@ -673,7 +673,19 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .actions{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;margin:0;
   padding:8px max(12px,env(safe-area-inset-left,0px)) calc(8px + env(safe-area-inset-bottom,0px));
   background:linear-gradient(#3a2c22f2,#1c140ff2);border-top:3px solid var(--frame);box-shadow:0 -4px 14px #0009;border-radius:14px 14px 0 0}
-.game{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.game{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))}
+.actions .resbar{grid-column:1/-1;display:flex;justify-content:center;gap:10px;margin:-2px 0 2px}
+.actions .resbar .chip{flex:1 1 0;max-width:200px;justify-content:center;padding:3px 12px;font-size:1rem}
+/* Profil als Symbol oben links, Dungeons und Erkundung in der Knopfreihe */
+.hbtns .onbtn.hon{display:flex;justify-content:center;border-width:2px;border-color:#5a4430;border-radius:999px;padding:3px 9px;font-size:.8rem;background:#2a1d12;color:#e8d4b0;position:relative}
+.hbtns .onbtn.hon::before{content:'';position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border-radius:50%;background:#8a7560;border:2px solid #1c140e}
+.hbtns .onbtn.hon[data-st="ok"]::before{background:#7be86a}.hbtns .onbtn.hon[data-st="off"]::before,.hbtns .onbtn.hon[data-st="err"]::before{background:#ff6a5a}
+.hbtns .onbtn.hon[data-chat]::after{content:attr(data-chat);position:absolute;top:-7px;right:-7px;margin:0;min-width:18px;height:18px;border-radius:9px;padding:0 4px;display:grid;place-items:center;font-size:.68rem;border:2px solid #1c140e}
+.onrow{grid-template-columns:1fr 1fr 1fr 1fr}
+.onrow .onbtn.sm{padding:6px 4px;min-width:0}.onrow .onbtn.sm span{white-space:nowrap}
+@media (max-width:420px){.onrow{gap:5px}.onrow .onbtn.sm b{font-size:.92rem}.onrow .onbtn.sm span{font-size:.62rem}}
+@media (max-width:370px){.onrow .onbtn.sm b{font-size:.84rem}}
+.onrow .onbtn.dgbtn span::before,.onrow .onbtn.exbtn span::before{display:none}
 .giftbox{display:flex;flex-direction:column;align-items:center;gap:2px;background:linear-gradient(#5a4a10,#3a2f08);border:3px solid #ffd447;border-radius:12px;padding:12px;box-shadow:0 0 18px #ffd44755}
 .giftbox span{font-family:var(--display);font-size:1.2rem;color:#fff2a8}.giftbox b{font-size:1.05rem;color:#fff}
 /* Optionen und Energiesparmodus */
@@ -762,10 +774,9 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 
 <div class="game">
   <header>
-    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉ Post<em id="mailN" hidden>0</em></button></div></div>
+    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
-    <div class="res"><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div></div>
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
@@ -780,11 +791,12 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   <div class="caprow"><button class="capsule" id="capBtn" type="button">Samenkapsel öffnen <span class="n" id="capN">0</span></button>
     <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
   <div class="actions">
+    <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
     <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
     <button class="garden" id="dBtn" type="button"><small>Hunde</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
     <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
   </div>
-  <div class="onrow"><button class="onbtn" id="onBtn" type="button" data-st="idle"><b>Online-Profil</b><span id="onSub">verbinde …</span></button>
+  <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>Bald da</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Bald da</span></button>
     <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
     <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
   <div class="autorow" id="autoRow" hidden>
@@ -804,7 +816,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2889,6 +2901,13 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
   if(performance.now()<2500)return;
   shown=true;clearInterval(tm);if(!dailyState().ready)return;$('modal').hidden=false;renderDaily();},1000);}
 
+// ---------- Dungeons und Erkundung: kommen bald ----------
+function soonBox(t,ico,txt){if(!$('modal').hidden||editing)return;$('modal').hidden=false;
+  $('card').innerHTML=`<h2>${ico} ${t}</h2><p style="margin:0;font-size:2.6rem">🚧</p><p class="hint" style="margin:0">${txt}</p>
+    <div class="row"><button class="btn go" id="soonOk" type="button">Okay</button></div>`;$('soonOk').onclick=()=>{$('modal').hidden=true;};}
+$('dgBtn').onclick=()=>soonBox('Dungeons','🏰','Hier entstehen gerade Dungeons. Bald geht es hier los!');
+$('exBtn').onclick=()=>soonBox('Erkundung','🧭','Hier entsteht gerade die Erkundung. Bald geht es hier los!');
+
 // ---------- Optionen: Energiesparmodus ----------
 function renderOpts(){
   $('card').innerHTML=`<h2>Optionen</h2>
@@ -2940,7 +2959,7 @@ const TUT=[
   {el:'gBtn',t:'Baust du die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
   {el:'dBtn',t:'Hunde begleiten dich in den Kampf und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
-  {el:'onBtn',t:'Im Online-Profil findest du Freunde, Gilden, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
+  {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Gilden, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
 const tut={on:false,i:0,wait:false,box:null};
@@ -3163,7 +3182,12 @@ const PATCHES=[
   {id:'pn41',date:'2026-11-08',title:'Kein Zurückstufen mehr',
    hero:['💪 Einmal geschafft bleibt geschafft','Wer in einer normalen Welle besiegt wird, fällt nicht mehr eine Stage zurück.'],
    items:()=>[['Neu:','Du bleibst auf deiner Stage, behältst die bisher besiegten Gegner und kämpfst mit vollem Leben weiter.'],
-     ['Tipp:','Jede Welt greift mit einem eigenen Element an, oben links unter „Gegner“. Ausrüstung mit passender Resistenz macht dort einen großen Unterschied.']]}
+     ['Tipp:','Jede Welt greift mit einem eigenen Element an, oben links unter „Gegner“. Ausrüstung mit passender Resistenz macht dort einen großen Unterschied.']]},
+  {id:'pn42',date:'2026-11-08',title:'Neuer Bildschirmaufbau',
+   hero:['🧭 Alles an seinem Platz','Ein paar Knöpfe sind umgezogen, damit der Bildschirm aufgeräumter ist.'],
+   items:()=>[['Oben links:','⚙ Optionen, ✉ Post und neu 👤 für Profil, Freunde, Gilde, Ranglisten und Weltboss.'],
+     ['Münzen und Kakteen:','Stehen jetzt unten fest über Werkstatt, Hunde und Gärtnerei und sind immer zu sehen.'],
+     ['Bald da:','🏰 Dungeons und 🧭 Erkundung haben schon ihre Knöpfe. Der Inhalt folgt bald.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
