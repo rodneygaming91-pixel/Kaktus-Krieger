@@ -662,6 +662,13 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .dslot .dl{position:absolute;top:-10px;left:4px;font-size:.55rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:#f3e6cc;background:#1c140f;border:1px solid #6b5644;border-radius:4px;padding:0 4px;white-space:nowrap;max-width:calc(100% + 4px);overflow:hidden;text-overflow:ellipsis}
 .dslot .dd{position:absolute;top:-6px;right:-6px;width:12px;height:12px;transform:rotate(45deg);border:2px solid #1c140f;border-radius:2px}
 .dslot .dv{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:.62rem;font-weight:900;color:#fff;text-shadow:0 1px 0 #000,0 0 3px #000;font-variant-numeric:tabular-nums}
+.dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
+.dslot .deff{position:absolute;top:16px;left:-5px;display:flex;align-items:center;gap:1px;height:18px;min-width:18px;padding:0 4px;border-radius:9px;
+  background:#1c140f;border:2px solid var(--ec);color:var(--ec);font-size:.7rem;font-weight:900;line-height:1;box-shadow:0 1px 3px #000a;z-index:2}
+.dslot .deff small{font-size:.58rem;color:#f3e6cc}
+.dslot .dres{left:auto;right:-5px}
+.dslot .deff.good{box-shadow:0 0 0 2px #7be86a,0 0 8px #7be86aaa}
+.dslot .deff.bad{opacity:.55}
 .dslot .dup{position:absolute;top:3px;left:4px;color:#7fe08a;font-size:.6rem;text-shadow:0 1px 0 #000}
 .dslot.empty{--rc:#4a3a2e;background:#1a130e}.dslot.empty i{font-style:normal;font-size:1.3rem;font-weight:900;color:#6b5644}
 .dslot.dinv{--rc:#c49a6c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}.dslot.dinv b{font-family:var(--display);font-weight:400;font-size:1.25rem;color:#ffd447;line-height:1}.dslot.dinv small{font-size:.62rem;font-weight:800;color:#d8c6a8}
@@ -816,7 +823,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1124,6 +1131,9 @@ const elMulFor=el=>{const Wd=world();return !el?1:el===Wd.weak?1.5:el===Wd.atkEl
 const elMul=()=>elMulFor(S.gear.waffe&&S.gear.waffe.el);
 // „Besser“ heißt: höherer Wert. Element und Resistenz sind nur Zusatzinfos und entscheiden höchstens bei exakt gleichem Wert.
 const itemScore=it=>it.v+((it.slot==='waffe'&&elMulFor(it.el)>1)||(it.res&&it.res.el===world().atkEl)?1e-6:0);
+// Effekt-Symbol an angelegten Teilen: genau wie im Inventar-Fenster (Element-Zeichen unten rechts in Elementfarbe)
+function effBadges(it){if(!it.el&&!it.res)return'';const E=ELEM[it.el||it.res.el];
+  return`<b class="eld" style="--ec:${E.c}" title="${it.el?'Element: '+E.n:it.res.v+' % '+E.n+'-Resistenz'}">${E.ico}</b>`;}
 const elTag=el=>el?`<span class="elt" style="--ec:${ELEM[el].c}">${ELEM[el].ico} ${ELEM[el].n}</span>`:'';
 function itemExtra(it){let h='';if(it.el)h+=`<span class="ex">${elTag(it.el)}${it.el===world().weak?' <em class="up">trifft Schwäche +50 %</em>':it.el===world().atkEl?' <em class="down">Gegner resistent −40 %</em>':''}</span>`;
   if(it.res)h+=`<span class="ex">+${it.res.v} % ${elTag(it.res.el)}-Resistenz${it.res.el===world().atkEl?' <em class="up">hilft hier</em>':''}</span>`;return h;}
@@ -1684,11 +1694,11 @@ function hud(){
       if(!it)return`<span class="dslot empty"><span class="dl">${sl.n}</span><i>+</i></span>`;
       const R=RAR[it.r];const up=S.inv.some(x=>x.slot===id&&itemScore(x)>itemScore(it));
       return`<span class="dslot${it.r>=4?' hi':''}" style="--rc:${R.c}"><span class="dl">${sl.n}</span><span class="dd" style="background:${R.c}"></span>${up?'<b class="dup">▲</b>':''}
-        <canvas width="112" height="112" data-gicon="${id}" title="${sl.n}"></canvas><b class="dv">+${fmtV(sl,it.v)}</b></span>`;};
+        <canvas width="112" height="112" data-gicon="${id}" title="${sl.n}"></canvas><b class="dv">+${fmtV(sl,it.v)}</b>${effBadges(it)}</span>`;};
    const st=heroStats();
    $('gear').innerHTML=`<span class="dcol">${LEFT.map(cell).join('')}</span>
      <span class="dmid"><span class="dpow">⚔ ${fmt(powerNow())}</span><canvas id="dollcv" width="440" height="560"></canvas>
-       <span class="dst"><span>⚔ ${fmt(st.atk)}</span><span>♥ ${fmt(st.hp)}</span><span>🛡 ${st.block.toFixed(0)}%</span><span>✦ ${st.crit.toFixed(0)}%</span></span></span>
+       <span class="dst"><span>⚔ ${fmt(st.atk)}</span><span>♥ ${fmt(st.hp)}</span><span>🛡 ${st.block.toFixed(0)}%</span><span>✦ ${st.crit.toFixed(0)}%</span><span>${elTag(world().atkEl)} ${st.res[world().atkEl]||0}%</span></span></span>
      <span class="dcol">${RIGHT.map(cell).join('')}<span class="dslot dinv"><span class="dl">Inventar</span><b>${S.inv.length}</b><small>/ ${invMax()}</small></span></span>`;}
   $('gear').querySelectorAll('canvas[data-gicon]').forEach(cv2=>{const it=S.gear[cv2.dataset.gicon];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});
   // neue, leere Figur sofort zeichnen (sonst blitzt sie im Energiesparmodus kurz leer auf)
@@ -3187,7 +3197,11 @@ const PATCHES=[
    hero:['🧭 Alles an seinem Platz','Ein paar Knöpfe sind umgezogen, damit der Bildschirm aufgeräumter ist.'],
    items:()=>[['Oben links:','⚙ Optionen, ✉ Post und neu 👤 für Profil, Freunde, Gilde, Ranglisten und Weltboss.'],
      ['Münzen und Kakteen:','Stehen jetzt unten fest über Werkstatt, Hunde und Gärtnerei und sind immer zu sehen.'],
-     ['Bald da:','🏰 Dungeons und 🧭 Erkundung haben schon ihre Knöpfe. Der Inhalt folgt bald.']]}
+     ['Bald da:','🏰 Dungeons und 🧭 Erkundung haben schon ihre Knöpfe. Der Inhalt folgt bald.']]},
+  {id:'pn43',date:'2026-11-08',title:'Effekte auf einen Blick',
+   hero:['❄ Element-Symbole an deiner Ausrüstung','Auf dem Startbildschirm siehst du jetzt bei jedem angelegten Teil sein Element, genau wie im Inventar.'],
+   items:()=>[['Symbole:','Unten rechts an jedem Teil, z. B. ☠ Gift, ❄ Eis, ✹ Feuer, ϟ Blitz.'],
+     ['Resistenz:','Unter deinem Kaktus steht, wie gut du gegen das Element der aktuellen Welt geschützt bist.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
