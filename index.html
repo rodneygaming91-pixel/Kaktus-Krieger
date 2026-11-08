@@ -637,7 +637,8 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 @media (prefers-reduced-motion:reduce){.gear .slot.ep::after,.gear .slot.hi,.gear .slot.hi .gico::before{animation:none}}
 /* ×2-Knopf und Werbe-Platzhalter */
 .fbr{position:absolute;right:10px;bottom:9px;display:flex;gap:6px;align-items:center}
-.fbr .mauto{position:relative!important;right:auto!important;bottom:auto!important}
+.fbr .mauto,.fbl .mauto{position:relative!important;right:auto!important;bottom:auto!important}
+#modAutoBtn{align-self:center}
 .x2btn{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;border:2px solid #1c140e;border-radius:10px;padding:3px 8px;min-width:46px;cursor:pointer;
   background:linear-gradient(#ffd447,#c98a10);color:#2a1a0e;box-shadow:0 2px 0 #0009,0 0 0 2px #5a3e00,0 0 8px #ffd44788;font-family:var(--display)}
 .x2btn b{font-weight:400;font-size:1.05rem}.x2btn small{font-family:var(--body);font-size:.55rem;font-weight:800;font-variant-numeric:tabular-nums}
@@ -831,7 +832,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 .fauto.fin{flex-direction:column;gap:2px;padding:4px 5px 3px;border-radius:10px;font-size:.55rem;letter-spacing:.06em;line-height:1}
 .fauto.fin small{font-size:.55rem;font-weight:900}
 @media (max-width:420px){.fbl{left:7px;bottom:5px;gap:6px}.fauto.fin{padding:3px 4px 2px}
-  .fbr .mauto{line-height:1.05;padding:3px 8px 3px 18px;font-size:.66rem;text-align:left}.fbr .mauto span{display:block}}
+  .fbr .mauto,.fbl .mauto{line-height:1.05;padding:3px 8px 3px 18px;font-size:.66rem;text-align:left}.fbr .mauto span,.fbl .mauto span{display:block}}
 .foot .fst{flex:1 1 0}
 .btn.twauto{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;padding:8px 10px 8px 52px;text-align:center}
 .btn.twauto small{display:block;font-size:.68rem;opacity:.85}
@@ -861,7 +862,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
-    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="fauto fin" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span class="sw"><i></i></span><small>AUTO</small><b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
+    <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <div class="foot">
@@ -897,7 +898,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1042,23 +1043,30 @@ function heroStats(){
 const MODS=[
   {id:'regen',n:'Stachelregen',ico:'✶',c:'#fff6d8',cd:8, unlock:1,d:'Trifft alle Gegner mit 250 % Angriff'},
   {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',cd:12,unlock:3,d:'Heilt 25 % Leben, 4 s lang +30 % Tempo'},
-  {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'}
+  {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'},
+  // 08.11.2026: Ausweichen und Betäuben sind aktive Fähigkeiten mit Abklingzeit
+  {id:'dodge',n:'Ausweichen',ico:'💨',c:'#9ad0ff',cd:20,unlock:1,d:'Ein paar Sekunden lang allen Treffern ausweichen'},
+  {id:'stun', n:'Betäuben',  ico:'💫',c:'#ffe066',cd:18,unlock:1,d:'Betäubt alle Gegner ein paar Sekunden'}
 ];
 // Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
 const SK=[
   {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+5*lv} %</b> Angriff`},
   {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> Leben, 4 s lang +30 % Tempo`},
   {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> Angriff an alle, betäubt <b>${(2+.02*lv).toFixed(2).replace('.',',')} s</b>`},
-  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',txt:lv=>`<b>${(.3*lv).toFixed(1).replace('.',',')} %</b> Chance, einem Treffer ganz auszuweichen`},
-  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',txt:lv=>`<b>${(.3*lv).toFixed(1).replace('.',',')} %</b> Chance, dass ein Stachel den Gegner kurz betäubt`}
+  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',act:1,txt:lv=>`Weicht <b>${(2+.04*lv).toFixed(2).replace('.',',')} s</b> lang allen Treffern aus`},
+  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',act:1,txt:lv=>`Betäubt alle Gegner <b>${(1.5+.025*lv).toFixed(2).replace('.',',')} s</b> lang`}
 ];
 // 08.11.2026: bis Lv 100, kleinere Schritte pro Level, teurer (Start 5.000, jedes Level +14 %)
 const SK_MAX=100,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(5000*Math.pow(1.14,lv));
 // Höchstens 3 der 5 Fähigkeiten sind aktiv (08.11.2026), der Spieler wählt sie in der Werkstatt aus
 const SK_ON=3,skOn=()=>Array.isArray(S.skOn)?S.skOn.filter(id=>SK.some(k=>k.id===id)).slice(0,SK_ON):['regen','sonne','falle'],skActive=id=>skOn().includes(id);
-const dodgeCh=()=>skActive('dodge')?skLv('dodge')*.003:0,stunCh=()=>skActive('stun')?skLv('stun')*.003:0;
+const dodgeDur=()=>2+.04*skLv('dodge'),stunDur=()=>1.5+.025*skLv('stun');
+// In Turm, Dungeon und Bosskämpfen (dort gibt es keine Knöpfe) lösen Ausweichen und Betäuben nach ihrer Abklingzeit von selbst aus
+function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;
+  if(skActive('dodge')){A.dgC=(A.dgC==null?2:A.dgC)-dt;if(A.dgC<=0){A.dgC=20*cm.cd;A.dgOn=dodgeDur();A.fl.push({x:70,y:50,txt:'Ausweichen!',c:'#9ad0ff',t:.9});}}
+  if(skActive('stun')){A.snC=(A.snC==null?3:A.snC)-dt;if(A.snC<=0){A.snC=18*cm.cd;A.bossT+=stunDur();A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.9});}}}
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
-let haste=0;
+let haste=0,dodgeT=0;
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
@@ -1256,8 +1264,7 @@ function update(dt){
   for(const p of spines){
     const e=p.tx;if(e.dying){p.dead=true;continue;}
     const ex=e.x,ey=e.y-(e.ty.r);const dx=ex-p.x,dy=ey-p.y,d=Math.hypot(dx,dy);
-    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100;hitEnemy(e,p.dmg!=null?p.dmg:hs.atk*rnd(.9,1.1)*(cr?2:1),cr);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);
-      else if(p.dmg==null&&!e.dying&&!(e.stun>0)&&Math.random()<stunCh()){e.stun=.8;floats.push({x:e.x,y:e.y-e.ty.r*2-8,txt:'Betäubt!',col:'#ffe066',t:.6});}}
+    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100;hitEnemy(e,p.dmg!=null?p.dmg:hs.atk*rnd(.9,1.1)*(cr?2:1),cr);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);}
     else{p.x+=dx/d*p.v*dt;p.y+=dy/d*p.v*dt;p.a=Math.atan2(dy,dx);}
   }
   spines=spines.filter(p=>!p.dead);
@@ -1295,7 +1302,7 @@ function update(dt){
     drT[id]=D.every;st.j=1;st.hit=false;st.e=f;st.tx=f.x-f.ty.r-pos.x;
   });
   // Module laden auf und zünden automatisch, wenn gekämpft wird
-  haste=Math.max(0,haste-dt);
+  haste=Math.max(0,haste-dt);dodgeT=Math.max(0,dodgeT-dt);
   for(const m of MODS){if(S.best<m.unlock||!skActive(m.id))continue;modCd[m.id]=Math.max(0,modCd[m.id]-dt);
     if(modCd[m.id]<=0&&engaged&&S.modAuto!==false)castMod(m);}
   for(const x of fx){x.t-=dt;if(x.kind==='drop'){x.y+=x.v*dt;if(!x.done&&x.y>=x.ty){x.done=true;x.t=Math.min(x.t,.15);}}}
@@ -1320,7 +1327,7 @@ function hitEnemy(e,dmg,crit){
 function castMod(m){
   if(modCd[m.id]>0||S.best<m.unlock||!skActive(m.id))return;
   const targets=alive().filter(e=>e.x<W+10);
-  if(m.id!=='sonne'&&!targets.length)return;
+  if(m.id!=='sonne'&&m.id!=='dodge'&&!targets.length)return;
   const cm=clsM();modCd[m.id]=m.cd*cm.cd;const atk=heroStats().atk*cm.mod;
   if(m.id==='regen'){
     for(const e of targets)for(let i=0;i<5;i++)fx.push({kind:'drop',x:e.x+rnd(-14,14),y:-rnd(0,80),ty:e.y-e.ty.r,v:520,t:1.2});
@@ -1328,13 +1335,17 @@ function castMod(m){
   }else if(m.id==='sonne'){
     const h=hero.max*(.25+.0025*skLv('sonne'))*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
     fx.push({kind:'sun',t:.8});floats.push({x:HX,y:GROUND-96,txt:'+'+fmt(h),col:'#63c74d',t:.9});
+  }else if(m.id==='dodge'){
+    dodgeT=dodgeDur();
+  }else if(m.id==='stun'){
+    const d=stunDur();for(const e of targets)if(!e.dying)e.stun=Math.max(e.stun||0,d);shake=Math.max(shake,2);
   }else{
     const fl=skLv('falle');for(const e of targets){hitEnemy(e,atk*(1+.05*fl));if(!e.dying)e.stun=2+.02*fl;fx.push({kind:'root',e,t:2});}
   }
   floats.push({x:HX+4,y:GROUND-108,txt:m.n+'!',col:m.c,t:1});
 }
 function hurtHero(dmg){
-  if(Math.random()<dodgeCh()){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
+  if(dodgeT>0){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
   const hs=heroStats();dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
   hero.hp-=dmg;hero.hit=1;shake=Math.max(shake,2);
   floats.push({x:HX,y:GROUND-70,txt:'-'+fmt(dmg),col:'#ff6fae',t:.7});
@@ -1774,6 +1785,7 @@ function draw(){
   // Sonnenheilung: goldener Schein um den Kaktus
   for(const x of fx)if(x.kind==='sun'){const k=1-x.t/.8;c.globalAlpha=1-k;c.strokeStyle='#ffd447';c.lineWidth=4;
     c.beginPath();c.arc(HX,GROUND-36,20+k*40,0,7);c.stroke();c.globalAlpha=1;}
+  if(dodgeT>0){c.globalAlpha=.35+.2*Math.sin(t*12);c.strokeStyle='#9ad0ff';c.lineWidth=3;c.beginPath();c.ellipse(HX,GROUND-34,30,42,0,0,7);c.stroke();c.globalAlpha=1;}
   if(haste>0){c.globalAlpha=.25+.15*Math.sin(t*10);c.fillStyle='#ffd447';c.beginPath();c.ellipse(HX,GROUND+2,26,6,0,0,7);c.fill();c.globalAlpha=1;}
   drawHero();
   // Stachelregen: Stacheln fallen von oben
@@ -2345,12 +2357,12 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?2:1);
-        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
+        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       // Boss greift an
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}
       A.lunge=Math.max(0,A.lunge-dt*3);
-      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
+      simSk(A,dt);for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(A.dgOn>0){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
         A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
@@ -3063,11 +3075,11 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
       A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=st.atk*em*rnd(.9,1.1)*(cr?2:1);
-        A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
+        A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.3;A.lunge=1;A.orbs.push({x:240,y:140});}
       A.lunge=Math.max(0,A.lunge-dt*3);
-      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitTaken*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
+      simSk(A,dt);for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(A.dgOn>0){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitTaken*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.bhp<=0){A.end='boss';A.bhp=0;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
@@ -3218,10 +3230,10 @@ function dgFight(){const D=dgState();if(dg.anim||dgKeys()<=0)return;D.used++;sav
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=Math.min(A.bhp,dps*.25*rnd(.85,1.15)*(cr?2:1));
-        A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.round(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
+        A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.round(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}A.lunge=Math.max(0,A.lunge-dt*3);
-      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitV*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
+      simSk(A,dt);for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(A.dgOn>0){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitV*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.bhp<=0){A.end='boss';A.bhp=0;A.coins=B.full;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
@@ -3728,7 +3740,13 @@ const PATCHES=[
    hero:['✓ Fähigkeiten auswählen','Von den 5 Fähigkeiten sind immer 3 aktiv – welche, entscheidest jetzt du.'],
    items:()=>[['So geht’s:','Werkstatt → nach links wischen → bei einer Fähigkeit „Aktivieren“ oder „✓ Aktiv“ antippen. Zum Tauschen erst eine abwählen.'],
      ['Im Kampf:','Unten links siehst du nur deine aktiven Fähigkeiten. Ausweichen und Betäuben wirken nur, wenn sie aktiv sind.'],
-     ['Start:','Am Anfang sind Stachelregen, Sonnenheilung und Wurzelfalle aktiv.']]}
+     ['Start:','Am Anfang sind Stachelregen, Sonnenheilung und Wurzelfalle aktiv.']]},
+  {id:'pn64',date:'2026-11-08',title:'Ausweichen und Betäuben zum Auslösen',
+   hero:['💨💫 Jetzt mit Knopf','Ausweichen und Betäuben sind jetzt Fähigkeiten mit Abklingzeit, wie Stachelregen.'],
+   items:()=>[['💨 Ausweichen:','Alle 20 s: 2 s lang allen Treffern ausweichen, pro Level +0,04 s (Lv 100: 6 s). Dein Kaktus leuchtet dabei blau.'],
+     ['💫 Betäuben:','Alle 18 s: alle Gegner 1,5 s betäuben, pro Level +0,025 s (Lv 100: 4 s).'],
+     ['Auslösen:','Automatisch oder per Tipp in der Kampfbox. In Turm, Dungeon und bei den Bossen lösen sie von selbst aus.'],
+     ['SKILLS AUTO:','Der Auto-Knopf für die Fähigkeiten hat keinen Schieberegler mehr. Er ist jetzt einfach an (grün) oder aus, wie BOSS AUTO.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
