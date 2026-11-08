@@ -865,7 +865,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1804,7 +1804,10 @@ function reveal(){
   {const b=$('bSwapSell');if(b)b.onclick=()=>{S.coins+=sellValue(cur);S.gear[it.slot]=it;feed(it,true);close();};}
   (better?($('bEquip').disabled?$('bSwapSell'):$('bEquip')):$('bSell')).focus();
 }
-function close(){pending=null;$('modal').hidden=true;save();lastHud='';}
+function close(){const back=pending&&pending.tw;if(back)delete pending.tw;pending=null;
+  // Teil aus dem Turm: zurück ins Turm-Fenster, Auto-Kampf läuft weiter
+  if(back&&tw.open){save();lastHud='';renderTower();if(tw.auto)setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim&&!pending)twFight();},S.twX2?400:800);return;}
+  $('modal').hidden=true;save();lastHud='';}
 $('capBtn').onclick=openCapsule;
 $('modal').addEventListener('click',e=>{if(pending&&!$('bEquip'))reveal();});
 
@@ -2865,11 +2868,13 @@ function renderTower(){
     <p class="hint" style="margin:0">Jeden Tag startest du bei Etage 1. Belohnungen gibt es für Etagen über deinem Rekord (<b>${S.twRec}</b>). Verlieren kostet nichts.</p>
     <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim||tw.auto?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
     <button class="btn twauto${tw.auto?' on':''}" id="twAuto" type="button" aria-pressed="${!!tw.auto}"><span class="sw"><i></i></span>${tw.auto?'Auto-Kampf läuft · Stoppen':'Auto-Kampf starten'}<small>${tw.auto?'Stoppt auch automatisch bei einer Niederlage':'Kämpft Etage für Etage weiter, bis du einen Kampf verlierst'}</small></button>
+    <button class="btn twauto twtrash${S.twTrash?' on':''}" id="twTrash" type="button" aria-pressed="${!!S.twTrash}"><span class="sw"><i></i></span>Schlechtere Teile zerstören<small>${S.twTrash?'Teile, die schlechter sind als deine Ausrüstung, werden sofort zu Münzen':'Aus: Du entscheidest bei jedem Teil selbst'}</small></button>
     ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Etagen, die du schon geschafft hast, sofort durchziehen</small></button>`:''}
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
   $('twGo').onclick=twFight;drawTower();
   $('twX2').onclick=()=>{S.twX2=!S.twX2;save();const b=$('twX2');b.classList.toggle('on',S.twX2);b.setAttribute('aria-pressed',S.twX2);};
+  $('twTrash').onclick=()=>{S.twTrash=!S.twTrash;save();renderTower();};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
   {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
     S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft.${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
@@ -2910,7 +2915,7 @@ function drawTower(){const cv2=$('twcv');if(!cv2)return;const g=cv2.getContext('
     g.textAlign='center';g.font='26px "Lilita One","Arial Black",sans-serif';g.fillStyle='#1c120c';g.fillText(txt,182,112);
     g.fillStyle=A.end==='boss'?'#ffe08a':A.end==='dead'?'#ff8a7a':'#f4e6cc';g.fillText(txt,180,110);}
 }
-function twFight(){if(tw.anim)return;
+function twFight(){if(tw.anim||pending)return;
   const f=twFloor(),G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
   const hitTaken=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100);
   tw.res=null;tw.anim={left:30,php:st.hp,pmax:st.hp,bhp:G.hp,bmax:G.hp,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,throwT:.3,bossT:1.3,reg:st.hp*st.reg/100};
@@ -2938,10 +2943,15 @@ function twFight(){if(tw.anim)return;
   requestAnimationFrame(step);}
 function twFinish(A,f){tw.anim=null;
   if(A.end==='boss'){S.tower=f+1;
-    if(f>S.twRec){const R=twReward(f),it=twRoll(f);S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.twRec=f;const itTxt=twGive(it);
+    if(f>S.twRec){const R=twReward(f),it=twRoll(f);S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.twRec=f;
+      const cur=S.gear[it.slot],worse=cur&&itemScore(it)<=itemScore(cur);let itTxt;
+      if(S.twTrash&&worse){const c=sellValue(it);S.coins+=c;itTxt=`<span style="color:${RAR[it.r].c}">${it.name}</span> war schlechter als deins – zerstört für <em class="up">+${fmt(c)} Münzen</em>`;}
+      else{itTxt=`Neues Teil: <span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n})`;tw.give=it;}
       tw.res=`<b>Etage ${f} geschafft – neuer Rekord!</b> <em class="up">+${R.kak} 🌵</em> · <em class="up">+${R.caps} Kapseln</em><br>${itTxt}`;}
     else tw.res=`<b>Etage ${f} geschafft!</b> Weiter zu Etage ${f+1}. <small>(Belohnungen gibt es ab Etage ${S.twRec+1})</small>`;
     save();lastHud='';twSubmit();
+    // Neues Teil: erst entscheiden (Behalten, Tauschen, Zerstören), danach geht es im Turm weiter
+    if(tw.give){const it=tw.give;tw.give=null;it.tw=true;pending=it;reveal();return;}
     // Auto-Kampf: nach kurzer Pause die nächste Etage starten
     if(tw.auto){if(tw.open)renderTower();setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim)twFight();},S.twX2?600:1200);return;}}
   else{tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span>${tw.auto?' <b>Auto-Kampf beendet.</b>':''}<br><small>Tipp: Werkstatt leveln, bessere Ausrüstung oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;tw.auto=false;}
@@ -3361,7 +3371,12 @@ const PATCHES=[
    hero:['🧩 Baue deinen Build','Unter Inventar → Builds kannst du jetzt jeden Platz einzeln belegen.'],
    items:()=>[['Plus-Taste:','Tippe auf einen Platz (+) und wähle ein Teil aus Inventar oder Ausrüstung, ohne es anzulegen.'],
      ['Anlegen:','Ein Tipp tauscht alle Teile des Builds auf einmal. Leere Plätze behalten dein aktuelles Teil.'],
-     ['Übersicht:','Unter jedem Build siehst du Waffen-Element und Resistenzen.']]}
+     ['Übersicht:','Unter jedem Build siehst du Waffen-Element und Resistenzen.']]},
+  {id:'pn49',date:'2026-11-08',title:'Turm: Teile selbst auswählen',
+   hero:['🗼 Du entscheidest','Neue Teile aus dem Turm landen nicht mehr einfach im Inventar.'],
+   items:()=>[['Belohnungsfenster:','Nach jeder Etage mit neuem Teil siehst du den Vergleich wie bei einer Samenkapsel: Zerstören, Behalten oder Tauschen.'],
+     ['Schlechtere Teile zerstören:','Mit dem neuen Schalter im Turm werden Teile, die schlechter sind als deine Ausrüstung, sofort zu Münzen.'],
+     ['Auto-Kampf:','Läuft nach deiner Entscheidung einfach weiter.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
