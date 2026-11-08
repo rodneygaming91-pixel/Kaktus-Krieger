@@ -870,7 +870,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2189,23 +2189,23 @@ async function wbClaim(){if(wb.claimBusy)return;wb.claimBusy=true;const P0=wb.st
     else wb.prizeMsg=(r&&r.reason)||'Keine Belohnung abzuholen';}
   catch(e){wb.prizeMsg='Keine Verbindung.';}
   wb.claimBusy=false;await loadWb();}
-function wbBody(){
-  if(wb.err)return`<p class="hint warn">${wb.err}</p>`;
-  if(!wb.st)return'<p class="hint">Lade Weltboss …</p>';
-  const B=wbBoss(wb.st.period),em=wbElMul(B),left=wb.st.day_left;
+function wbBody(X=wb){
+  if(X.err)return`<p class="hint warn">${X.err}</p>`;
+  if(!X.st)return`<p class="hint">${X.loading}</p>`;
+  const B=X.boss(X.st.period),em=wbElMul(B),left=X.st.day_left;
   return`<div class="wbbox"><div class="wbhead"><b>${B.n}</b><span>Leben ∞</span></div>
-    <canvas id="wbcv" width="720" height="420"></canvas>
+    <canvas id="${X.cv}" width="720" height="420"></canvas>
     <div class="wbhp inf"><div style="width:100%"></div><span>∞ unbesiegbar · mach so viel Schaden wie möglich</span></div>
     <div class="wbel"><span>Greift an mit ${elTag(B.atkEl)}</span><span>Schwach gegen ${elTag(B.weak)}</span>
       <span>Deine Waffe: ${S.gear.waffe&&S.gear.waffe.el?elTag(S.gear.waffe.el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
-    ${wb.res?`<div class="wbres">${wb.res}</div>`:''}
-    <div class="eqdb"><button class="sbtn red" type="button" id="wbGo" ${left<=0||wb.busy||!ON.code?'disabled':''}>${wb.busy?'Kampf läuft …':left>0?'Angreifen ('+left+'/3 heute)':'Morgen wieder'}</button></div>
-    <p class="hint">Diese Woche: ${wb.st.players} Spieler · dein Schaden ${fmt(wb.st.mine)} · Gesamtschaden ${fmt(wb.st.total)}</p>
-    ${wb.st.top&&wb.st.top.length?`<ol class="lb wbtop">${wb.st.top.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
+    ${X.res?`<div class="wbres">${X.res}</div>`:''}
+    <div class="eqdb"><button class="sbtn red" type="button" id="${X.go}" ${left<=0||X.busy||!ON.code?'disabled':''}>${X.busy?'Kampf läuft …':left>0?'Angreifen ('+left+'/3 heute)':'Morgen wieder'}</button></div>
+    <p class="hint">${X.info()}</p>
+    ${X.st.top&&X.st.top.length?`<ol class="lb wbtop">${X.st.top.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
       <span class="rk">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</span><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}</b><small>${r.cls||''}</small></span><span class="vl">${fmt(r.dmg)}</span></button></li>`).join('')}</ol>`:''}
-    ${wbPrizeHtml()}
+    ${X.prize()}
   </div>`;}
-function drawWb(){const cv2=$('wbcv');if(!cv2||!wb.st)return;const g=cv2.getContext('2d'),B=wbBoss(wb.st.period),A=wb.anim;
+function drawWb(X=wb){const cv2=$(X.cv);if(!cv2||!X.st)return;const g=cv2.getContext('2d'),B=X.boss(X.st.period),A=X.anim;
   g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,720,420);
   const gr=g.createLinearGradient(0,0,0,420);gr.addColorStop(0,'#2a1030');gr.addColorStop(1,'#5a1f2a');g.fillStyle=gr;g.fillRect(0,0,720,420);
   g.fillStyle='#3a1a1a';g.fillRect(0,330,720,90);g.fillStyle='#5a2a24';g.fillRect(0,330,720,6);
@@ -2238,16 +2238,16 @@ function drawWb(){const cv2=$('wbcv');if(!cv2||!wb.st)return;const g=cv2.getCont
     g.fillStyle=A.end==='boss'?'#ffe08a':A.end==='dead'?'#ff8a7a':'#f4e6cc';g.fillText(txt,180,110);}
 }
 // Echter 30-Sekunden-Kampf: endet bei Zeitablauf, besiegtem Boss oder wenn der Kaktus fällt
-function wbAttack(){if(wb.busy||!wb.st||wb.st.day_left<=0)return;
-  const B=wbBoss(wb.st.period),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30;
+function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
+  const B=X.boss(X.st.period),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30;
   // Der Boss hat unendlich Leben und wird alle 10 s wütender (schlägt härter zu)
   const res=(st.res[B.atkEl]||0)/100,blk=st.block/100,bossHit=st.hp*0.09*(1-blk)*(1-(st.armor||0)/100)*(1-res);
-  wb.busy=true;wb.res=null;
-  wb.anim={left:30,dmg:0,php:st.hp,pmax:st.hp,bhp:1,bmax:1,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,
+  X.busy=true;X.res=null;
+  X.anim={left:30,dmg:0,php:st.hp,pmax:st.hp,bhp:1,bmax:1,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,
     throwT:0,bossT:1.2,reg:st.hp*st.reg/100};
   renderOnline();
   let last=performance.now();
-  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=wb.anim;if(!A)return;
+  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=X.anim;if(!A)return;
     if(!A.end){
       A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       // Kaktus wirft: Schaden pro Wurf aus der Gesamtleistung (Angriff, Krit, Drohnen, Module, Element)
@@ -2265,18 +2265,47 @@ function wbAttack(){if(wb.busy||!wb.st||wb.st.day_left<=0)return;
       if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
     A.bhit=Math.max(0,A.bhit-dt);A.phit=Math.max(0,A.phit-dt);for(const f of A.fl){f.y-=30*dt;f.t-=dt;}A.fl=A.fl.filter(f=>f.t>0);
-    drawWb();
-    const alive=olOpen&&olTab==='boss'&&$('wbcv');
+    drawWb(X);
+    const alive=X.alive()&&$(X.cv);
     if(alive&&!(A.end&&A.endT>1.6))requestAnimationFrame(step);else finish(A);};
   const finish=async A=>{const total=Math.round(A.dmg),why=A.end==='boss'?'Boss besiegt!':A.end==='dead'?'Du bist gefallen.':A.end==='time'?'Zeit abgelaufen.':'Kampf abgebrochen.';
-    try{const r=await rpc('kk_wb_hit',{p_code:ON.code,p_key:ON.key,p_dmg:total});
+    try{const r=await rpc(X.hitRpc,{p_code:ON.code,p_key:ON.key,p_dmg:total});
       if(r&&r.ok){const bonus=A.end==='boss'?3:0,caps=Math.min(10,2+bonus+Math.floor(Math.log10(r.added+1)/2)),coins=Math.round(r.added*.25*(A.end==='boss'?1.5:1));
         S.caps+=caps;S.coins+=coins;save();lastHud='';
-        wb.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen.</small>':''}`;}
-      else wb.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
-    catch(e){wb.res='<span class="down">Keine Verbindung, Angriff nicht gezählt.</span>';}
-    wb.busy=false;wb.anim=null;await loadWb();};
+        X.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen.</small>':''}`;}
+      else X.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
+    catch(e){X.res='<span class="down">Keine Verbindung, Angriff nicht gezählt.</span>';}
+    X.busy=false;X.anim=null;await X.load();};
   requestAnimationFrame(step);}
+
+// Weltboss und Allianz-Boss teilen sich Kampf und Anzeige; hier steht, was sich unterscheidet
+Object.assign(wb,{hitRpc:'kk_wb_hit',cv:'wbcv',go:'wbGo',loading:'Lade Weltboss …',boss:p=>wbBoss(p),prize:()=>wbPrizeHtml(),load:()=>loadWb(),
+  alive:()=>olOpen&&olTab==='boss',info:()=>`Diese Woche: ${wb.st.players} Spieler · dein Schaden ${fmt(wb.st.mine)} · Gesamtschaden ${fmt(wb.st.total)}`});
+// ---------- Allianz-Boss: wie der Weltboss, aber nur für die eigene Allianz; Belohnung nach dem Gesamtschaden der ganzen Allianz ----------
+const AB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:8},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e7,kak:10,caps:12},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e9,kak:15,caps:16},
+  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e11,kak:22,caps:22},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e13,kak:30,caps:30}];
+const abTier=d=>{let T=AB_TIERS[0];for(const x of AB_TIERS)if(d>=x.min)T=x;return T;};
+function abBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS[(n+6)%WORLDS.length],W1=WORLDS[(n*3+2)%WORLDS.length];
+  return{n:'Allianz-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak};}
+let ab={st:null,err:'',busy:false,res:null,anim:null,hitRpc:'kk_ab_hit',cv:'abcv',go:'abGo',loading:'Lade Allianz-Boss …',boss:p=>abBoss(p),
+  prize:()=>abPrizeHtml(),load:()=>loadAb(),alive:()=>olOpen&&olTab==='gilde'&&gd.sub==='boss',
+  info:()=>`Diese Woche: ${ab.st.top.length} Mitglieder dabei · dein Schaden ${fmt(ab.st.mine)} · Allianz gesamt ${fmt(ab.st.total)}`};
+async function loadAb(){ab.err='';try{ab.st=await rpc('kk_ab_status',{p_code:ON.code});if(ab.st&&!ab.st.guild){ab.st=null;ab.err='Du bist in keiner Allianz.';}}
+  catch(e){ab.st=null;ab.err='Keine Verbindung. Den Allianz-Boss gibt es nur auf kaktus-krieger.pages.dev.';}
+  if(ab.alive())renderOnline();}
+function abPrizeHtml(){const P=ab.st&&ab.st.prize,tot=ab.st?+ab.st.total:0,T=abTier(tot),nx=AB_TIERS[AB_TIERS.indexOf(T)+1];
+  return`<div class="twrank"><div class="twrh"><b>🏆 Wochenbelohnung</b><span>${wbWeekLeft()}</span></div>
+    ${P?`<div class="twclaim"><span>${abTier(+P.gdmg).ico} Letzte Woche: ${abTier(+P.gdmg).n} · Allianz ${fmt(P.gdmg)} Schaden</span><button class="sbtn go" type="button" id="abClaim" ${ab.claimBusy?'disabled':''}>Abholen</button></div>`:''}
+    ${ab.prizeMsg?`<p class="hint" style="margin:0">${ab.prizeMsg}</p>`:''}
+    <div class="wbtiers">${AB_TIERS.map(x=>`<span class="${x===T&&tot>0?'on':''}" style="--tc:${x.c}"><b>${x.ico} ${x.n}</b><small>${x.min?'ab '+fmt(x.min):'ab 1 Angriff'}</small><small>${x.kak} 🌵 · ${x.caps} Kapseln</small></span>`).join('')}</div>
+    ${tot>0?`<p class="hint" style="margin:0">Eure Allianz ist diese Woche auf <b style="color:${T.c}">${T.ico} ${T.n}</b>${nx?` · noch ${fmt(nx.min-tot)} Schaden bis ${nx.ico} ${nx.n}`:' · höchste Stufe!'}</p>`:'<p class="hint" style="margin:0">Greift gemeinsam an, um in eine Stufe zu kommen.</p>'}
+    <p class="hint" style="margin:0">Der Schaden aller Mitglieder zählt zusammen. Jedes Mitglied, das angegriffen hat, bekommt ab Montag die Belohnung dieser Stufe.</p></div>`;}
+async function abClaim(){if(ab.claimBusy)return;ab.claimBusy=true;renderOnline();
+  try{const r=await rpc('kk_ab_claim',{p_code:ON.code,p_key:ON.key});
+    if(r&&r.ok){const T=abTier(+r.gdmg);S.kak=(S.kak||0)+T.kak;S.caps+=T.caps;save();lastHud='';ab.prizeMsg=`${T.ico} ${T.n} <b>Abgeholt:</b> <em class="up">+${T.kak} 🌵</em> · <em class="up">+${T.caps} Kapseln</em>`;}
+    else ab.prizeMsg=(r&&r.reason)||'Keine Belohnung abzuholen';}
+  catch(e){ab.prizeMsg='Keine Verbindung.';}
+  ab.claimBusy=false;await loadAb();}
 
 // ---------- Allianzen ----------
 const GUILD_COST=1000;
@@ -2328,11 +2357,12 @@ function guildBody(){
   if(gd.my===undefined)return'<p class="hint">Lade Allianz …</p>';
   const msg=gd.msg?`<p class="hint warn">${esc2(gd.msg)}</p>`:'';
   if(gd.info){const G=gd.info,lead=G.leader===ON.code;
-    const sub=`<div class="lbsw"><button type="button" class="${gd.sub==='halle'?'on':''}" data-gsub="halle">Mitglieder</button><button type="button" class="${gd.sub==='kasse'?'on':''}" data-gsub="kasse">Kasse</button><button type="button" class="${gd.sub==='ziele'?'on':''}" data-gsub="ziele">Ziele</button><button type="button" class="${gd.sub==='chat'?'on':''}" data-gsub="chat">Chat${chat.unread?' <i class="cdot">'+chat.unread+'</i>':''}</button></div>`;
+    const sub=`<div class="lbsw"><button type="button" class="${gd.sub==='halle'?'on':''}" data-gsub="halle">Mitglieder</button><button type="button" class="${gd.sub==='kasse'?'on':''}" data-gsub="kasse">Kasse</button><button type="button" class="${gd.sub==='ziele'?'on':''}" data-gsub="ziele">Ziele</button><button type="button" class="${gd.sub==='boss'?'on':''}" data-gsub="boss">Boss</button><button type="button" class="${gd.sub==='chat'?'on':''}" data-gsub="chat">Chat${chat.unread?' <i class="cdot">'+chat.unread+'</i>':''}</button></div>`;
 
     const head=`<div class="ghead"><div><b>${esc2(G.name)} <em>[${esc2(G.tag)}]</em></b><small>${esc2(G.about)}</small></div>
         <span class="glv">Lv ${G.level}<small>+${G.level*2}% Münzen</small></span></div>`;
     if(gd.sub==='ziele')return head+sub+msg+goalsHtml();
+    if(gd.sub==='boss')return head+sub+msg+wbBody(ab);
     if(gd.sub==='chat')return head+sub+msg+`<div class="gchat" id="gchat">${chatHtml()}</div>
       <div class="ofind"><input id="gMsg" class="oin" maxlength="200" placeholder="Nachricht an die Allianz …" autocomplete="off"><button class="sbtn go" type="button" id="gSend">Senden</button></div>
       <p class="hint">Bitte freundlich bleiben. Links sind nicht erlaubt.</p>`;
@@ -2375,7 +2405,7 @@ function wireGuild(){
   $('card').querySelectorAll('[data-kick]').forEach(b=>b.onclick=e=>{e.stopPropagation();const tgt=b.dataset.kick;if(gd.kick!==tgt){gd.kick=tgt;renderOnline();return;}gd.kick=null;act('kk_guild_kick',{p_target:tgt});});
   if(q('gLeave'))q('gLeave').onclick=()=>{if(!gd.leaveAsk){gd.leaveAsk=true;renderOnline();return;}gd.leaveAsk=false;act('kk_guild_leave',{});};
   if(q('gRe'))q('gRe').onclick=()=>{gd.leaveAsk=false;gd.kick=null;loadGuild();};
-  $('card').querySelectorAll('[data-gsub]').forEach(b=>b.onclick=()=>{gd.sub=b.dataset.gsub;gd.msg='';if(gd.sub==='ziele'){goals.d=null;loadGoals();}if(gd.sub==='chat'&&chat.msgs.length){chat.seen=chat.last;chat.unread=0;try{localStorage.setItem('kk-chat-seen',chat.seen);}catch(e){}if($('onBtn'))delete $('onBtn').dataset.chat;}renderOnline();if(gd.sub==='chat')pollChat();});
+  $('card').querySelectorAll('[data-gsub]').forEach(b=>b.onclick=()=>{gd.sub=b.dataset.gsub;gd.msg='';if(gd.sub==='boss'&&!ab.busy)loadAb();if(gd.sub==='ziele'){goals.d=null;loadGoals();}if(gd.sub==='chat'&&chat.msgs.length){chat.seen=chat.last;chat.unread=0;try{localStorage.setItem('kk-chat-seen',chat.seen);}catch(e){}if($('onBtn'))delete $('onBtn').dataset.chat;}renderOnline();if(gd.sub==='chat')pollChat();});
   $('card').querySelectorAll('[data-claim]').forEach(b=>b.onclick=async()=>{const [goal,ti]=b.dataset.claim.split(':'),i=+ti;b.disabled=true;
     try{const r=await rpc('kk_guild_claim',{p_code:ON.code,p_key:ON.key,p_goal:goal,p_tier:i});
       if(r&&r.ok){const caps=GOAL_REW[goal][i],coins=Math.ceil(3*cPow(S.stage))*GOAL_COIN[i];S.caps+=caps;S.coins+=coins;save();lastHud='';
@@ -2458,7 +2488,8 @@ function renderOnline(){
   $('card').innerHTML=`<div class="eqwin">${tabs}${body}<button class="sbtn wide" type="button" id="oClose">Schließen</button></div>`;
   $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
   if(olTab==='gilde')wireGuild();
-  {const wg=$('wbGo');if(wg)wg.onclick=wbAttack;if($('wbcv'))drawWb();}
+  {const wg=$('wbGo');if(wg)wg.onclick=()=>wbAttack(wb);if($('wbcv'))drawWb(wb);}
+  {const ag=$('abGo');if(ag)ag.onclick=()=>wbAttack(ab);if($('abcv'))drawWb(ab);const ac=$('abClaim');if(ac)ac.onclick=abClaim;}
   {const wc=$('wbClaim');if(wc)wc.onclick=wbClaim;}
   $('card').querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{lbBy=b.dataset.lb;lbData=null;renderOnline();loadLb();});
   $('card').querySelectorAll('[data-fc]').forEach(b=>b.onclick=async()=>{friendBack=olTab==='freunde'?null:olTab;olTab='freunde';friendErr='';try{friend=await rpc('kk_profile',{p_code:b.dataset.fc});}catch(e){friend=null;friendErr='Keine Verbindung.';}renderOnline();});
@@ -3395,7 +3426,12 @@ const PATCHES=[
    hero:['⚔ 20 Stufen für deine Allianz','Die Allianz-Ausbauten haben jetzt 20 statt 10 Stufen und neue Preise.'],
    items:()=>[['Preise:','Kriegstrommel und Wasserspeicher starten bei 50.000, Handelskarren bei 80.000, Glücksklee bei 120.000. Jede Stufe kostet 2,5-mal so viel.'],
      ['Glücksklee:','+1 % pro Stufe, auf Stufe 20 also 20 % Chance auf eine höhere Seltenheit.'],
-     ['Zurückgesetzt:','Alle Ausbauten stehen wieder auf 0. Die dafür ausgegebenen Münzen sind zurück in der Allianzkasse.']]}
+     ['Zurückgesetzt:','Alle Ausbauten stehen wieder auf 0. Die dafür ausgegebenen Münzen sind zurück in der Allianzkasse.']]},
+  {id:'pn52',date:'2026-11-08',title:'Der Allianz-Boss',
+   hero:['🛡 Gemeinsam gegen den Allianz-Boss','Im Allianz-Fenster gibt es jetzt den Reiter „Boss“.'],
+   items:()=>[['Kampf:','Wie beim Weltboss: unendlich Leben, 30 Sekunden so viel Schaden wie möglich, 3 Angriffe pro Tag.'],
+     ['Gemeinsam:','Der Schaden aller Mitglieder zählt zusammen. Je mehr ihr schafft, desto besser die Stufe von Bronze bis Diamant.'],
+     ['Belohnung:','Jedes Mitglied, das in der Woche angegriffen hat, bekommt ab Montag die Belohnung eurer Stufe.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
