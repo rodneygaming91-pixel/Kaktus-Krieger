@@ -681,6 +681,12 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .avs.empty{opacity:.5;justify-content:center;min-height:60px}.avs.empty i{font-style:normal}
 .avt{display:flex;flex-direction:column;min-width:0}.avt b{font-size:.74rem;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .avt small{font-size:.64rem;color:#d8c6a8;line-height:1.25}.avt small .elt{font-size:.64rem}
+.wbhp.inf>div{background:linear-gradient(90deg,#e0283a,#ff6a8a,#e0283a);background-size:200% 100%;animation:wbinf 3s linear infinite}
+@keyframes wbinf{to{background-position:200% 0}}
+.wbtiers{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.wbtiers span{display:flex;flex-direction:column;align-items:center;gap:1px;background:#1c140f;border:2px solid #4a3a2e;border-radius:8px;padding:5px 2px;text-align:center;min-width:0}
+.wbtiers span b{font-size:.68rem;color:var(--tc);white-space:nowrap}.wbtiers span small{font-size:.56rem;color:#bfae94;line-height:1.2}
+.wbtiers span.on{border-color:var(--tc);box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 40%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
 .dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
 .dslot .deff{position:absolute;top:16px;left:-5px;display:flex;align-items:center;gap:1px;height:18px;min-width:18px;padding:0 4px;border-radius:9px;
   background:#1c140f;border:2px solid var(--ec);color:var(--ec);font-size:.7rem;font-weight:900;line-height:1;box-shadow:0 1px 3px #000a;z-index:2}
@@ -842,7 +848,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2118,31 +2124,38 @@ function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk
 async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='boss')renderOnline();}
 // Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
+// Weltboss hat unendlich Leben (08.11.2026): Belohnung richtet sich nach dem eigenen Schaden der ganzen Woche, Platz 1–3 bekommt zusätzlich einen Bonus
+const WB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:8},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e6,kak:10,caps:12},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e8,kak:15,caps:16},
+  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e10,kak:22,caps:22},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e12,kak:30,caps:30}];
+const wbTier=d=>{let T=WB_TIERS[0];for(const x of WB_TIERS)if(d>=x.min)T=x;return T;};
 const WB_PART={kak:10,caps:10};
 const WB_PRIZE=[null,{kak:40,caps:30,bump:2,n:'🥇'},{kak:25,caps:20,bump:1,n:'🥈'},{kak:15,caps:12,bump:0,n:'🥉'}];
 function wbPrizeHtml(){const P=wb.st&&wb.st.prize;
-  const legend=`<div class="twprz"><span>Alle, die angreifen: ${WB_PART.kak} 🌵 · ${WB_PART.caps} Kapseln</span>${[1,2,3].map(r=>{const X=WB_PRIZE[r];return`<span>${X.n} zusätzlich ${X.kak} 🌵 · ${X.caps} Kapseln${X.bump?` · Teil +${X.bump} Seltenheit${X.bump>1?'en':''}`:''}</span>`;}).join('')}</div>`;
+  const mine=wb.st?+wb.st.mine:0,T=wbTier(mine),nx=WB_TIERS[WB_TIERS.indexOf(T)+1];
+  const legend=`<div class="wbtiers">${WB_TIERS.map(x=>`<span class="${x===T&&mine>0?'on':''}" style="--tc:${x.c}"><b>${x.ico} ${x.n}</b><small>${x.min?'ab '+fmt(x.min):'ab 1 Angriff'}</small><small>${x.kak} 🌵 · ${x.caps} Kapseln</small></span>`).join('')}</div>
+    ${mine>0?`<p class="hint" style="margin:0">Diese Woche bist du auf <b style="color:${T.c}">${T.ico} ${T.n}</b>${nx?` · noch ${fmt(nx.min-mine)} Schaden bis ${nx.ico} ${nx.n}`:' · höchste Stufe!'}</p>`:'<p class="hint" style="margin:0">Greif an, um in eine Stufe zu kommen.</p>'}
+    <div class="twprz">${[1,2,3].map(r=>{const X=WB_PRIZE[r];return`<span>${X.n} Platz ${r} zusätzlich ${X.kak} 🌵 · ${X.caps} Kapseln${X.bump?` · Teil +${X.bump} Seltenheit${X.bump>1?'en':''}`:''}</span>`;}).join('')}</div>`;
   return`<div class="twrank"><div class="twrh"><b>🏆 Wochenbelohnung</b><span>${wbWeekLeft()}</span></div>
-    ${P?`<div class="twclaim"><span>${P.rk<=3?WB_PRIZE[P.rk].n+' Letzte Woche Platz '+P.rk:'⚔ Letzte Woche dabei (Platz '+P.rk+')'} · ${fmt(P.dmg)} Schaden</span><button class="sbtn go" type="button" id="wbClaim" ${wb.claimBusy?'disabled':''}>Abholen</button></div>`:''}
+    ${P?`<div class="twclaim"><span>${wbTier(+P.dmg).ico} Letzte Woche: ${wbTier(+P.dmg).n} · ${fmt(P.dmg)} Schaden${P.rk<=3?' · '+WB_PRIZE[P.rk].n+' Platz '+P.rk:''}</span><button class="sbtn go" type="button" id="wbClaim" ${wb.claimBusy?'disabled':''}>Abholen</button></div>`:''}
     ${wb.prizeMsg?`<p class="hint" style="margin:0">${wb.prizeMsg}</p>`:''}
     <p class="hint" style="margin:0">Nach Ende der Woche (Montag) kannst du hier deine Belohnung abholen.</p>${legend}</div>`;}
 function wbWeekLeft(){const n=new Date(),d=new Date(Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()));const dow=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()+7-dow);
   const s2=(d-n)/1000,dd=Math.floor(s2/86400),hh=Math.floor(s2%86400/3600);return'Woche endet in '+(dd?dd+' T ':'')+hh+' h';}
-async function wbClaim(){if(wb.claimBusy)return;wb.claimBusy=true;renderOnline();
+async function wbClaim(){if(wb.claimBusy)return;wb.claimBusy=true;const P0=wb.st&&wb.st.prize;renderOnline();
   try{const r=await rpc('kk_wb_claim',{p_code:ON.code,p_key:ON.key});
-    if(r&&r.ok){let k=WB_PART.kak,c=WB_PART.caps,t2='';const X=r.rk<=3?WB_PRIZE[r.rk]:null;
+    if(r&&r.ok){const T=wbTier(+(r.dmg!=null?r.dmg:(P0&&P0.dmg)||0));let k=T.kak,c=T.caps,t2='';const X=r.rk<=3?WB_PRIZE[r.rk]:null;
       if(X){k+=X.kak;c+=X.caps;t2=' · '+twGive(twRoll(Math.max(1,Math.floor((S.best||1)/3)),X.bump));}
-      S.kak=(S.kak||0)+k;S.caps+=c;save();lastHud='';wb.prizeMsg=`${X?X.n:'⚔'} <b>Abgeholt:</b> <em class="up">+${k} 🌵</em> · <em class="up">+${c} Kapseln</em>${t2}`;}
+      S.kak=(S.kak||0)+k;S.caps+=c;save();lastHud='';wb.prizeMsg=`${T.ico} ${T.n}${X?' · '+X.n:''} <b>Abgeholt:</b> <em class="up">+${k} 🌵</em> · <em class="up">+${c} Kapseln</em>${t2}`;}
     else wb.prizeMsg=(r&&r.reason)||'Keine Belohnung abzuholen';}
   catch(e){wb.prizeMsg='Keine Verbindung.';}
   wb.claimBusy=false;await loadWb();}
 function wbBody(){
   if(wb.err)return`<p class="hint warn">${wb.err}</p>`;
   if(!wb.st)return'<p class="hint">Lade Weltboss …</p>';
-  const B=wbBoss(wb.st.period),L=wbLevel(+wb.st.total),pct=Math.max(0,1-L.rest/L.hp),em=wbElMul(B),left=wb.st.day_left;
-  return`<div class="wbbox"><div class="wbhead"><b>${B.n}</b><span>Stufe ${L.l}</span></div>
+  const B=wbBoss(wb.st.period),em=wbElMul(B),left=wb.st.day_left;
+  return`<div class="wbbox"><div class="wbhead"><b>${B.n}</b><span>Leben ∞</span></div>
     <canvas id="wbcv" width="720" height="420"></canvas>
-    <div class="wbhp"><div style="width:${pct*100}%"></div><span>${fmt(L.hp-L.rest)} / ${fmt(L.hp)}</span></div>
+    <div class="wbhp inf"><div style="width:100%"></div><span>∞ unbesiegbar · mach so viel Schaden wie möglich</span></div>
     <div class="wbel"><span>Greift an mit ${elTag(B.atkEl)}</span><span>Schwach gegen ${elTag(B.weak)}</span>
       <span>Deine Waffe: ${S.gear.waffe&&S.gear.waffe.el?elTag(S.gear.waffe.el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
     ${wb.res?`<div class="wbres">${wb.res}</div>`:''}
@@ -2165,10 +2178,11 @@ function drawWb(){const cv2=$('wbcv');if(!cv2||!wb.st)return;const g=cv2.getCont
   // Boss
   g.save();if(bossDead){g.globalAlpha=Math.max(0,1-A.endT*1.5);g.translate(265,166);g.rotate(A.endT*.6);g.translate(-265,-166);}
   drawEnemy({ty:B.ty,boss:true,x:265+shake-(A?A.lunge*12:0),y:166,hp:1,max:1,hit:A&&A.bhit>0?1:0,dying:0,stun:0,lunge:0},g);g.restore();
-  if(!A){g.font='800 11px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#d8c8a8';g.fillText('30 Sekunden Zeit. Halte durch!',180,30);return;}
+  if(!A){g.font='800 11px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#d8c8a8';g.fillText('30 Sekunden: so viel Schaden wie möglich!',180,30);return;}
   // Lebensleisten
-  bar2(40,76,60,6,A.php/A.pmax,'#63c74d');bar2(225,58,90,7,A.bhp/A.bmax,'#e0283a');
-  g.font='800 8px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#f4e6cc';g.fillText(fmt(Math.max(0,A.bhp)),270,55);
+  bar2(40,76,60,6,A.php/A.pmax,'#63c74d');bar2(225,58,90,7,1,'#e0283a');
+  g.font='800 9px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#f4e6cc';g.fillText('∞',270,55);
+  {const rage=Math.floor((30-A.left)/10);if(rage>0&&!A.end){g.fillStyle='#ff8a5a';g.font='800 8px Nunito, system-ui, sans-serif';g.fillText(rage===1?'WÜTEND':'RASEND',270,80);}}
   // Stacheln und Boss-Angriffe
   g.strokeStyle='#fff6d8';g.lineWidth=2;for(const s2 of A.sp){g.beginPath();g.moveTo(s2.x,s2.y);g.lineTo(s2.x+7,s2.y);g.stroke();}
   for(const o of A.orbs){g.fillStyle=ELEM[B.atkEl].c;g.beginPath();g.arc(o.x,o.y,5,0,7);g.fill();g.strokeStyle='#1c120c';g.lineWidth=1.5;g.stroke();}
@@ -2185,10 +2199,11 @@ function drawWb(){const cv2=$('wbcv');if(!cv2||!wb.st)return;const g=cv2.getCont
 }
 // Echter 30-Sekunden-Kampf: endet bei Zeitablauf, besiegtem Boss oder wenn der Kaktus fällt
 function wbAttack(){if(wb.busy||!wb.st||wb.st.day_left<=0)return;
-  const B=wbBoss(wb.st.period),L=wbLevel(+wb.st.total),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30;
-  const res=(st.res[B.atkEl]||0)/100,blk=st.block/100,bossHit=st.hp*(0.075+0.02*(L.l-1))*(1-blk)*(1-(st.armor||0)/100)*(1-res);
+  const B=wbBoss(wb.st.period),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30;
+  // Der Boss hat unendlich Leben und wird alle 10 s wütender (schlägt härter zu)
+  const res=(st.res[B.atkEl]||0)/100,blk=st.block/100,bossHit=st.hp*0.09*(1-blk)*(1-(st.armor||0)/100)*(1-res);
   wb.busy=true;wb.res=null;
-  wb.anim={left:30,dmg:0,php:st.hp,pmax:st.hp,bhp:L.hp-L.rest,bmax:L.hp,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,
+  wb.anim={left:30,dmg:0,php:st.hp,pmax:st.hp,bhp:1,bmax:1,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,
     throwT:0,bossT:1.2,reg:st.hp*st.reg/100};
   renderOnline();
   let last=performance.now();
@@ -2199,15 +2214,15 @@ function wbAttack(){if(wb.busy||!wb.st||wb.st.day_left<=0)return;
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?2:1);
-        A.dmg+=v;A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
+        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       // Boss greift an
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}
       A.lunge=Math.max(0,A.lunge-dt*3);
-      for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;const v=bossHit*rnd(.9,1.1);A.php-=v;A.phit=.15;
+      for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
         A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
-      if(A.bhp<=0){A.end='boss';A.bhp=0;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
+      if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
     A.bhit=Math.max(0,A.bhit-dt);A.phit=Math.max(0,A.phit-dt);for(const f of A.fl){f.y-=30*dt;f.t-=dt;}A.fl=A.fl.filter(f=>f.t>0);
     drawWb();
@@ -3259,7 +3274,12 @@ const PATCHES=[
    hero:['👁 Kenne deinen Gegner','In der Arena kannst du dir jetzt die Ausrüstung deiner Gegner ansehen.'],
    items:()=>[['So geht’s:','Tippe in der Arena unter einem Gegner auf „👁 Ausrüstung“.'],
      ['Du siehst:','Alle Teile mit Seltenheit, Wert, Waffen-Element und Resistenz, dazu Angriff, Leben, Block und Krit.'],
-     ['Hinweis:','Die genauen Werte anderer Spieler erscheinen, sobald sie dieses Update geladen haben.']]}
+     ['Hinweis:','Die genauen Werte anderer Spieler erscheinen, sobald sie dieses Update geladen haben.']]},
+  {id:'pn46',date:'2026-11-08',title:'Weltboss: unendlich Leben',
+   hero:['∞ Der Weltboss ist unbesiegbar','Jetzt zählt nur noch, wie viel Schaden du in der Woche machst.'],
+   items:()=>[['Kampf:','30 Sekunden so viel Schaden wie möglich. Nach 10 s wird der Boss wütend, nach 20 s rasend und schlägt härter zu.'],
+     ['Wochenbelohnung:','🥉 Bronze ab 1 Angriff, 🥈 Silber ab 1 Mio., 🥇 Gold ab 100 Mio., 💠 Platin ab 10 Mrd., 💎 Diamant ab 1 Bio. Schaden.'],
+     ['Top 3:','Platz 1–3 der Woche bekommen zusätzlich Kakteen, Kapseln und ein besseres Ausrüstungsteil.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
