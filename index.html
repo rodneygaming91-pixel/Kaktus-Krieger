@@ -851,7 +851,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   <div class="actions">
     <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
     <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
-    <button class="garden" id="dBtn" type="button"><small>Hunde</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
+    <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
     <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
   </div>
   <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 3 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Bald da</span></button>
@@ -874,7 +874,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -970,7 +970,8 @@ const DRONES=[
   {id:'kolibri', n:'Windhund',     c:'#3fe0c0',cost:300, act:'shot',every:.8, dmg:.25,stat:'spd',per:1.5,d:'Flinke Bisse alle 0,8 s'},
   {id:'chihu',   n:'Chihuahua',    c:'#ff8a3d',cost:600, act:'shot',every:.6, dmg:.15,stat:'crit',per:1,d:'Kläfft und zwickt alle 0,6 s. Macht dich wütend: mehr kritische Treffer'},
   {id:'gluehw',  n:'Bernhardiner', c:'#ff6fae',cost:1000,act:'heal',every:3,  heal:3, stat:'hp', per:3,d:'Heilt alle 3 s 3 % Leben mit seinem Fässchen'},
-  {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'heal',every:6,  heal:8, stat:'reg',per:.05,d:'Sanitätshund: heilt alle 6 s 8 % Leben und stärkt deine Regeneration'}
+  {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'heal',every:6,  heal:8, stat:'reg',per:.05,d:'Sanitätshund: heilt alle 6 s 8 % Leben und stärkt deine Regeneration'},
+  {id:'fleder',  n:'Fledermaus',   c:'#c87bff',cost:5000,act:'steal',every:1,dmg:.3,steal:1,stat:'hp',per:2,d:'Lebensraub: beißt alle 1 s für 30 % Angriff, der Schaden kommt dir als Leben zugute'}
 ];
 const DR_MAX=25;                                                    // Höchststufe der Hunde
 const drUp=(D,lv)=>Math.round(D.cost*Math.pow(1.85,lv));          // Kosten für das nächste Level
@@ -1243,7 +1244,9 @@ function update(dt){
   // Hunde laufen vorneweg, springen den vordersten Gegner an und kommen zurück
   S.drEq.forEach((id,i)=>{const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(!D||!o)return;
     const st=dogSt[id]||(dogSt[id]={j:0,hit:false,tx:0});if(st.j>0){st.j=Math.max(0,st.j-dt/.45);
-      if(!st.hit&&st.j<.5){st.hit=true;const e=st.e;if(e&&!e.dying){hitEnemy(e,heroStats().atk*D.dmg*drScale(o.lv));if(D.act==='stun'&&!e.dying)e.stun=Math.max(e.stun||0,.6);}}}
+      if(!st.hit&&st.j<.5){st.hit=true;const e=st.e;if(e&&!e.dying){const dd=heroStats().atk*D.dmg*drScale(o.lv);hitEnemy(e,dd);if(D.act==='stun'&&!e.dying)e.stun=Math.max(e.stun||0,.6);
+        // Lebensraub der Fledermaus: der verursachte Schaden kommt als Leben zurück
+        if(D.act==='steal'&&hero.hp<hero.max){const h=Math.min(hero.max-hero.hp,dd*elMul()*(D.steal||1));hero.hp+=h;floats.push({x:HX+6,y:GROUND-96,txt:'🦇 +'+fmt(h),col:'#d79bff',t:.9});}}}}
     drT[id]=(drT[id]??rnd(0,D.every))-dt;
     if(drT[id]>0||!f)return;
     const pos=dogPos(i);
@@ -1578,7 +1581,21 @@ const dogPos=i=>({x:HX+34+i*27,y:GROUND});
 function stopX(e){return HX+28+e.ty.r+(S.drEq.length?14+S.drEq.length*27:0);}
 function isEngaged(f){return !!f&&f.x<Math.max(HX+150,stopX(f)+12);}
 const dogSt={};
-function drawDog(g,D,x,y,s,o){o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o.run??0,ph=t*14+(o.ph||0);
+// Fledermaus: fliegt über den Hunden, schlägt mit den Flügeln, rote Augen und kleine Fangzähne
+function drawBat(g,D,x,y,s,o){o=o||{};const ph=t*16+(o.ph||0),fl=Math.sin(ph),bob=Math.sin(t*4+(o.ph||0))*2.5;
+  g.save();g.translate(x,y-(o.menu?9*s:20)+bob);g.scale(s,s);
+  g.fillStyle='rgba(0,0,0,.18)';g.beginPath();g.ellipse(0,21-bob,6,1.8,0,0,7);g.fill();
+  for(const k of[-1,1]){g.save();g.scale(k,1);g.rotate(-fl*.5);
+    g.beginPath();g.moveTo(2,-1);g.quadraticCurveTo(8,-9,16,-6);g.lineTo(14,-2);g.quadraticCurveTo(12,0,11,1);g.quadraticCurveTo(9,-1,7,2);g.quadraticCurveTo(5,0,2,3);g.closePath();
+    g.fillStyle='#4a2a5a';g.fill();g.lineWidth=1.4;g.strokeStyle=OL;g.stroke();
+    g.strokeStyle='#6a4a7a';g.lineWidth=.8;g.beginPath();g.moveTo(3,0);g.lineTo(11,-3);g.moveTo(3,0);g.lineTo(9,0);g.stroke();g.restore();}
+  g.beginPath();g.ellipse(0,1,5,6,0,0,7);g.fillStyle='#3a2048';g.fill();g.lineWidth=1.6;g.strokeStyle=OL;g.stroke();
+  for(const k of[-1,1]){g.beginPath();g.moveTo(k*1.5,-4);g.lineTo(k*4,-10);g.lineTo(k*4.5,-3);g.closePath();g.fillStyle='#3a2048';g.fill();g.lineWidth=1.2;g.stroke();}
+  g.fillStyle='#ff3a4a';for(const k of[-1,1]){g.beginPath();g.arc(k*2,-1,1.3,0,7);g.fill();}
+  g.fillStyle='#fff';g.beginPath();g.moveTo(-1.6,3);g.lineTo(-1,5.2);g.lineTo(-.4,3);g.moveTo(.4,3);g.lineTo(1,5.2);g.lineTo(1.6,3);g.fill();
+  g.fillStyle=D.c;g.fillRect(-2,5.5,4,1.6);
+  g.restore();}
+function drawDog(g,D,x,y,s,o){if(D.id==='fleder'){drawBat(g,D,x,y,s,o);return;}o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o.run??0,ph=t*14+(o.ph||0);
   g.save();g.translate(x,y);g.scale(s,s);
   g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(0,1,L.len*.75,2.5,0,0,7);g.fill();
   const bob=run?Math.abs(Math.sin(ph))*-1.5:0,by=-L.leg-L.h/2+bob;
@@ -1616,7 +1633,7 @@ function drawDog(g,D,x,y,s,o){o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o
   if(L.barrel){g.beginPath();g.roundRect(hx-6,hy+5,6,4.5,1.5);g.fillStyle='#a8703c';g.fill();g.lineWidth=1.2;g.stroke();}
   if(o.bite){g.fillStyle='#fff';g.beginPath();g.moveTo(hx+3,hy+2);g.lineTo(hx+4,hy+4);g.lineTo(hx+5,hy+2);g.fill();}
   g.restore();}
-const drawDrone=(g,D,x,y,s)=>drawDog(g,D,x,y+9*s,s*1.05,{run:0});
+const drawDrone=(g,D,x,y,s)=>drawDog(g,D,x,y+9*s,s*1.05,{run:0,menu:1});
 const DEFAULT_CH={name:'Stachel',shape:'saeule',color:'#63c74d',eyes:'entschlossen',hat:'bluete',cls:'schuetze'};
 function drawHero(){
   const walk=!isEngaged(front());
@@ -1872,8 +1889,8 @@ setInterval(()=>{
 let dOpen=false;
 function renderDrones(){
   const slots=drSlots();
-  $('card').innerHTML=`<h2>Hunde <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
-    <p style="margin:0;color:var(--muted)">Eingesetzte Hunde laufen vor dir her, kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 wird ab Stage 10 frei.':''}</p>
+  $('card').innerHTML=`<h2>Begleiter <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
+    <p style="margin:0;color:var(--muted)">Eingesetzte Begleiter laufen (oder fliegen) vor dir her, kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 wird ab Stage 10 frei.':''}</p>
     <div class="dlist">${DRONES.map(D=>{const o=S.dr[D.id],eq=S.drEq.includes(D.id),lv=o?o.lv:0;
       const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration pro s'}[D.stat];
       let btns;
@@ -3261,7 +3278,7 @@ const TUT=[
   {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Ist AUTO an, setzt er sie von selbst ein.'},
   {el:'hqBtn',t:'In der Werkstatt steckst du Münzen in Angriff, Leben, Panzer und Tempo deines Kaktus.'},
   {el:'gBtn',t:'Baust du die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
-  {el:'dBtn',t:'Hunde begleiten dich in den Kampf und geben dir Boni. Den ersten kannst du bald freischalten.'},
+  {el:'dBtn',t:'Begleiter wie Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
   {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Allianzen, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
@@ -3547,7 +3564,12 @@ const PATCHES=[
    hero:['🪙 Plündere die Schatzkammer des Münzkönigs','Unter 🏰 Dungeons wartet jetzt der erste Dungeon.'],
    items:()=>[['Kampf:','30 Sekunden gegen den Münzkönig. Besiegst du ihn, gibt es viele Münzen und die nächste, stärkere Stufe wird frei. Sonst gibt es Münzen für deinen Schaden.'],
      ['Schlüssel:','Jeden Tag 3 Schlüssel gratis. Weitere Schlüssel kosten Kakteen: 5 🌵, dann 10, 15, … pro Tag.'],
-     ['Stufen:','Mit ‹ › wählst du jede freigeschaltete Stufe. Höhere Stufen bringen mehr Münzen.']]}
+     ['Stufen:','Mit ‹ › wählst du jede freigeschaltete Stufe. Höhere Stufen bringen mehr Münzen.']]},
+  {id:'pn55',date:'2026-11-08',title:'Begleiter und die Fledermaus',
+   hero:['🦇 Neuer Begleiter: die Fledermaus','Aus „Hunde“ wird „Begleiter“, und als Erstes kommt die Fledermaus dazu.'],
+   items:()=>[['Lebensraub:','Die Fledermaus beißt jede Sekunde für 30 % deines Angriffs. Der Schaden kommt dir als Leben zurück.'],
+     ['Dauerbonus:','+2 % Leben pro Level.'],
+     ['Preis:','5.000 Münzen, zu finden unter Begleiter.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
