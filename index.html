@@ -68,6 +68,16 @@ h1 span{color:var(--bloom)}
 .brow div{min-width:0;display:flex;flex-direction:column;gap:1px}
 .brow b{font-size:.92rem}.brow b em{font-style:normal;color:var(--sand);font-size:.78rem;margin-left:4px}
 .brow small{color:var(--muted);font-size:.74rem;font-variant-numeric:tabular-nums}
+.wspg{flex:none;overflow:hidden;touch-action:pan-y}
+.wstrack{display:flex;width:200%;align-items:flex-start;transition:transform .3s ease}
+.wstrack>section{width:50%;box-sizing:border-box;padding:0 2px;display:flex;flex-direction:column;gap:8px}
+.wshead{display:flex;align-items:center;justify-content:space-between;gap:8px}.wshead h2{margin:0;font-size:1.25rem}
+.wsarr{flex:none;border:2px solid #6b5644;background:var(--night);color:var(--sand);border-radius:999px;padding:4px 10px;font:inherit;font-size:.8rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:4px}
+.wsarr i{font-style:normal;font-size:1.2rem;line-height:1;display:inline-block}
+.wsarr.r i{animation:wsnr 1.1s ease-in-out infinite}.wsarr.l i{animation:wsnl 1.1s ease-in-out infinite}
+@keyframes wsnr{50%{transform:translateX(4px)}}@keyframes wsnl{50%{transform:translateX(-4px)}}
+.wsdots{display:flex;justify-content:center;gap:6px;margin:8px 0 2px}.wsdots i{width:8px;height:8px;border-radius:50%;background:#6b5644}.wsdots i.on{background:var(--sand)}
+.brow b em.skpas{color:#9ad0ff}
 .brow .btn{flex:none;padding:8px 10px;font-size:.8rem}
 /* Ausrüstungs-Fenster: Stein- und Holzrahmen wie im Konzeptbild */
 .gearbtn{border:0;background:none;padding:0;color:inherit;font:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px;text-align:left}
@@ -882,7 +892,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1029,6 +1039,16 @@ const MODS=[
   {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',cd:12,unlock:3,d:'Heilt 25 % Leben, 4 s lang +30 % Tempo'},
   {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'}
 ];
+// Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
+const SK=[
+  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+20*lv} %</b> Angriff`},
+  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${25+lv} %</b> Leben, 4 s lang +30 % Tempo`},
+  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+10*lv} %</b> Angriff an alle, betäubt <b>${(2+.1*lv).toFixed(1).replace('.',',')} s</b>`},
+  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',txt:lv=>`<b>${lv} %</b> Chance, einem Treffer ganz auszuweichen`},
+  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',txt:lv=>`<b>${lv} %</b> Chance, dass ein Stachel den Gegner kurz betäubt`}
+];
+const SK_MAX=20,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(2500*Math.pow(1.3,lv));
+const dodgeCh=()=>skLv('dodge')/100,stunCh=()=>skLv('stun')/100;
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
 let haste=0;
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
@@ -1228,7 +1248,8 @@ function update(dt){
   for(const p of spines){
     const e=p.tx;if(e.dying){p.dead=true;continue;}
     const ex=e.x,ey=e.y-(e.ty.r);const dx=ex-p.x,dy=ey-p.y,d=Math.hypot(dx,dy);
-    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100;hitEnemy(e,p.dmg!=null?p.dmg:hs.atk*rnd(.9,1.1)*(cr?2:1),cr);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);}
+    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100;hitEnemy(e,p.dmg!=null?p.dmg:hs.atk*rnd(.9,1.1)*(cr?2:1),cr);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);
+      else if(p.dmg==null&&!e.dying&&!(e.stun>0)&&Math.random()<stunCh()){e.stun=.8;floats.push({x:e.x,y:e.y-e.ty.r*2-8,txt:'Betäubt!',col:'#ffe066',t:.6});}}
     else{p.x+=dx/d*p.v*dt;p.y+=dy/d*p.v*dt;p.a=Math.atan2(dy,dx);}
   }
   spines=spines.filter(p=>!p.dead);
@@ -1295,16 +1316,17 @@ function castMod(m){
   const cm=clsM();modCd[m.id]=m.cd*cm.cd;const atk=heroStats().atk*cm.mod;
   if(m.id==='regen'){
     for(const e of targets)for(let i=0;i<5;i++)fx.push({kind:'drop',x:e.x+rnd(-14,14),y:-rnd(0,80),ty:e.y-e.ty.r,v:520,t:1.2});
-    setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*2.5);shake=Math.max(shake,3);},350);
+    setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*(2.5+.2*skLv('regen')));shake=Math.max(shake,3);},350);
   }else if(m.id==='sonne'){
-    const h=hero.max*.25*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
+    const h=hero.max*(.25+.01*skLv('sonne'))*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
     fx.push({kind:'sun',t:.8});floats.push({x:HX,y:GROUND-96,txt:'+'+fmt(h),col:'#63c74d',t:.9});
   }else{
-    for(const e of targets){hitEnemy(e,atk);if(!e.dying)e.stun=2;fx.push({kind:'root',e,t:2});}
+    const fl=skLv('falle');for(const e of targets){hitEnemy(e,atk*(1+.1*fl));if(!e.dying)e.stun=2+.1*fl;fx.push({kind:'root',e,t:2});}
   }
   floats.push({x:HX+4,y:GROUND-108,txt:m.n+'!',col:m.c,t:1});
 }
 function hurtHero(dmg){
+  if(Math.random()<dodgeCh()){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
   const hs=heroStats();dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
   hero.hp-=dmg;hero.hit=1;shake=Math.max(shake,2);
   floats.push({x:HX,y:GROUND-70,txt:'-'+fmt(dmg),col:'#ff6fae',t:.7});
@@ -1939,18 +1961,35 @@ setInterval(()=>{if(dOpen){refreshDroneBtns();drawDroneIcons();}
   $('dBtn').classList.toggle('ready',cheap);$('dSub').textContent=cheap?'Upgrade!':'Begleiter';},250);
 
 // ---------- Werkstatt: den Kaktus leveln (ersetzt das Hauptquartier) ----------
-let hqOpen=false;
+let hqOpen=false,wsPage=0;
 function renderWS(){
   const kak=S.kak||0;
-  $('card').innerHTML=`<h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2>
+  const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
     <p style="margin:0;color:var(--muted)">Level deinen Kaktus mit Münzen. Jedes 10. Level braucht zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b>, die du für gewonnene Bosskämpfe bekommst.</p>
     <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
     <div class="blist">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
       const now=wsVal(W.id),nx=wsVal(W.id,lv+1),f=x=>W.kind==='mul'?fmt(Math.round(x)):x;
       return`<div class="brow" style="--bc:${W.c}"><div><b style="color:${W.c}">${W.ico} ${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b>
         <small>jetzt +${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
-        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>
+        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`;
+  const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
+    <p style="margin:0;color:var(--muted)">Level deine Fähigkeiten mit Münzen (bis Lv ${SK_MAX}). Ausweichen und Betäuben wirken von selbst, auch in Turm, Dungeon und bei den Bossen.</p>
+    <div class="blist">${SK.map(K=>{const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=SK_MAX,c=skCost(lv),ok=!lock&&S.coins>=c;
+      return`<div class="brow" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}<em>Lv ${lv} / ${SK_MAX}</em>${K.act?'':'<em class="skpas">passiv</em>'}</b>
+        <small>${K.txt(lv)}${max?'':` → <span style="color:#7fe08a">${(K.txt(lv+1).match(/<b>[^<]*<\/b>/g)||[]).join(' · ').replace(/<\/?b>/g,'')}</span>`}</small>
+        ${M?`<small>Abklingzeit ${M.cd} s${lock?` · <span style="color:#ff8a7a">frei ab Stage ${M.unlock}</span>`:''}</small>`:''}</div>
+        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}</div>`;
+  $('card').innerHTML=`<div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
+    <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
     <div class="row"><button class="btn" id="hqClose" type="button">Schließen</button></div>`;
+  const go=pg=>{wsPage=pg;$('wsTrack').style.transform=`translateX(-${pg*50}%)`;$('card').querySelectorAll('.wsdots i').forEach((d,i)=>d.className=i===pg?'on':'');};
+  $('card').querySelectorAll('[data-pg]').forEach(b=>b.onclick=()=>go(+b.dataset.pg));
+  {const pg=$('wsPg');let sx=null,sy=0;
+   pg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+   pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
+     if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(dx<0?1:0);});}
+  $('card').querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{const id=b.dataset.sk,lv=skLv(id),c=skCost(lv),M=MODS.find(m=>m.id===id);
+    if(lv>=SK_MAX||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderWS();});
   $('card').querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
     if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
     if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};renderWS();});
@@ -2200,7 +2239,7 @@ function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp
 function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
 function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100)/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
-  dps+=st.atk*cm.mod*(2.5/8+1/15)/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
+  dps+=st.atk*cm.mod*((2.5+.2*skLv('regen'))/8+(1+.1*skLv('falle'))/15)/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
 async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='boss')renderOnline();}
 // Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
@@ -2294,12 +2333,12 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?2:1);
-        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
+        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
       A.sp=A.sp.filter(s2=>!s2.done);
       // Boss greift an
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}
       A.lunge=Math.max(0,A.lunge-dt*3);
-      for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
+      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
         A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
@@ -3009,11 +3048,11 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
       A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=st.atk*em*rnd(.9,1.1)*(cr?2:1);
-        A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});}}
+        A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.3;A.lunge=1;A.orbs.push({x:240,y:140});}
       A.lunge=Math.max(0,A.lunge-dt*3);
-      for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;const v=hitTaken*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
+      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitTaken*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.bhp<=0){A.end='boss';A.bhp=0;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
@@ -3164,10 +3203,10 @@ function dgFight(){const D=dgState();if(dg.anim||dgKeys()<=0)return;D.used++;sav
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=Math.min(A.bhp,dps*.25*rnd(.85,1.15)*(cr?2:1));
-        A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.round(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});}}
+        A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.round(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});if(!(A.stn>0)&&Math.random()<stunCh()){A.stn=.8;A.bossT+=.8;A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.6});}}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}A.lunge=Math.max(0,A.lunge-dt*3);
-      for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;const v=hitV*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
+      A.stn=(A.stn||0)-dt;for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(Math.random()<dodgeCh()){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=hitV*rnd(.9,1.1);A.php-=v;A.phit=.15;A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
       A.orbs=A.orbs.filter(o=>!o.done);
       if(A.bhp<=0){A.end='boss';A.bhp=0;A.coins=B.full;}else if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
     }else A.endT+=dt;
@@ -3657,7 +3696,13 @@ const PATCHES=[
    items:()=>[['Ursache:','Das waren die Wurzeln der Wurzelfalle. Sie wuchsen nur knapp über den Boden und endeten in der Luft unter dem Vogel.'],['Neu:','Bei fliegenden Gegnern wachsen die Wurzeln jetzt bis hoch zum Vogel und umschlingen ihn.']]},
   {id:'pn60',date:'2026-11-08',title:'Turm: Zerstören nach Seltenheit',
    hero:['🗼 Schlechtere Teile zerstören','Der Schalter im Turm richtet sich jetzt nach der Seltenheit.'],
-   items:()=>[['Neu:','Nur Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden zerstört.'],['Beispiel:','Trägst du ein mythisches Schwert und bekommst ein anderes mythisches Schwert, wird es dir als neues Teil angezeigt.']]}
+   items:()=>[['Neu:','Nur Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden zerstört.'],['Beispiel:','Trägst du ein mythisches Schwert und bekommst ein anderes mythisches Schwert, wird es dir als neues Teil angezeigt.']]},
+  {id:'pn61',date:'2026-11-08',title:'Fähigkeiten zum Leveln',
+   hero:['✶ Neue Seite in der Werkstatt','Wische in der Werkstatt nach links (oder tippe auf den Pfeil) und du kommst zu deinen Fähigkeiten.'],
+   items:()=>[['Leveln:','Stachelregen, Sonnenheilung und Wurzelfalle lassen sich jetzt mit Münzen bis Lv 20 verbessern: mehr Schaden, mehr Heilung, längere Betäubung.'],
+     ['💨 Ausweichen (neu):','Pro Level 1 % Chance, einem Treffer ganz auszuweichen.'],
+     ['💫 Betäuben (neu):','Pro Level 1 % Chance, dass ein Stachel den Gegner kurz betäubt.'],
+     ['Überall:','Die Fähigkeiten wirken auch im Turm, im Dungeon und gegen Welt- und Allianzboss.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
