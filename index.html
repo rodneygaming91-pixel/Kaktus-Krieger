@@ -870,7 +870,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2861,7 +2861,8 @@ const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMo
 function twDayCheck(){let ch=false;if(S.twRec==null){S.twRec=Math.max(0,(S.tower||1)-1);ch=true;}if(S.twDay!==todayStr()){S.twDay=todayStr();S.tower=1;ch=true;}if(ch)save();}
 twDayCheck();
 const twFloor=()=>S.tower||1;
-const TW_PRIZE=[null,{kak:30,caps:20,bump:2,n:'🥇'},{kak:20,caps:12,bump:1,n:'🥈'},{kak:10,caps:8,bump:0,n:'🥉'}];
+// Tagespreise Turm Platz 1–3 (08.11.2026: Kapseln ×10, Kakteen bleiben selten)
+const TW_PRIZE=[null,{kak:30,caps:200,bump:2,n:'🥇'},{kak:20,caps:120,bump:1,n:'🥈'},{kak:10,caps:80,bump:0,n:'🥉'}];
 const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
   return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.56,keeper:f%10===0};};
 const twReward=f=>({kak:1+Math.floor(f/25),caps:2,item:true,bump:f%10===0});
@@ -3431,7 +3432,10 @@ const PATCHES=[
    hero:['🛡 Gemeinsam gegen den Allianz-Boss','Im Allianz-Fenster gibt es jetzt den Reiter „Boss“.'],
    items:()=>[['Kampf:','Wie beim Weltboss: unendlich Leben, 30 Sekunden so viel Schaden wie möglich, 3 Angriffe pro Tag.'],
      ['Gemeinsam:','Der Schaden aller Mitglieder zählt zusammen. Je mehr ihr schafft, desto besser die Stufe von Bronze bis Diamant.'],
-     ['Belohnung:','Jedes Mitglied, das in der Woche angegriffen hat, bekommt ab Montag die Belohnung eurer Stufe.']]}
+     ['Belohnung:','Jedes Mitglied, das in der Woche angegriffen hat, bekommt ab Montag die Belohnung eurer Stufe.']]},
+  {id:'pn53',date:'2026-11-08',title:'Mehr Kapseln für die Turm-Besten',
+   hero:['🗼 Zehnmal so viele Kapseln','Die Tagespreise im Turm für Platz 1 bis 3 bringen jetzt viel mehr Samenkapseln.'],
+   items:()=>[['🥇 Platz 1:','30 🌵 · 200 Kapseln · Teil +2 Seltenheiten'],['🥈 Platz 2:','20 🌵 · 120 Kapseln · Teil +1 Seltenheit'],['🥉 Platz 3:','10 🌵 · 80 Kapseln']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
