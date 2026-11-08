@@ -138,10 +138,15 @@ h1 span{color:var(--bloom)}
 .bs canvas{width:90%;height:90%}.bs em{font-style:normal;color:#ff8a7a;font-weight:800;font-size:.8rem}
 .hint.warn{color:#ff9a7a}
 .invtools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.invtools{display:grid;grid-template-columns:1fr 1fr auto}.invtools .seg{grid-column:1/-1;display:flex}
+.invtools #invEl,.invtools #invFilter{width:100%;min-width:0;font-size:.82rem;padding-left:7px;padding-right:18px;background-position:right 5px center}.invtools .seg button{flex:1 1 0;min-width:0;padding-left:4px;padding-right:4px}
+.invtools select{flex:1 1 0;min-width:0;padding-left:8px;padding-right:22px;font-size:.85rem}
+.invtools .sbtn.pickbtn{flex:0 0 auto;padding:8px 10px;font-size:.88rem}
+.invtools #invEl,.invtools #invFilter{padding-left:8px;padding-right:20px}
 .seg{display:flex;border:2px solid var(--stl);border-radius:8px;overflow:hidden;flex:1;min-width:200px}
 .seg button{flex:1;background:#3a2c20;color:#d8c6a8;border:0;border-right:2px solid var(--stl);font:inherit;font-size:.78rem;font-weight:800;padding:6px 4px;cursor:pointer}
 .seg button:last-child{border-right:0}.seg button[aria-pressed="true"]{background:var(--gd);color:#2a1d10}
-#invFilter{background:#3a2c20;color:#f3e6cc;border:2px solid var(--stl);border-radius:8px;font:inherit;font-size:.78rem;font-weight:800;padding:5px 6px;flex:1;min-width:120px}
+#invFilter,#invEl{background:#3a2c20;color:#f3e6cc;border:2px solid var(--stl);border-radius:8px;font:inherit;font-size:.78rem;font-weight:800;padding:5px 6px;flex:1;min-width:120px}
 .pickbtn{flex:0 0 auto}.pickbtn.on{background:var(--gd);color:#2a1d10}
 .pickbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#2a1f16;border:2px solid var(--stl);border-radius:8px;padding:6px}
 .pickbar span{color:#f3e6cc;font-weight:800;font-size:.85rem;margin-right:auto}
@@ -823,7 +828,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1881,14 +1886,21 @@ const invCost=()=>Math.round(500*Math.pow(2.2,(invMax()-INV_START)/INV_STEP));
 let eqOpen=false,eqSel=null;
 // Sortieren und Filtern im Inventar (nur die Anzeige, die Teile selbst bleiben an ihrem Platz)
 let invPick=false;const invMarks=new Set();   // Mehrfachauswahl im Inventar
-const INV_SORTS=[['rar','Seltenheit'],['slot','Platz'],['neu','Neueste']];
+const INV_SORTS=[['rar','Seltenheit'],['slot','Platz'],['el','Element'],['neu','Neu']];
+// Element eines Teils: Waffen-Element oder Resistenz
+const itemEl=it=>it.el||(it.res&&it.res.el)||'';
+const EL_ORDER=['gift','eis','feuer','blitz','schatten','licht'];
 const invSort=()=>S.invSort||'rar';
 function invOrder(){const sOrd=id=>SLOTS.findIndex(x=>x.id===id);
   let idx=S.inv.map((_,i)=>i);if(S.invFilter)idx=idx.filter(i=>S.inv[i].slot===S.invFilter);
+  if(S.invEl)idx=idx.filter(i=>itemEl(S.inv[i])===S.invEl);
   const m=invSort();
   if(m==='neu')return idx.reverse();
   return idx.sort((a,b)=>{const A=S.inv[a],B=S.inv[b];
     const byR=B.r-A.r,byS=sOrd(A.slot)-sOrd(B.slot),byV=itemScore(B)-itemScore(A);
+    if(m==='el'){// zuerst, was in der aktuellen Welt hilft, dann nach Element gruppiert
+      const Wd=world(),help=it=>(it.res&&it.res.el===Wd.atkEl)||(it.el&&it.el===Wd.weak)?0:1,eo=it=>{const e=itemEl(it);return e?EL_ORDER.indexOf(e):99;};
+      return (help(A)-help(B))||(eo(A)-eo(B))||byR||byS||byV;}
     return m==='slot'?(byS||byR||byV):(byR||byS||byV);});}
 // ---------- Builds: gespeicherte Ausrüstungs-Sets ----------
 const BUILD_MAX=4;
@@ -1971,7 +1983,8 @@ function renderEq(){
     ${detail}
     <div class="invhead"><span>Inventar</span><small>${S.inv.length} / ${invMax()}</small>${invMax()<INV_CAP?`<button class="sbtn invx" type="button" id="invExp" ${S.coins<invCost()?'disabled':''}>+${INV_STEP} Plätze · ${fmt(invCost())}</button>`:'<small class="max">Max</small>'}</div>
     ${S.inv.length?`<div class="invtools"><div class="seg" role="group" aria-label="Sortieren">${INV_SORTS.map(([k,n])=>`<button type="button" data-isort="${k}" aria-pressed="${invSort()===k}">${n}</button>`).join('')}</div>
-      <select id="invFilter" aria-label="Nach Platz filtern"><option value="">Alle Plätze</option>${SLOTS.map(sl=>`<option value="${sl.id}"${S.invFilter===sl.id?' selected':''}>${sl.n} (${S.inv.filter(it=>it.slot===sl.id).length})</option>`).join('')}</select>
+      <select id="invFilter" aria-label="Nach Platz filtern"><option value="">Platz</option>${SLOTS.map(sl=>`<option value="${sl.id}"${S.invFilter===sl.id?' selected':''}>${sl.n} (${S.inv.filter(it=>it.slot===sl.id).length})</option>`).join('')}</select>
+      <select id="invEl" aria-label="Nach Element filtern"><option value="">Element</option>${EL_ORDER.map(e=>`<option value="${e}"${S.invEl===e?' selected':''}>${ELEM[e].ico} ${ELEM[e].n} ${S.inv.filter(it=>itemEl(it)===e).length}</option>`).join('')}</select>
       <button type="button" class="sbtn pickbtn${invPick?' on':''}" id="invPick">${invPick?'Fertig':'Auswählen'}</button></div>
       ${invPick?(()=>{const sel=S.inv.filter(it=>invMarks.has(it.id)),sum=sel.reduce((a,it)=>a+sellValue(it),0);
         return`<div class="pickbar"><span><b>${sel.length}</b> markiert</span>
@@ -1980,7 +1993,7 @@ function renderEq(){
           <button type="button" class="sbtn red" id="invDestroy" ${sel.length?'':'disabled'}>Zerstören +${fmt(sum)}</button></div>
           <p class="hint" style="margin:0">Tippe Teile an, um sie zu markieren. „Schlechtere markieren“ wählt alle Teile, die nicht besser sind als deine jetzige Ausrüstung (ohne ★ Build-Teile).</p>`;})():''}`:''}
     <div class="inv">${invOrder().map(i=>{const it=S.inv[i],cur=S.gear[it.slot],up=!cur||itemScore(it)>itemScore(cur);
-      return`<button type="button" class="invc${eqSel&&eqSel.src==='inv'&&eqSel.i===i&&!invPick?' sel':''}${invPick&&invMarks.has(it.id)?' mk':''}" data-inv="${i}" ${invPick?`aria-pressed="${invMarks.has(it.id)}"`:''} style="--rc:${RAR[it.r].c}"><canvas width="88" height="88" data-icon="i:${i}"></canvas>${inBuild(it.id)?'<b class="star">★</b>':''}${up?'<b class="upm" title="Besser als dein jetziges Teil">▲</b>':''}${invPick&&invMarks.has(it.id)?'<b class="mkx">✓</b>':''}</button>`;}).join('')||(S.inv.length?'<p class="hint">Keine Teile für diesen Platz.</p>':'<p class="hint">Noch leer. Behalte Teile aus Samenkapseln, dann landen sie hier.</p>')}</div>
+      return`<button type="button" class="invc${eqSel&&eqSel.src==='inv'&&eqSel.i===i&&!invPick?' sel':''}${invPick&&invMarks.has(it.id)?' mk':''}" data-inv="${i}" ${invPick?`aria-pressed="${invMarks.has(it.id)}"`:''} style="--rc:${RAR[it.r].c}"><canvas width="88" height="88" data-icon="i:${i}"></canvas>${effBadges(it)}${inBuild(it.id)?'<b class="star">★</b>':''}${up?'<b class="upm" title="Besser als dein jetziges Teil">▲</b>':''}${invPick&&invMarks.has(it.id)?'<b class="mkx">✓</b>':''}</button>`;}).join('')||(S.inv.length?'<p class="hint">Keine Teile für diesen Platz.</p>':'<p class="hint">Noch leer. Behalte Teile aus Samenkapseln, dann landen sie hier.</p>')}</div>
     <div class="eqfoot"><div class="gold"><i></i><i></i><i></i><b>${fmt(S.coins)}</b></div>
       <button class="sbtn" type="button" id="eqStrip">Entfernen</button><button class="sbtn go" type="button" id="eqBest">Alles ausrüsten</button></div>
     <button class="sbtn wide" type="button" id="eqClose">Schließen</button></div>`;
@@ -2006,6 +2019,7 @@ function renderEq(){
   on('eqSell',()=>{const it=selIt;S.coins+=sellValue(it);if(eqSel.src==='inv')S.inv.splice(eqSel.i,1);else delete S.gear[eqSel.slot];eqSel=null;});
   $('card').querySelectorAll('[data-isort]').forEach(b=>b.onclick=()=>{S.invSort=b.dataset.isort;save();renderEq();});
   {const f=$('invFilter');if(f)f.onchange=()=>{S.invFilter=f.value||null;save();renderEq();};}
+  {const f=$('invEl');if(f)f.onchange=()=>{S.invEl=f.value||null;save();renderEq();};}
   on('invExp',()=>{const k=invCost();if(S.coins<k||invMax()>=INV_CAP)return;S.coins-=k;S.invMax=invMax()+INV_STEP;banner={txt:'Inventar: '+S.invMax+' Plätze',t:1.8};});
   on('eqStrip',()=>{for(const sl of SLOTS){const it=S.gear[sl.id];if(it&&S.inv.length<invMax()){S.inv.push(it);delete S.gear[sl.id];}}eqSel=null;});
   on('eqBest',()=>{for(const sl of SLOTS){let bi=-1,bv=S.gear[sl.id]?itemScore(S.gear[sl.id]):-1;S.inv.forEach((it,i)=>{const sc=itemScore(it);if(it.slot===sl.id&&sc>bv){bv=sc;bi=i;}});
@@ -3201,7 +3215,12 @@ const PATCHES=[
   {id:'pn43',date:'2026-11-08',title:'Effekte auf einen Blick',
    hero:['❄ Element-Symbole an deiner Ausrüstung','Auf dem Startbildschirm siehst du jetzt bei jedem angelegten Teil sein Element, genau wie im Inventar.'],
    items:()=>[['Symbole:','Unten rechts an jedem Teil, z. B. ☠ Gift, ❄ Eis, ✹ Feuer, ϟ Blitz.'],
-     ['Resistenz:','Unter deinem Kaktus steht, wie gut du gegen das Element der aktuellen Welt geschützt bist.']]}
+     ['Resistenz:','Unter deinem Kaktus steht, wie gut du gegen das Element der aktuellen Welt geschützt bist.']]},
+  {id:'pn44',date:'2026-11-08',title:'Inventar nach Element',
+   hero:['🔎 Die richtige Resistenz schnell finden','Im Inventar kannst du jetzt nach Element sortieren und filtern.'],
+   items:()=>[['Sortieren:','„Element“ zeigt zuerst die Teile, die in der aktuellen Welt helfen, danach alle anderen nach Element gruppiert.'],
+     ['Filtern:','Mit dem Filter „Element“ siehst du z. B. nur ❄ Eis-Teile.'],
+     ['Symbole:','Jedes Teil im Inventar zeigt jetzt sein Element.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
