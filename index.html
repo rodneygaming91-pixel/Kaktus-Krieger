@@ -892,7 +892,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1041,14 +1041,15 @@ const MODS=[
 ];
 // Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
 const SK=[
-  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+20*lv} %</b> Angriff`},
-  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${25+lv} %</b> Leben, 4 s lang +30 % Tempo`},
-  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+10*lv} %</b> Angriff an alle, betäubt <b>${(2+.1*lv).toFixed(1).replace('.',',')} s</b>`},
-  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',txt:lv=>`<b>${lv} %</b> Chance, einem Treffer ganz auszuweichen`},
-  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',txt:lv=>`<b>${lv} %</b> Chance, dass ein Stachel den Gegner kurz betäubt`}
+  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+5*lv} %</b> Angriff`},
+  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> Leben, 4 s lang +30 % Tempo`},
+  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> Angriff an alle, betäubt <b>${(2+.02*lv).toFixed(2).replace('.',',')} s</b>`},
+  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',txt:lv=>`<b>${(.3*lv).toFixed(1).replace('.',',')} %</b> Chance, einem Treffer ganz auszuweichen`},
+  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',txt:lv=>`<b>${(.3*lv).toFixed(1).replace('.',',')} %</b> Chance, dass ein Stachel den Gegner kurz betäubt`}
 ];
-const SK_MAX=20,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(2500*Math.pow(1.3,lv));
-const dodgeCh=()=>skLv('dodge')/100,stunCh=()=>skLv('stun')/100;
+// 08.11.2026: bis Lv 100, kleinere Schritte pro Level, teurer (Start 5.000, jedes Level +14 %)
+const SK_MAX=100,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(5000*Math.pow(1.14,lv));
+const dodgeCh=()=>skLv('dodge')*.003,stunCh=()=>skLv('stun')*.003;
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
 let haste=0;
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
@@ -1316,12 +1317,12 @@ function castMod(m){
   const cm=clsM();modCd[m.id]=m.cd*cm.cd;const atk=heroStats().atk*cm.mod;
   if(m.id==='regen'){
     for(const e of targets)for(let i=0;i<5;i++)fx.push({kind:'drop',x:e.x+rnd(-14,14),y:-rnd(0,80),ty:e.y-e.ty.r,v:520,t:1.2});
-    setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*(2.5+.2*skLv('regen')));shake=Math.max(shake,3);},350);
+    setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*(2.5+.05*skLv('regen')));shake=Math.max(shake,3);},350);
   }else if(m.id==='sonne'){
-    const h=hero.max*(.25+.01*skLv('sonne'))*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
+    const h=hero.max*(.25+.0025*skLv('sonne'))*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
     fx.push({kind:'sun',t:.8});floats.push({x:HX,y:GROUND-96,txt:'+'+fmt(h),col:'#63c74d',t:.9});
   }else{
-    const fl=skLv('falle');for(const e of targets){hitEnemy(e,atk*(1+.1*fl));if(!e.dying)e.stun=2+.1*fl;fx.push({kind:'root',e,t:2});}
+    const fl=skLv('falle');for(const e of targets){hitEnemy(e,atk*(1+.05*fl));if(!e.dying)e.stun=2+.02*fl;fx.push({kind:'root',e,t:2});}
   }
   floats.push({x:HX+4,y:GROUND-108,txt:m.n+'!',col:m.c,t:1});
 }
@@ -2239,7 +2240,7 @@ function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp
 function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
 function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100)/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
-  dps+=st.atk*cm.mod*((2.5+.2*skLv('regen'))/8+(1+.1*skLv('falle'))/15)/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
+  dps+=st.atk*cm.mod*((2.5+.05*skLv('regen'))/8+(1+.05*skLv('falle'))/15)/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
 async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='boss')renderOnline();}
 // Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
@@ -3702,7 +3703,13 @@ const PATCHES=[
    items:()=>[['Leveln:','Stachelregen, Sonnenheilung und Wurzelfalle lassen sich jetzt mit Münzen bis Lv 20 verbessern: mehr Schaden, mehr Heilung, längere Betäubung.'],
      ['💨 Ausweichen (neu):','Pro Level 1 % Chance, einem Treffer ganz auszuweichen.'],
      ['💫 Betäuben (neu):','Pro Level 1 % Chance, dass ein Stachel den Gegner kurz betäubt.'],
-     ['Überall:','Die Fähigkeiten wirken auch im Turm, im Dungeon und gegen Welt- und Allianzboss.']]}
+     ['Überall:','Die Fähigkeiten wirken auch im Turm, im Dungeon und gegen Welt- und Allianzboss.']]},
+  {id:'pn62',date:'2026-11-08',title:'Fähigkeiten bis Lv 100',
+   hero:['✶ 100 Stufen pro Fähigkeit','Jede Fähigkeit lässt sich jetzt bis Lv 100 leveln. Dafür ist jede Stufe etwas kleiner und teurer.'],
+   items:()=>[['Kosten:','Lv 1 kostet 5.000 Münzen, jedes weitere Level 14 % mehr.'],
+     ['Pro Level:','Stachelregen +5 % Schaden, Sonnenheilung +0,25 % Heilung, Wurzelfalle +5 % Schaden und +0,02 s Betäubung, Ausweichen und Betäuben je +0,3 %.'],
+     ['Auf Lv 100:','Stachelregen 750 %, Sonnenheilung 50 %, Wurzelfalle 600 % und 4 s, Ausweichen und Betäuben je 30 %.'],
+     ['Schon gekauft?','Deine Level bleiben erhalten und wirken nach den neuen Werten.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
