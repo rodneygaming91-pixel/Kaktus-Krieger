@@ -882,7 +882,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1734,8 +1734,12 @@ function draw(){
   drawBg();
   // Wurzelfalle: Wurzeln wachsen um betäubte Gegner
   for(const x of fx)if(x.kind==='root'&&!x.e.dying){const k=Math.min(1,(2-x.t)*5),r=x.e.ty.r;
-    c.strokeStyle='#8a5a2b';c.lineWidth=3;for(const dx of[-r,-r/3,r/3,r]){c.beginPath();c.moveTo(x.e.x+dx,GROUND+4);
-      c.quadraticCurveTo(x.e.x+dx*1.4,GROUND-r*k,x.e.x+dx*.3,GROUND-r*1.6*k);c.stroke();}}
+    const fly=x.e.y<GROUND-10,ex=x.e.x,ey=x.e.y; // fliegende Gegner (Vögel): Ranken wachsen hoch und umschlingen den Körper
+    c.strokeStyle='#8a5a2b';c.lineWidth=3;for(const dx of[-r,-r/3,r/3,r]){c.beginPath();
+      if(!fly){c.moveTo(ex+dx,GROUND+4);c.quadraticCurveTo(ex+dx*1.4,GROUND-r*k,ex+dx*.3,GROUND-r*1.6*k);}
+      else{const sx=ex+dx*.5,top=GROUND-(GROUND-ey+r*1.7)*k;c.moveTo(sx,GROUND+4);
+        c.bezierCurveTo(sx+dx*.6,GROUND-(GROUND-ey)*.5*k,ex+dx*1.7,ey-r*.2*k,ex+dx*.15,top);}
+      c.stroke();}}
   for(const e of enemies)drawEnemy(e);
   // Sonnenheilung: goldener Schein um den Kaktus
   for(const x of fx)if(x.kind==='sun'){const k=1-x.t/.8;c.globalAlpha=1-k;c.strokeStyle='#ffd447';c.lineWidth=4;
@@ -3647,7 +3651,10 @@ const PATCHES=[
    items:()=>[['Hunde:','Laufen weiter am Boden und rücken zusammen, weil die Fledermaus keinen Bodenplatz mehr braucht.']]},
   {id:'pn58',date:'2026-11-08',title:'Vögel mit richtigen Füßen',
    hero:['🐦 Grafikfehler behoben','Beim Sternenwächter und den anderen Vögeln sahen die Beine aus wie abgefallen.'],
-   items:()=>[['Neu:','Die Beine wachsen mit der Größe des Vogels mit, sitzen fest am Körper und haben kleine Krallenfüße.']]}
+   items:()=>[['Neu:','Die Beine wachsen mit der Größe des Vogels mit, sitzen fest am Körper und haben kleine Krallenfüße.']]},
+  {id:'pn59',date:'2026-11-08',title:'Wurzelfalle packt auch Vögel',
+   hero:['🌱 Grafikfehler behoben','Unter fliegenden Bossen wie dem Sternenwächter tauchten manchmal vier braune Striche auf, wie ein Käfig.'],
+   items:()=>[['Ursache:','Das waren die Wurzeln der Wurzelfalle. Sie wuchsen nur knapp über den Boden und endeten in der Luft unter dem Vogel.'],['Neu:','Bei fliegenden Gegnern wachsen die Wurzeln jetzt bis hoch zum Vogel und umschlingen ihn.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
