@@ -882,7 +882,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2950,7 +2950,7 @@ function renderTower(){
     <p class="hint" style="margin:0">Jeden Tag startest du bei Etage 1. Belohnungen gibt es für Etagen über deinem Rekord (<b>${S.twRec}</b>). Verlieren kostet nichts.</p>
     <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim||tw.auto?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
     <button class="btn twauto${tw.auto?' on':''}" id="twAuto" type="button" aria-pressed="${!!tw.auto}"><span class="sw"><i></i></span>${tw.auto?'Auto-Kampf läuft · Stoppen':'Auto-Kampf starten'}<small>${tw.auto?'Stoppt auch automatisch bei einer Niederlage':'Kämpft Etage für Etage weiter, bis du einen Kampf verlierst'}</small></button>
-    <button class="btn twauto twtrash${S.twTrash?' on':''}" id="twTrash" type="button" aria-pressed="${!!S.twTrash}"><span class="sw"><i></i></span>Schlechtere Teile zerstören<small>${S.twTrash?'Teile, die schlechter sind als deine Ausrüstung, werden sofort zu Münzen':'Aus: Du entscheidest bei jedem Teil selbst'}</small></button>
+    <button class="btn twauto twtrash${S.twTrash?' on':''}" id="twTrash" type="button" aria-pressed="${!!S.twTrash}"><span class="sw"><i></i></span>Schlechtere Teile zerstören<small>${S.twTrash?'Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden sofort zu Münzen':'Aus: Du entscheidest bei jedem Teil selbst'}</small></button>
     ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Etagen, die du schon geschafft hast, sofort durchziehen</small></button>`:''}
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
@@ -3026,8 +3026,8 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
 function twFinish(A,f){tw.anim=null;
   if(A.end==='boss'){S.tower=f+1;
     if(f>S.twRec){const R=twReward(f),it=twRoll(f);S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.twRec=f;
-      const cur=S.gear[it.slot],worse=cur&&itemScore(it)<=itemScore(cur);let itTxt;
-      if(S.twTrash&&worse){const c=sellValue(it);S.coins+=c;itTxt=`<span style="color:${RAR[it.r].c}">${it.name}</span> war schlechter als deins – zerstört für <em class="up">+${fmt(c)} Münzen</em>`;}
+      const cur=S.gear[it.slot],worse=cur&&it.r<cur.r; // nur niedrigere Seltenheit wird zerstört, gleiche Seltenheit wird angezeigtlet itTxt;
+      if(S.twTrash&&worse){const c=sellValue(it);S.coins+=c;itTxt=`<span style="color:${RAR[it.r].c}">${it.name}</span> hat eine niedrigere Seltenheit als deins – zerstört für <em class="up">+${fmt(c)} Münzen</em>`;}
       else{itTxt=`Neues Teil: <span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n})`;tw.give=it;}
       tw.res=`<b>Etage ${f} geschafft – neuer Rekord!</b> <em class="up">+${R.kak} 🌵</em> · <em class="up">+${R.caps} Kapseln</em><br>${itTxt}`;}
     else tw.res=`<b>Etage ${f} geschafft!</b> Weiter zu Etage ${f+1}. <small>(Belohnungen gibt es ab Etage ${S.twRec+1})</small>`;
@@ -3654,7 +3654,10 @@ const PATCHES=[
    items:()=>[['Neu:','Die Beine wachsen mit der Größe des Vogels mit, sitzen fest am Körper und haben kleine Krallenfüße.']]},
   {id:'pn59',date:'2026-11-08',title:'Wurzelfalle packt auch Vögel',
    hero:['🌱 Grafikfehler behoben','Unter fliegenden Bossen wie dem Sternenwächter tauchten manchmal vier braune Striche auf, wie ein Käfig.'],
-   items:()=>[['Ursache:','Das waren die Wurzeln der Wurzelfalle. Sie wuchsen nur knapp über den Boden und endeten in der Luft unter dem Vogel.'],['Neu:','Bei fliegenden Gegnern wachsen die Wurzeln jetzt bis hoch zum Vogel und umschlingen ihn.']]}
+   items:()=>[['Ursache:','Das waren die Wurzeln der Wurzelfalle. Sie wuchsen nur knapp über den Boden und endeten in der Luft unter dem Vogel.'],['Neu:','Bei fliegenden Gegnern wachsen die Wurzeln jetzt bis hoch zum Vogel und umschlingen ihn.']]},
+  {id:'pn60',date:'2026-11-08',title:'Turm: Zerstören nach Seltenheit',
+   hero:['🗼 Schlechtere Teile zerstören','Der Schalter im Turm richtet sich jetzt nach der Seltenheit.'],
+   items:()=>[['Neu:','Nur Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden zerstört.'],['Beispiel:','Trägst du ein mythisches Schwert und bekommst ein anderes mythisches Schwert, wird es dir als neues Teil angezeigt.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
