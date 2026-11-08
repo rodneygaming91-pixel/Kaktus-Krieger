@@ -712,6 +712,14 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .dgcard .dgi{font-size:2rem}.dgcard div{flex:1;min-width:0;display:flex;flex-direction:column}.dgcard b{font-size:1.05rem}.dgcard small{color:#d8c6a8;font-size:.78rem}
 .dgcard .dgk{font-weight:900;color:#ffd447;white-space:nowrap}.dgcard.soon{opacity:.5;cursor:default;border-color:#5a4430}
 .dglv{display:flex;align-items:center;gap:8px}.dglv span{flex:1 1 auto;text-align:center;font-size:.85rem}.dglv .sbtn{flex:0 0 44px;padding:6px 0;min-width:0}
+.exlist{display:flex;flex-direction:column;gap:6px;text-align:left;max-height:58vh;overflow:auto}
+.exc{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:radial-gradient(circle at 10% 50%,color-mix(in srgb,var(--rc) 22%,#2c211a),#1a130e 75%);border:2px solid var(--rc);border-radius:10px;padding:8px 10px 10px}
+.exc .exi{font-size:1.5rem}.exc>div{flex:1;min-width:0;display:flex;flex-direction:column}.exc b{font-size:.95rem}.exc small{font-size:.7rem;color:#d8c6a8}
+.exc .sbtn{padding:6px 10px;font-size:.82rem}.exc .exst{font-size:.72rem;font-weight:800;color:#d8c6a8;text-align:right;font-variant-numeric:tabular-nums}
+.exc .exbar{position:absolute;left:8px;right:8px;bottom:3px;height:3px;background:#0006;border-radius:2px}.exc .exbar i{display:block;height:100%;background:var(--rc);border-radius:2px}
+.exc.lock{opacity:.5;filter:saturate(.4)}.exc.rd{box-shadow:0 0 0 2px #ffd447,0 0 10px #ffd44766}
+.exc>.expick{flex:1 1 100%;display:flex;flex-direction:row;flex-wrap:wrap;gap:5px}.expick .sbtn{display:flex;align-items:center;gap:4px;padding:3px 8px 3px 3px}.expick canvas{width:28px;height:28px}
+.onbtn.exbtn.rd{border-color:#ffd447;box-shadow:0 0 0 2px #ffd44755}
 .dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
 .dslot .deff{position:absolute;top:16px;left:-5px;display:flex;align-items:center;gap:1px;height:18px;min-width:18px;padding:0 4px;border-radius:9px;
   background:#1c140f;border:2px solid var(--ec);color:var(--ec);font-size:.7rem;font-weight:900;line-height:1;box-shadow:0 1px 3px #000a;z-index:2}
@@ -854,7 +862,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
     <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
   </div>
-  <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 3 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Bald da</span></button>
+  <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 3 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Missionen</span></button>
     <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
     <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
   <div class="autorow" id="autoRow" hidden>
@@ -874,7 +882,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1831,7 +1839,8 @@ function reveal(){
   {const b=$('bSwapSell');if(b)b.onclick=()=>{S.coins+=sellValue(cur);S.gear[it.slot]=it;feed(it,true);close();};}
   (better?($('bEquip').disabled?$('bSwapSell'):$('bEquip')):$('bSell')).focus();
 }
-function close(){const back=pending&&pending.tw;if(back)delete pending.tw;pending=null;
+function close(){const back=pending&&pending.tw,exb=pending&&pending.ex;if(back)delete pending.tw;if(exb)delete pending.ex;pending=null;
+  if(exb&&exOpen){save();lastHud='';renderEx();return;}
   // Teil aus dem Turm: zurück ins Turm-Fenster, Auto-Kampf läuft weiter
   if(back&&tw.open){save();lastHud='';renderTower();if(tw.auto)setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim&&!pending)twFight();},S.twX2?400:800);return;}
   $('modal').hidden=true;save();lastHud='';}
@@ -1895,7 +1904,7 @@ function renderDrones(){
       const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration pro s'}[D.stat];
       let btns;
       if(!o)btns=`<button class="btn go" type="button" data-buy="${D.id}" data-cost="${D.cost}">Kaufen · ${fmt(D.cost)}</button>`;
-      else btns=`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
+      else btns=exBusy(D.id)?`<button class="btn" type="button" disabled>🧭 Auf Mission</button>`:`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
         ${lv>=DR_MAX?'<button class="btn" type="button" disabled>Max</button>':`<button class="btn" type="button" data-up="${D.id}" data-cost="${drUp(D,lv)}">Lv ${lv+1} · ${fmt(drUp(D,lv))}</button>`}`;
       return`<div class="drow${eq?' eq':''}" style="--dc:${D.c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas>
         <div><b style="color:${D.c}">${D.n}${o?`<em>Lv ${lv}</em>`:''}</b><small>${D.d}${o&&lv>1?` (×${drScale(lv).toFixed(2)})`:''}</small>
@@ -3186,7 +3195,59 @@ $('dgBtn').onclick=()=>{if(!$('modal').hidden||editing)return;dg.open=true;dg.vi
 setInterval(()=>{if(dg.open&&!dg.anim&&$('dgcv'))drawDg();},100);
 // Knopf-Anzeige: wie viele Schlüssel heute noch da sind
 setInterval(()=>{if(!S.char)return;const k=dgKeys(),e=$('dgBtn').querySelector('span');if(e){const tx=k>0?'🗝 '+k+' Schlüssel':'Morgen wieder';if(e.textContent!==tx)e.textContent=tx;}},1000);
-$('exBtn').onclick=()=>soonBox('Erkundung','🧭','Hier entsteht gerade die Erkundung. Bald geht es hier los!');
+// ---------- Erkundung: Begleiter, die nicht kämpfen, gehen auf Mission ----------
+// 8 Missionen, je 2 pro Schwierigkeit (Start und Mitte). Farbe und Ausrüstung richten sich nach einer Seltenheit der Gärtnerei.
+const EX=[
+  {id:'hain',  n:'Kakteenhain',      ico:'🌵',r:1, at:1,   h:.5, kc:.2, d:'Ein ruhiger Spaziergang durch junge Kakteen.'},
+  {id:'dorn',  n:'Dornenpfad',       ico:'🌿',r:3, at:121, h:1,  kc:.25,d:'Gefährliche Dornen, aber auch versteckte Schätze.'},
+  {id:'salz',  n:'Salzhöhlen',       ico:'🧂',r:5, at:241, h:2,  kc:.3, d:'Tief unter dem Salzsee glitzert es.'},
+  {id:'glut',  n:'Glutgrotte',       ico:'🔥',r:7, at:361, h:3,  kc:.35,d:'Heiße Gänge voller geschmolzenem Gold.'},
+  {id:'kris',  n:'Kristallmine',     ico:'💎',r:9, at:481, h:4,  kc:.4, d:'Kristalle, die von selbst leuchten.'},
+  {id:'stern', n:'Sternenkrater',    ico:'🌠',r:11,at:601, h:6,  kc:.5, d:'Hier ist ein Stern eingeschlagen.'},
+  {id:'schat', n:'Schattenfeste',    ico:'🏰',r:13,at:721, h:8,  kc:.6, d:'Eine verlassene Festung im ewigen Zwielicht.'},
+  {id:'urkn',  n:'Tempel des Urknalls',ico:'☀',r:15,at:841,h:12, kc:.75,d:'Der Ort, an dem alles begann.'}];
+const exUnlocked=M=>S.best>=M.at;
+const exState=()=>{if(!S.ex)S.ex={runs:{}};return S.ex;};
+const exBusy=id=>Object.values(exState().runs).some(r=>r.dog===id);
+const exFree=()=>Object.keys(S.dr||{}).filter(id=>S.dr[id]&&!S.drEq.includes(id)&&!exBusy(id));
+const exAtTxt=M=>{const d=diffIdx(M.at),loc=M.at-d*STAGES_PER_DIFF,w=Math.floor((loc-1)/20);return DIFFS[d].n+' '+(w+1)+'-'+(((loc-1)%20)+1);};
+const exHM=h=>h<1?Math.round(h*60)+' Min':h+(h===1?' Stunde':' Stunden');
+function exReward(M,lv){const k=1+.04*lv;return{coins:Math.round(6*cPow(S.best)*300*M.h*k),kakChance:Math.min(.95,M.kc*k),kak:1+diffIdx(M.at),itemChance:Math.min(1,.5+.02*lv)};}
+let exOpen=false,exMsg='',exPick=null;
+function exStart(M,id){const R=exState().runs;if(R[M.id]||exBusy(id)||S.drEq.includes(id)||!S.dr[id])return;
+  R[M.id]={dog:id,start:Date.now(),end:Date.now()+M.h*3600e3};exPick=null;exMsg='';save();renderEx();}
+function exClaim(M){const R=exState().runs,run=R[M.id];if(!run||Date.now()<run.end)return;const lv=(S.dr[run.dog]&&S.dr[run.dog].lv)||1,W=exReward(M,lv),out=[];
+  delete R[M.id];S.coins+=W.coins;out.push(`<em class="up">+${fmt(W.coins)} Münzen</em>`);
+  if(Math.random()<W.kakChance){S.kak=(S.kak||0)+W.kak;out.push(`<em class="up">+${W.kak} 🌵</em>`);}
+  const D=DRONES.find(d=>d.id===run.dog);exMsg=`${M.ico} <b>${D?D.n:'Begleiter'} ist zurück aus ${M.n}:</b> `+out.join(' · ');
+  if(Math.random()<W.itemChance){const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)],r=Math.min(M.r,RAR.length-1);
+    const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),slot:sl.id,r,v:itemValue(sl,r,S.best,rnd(ROLL_LO,ROLL_HI)),lvl:S.best,name:sl.names[r]};
+    const els=Object.keys(ELEM);if(sl.id==='waffe')it.el=els[Math.floor(Math.random()*els.length)];else it.res={el:ATK_ELS[Math.floor(Math.random()*ATK_ELS.length)],v:Math.round(4*RAR[r].pm)};
+    exMsg+=` · <span style="color:${RAR[r].c}">${it.name}</span>`;save();lastHud='';it.ex=true;pending=it;reveal();return;}
+  save();lastHud='';renderEx();}
+function renderEx(){if(pending)return;const R=exState().runs,free=exFree(),now=Date.now();
+  $('card').innerHTML=`<h2>🧭 Erkundung</h2><p class="hint" style="margin:0">Schicke Begleiter, die gerade nicht kämpfen, auf Mission. Höhere Begleiter-Level bringen mehr.</p>
+    ${exMsg?`<div class="wbres">${exMsg}</div>`:''}
+    <div class="exlist">${EX.map(M=>{const Rr=RAR[M.r],run=R[M.id],un=exUnlocked(M);
+      if(!un)return`<div class="exc lock" style="--rc:${Rr.c}"><span class="exi">🔒</span><div><b>${M.n}</b><small>Frei ab ${exAtTxt(M)} · ${Rr.n}</small></div></div>`;
+      let act;
+      if(run){const left=run.end-now,D=DRONES.find(d=>d.id===run.dog),p=Math.min(1,(now-run.start)/(run.end-run.start));
+        act=left<=0?`<button class="sbtn go" type="button" data-exc="${M.id}">Abholen</button>`:`<span class="exst">${D?D.n:''}<br>noch ${mmss(left/1000)}</span>`;
+        act+=`<i class="exbar"><i style="width:${p*100}%"></i></i>`;}
+      else act=free.length?`<button class="sbtn" type="button" data-exp="${M.id}">Losschicken</button>`:'<span class="exst">Kein freier Begleiter</span>';
+      const lvPick=exPick===M.id?`<div class="expick">${free.map(id=>{const D=DRONES.find(d=>d.id===id);return`<button type="button" class="sbtn" data-exs="${M.id}:${id}"><canvas width="56" height="56" data-exd="${id}"></canvas>${D.n} Lv ${S.dr[id].lv}</button>`;}).join('')}</div>`:'';
+      return`<div class="exc${run&&run.end<=now?' rd':''}" style="--rc:${Rr.c}"><span class="exi">${M.ico}</span><div><b>${M.n}</b><small>${exHM(M.h)} · Ausrüstung: <span style="color:${Rr.c}">${Rr.n}</span></small><small>Münzen${M.kc>=.5?' · oft Kakteen':' · ab und zu Kakteen'}</small></div>${act}${lvPick}</div>`;}).join('')}</div>
+    <div class="row"><button class="btn" id="exX" type="button">Schließen</button></div>`;
+  $('card').querySelectorAll('[data-exp]').forEach(b=>b.onclick=()=>{exPick=exPick===b.dataset.exp?null:b.dataset.exp;renderEx();});
+  $('card').querySelectorAll('[data-exs]').forEach(b=>b.onclick=()=>{const [m,id]=b.dataset.exs.split(':');exStart(EX.find(x=>x.id===m),id);});
+  $('card').querySelectorAll('[data-exc]').forEach(b=>b.onclick=()=>exClaim(EX.find(x=>x.id===b.dataset.exc)));
+  $('card').querySelectorAll('canvas[data-exd]').forEach(cv2=>{const D=DRONES.find(d=>d.id===cv2.dataset.exd);if(D)drawDrone(cv2.getContext('2d'),D,28,40,1.5);});
+  $('exX').onclick=()=>{exOpen=false;exMsg='';exPick=null;$('modal').hidden=true;};}
+$('exBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;exOpen=true;exMsg='';$('modal').hidden=false;renderEx();};
+setInterval(()=>{if(exOpen&&!$('modal').hidden&&!pending&&!exPick)renderEx();},1000);
+// Knopf-Anzeige: fertige Missionen
+setInterval(()=>{if(!S.char)return;const R=exState().runs,n=Object.values(R).filter(r=>Date.now()>=r.end).length,k=Object.keys(R).length,e=$('exBtn').querySelector('span');
+  const tx=n?n+' zurück!':k?k+' unterwegs':'Missionen';if(e&&e.textContent!==tx)e.textContent=tx;$('exBtn').classList.toggle('rd',n>0);},1000);
 
 // ---------- Spielzeit-Truhen: jeden Tag neu nach 15 min, 30 min, 1 h, 2 h und 3 h Spielzeit ----------
 const PT=[{m:15,coin:150,kc:.25,k:1,ic:0},{m:30,coin:300,kc:.35,k:1,ic:.35},{m:60,coin:600,kc:.5,k:2,ic:.5},{m:120,coin:1000,kc:.7,k:2,ic:.75},{m:180,coin:1500,kc:1,k:3,ic:1}];
@@ -3569,7 +3630,12 @@ const PATCHES=[
    hero:['🦇 Neuer Begleiter: die Fledermaus','Aus „Hunde“ wird „Begleiter“, und als Erstes kommt die Fledermaus dazu.'],
    items:()=>[['Lebensraub:','Die Fledermaus beißt jede Sekunde für 30 % deines Angriffs. Der Schaden kommt dir als Leben zurück.'],
      ['Dauerbonus:','+2 % Leben pro Level.'],
-     ['Preis:','5.000 Münzen, zu finden unter Begleiter.']]}
+     ['Preis:','5.000 Münzen, zu finden unter Begleiter.']]},
+  {id:'pn56',date:'2026-11-08',title:'Erkundung',
+   hero:['🧭 Schick deine Begleiter auf Mission','Begleiter, die gerade nicht kämpfen, können jetzt auf Erkundung gehen.'],
+   items:()=>[['8 Missionen:','Je 2 pro Schwierigkeit, vom Kakteenhain (30 Min) bis zum Tempel des Urknalls (12 Std). Neue Missionen schaltest du mit deinem Fortschritt frei.'],
+     ['Belohnung:','Immer Münzen, oft Kakteen und mit etwas Glück Ausrüstung in der Farbe der Mission.'],
+     ['Echtzeit:','Missionen laufen weiter, auch wenn das Spiel geschlossen ist. Höhere Begleiter-Level bringen mehr.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
