@@ -667,6 +667,20 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .dslot .dl{position:absolute;top:-10px;left:4px;font-size:.55rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:#f3e6cc;background:#1c140f;border:1px solid #6b5644;border-radius:4px;padding:0 4px;white-space:nowrap;max-width:calc(100% + 4px);overflow:hidden;text-overflow:ellipsis}
 .dslot .dd{position:absolute;top:-6px;right:-6px;width:12px;height:12px;transform:rotate(45deg);border:2px solid #1c140f;border-radius:2px}
 .dslot .dv{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:.62rem;font-weight:900;color:#fff;text-shadow:0 1px 0 #000,0 0 3px #000;font-variant-numeric:tabular-nums}
+.aolook{background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;color:#ffd447;font:inherit}
+.aolook i{font-style:normal;font-size:.62rem;font-weight:900;margin-top:-6px;background:#1c140f;border:1.5px solid #6b5644;border-radius:999px;padding:1px 6px;white-space:nowrap}
+.arview{display:flex;flex-direction:column;gap:10px}
+.avhead{display:flex;gap:10px;align-items:center;background:#1c140f;border:2px solid #4a3a2e;border-radius:10px;padding:6px 10px}
+.avhead canvas{width:90px;height:auto}.avhead div{display:flex;flex-direction:column;gap:1px;min-width:0}.avhead b{font-size:1.1rem}.avhead small{color:#bfae94}
+.avhead span{font-size:.82rem;font-weight:800}.avhead .avst{color:#f3e6cc;font-size:.78rem}
+.avgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.avs{position:relative;display:flex;gap:6px;align-items:center;background:radial-gradient(circle at 20% 50%,color-mix(in srgb,var(--rc,#6b5644) 25%,#2c211a),#1a130e 80%);
+  border:2px solid var(--rc,#4a3a2e);border-radius:8px;padding:14px 6px 5px;min-width:0}
+.avs .lbl{position:absolute;top:-1px;left:6px;font-size:.58rem;font-weight:900;color:#bfae94;text-transform:uppercase;letter-spacing:.04em}
+.avs canvas{width:44px;height:44px;flex:0 0 44px}.avs .eld{bottom:3px;left:36px;right:auto}
+.avs.empty{opacity:.5;justify-content:center;min-height:60px}.avs.empty i{font-style:normal}
+.avt{display:flex;flex-direction:column;min-width:0}.avt b{font-size:.74rem;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.avt small{font-size:.64rem;color:#d8c6a8;line-height:1.25}.avt small .elt{font-size:.64rem}
 .dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
 .dslot .deff{position:absolute;top:16px;left:-5px;display:flex;align-items:center;gap:1px;height:18px;min-width:18px;padding:0 4px;border-radius:9px;
   background:#1c140f;border:2px solid var(--ec);color:var(--ec);font-size:.7rem;font-weight:900;line-height:1;box-shadow:0 1px 3px #000a;z-index:2}
@@ -828,7 +842,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2059,7 +2073,7 @@ async function rpc(fn,body){
   finally{clearTimeout(tm);}
 }
 function powerNow(){const s=heroStats();return Math.round(s.atk*4+s.hp*.5+s.block*20+s.crit*20);}
-function cardNow(){const g={};for(const k in S.gear){const it=S.gear[k];if(it)g[k]={slot:it.slot,r:it.r,name:it.name,el:it.el||null};}
+function cardNow(){const g={};for(const k in S.gear){const it=S.gear[k];if(it)g[k]={slot:it.slot,r:it.r,name:it.name,el:it.el||null,v:it.v,lvl:it.lvl,res:it.res||null};}
   return{char:S.char,gear:g,ws:wsTotal(),glv:S.glv};}
 async function onEnsure(){
   if(ON.code&&ON.key)return true;if(!S.char)return false;
@@ -2427,11 +2441,13 @@ renderOnBadge();
 // ---------- Arena: Kämpfe gegen andere Spieler (der Server entscheidet) ----------
 const LEAGUES=[{n:'Bronze',min:0,c:'#cd8a4a'},{n:'Silber',min:1100,c:'#c8d0e0'},{n:'Gold',min:1250,c:'#ffd447'},{n:'Platin',min:1450,c:'#5fe0d0'},{n:'Diamant',min:1700,c:'#b48cff'}];
 const leagueOf=p=>LEAGUES.filter(L=>p>=L.min).pop();
-let ar={open:false,st:null,opp:null,err:'',msg:'',fight:null,res:null};
+let ar={open:false,st:null,opp:null,err:'',msg:'',fight:null,res:null,view:null};
 const arStats=()=>{const s=heroStats();return{atk:Math.round(s.atk*100)/100,hp:s.hp,spd:Math.round(s.spd*1000)/1000,block:s.block,crit:s.crit};};
 const BOTN=['Trainings-Kaktus','Übungs-Säule','Sandsack-Kaktus','Holzkaktus','Strohkaktus'];
 function makeBots(n,pts){const me=arStats(),out=[];for(let i=0;i<n;i++){const f=rnd(.75,1.15),G={};
-    for(const sl of SLOTS)if(Math.random()<.7)G[sl.id]={slot:sl.id,r:Math.max(0,Math.min(5,Math.round(rnd(0,3)))),name:''};
+    for(const sl of SLOTS){const mine=S.gear[sl.id];if(!mine&&Math.random()<.5)continue;
+      const r=mine?Math.max(0,Math.min(RAR.length-1,mine.r+Math.round(rnd(-1,1)))):Math.round(rnd(0,2)),it={slot:sl.id,r,name:sl.names[r],lvl:S.stage,v:itemValue(sl,r,S.stage,rnd(.9,1.1))};
+      const one=a=>a[Math.floor(Math.random()*a.length)];if(sl.id==='waffe'&&r>=1)it.el=one(Object.keys(ELEM));else if(r>=1&&Math.random()<.55)it.res={el:one(ATK_ELS),v:Math.round(4*RAR[r].pm)};G[sl.id]=it;}
     out.push({code:'BOT',bot:true,name:BOTN[i%BOTN.length],cls:'Training',pts:Math.round(pts+rnd(-60,60)),power:Math.round(powerNow()*f),
       stats:{atk:me.atk*f,hp:Math.round(me.hp*f),spd:me.spd,block:Math.min(40,me.block*f),crit:Math.min(30,me.crit*f)},
       card:{char:{name:'',shape:pick(SHAPES),color:COLORS[Math.floor(Math.random()*COLORS.length)][1],eyes:pick(EYES),hat:pick(HATS),cls:'schuetze'},gear:G}});}
@@ -2468,6 +2484,19 @@ async function loadArena(){ar.err='';try{
     ar.opp=real.concat(makeBots(Math.max(0,3-real.length),(ar.st&&ar.st.me&&ar.st.me.pts)||1000));}
   catch(e){ar.err='Keine Verbindung. Die Arena gibt es nur auf kaktus-krieger.pages.dev.';}
   if(ar.open)renderArena();}
+// Ausrüstung eines Arena-Gegners: alle Plätze mit Seltenheit, Wert, Element und Resistenz
+function arViewHtml(o){if(!o)return'';const G=(o.card&&o.card.gear)||{},st=o.stats||{},OL=leagueOf(o.pts);
+  const cell=id=>{const sl=slotOf(id),it=G[id];if(!it)return`<div class="avs empty"><span class="lbl">${sl.n}</span><i>–</i></div>`;
+    const R=RAR[it.r]||RAR[0];
+    return`<div class="avs" style="--rc:${R.c}"><span class="lbl">${sl.n}</span><canvas width="88" height="88" data-avi="${id}"></canvas>${effBadges(it)}
+      <div class="avt"><b style="color:${R.c}">${esc2(it.name||R.n)}</b><small>${R.n}${it.v!=null?' · +'+fmtV(sl,it.v)+' '+sl.unit:''}</small>
+      ${it.el?`<small>${elTag(it.el)}</small>`:''}${it.res?`<small>${elTag(it.res.el)} ${it.res.v} % Resistenz</small>`:''}</div></div>`;};
+  return`<div class="arview"><div class="avhead"><canvas id="arvcv" width="160" height="190"></canvas><div><b>${esc2(o.name)}</b><small>${esc2(o.cls||'')}</small>
+      <span style="color:${OL.c}">${OL.n} · ${o.pts}</span><span>Kampfkraft ${fmt(o.power)}</span>
+      ${st.atk?`<span class="avst">⚔ ${fmt(st.atk)} · ♥ ${fmt(st.hp)}${st.block!=null?' · 🛡 '+(+st.block).toFixed(0)+'%':''}${st.crit!=null?' · ✦ '+(+st.crit).toFixed(0)+'%':''}</span>`:''}</div></div>
+    ${Object.keys(G).length&&!Object.values(G).some(it=>it.v!=null)&&!o.bot?'<p class="hint">Die genauen Werte erscheinen, sobald dieser Spieler das neue Update geladen hat.</p>':''}
+    <div class="avgrid">${SLOTS.map(sl=>cell(sl.id)).join('')}</div>
+    <div class="eqdb"><button class="sbtn" type="button" id="arBack">‹ Zurück</button><button class="sbtn red" type="button" data-fight="${ar.view}" ${(ar.st&&ar.st.me&&ar.st.me.tickets<=0)?'disabled':''}>Kämpfen</button></div></div>`;}
 function renderArena(){
   let body;
   if(ar.err)body=`<p class="hint warn">${ar.err}</p>`;
@@ -2478,7 +2507,8 @@ function renderArena(){
       ${ar.fight?'<canvas id="arcv" width="720" height="380"></canvas>':''}
       ${ar.res?`<div class="wbres">${ar.res}</div>`:''}
       ${ar.msg?`<p class="hint warn">${esc2(ar.msg)}</p>`:''}
-      ${ar.fight?'':`<div class="aropp">${ar.opp.map((o,i)=>{const OL=leagueOf(o.pts);return`<div class="ao"><canvas width="120" height="130" data-aoc="${i}"></canvas>
+      ${ar.view!=null&&!ar.fight?arViewHtml(ar.opp[ar.view]):''}
+      ${ar.fight||ar.view!=null?'':`<div class="aropp">${ar.opp.map((o,i)=>{const OL=leagueOf(o.pts);return`<div class="ao"><button type="button" class="aolook" data-look="${i}" title="Ausrüstung ansehen"><canvas width="120" height="130" data-aoc="${i}"></canvas><i>👁 Ausrüstung</i></button>
         <div><b>${esc2(o.name)}</b><small>${esc2(o.cls||'')}${o.bot?' · bringt halbe Punkte':''}</small><span style="color:${OL.c}">${OL.n} · ${o.pts}</span><span>Kampfkraft ${fmt(o.power)}</span></div>
         <button type="button" class="sbtn red" data-fight="${i}" ${me.tickets<=0?'disabled':''}>Kämpfen</button></div>`;}).join('')}</div>
         <div class="eqdb"><button class="sbtn" type="button" id="arNew">Neue Gegner</button></div>`}
@@ -2487,12 +2517,16 @@ function renderArena(){
       ${ar.st.top.length?`<ol class="lb">${ar.st.top.map((r,i)=>{const RL=leagueOf(r.pts);return`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-afc="${r.code}">
         <span class="rk">${i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1}</span><span class="nm"><b>${esc2(r.name)}</b><small style="color:${RL.c}">${RL.n}</small></span><span class="vl">${r.pts}</span></button></li>`;}).join('')}</ol>`:'<p class="hint">Noch niemand hat gekämpft. Sei der Erste!</p>'}`;}
   $('card').innerHTML=`<div class="eqwin"><h2 class="arh">⚔ Arena</h2>${body}<button class="sbtn wide" type="button" id="arClose" ${ar.fight&&!ar.fight.done?'disabled':''}>Schließen</button></div>`;
-  $('arClose').onclick=()=>{ar.open=false;ar.fight=null;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
+  $('arClose').onclick=()=>{ar.open=false;ar.fight=null;ar.view=null;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
   {const cb=$('arClaim');if(cb)cb.onclick=arClaim;}
-  const nb=$('arNew');if(nb)nb.onclick=()=>{ar.opp=null;ar.res=null;renderArena();loadArena();};
+  const nb=$('arNew');if(nb)nb.onclick=()=>{ar.opp=null;ar.view=null;ar.res=null;renderArena();loadArena();};
   $('card').querySelectorAll('canvas[data-aoc]').forEach(cv2=>{const o=ar.opp[+cv2.dataset.aoc],g=cv2.getContext('2d');g.save();g.translate(60,120);g.scale(1.1,1.1);
     drawCactus(g,o.card&&o.card.char||DEFAULT_CH,{x:0,y:0,gear:(o.card&&o.card.gear)||{}});g.restore();});
-  $('card').querySelectorAll('[data-fight]').forEach(b=>b.onclick=()=>arFight(ar.opp[+b.dataset.fight]));
+  $('card').querySelectorAll('[data-fight]').forEach(b=>b.onclick=()=>{ar.view=null;arFight(ar.opp[+b.dataset.fight]);});
+  $('card').querySelectorAll('[data-look]').forEach(b=>b.onclick=()=>{ar.view=+b.dataset.look;renderArena();});
+  {const bk=$('arBack');if(bk)bk.onclick=()=>{ar.view=null;renderArena();};}
+  $('card').querySelectorAll('canvas[data-avi]').forEach(cv2=>{const o=ar.opp[ar.view],it=o&&o.card&&o.card.gear&&o.card.gear[cv2.dataset.avi];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});
+  {const cv2=$('arvcv');if(cv2){const o=ar.opp[ar.view],g=cv2.getContext('2d');g.save();g.translate(80,170);g.scale(1.5,1.5);drawCactus(g,o.card&&o.card.char||DEFAULT_CH,{x:0,y:0,gear:(o.card&&o.card.gear)||{}});g.restore();}}
   $('card').querySelectorAll('[data-afc]').forEach(b=>b.onclick=async()=>{try{friend=await rpc('kk_profile',{p_code:b.dataset.afc});}catch(e){friend=null;}
     ar.open=false;olOpen=true;olTab='freunde';friendBack=null;renderOnline();});
   if(ar.fight)drawArena();
@@ -3220,7 +3254,12 @@ const PATCHES=[
    hero:['🔎 Die richtige Resistenz schnell finden','Im Inventar kannst du jetzt nach Element sortieren und filtern.'],
    items:()=>[['Sortieren:','„Element“ zeigt zuerst die Teile, die in der aktuellen Welt helfen, danach alle anderen nach Element gruppiert.'],
      ['Filtern:','Mit dem Filter „Element“ siehst du z. B. nur ❄ Eis-Teile.'],
-     ['Symbole:','Jedes Teil im Inventar zeigt jetzt sein Element.']]}
+     ['Symbole:','Jedes Teil im Inventar zeigt jetzt sein Element.']]},
+  {id:'pn45',date:'2026-11-08',title:'Arena: Ausrüstung ansehen',
+   hero:['👁 Kenne deinen Gegner','In der Arena kannst du dir jetzt die Ausrüstung deiner Gegner ansehen.'],
+   items:()=>[['So geht’s:','Tippe in der Arena unter einem Gegner auf „👁 Ausrüstung“.'],
+     ['Du siehst:','Alle Teile mit Seltenheit, Wert, Waffen-Element und Resistenz, dazu Angriff, Leben, Block und Krit.'],
+     ['Hinweis:','Die genauen Werte anderer Spieler erscheinen, sobald sie dieses Update geladen haben.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
