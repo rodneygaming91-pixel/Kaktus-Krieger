@@ -507,7 +507,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .wbres small{color:#d8c8a8}
 .wbres{background:var(--std);border:2px solid #c9963d;border-radius:8px;padding:8px 10px;font-size:.88rem;text-align:center}.wbres em{font-style:normal}
 .wbtop{max-height:none}
-/* Gilden */
+/* Allianzen */
 .eqwin .eqtabs{gap:2px}.eqwin .eqtabs button{font-size:.8rem;padding:8px 2px}
 @media (max-width:420px){.eqwin .eqtabs button{font-size:.68rem;letter-spacing:0}}
 .ghead{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--std);border:3px solid var(--gd);border-radius:8px;padding:10px}
@@ -526,7 +526,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .gform{display:flex;flex-direction:column;gap:6px;background:var(--std);border:2px solid var(--stl);border-radius:8px;padding:10px}
 .lb .gk,.lb .gj{width:auto;display:inline-block;grid-template-columns:none}
 #gQ{text-transform:none;letter-spacing:0}
-/* Gildenkasse und Upgrades */
+/* Allianzkasse und Upgrades */
 .gbank{background:var(--std);border:3px solid var(--gd);border-radius:8px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
 .gbank small{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#b8a488}
 .gbank>b{font-family:var(--display);font-weight:400;font-size:1.8rem;color:#ffe08a;text-shadow:0 2px 0 #000}
@@ -541,7 +541,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .gup small{font-size:.7rem;color:#b8a488}
 .gbar{height:5px;background:#140d09;border-radius:3px;overflow:hidden}.gbar i{display:block;height:100%;background:linear-gradient(90deg,#c9963d,#ffe08a)}
 .gup .sbtn{flex:none;padding:7px 10px;font-size:.82rem}.gcost{font-weight:800;color:#d8c8a8!important}
-/* Gilden-Chat */
+/* Allianz-Chat */
 .gchat{display:flex;flex-direction:column;gap:6px;height:min(46vh,340px);overflow-y:auto;background:var(--std);border:2px solid var(--stl);border-radius:8px;padding:8px;overscroll-behavior:contain}
 .cm{max-width:82%;align-self:flex-start;display:flex;flex-direction:column;gap:1px;background:#3a2c22;border:1px solid #6b5644;border-radius:10px 10px 10px 3px;padding:5px 9px}
 .cm.me{align-self:flex-end;background:#2f4a22;border-color:#4a7a32;border-radius:10px 10px 3px 10px}
@@ -551,7 +551,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .onbtn[data-chat]::after{content:attr(data-chat) " neu";margin-left:auto;background:#e0283a;color:#fff;border-radius:8px;padding:1px 7px;font-size:.68rem;font-weight:800}
 .onbtn[data-chat] span{margin-left:8px}
 #gMsg{text-transform:none;letter-spacing:0}
-/* Gilden-Wochenziel */
+/* Allianz-Wochenziel */
 .goal{background:var(--std);border:2px solid var(--stl);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:10px}
 .gh2{display:flex;align-items:center;gap:10px}.gh2>div{display:flex;flex-direction:column}
 .gh2 .gi{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#ffe7a8,#c9963d 55%,#6b4a1a);border:2px solid #1c120c;font-size:1rem}
@@ -694,6 +694,11 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .wbtiers span{display:flex;flex-direction:column;align-items:center;gap:1px;background:#1c140f;border:2px solid #4a3a2e;border-radius:8px;padding:5px 2px;text-align:center;min-width:0}
 .wbtiers span b{font-size:.68rem;color:var(--tc);white-space:nowrap}.wbtiers span small{font-size:.56rem;color:#bfae94;line-height:1.2}
 .wbtiers span.on{border-color:var(--tc);box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 40%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
+.hr{justify-self:end;display:flex;gap:5px}
+.allybtn{position:relative}.allybtn[data-chat]::after{content:attr(data-chat);position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;background:#e0283a;color:#fff;font-size:.68rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #1c140e}
+@media (max-width:400px){.chestbtn{min-width:48px;padding:3px 5px 4px}.chestbtn span{font-size:.6rem}}
+@media (max-width:400px){header{gap:4px}.hbtns{gap:3px}.hbtns .setbtn{padding:3px 6px;font-size:.74rem}.hr{gap:3px}.chestbtn{min-width:44px}.chestbtn b{font-size:1.1rem}}
+@media (max-width:370px){.who.plate{min-width:0;padding:4px 7px 5px}.who.plate b{font-size:.88rem}.who.plate small{font-size:.58rem}}
 .chestbtn{justify-self:end;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(#3a2c22,#2a1f18);border:2px solid var(--frame);border-radius:10px;padding:3px 8px 4px;color:#e8d4b0;font:inherit;cursor:pointer;min-width:58px;box-shadow:inset 0 0 0 1px var(--frameD),0 2px 0 #0008}
 .chestbtn b{font-size:1.25rem;line-height:1.1}.chestbtn span{font-size:.66rem;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
 .chestbtn.rd{border-color:#ffd447;color:#fff2a8;animation:mailpulse 1.4s ease-in-out infinite}.chestbtn.rd b{animation:mwob 1s ease-in-out infinite}
@@ -825,7 +830,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
-    <button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button>
+    <div class="hr"><button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
@@ -865,7 +870,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -986,7 +991,7 @@ const wsMax=W=>W.max&&wsLv(W.id)>=W.max;
 const wsTotal=()=>WS.reduce((a,W)=>a+wsLv(W.id),0);
 // Kakteen: für jeden gewonnenen Bosskampf, mehr auf höheren Stages
 const kakFor=st=>1+diffIdx(st);
-// Gilden-Upgrades (Stufen werden aus der Gilde geladen und hier zwischengespeichert)
+// Allianz-Upgrades (Stufen werden aus der Allianz geladen und hier zwischengespeichert)
 const GUPG=[
   {id:'atk', n:'Kriegstrommel',  ico:'⚔',per:3,unit:'% Angriff',   base:5000,d:'Mehr Angriff für alle Mitglieder'},
   {id:'hp',  n:'Wasserspeicher', ico:'♥',per:3,unit:'% Leben',     base:5000,d:'Mehr Leben für alle Mitglieder'},
@@ -1041,7 +1046,7 @@ const gTime=L=>Math.round(Math.min(L>=20?4*3600+(L-20)*1800:4*3600,10*Math.pow(1
 function rollItem(){
   const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
   for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
-  if(r<RAR.length-1&&Math.random()<gUp('luck')*.02)r++; // Glücksklee der Gilde
+  if(r<RAR.length-1&&Math.random()<gUp('luck')*.02)r++; // Glücksklee der Allianz
   const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)];
   const lvl=S.stage;
   const v=itemValue(sl,r,lvl,rnd(ROLL_LO,ROLL_HI));
@@ -1257,7 +1262,7 @@ function hitEnemy(e,dmg,crit){
   const em=elMul();dmg*=em;
   e.hp-=dmg;e.hit=1;floats.push({x:e.x,y:e.y-e.ty.r*2-6,txt:fmt(dmg)+(crit?'!':''),col:crit?'#ffd447':em>1?ELEM[world().weak].c:em<1?'#9a8f88':'#fff',t:crit?.9:.7});
   if(e.hp<=0){
-    S.tk=(S.tk||0)+1; // alle Kills zählen fürs Gilden-Wochenziel
+    S.tk=(S.tk||0)+1; // alle Kills zählen fürs Allianz-Wochenziel
     const gain=Math.ceil(e.coin*coinMul());
     e.dying=.35;S.coins+=gain;floats.push({x:e.x,y:e.y-e.ty.r*2-20,txt:'+'+fmt(gain),col:'#f0b866',t:1});
     for(let i=0;i<(eco?3:10);i++)parts.push({x:e.x,y:e.y-e.ty.r,vx:rnd(-120,120),vy:rnd(-220,-60),t:rnd(.3,.6),col:e.ty.col});
@@ -2129,7 +2134,7 @@ async function onSave(){
       p_stage:S.stage,p_best:S.best,p_power:powerNow(),p_card:cardNow(),p_save:S});
     if(ok===false){onState='err';onMsg='Dein Konto wurde auf einem anderen Gerät geladen. Melde dich unten mit Freundescode und PIN wieder an.';}else{onState='ok';onLast=Date.now();onMsg='';}
     try{await rpc('kk_ar_update',{p_code:ON.code,p_key:ON.key,p_stats:arStats()});}catch(e){}
-    // neue Kills an die Gilde melden
+    // neue Kills an die Allianz melden
     if(ok!==false&&gd.my&&S.tkGuild===gd.my){const d=Math.min(20000,(S.tk||0)-(S.tkSent||0));
       if(d>0){await rpc('kk_guild_contrib',{p_code:ON.code,p_key:ON.key,p_kills:d});S.tkSent=(S.tkSent||0)+d;save();}}}
   catch(e){onState=/Failed to fetch|NetworkError|abort|Load failed/i.test(String(e))?'off':'err';onMsg=String(e.message||e).slice(0,120);}
@@ -2272,9 +2277,9 @@ function wbAttack(){if(wb.busy||!wb.st||wb.st.day_left<=0)return;
     wb.busy=false;wb.anim=null;await loadWb();};
   requestAnimationFrame(step);}
 
-// ---------- Gilden ----------
+// ---------- Allianzen ----------
 const GUILD_COST=1000;
-// Gilden-Chat: Nachrichten werden alle 4 s nachgeladen, solange der Chat offen ist, sonst jede Minute (für die Ungelesen-Anzeige)
+// Allianz-Chat: Nachrichten werden alle 4 s nachgeladen, solange der Chat offen ist, sonst jede Minute (für die Ungelesen-Anzeige)
 let chat={msgs:[],last:0,unread:0,seen:+(localStorage.getItem('kk-chat-seen')||0)||0,busy:false};
 function chatHtml(){if(!chat.msgs.length)return'<p class="hint">Noch keine Nachrichten. Sag Hallo!</p>';
   return chat.msgs.map(m=>{const me=m.code===ON.code,tm=new Date(m.created_at);
@@ -2286,11 +2291,12 @@ async function pollChat(){if(chat.busy||!ON.code||!S.gUpg&&!gd.my)return;chat.bu
     if(open&&chat.msgs.length){chat.seen=chat.last;try{localStorage.setItem('kk-chat-seen',chat.seen);}catch(e){}}
     chat.unread=chat.msgs.filter(m=>m.id>chat.seen&&m.code!==ON.code).length;
     const box=$('gchat');if(open&&box){const atEnd=box.scrollHeight-box.scrollTop-box.clientHeight<40;box.innerHTML=chatHtml();if(atEnd||r.length)box.scrollTop=box.scrollHeight;}
-    const ob=$('onSub');if(ob&&chat.unread&&!open)$('onBtn').dataset.chat=chat.unread;else if($('onBtn'))delete $('onBtn').dataset.chat;}
+    const ob=$('onSub');if(ob&&chat.unread&&!open)$('onBtn').dataset.chat=chat.unread;else if($('onBtn'))delete $('onBtn').dataset.chat;
+    if(chat.unread&&!open)$('allyBtn').dataset.chat=chat.unread;else delete $('allyBtn').dataset.chat;}
   catch(e){}finally{chat.busy=false;}}
 setInterval(()=>{const open=olOpen&&olTab==='gilde'&&gd.sub==='chat';if(open||Date.now()%60000<4000)pollChat();},4000);
 setTimeout(pollChat,7000);
-// Gilden-Wochenziel
+// Allianz-Wochenziel
 let goals={d:null,err:''};
 const GOAL_REW={kills:[5,10,20],wb:[5,10,20]},GOAL_COIN=[100,250,600],TIERN=['Bronze','Silber','Gold'],TIERC=['#cd8a4a','#c8d0e0','#ffd447'];
 async function loadGoals(){goals.err='';try{goals.d=await rpc('kk_guild_goals',{p_code:ON.code});}catch(e){goals.err='Keine Verbindung.';}
@@ -2305,7 +2311,7 @@ function goalsHtml(){
         return`<div class="gt" style="--tc:${TIERC[i]}"><b>${TIERN[i]}</b><small>${fmt(tg)}</small><span>+${GOAL_REW[key][i]} Kapseln<br>+${fmt(coinBase*GOAL_COIN[i])} Münzen</span>
           ${got?'<small class="got">✓ abgeholt</small>':`<button type="button" class="sbtn go" data-claim="${key}:${i}" ${done?'':'disabled'}>${done?'Abholen':'offen'}</button>`}</div>`;}).join('')}</div></div>`;};
   return card('kills','⚔','Gegner besiegen','Kills')+card('wb','👑','Weltboss-Schaden','Schaden')+
-    `<p class="hint">Woche ${esc2(D.period)} · ${D.members} Mitglieder · Ziele wachsen mit der Gilde. Neue Woche ab Montag.</p>`;}
+    `<p class="hint">Woche ${esc2(D.period)} · ${D.members} Mitglieder · Ziele wachsen mit der Allianz. Neue Woche ab Montag.</p>`;}
 let gd={sub:'halle',my:undefined,info:null,list:null,err:'',msg:'',q:'',kick:null,leaveAsk:false,form:false};
 const esc2=v=>String(v==null?'':v).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
 async function loadGuild(){gd.err='';try{
@@ -2313,12 +2319,12 @@ async function loadGuild(){gd.err='';try{
     if(gd.my&&S.tkGuild!==gd.my){S.tkGuild=gd.my;S.tkSent=S.tk||0;save();}
     if(gd.my){gd.info=await rpc('kk_guild_info',{p_gid:gd.my});S.gBonus=gd.info?gd.info.level*2:0;S.gUpg=gd.info?gd.info.upg||{}:{};save();lastHud='';}
     else{gd.info=null;S.gBonus=0;S.gUpg={};gd.list=await rpc('kk_guild_list',{p_q:gd.q});}}
-  catch(e){gd.err='Keine Verbindung. Gilden gibt es nur auf kaktus-krieger.pages.dev.';}
+  catch(e){gd.err='Keine Verbindung. Allianzen gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='gilde')renderOnline();}
-setTimeout(()=>{if(ON.code)loadGuild();},5000); // Gildenbonus beim Start auffrischen
+setTimeout(()=>{if(ON.code)loadGuild();},5000); // Allianzbonus beim Start auffrischen
 function guildBody(){
   if(gd.err)return`<p class="hint warn">${gd.err}</p>`;
-  if(gd.my===undefined)return'<p class="hint">Lade Gilde …</p>';
+  if(gd.my===undefined)return'<p class="hint">Lade Allianz …</p>';
   const msg=gd.msg?`<p class="hint warn">${esc2(gd.msg)}</p>`:'';
   if(gd.info){const G=gd.info,lead=G.leader===ON.code;
     const sub=`<div class="lbsw"><button type="button" class="${gd.sub==='halle'?'on':''}" data-gsub="halle">Mitglieder</button><button type="button" class="${gd.sub==='kasse'?'on':''}" data-gsub="kasse">Kasse</button><button type="button" class="${gd.sub==='ziele'?'on':''}" data-gsub="ziele">Ziele</button><button type="button" class="${gd.sub==='chat'?'on':''}" data-gsub="chat">Chat${chat.unread?' <i class="cdot">'+chat.unread+'</i>':''}</button></div>`;
@@ -2327,10 +2333,10 @@ function guildBody(){
         <span class="glv">Lv ${G.level}<small>+${G.level*2}% Münzen</small></span></div>`;
     if(gd.sub==='ziele')return head+sub+msg+goalsHtml();
     if(gd.sub==='chat')return head+sub+msg+`<div class="gchat" id="gchat">${chatHtml()}</div>
-      <div class="ofind"><input id="gMsg" class="oin" maxlength="200" placeholder="Nachricht an die Gilde …" autocomplete="off"><button class="sbtn go" type="button" id="gSend">Senden</button></div>
+      <div class="ofind"><input id="gMsg" class="oin" maxlength="200" placeholder="Nachricht an die Allianz …" autocomplete="off"><button class="sbtn go" type="button" id="gSend">Senden</button></div>
       <p class="hint">Bitte freundlich bleiben. Links sind nicht erlaubt.</p>`;
     if(gd.sub==='kasse'){const amt=[.1,.25,.5].map(f=>Math.floor(S.coins*f));
-      return head+sub+msg+`<div class="gbank"><small>Gildenkasse</small><b>${fmt(G.bank)}</b><span>Deine Münzen: ${fmt(S.coins)}</span>
+      return head+sub+msg+`<div class="gbank"><small>Allianzkasse</small><b>${fmt(G.bank)}</b><span>Deine Münzen: ${fmt(S.coins)}</span>
           <div class="gdon">${amt.map((a,i)=>`<button type="button" class="sbtn" data-don="${a}" ${a<1?'disabled':''}>${['10 %','25 %','50 %'][i]}<small>${fmt(a)}</small></button>`).join('')}</div></div>
         <div class="gups">${GUPG.map(U=>{const lv=+(G.upg&&G.upg[U.id])||0,cost=gUpCost(U,lv),max=lv>=GUPG_MAX;
           return`<div class="gup"><span class="gi">${U.ico}</span><div><b>${U.n} <em>Lv ${lv}/${GUPG_MAX}</em></b><small>${U.d} · jetzt +${lv*U.per}${U.unit}</small>
@@ -2345,16 +2351,16 @@ function guildBody(){
         <span class="vl">${fmt(m.power)}<small>Boss ${fmt(m.wb)}</small></span>
         ${lead&&m.code!==ON.code?`<button type="button" class="gk${gd.kick===m.code?' ask':''}" data-kick="${m.code}" title="Entfernen">${gd.kick===m.code?'Sicher?':'✕'}</button>`:''}</div></li>`).join('')}</ol>
       <p class="hint">${G.members.length}/20 Mitglieder · Level steigt mit den Stages aller Mitglieder (je 100 Stages ein Level)</p>
-      <div class="eqdb"><button class="sbtn ${gd.leaveAsk?'red':''}" type="button" id="gLeave">${gd.leaveAsk?'Wirklich verlassen?':'Gilde verlassen'}</button><button class="sbtn" type="button" id="gRe">Aktualisieren</button></div>`;}
-  return`${msg}<div class="ofind"><input id="gQ" class="oin" maxlength="20" placeholder="Gilde suchen" value="${esc2(gd.q)}" autocomplete="off"><button class="sbtn" type="button" id="gSearch">Suchen</button></div>
-    ${!gd.list?'<p class="hint">Lade Gilden …</p>':!gd.list.length?'<p class="hint">Noch keine Gilde gefunden. Gründe die erste!</p>':
+      <div class="eqdb"><button class="sbtn ${gd.leaveAsk?'red':''}" type="button" id="gLeave">${gd.leaveAsk?'Wirklich verlassen?':'Allianz verlassen'}</button><button class="sbtn" type="button" id="gRe">Aktualisieren</button></div>`;}
+  return`${msg}<div class="ofind"><input id="gQ" class="oin" maxlength="20" placeholder="Allianz suchen" value="${esc2(gd.q)}" autocomplete="off"><button class="sbtn" type="button" id="gSearch">Suchen</button></div>
+    ${!gd.list?'<p class="hint">Lade Allianzen …</p>':!gd.list.length?'<p class="hint">Noch keine Allianz gefunden. Gründe die erste!</p>':
     `<ol class="lb">${gd.list.map(G=>`<li><div class="gm"><span class="rk">${G.level}</span><span class="nm"><b>${esc2(G.name)} <em>[${esc2(G.tag)}]</em></b><small>${esc2(G.about)||'&nbsp;'}</small></span>
       <span class="vl">${G.members}/20</span><button type="button" class="sbtn go gj" data-join="${G.id}" ${G.members>=20||!ON.code?'disabled':''}>Beitreten</button></div></li>`).join('')}</ol>`}
-    ${gd.form?`<div class="gform"><input id="gN" class="oin" maxlength="20" placeholder="Gildenname (3–20 Zeichen)" autocomplete="off">
+    ${gd.form?`<div class="gform"><input id="gN" class="oin" maxlength="20" placeholder="Allianzname (3–20 Zeichen)" autocomplete="off">
       <input id="gT" class="oin" maxlength="4" placeholder="Kürzel, z. B. KAK" autocomplete="off" style="text-transform:uppercase">
       <input id="gA" class="oin" maxlength="120" placeholder="Beschreibung (optional)" autocomplete="off">
       <div class="eqdb"><button class="sbtn" type="button" id="gCancel">Abbrechen</button><button class="sbtn go" type="button" id="gMake" ${S.coins<GUILD_COST?'disabled':''}>Gründen · ${fmt(GUILD_COST)}</button></div></div>`
-    :`<div class="eqdb"><button class="sbtn go" type="button" id="gNew" ${!ON.code?'disabled':''}>Neue Gilde gründen</button></div>`}`;
+    :`<div class="eqdb"><button class="sbtn go" type="button" id="gNew" ${!ON.code?'disabled':''}>Neue Allianz gründen</button></div>`}`;
 }
 function wireGuild(){
   const q=id=>$(id),act=async(fn,body,after)=>{gd.msg='';try{const r=await rpc(fn,Object.assign({p_code:ON.code,p_key:ON.key},body));
@@ -2384,7 +2390,7 @@ function wireGuild(){
     q('gSend').onclick=send;q('gMsg').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();send();}};}
   $('card').querySelectorAll('[data-don]').forEach(b=>b.onclick=()=>{const a=Math.floor(+b.dataset.don);if(a<1||S.coins<a)return;
     S.coins-=a;save();lastHud='';b.disabled=true;
-    act('kk_guild_donate',{p_amount:a},r=>{banner={txt:'+'+fmt(a)+' für die Gilde',t:1.8};}).then(()=>{if(gd.msg){S.coins+=a;save();lastHud='';renderOnline();}});});
+    act('kk_guild_donate',{p_amount:a},r=>{banner={txt:'+'+fmt(a)+' für die Allianz',t:1.8};}).then(()=>{if(gd.msg){S.coins+=a;save();lastHud='';renderOnline();}});});
   $('card').querySelectorAll('[data-gup]').forEach(b=>b.onclick=()=>{b.disabled=true;const U=GUPG.find(x=>x.id===b.dataset.gup);
     act('kk_guild_upgrade',{p_upg:U.id},r=>{banner={txt:U.n+' Lv '+r.level+'!',t:2};});});
 }
@@ -2410,7 +2416,7 @@ function bindLogin(p,rerender){
   $(p+'LGo').onclick=go;$(p+'LPin').onkeydown=e=>{if(e.key==='Enter')go();};
 }
 function renderOnline(){
-  const tabs=`<div class="eqtabs" role="tablist">${[['profil','Profil'],['freunde','Freunde'],['liste','Rangliste'],['boss','Weltboss'],['gilde','Gilde']].map(([k,n])=>`<button type="button" role="tab" aria-selected="${olTab===k}" data-otab="${k}">${n}</button>`).join('')}</div>`;
+  const tabs=`<div class="eqtabs" role="tablist">${[['profil','Profil'],['freunde','Freunde'],['liste','Rangliste'],['boss','Weltboss'],['gilde','Allianz']].map(([k,n])=>`<button type="button" role="tab" aria-selected="${olTab===k}" data-otab="${k}">${n}</button>`).join('')}</div>`;
   let body='';
   if(olTab==='profil'){
     const st=onState==='ok'?`<span class="ost ok">● Online gespeichert ${agoTxt(onLast)}</span>`:onState==='off'?'<span class="ost off">● Keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.</span>':onState==='err'?`<span class="ost err">● Fehler beim Speichern: ${onMsg.replace(/</g,'&lt;')}</span>`:'<span class="ost">● Verbinde …</span>';
@@ -2439,7 +2445,7 @@ function renderOnline(){
         <span class="vl">${lbBy==='best'?stageName(r.best):fmt(r.power)}</span></button></li>`).join('')}</ol>`}
       ${lbData?`<p class="hint">Stand ${agoTxt(lbAt)} · <button type="button" class="lnk" id="lbRe">aktualisieren</button> · Antippen zeigt das Profil</p>`:''}`;
   }else{
-    body=`${friendBack?`<button type="button" class="lnk back" id="fBack">← zurück zu ${friendBack==='gilde'?'Gilde':friendBack==='boss'?'Weltboss':'Rangliste'}</button>`:''}<div class="ofind"><input id="oFriend" class="oin" maxlength="7" placeholder="Freundescode, z. B. KXT-4PQ" autocomplete="off" spellcheck="false"><button class="sbtn go" type="button" id="oFind">Ansehen</button></div>
+    body=`${friendBack?`<button type="button" class="lnk back" id="fBack">← zurück zu ${friendBack==='gilde'?'Allianz':friendBack==='boss'?'Weltboss':'Rangliste'}</button>`:''}<div class="ofind"><input id="oFriend" class="oin" maxlength="7" placeholder="Freundescode, z. B. KXT-4PQ" autocomplete="off" spellcheck="false"><button class="sbtn go" type="button" id="oFind">Ansehen</button></div>
       ${friendErr?`<p class="hint warn">${friendErr}</p>`:''}
       ${friend?`<div class="fcard"><canvas id="fcv" width="240" height="260"></canvas><div>
         <b class="fname">${String(friend.name).replace(/</g,'&lt;')}</b><small>${friend.cls||''} · ${fmtCode(friend.code)}${friend.guild?' · ['+esc2(friend.guild.tag)+'] '+esc2(friend.guild.name):''}</small>
@@ -2484,6 +2490,7 @@ function renderOnline(){
       drawCactus(g,(friend.card&&friend.card.char)||DEFAULT_CH,{x:0,y:0,gear});g.restore();}
   }
 }
+$('allyBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olTab='gilde';loadGuild();$('onBtn').onclick();};
 $('onBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();};
 renderOnBadge();
 
@@ -2796,7 +2803,7 @@ document.addEventListener('visibilitychange',()=>{
       ${L('Gärtnerei:','Mehr Seltenheitsstufen (9 Stück) und Ausbau bis Lv 40.')}
       ${L('×2-Tempo:','Neuer Knopf in der Kampfbox. Nach einem kurzen Video läuft der Kampf 30 Minuten doppelt so schnell.')}
     </ul>
-    <p style="margin:0;color:var(--muted)">Freundescode und Gilde bleiben erhalten. Die Rangliste startet neu.</p>
+    <p style="margin:0;color:var(--muted)">Freundescode und Allianz bleiben erhalten. Die Rangliste startet neu.</p>
     <div class="row"><button class="btn go" id="v7ok" type="button">Los geht's!</button></div>`;
   $('modal').hidden=false;$('v7ok').onclick=()=>{delete S.v7note;save();$('modal').hidden=true;lastHud='';};},700);}
 
@@ -2858,6 +2865,8 @@ function twBoardHtml(){
     ${B.yesterday&&B.yesterday.length?`<p class="hint" style="margin:0">Gestern: ${B.yesterday.map(y=>`${TW_PRIZE[y.rk].n} ${String(y.name).replace(/</g,'&lt;')} (${y.floor})`).join(' · ')}</p>`:''}
   </div>`;}
 function renderTower(){
+  // Wartet gerade ein Teil aus dem Turm auf deine Entscheidung, bleibt das Ausrüstungsfenster stehen
+  if(pending&&pending.tw)return;
   const f=twFloor(),G=twGuard(f),R=twReward(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
   $('card').innerHTML=`<div class="twhead"><b>🗼 Turm · Etage ${f}</b><span>Rekord: ${S.twRec}</span><button class="twx2${S.twX2?' on':''}" id="twX2" type="button" aria-pressed="${!!S.twX2}" title="Doppelte Geschwindigkeit">⏩ ×2</button></div>
     <canvas id="twcv" width="720" height="420"></canvas>
@@ -2915,7 +2924,7 @@ function drawTower(){const cv2=$('twcv');if(!cv2)return;const g=cv2.getContext('
     g.textAlign='center';g.font='26px "Lilita One","Arial Black",sans-serif';g.fillStyle='#1c120c';g.fillText(txt,182,112);
     g.fillStyle=A.end==='boss'?'#ffe08a':A.end==='dead'?'#ff8a7a':'#f4e6cc';g.fillText(txt,180,110);}
 }
-function twFight(){if(tw.anim||pending)return;
+function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)return;
   const f=twFloor(),G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
   const hitTaken=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100);
   tw.res=null;tw.anim={left:30,php:st.hp,pmax:st.hp,bhp:G.hp,bmax:G.hp,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,throwT:.3,bossT:1.3,reg:st.hp*st.reg/100};
@@ -3114,7 +3123,7 @@ const TUT=[
   {el:'gBtn',t:'Baust du die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
   {el:'dBtn',t:'Hunde begleiten dich in den Kampf und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
-  {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Gilden, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
+  {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Allianzen, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
 const tut={on:false,i:0,wait:false,box:null};
@@ -3169,7 +3178,7 @@ addEventListener('resize',()=>{if(tut.on)tutPlace();});
   if(!S.char||editing||!$('modal').hidden)return;shown=true;clearInterval(tm);
   const G=S.gift,reset=(G.caps||0)>0||(G.kak||0)>0;
   $('card').innerHTML=`<h2>${reset?'Neustart!':'Geschenk für alle!'}</h2>
-    <p style="margin:0">${reset?'Mit 12 Welten pro Schwierigkeit und neuer Balance fangen alle wieder bei null an. Dein Kaktus, dein Name, dein Freundescode und deine Gilde bleiben.':'Als Starthilfe bekommt jeder Spieler einmalig Münzen geschenkt.'}</p>
+    <p style="margin:0">${reset?'Mit 12 Welten pro Schwierigkeit und neuer Balance fangen alle wieder bei null an. Dein Kaktus, dein Name, dein Freundescode und deine Allianz bleiben.':'Als Starthilfe bekommt jeder Spieler einmalig Münzen geschenkt.'}</p>
     <div class="giftbox"><span>🎁 Startguthaben</span>${G.coins?`<b>${G.coins.toLocaleString('de-DE')} Münzen</b>`:''}${G.caps?`<b>${G.caps} Samenkapseln</b>`:''}${G.kak?`<b>${G.kak} Kakteen 🌵</b>`:''}</div>
     <div class="row"><button class="btn go" id="giftGo" type="button">Abholen</button></div>`;
   $('modal').hidden=false;
@@ -3376,7 +3385,11 @@ const PATCHES=[
    hero:['🗼 Du entscheidest','Neue Teile aus dem Turm landen nicht mehr einfach im Inventar.'],
    items:()=>[['Belohnungsfenster:','Nach jeder Etage mit neuem Teil siehst du den Vergleich wie bei einer Samenkapsel: Zerstören, Behalten oder Tauschen.'],
      ['Schlechtere Teile zerstören:','Mit dem neuen Schalter im Turm werden Teile, die schlechter sind als deine Ausrüstung, sofort zu Münzen.'],
-     ['Auto-Kampf:','Läuft nach deiner Entscheidung einfach weiter.']]}
+     ['Auto-Kampf:','Läuft nach deiner Entscheidung einfach weiter.']]},
+  {id:'pn50',date:'2026-11-08',title:'Aus Gilde wird Allianz',
+   hero:['🛡 Die Allianz','Gilden heißen ab jetzt Allianzen und haben oben rechts einen eigenen Knopf.'],
+   items:()=>[['Allianz-Knopf:','Oben rechts neben den Truhen öffnet 🛡 Allianz direkt Mitglieder, Kasse, Ziele und Chat. Neue Nachrichten zeigt eine rote Zahl.'],
+     ['Turm behoben:','Im Auto-Kampf ist das Fenster für neue Teile manchmal sofort wieder verschwunden. Jetzt bleibt es stehen, bis du entschieden hast.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
