@@ -882,7 +882,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1705,7 +1705,10 @@ function drawEnemy(e,g){
   }else if(k==='bird'){ // Vogel
     const flap=Math.sin(t*10+e.x);
     g.beginPath();g.moveTo(r*.9,-r);g.lineTo(r*1.7,-r*1.25);g.lineTo(r*1.6,-r*.75);g.closePath();olFill(g,dk,2);
-    for(const s of[-1,1])legLine(g,s*3,-r*.4,s*3-2,r*.15,'#f0b866');
+    // Beine wachsen mit der Größe mit und sitzen fest am Bauch, unten kleine Krallenfüße
+    for(const s of[-1,1]){const lx=s*r*.28,fx=lx-r*.08,fy=-r*.02+Math.sin(t*10+e.x+s)*r*.03;
+      legLine(g,lx,-r*.5,fx,fy,'#f0b866');
+      for(const d of[-1,0,1])legLine(g,fx,fy,fx-r*.14+d*r*.1,fy+r*.1-Math.abs(d)*r*.03,'#f0b866');}
     shadeBlob(g,()=>{g.beginPath();g.ellipse(0,-r,r*1.05,r*.72,0,0,7);},col,-r,r*.72);
     g.beginPath();g.arc(-r*.85,-r*1.45,r*.52,0,7);olFill(g,col,2.2);
     g.beginPath();g.moveTo(-r*1.25,-r*1.55);g.lineTo(-r*1.85,-r*1.35);g.lineTo(-r*1.25,-r*1.2);g.closePath();olFill(g,'#f0b866',1.8);
@@ -3641,7 +3644,10 @@ const PATCHES=[
      ['Echtzeit:','Missionen laufen weiter, auch wenn das Spiel geschlossen ist. Höhere Begleiter-Level bringen mehr.']]},
   {id:'pn57',date:'2026-11-08',title:'Die Fledermaus fliegt',
    hero:['🦇 Ab in die Luft','Die Fledermaus fliegt jetzt auf Kopfhöhe vor deinem Kaktus statt am Boden zu laufen.'],
-   items:()=>[['Hunde:','Laufen weiter am Boden und rücken zusammen, weil die Fledermaus keinen Bodenplatz mehr braucht.']]}
+   items:()=>[['Hunde:','Laufen weiter am Boden und rücken zusammen, weil die Fledermaus keinen Bodenplatz mehr braucht.']]},
+  {id:'pn58',date:'2026-11-08',title:'Vögel mit richtigen Füßen',
+   hero:['🐦 Grafikfehler behoben','Beim Sternenwächter und den anderen Vögeln sahen die Beine aus wie abgefallen.'],
+   items:()=>[['Neu:','Die Beine wachsen mit der Größe des Vogels mit, sitzen fest am Körper und haben kleine Krallenfüße.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
