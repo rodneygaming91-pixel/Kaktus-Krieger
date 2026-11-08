@@ -804,7 +804,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1223,7 +1223,8 @@ function hurtHero(dmg){
   const hs=heroStats();dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
   hero.hp-=dmg;hero.hit=1;shake=Math.max(shake,2);
   floats.push({x:HX,y:GROUND-70,txt:'-'+fmt(dmg),col:'#ff6fae',t:.7});
-  if(hero.hp<=0){if(boss)failBoss('Verloren');else{resetHero();enemies=[];if(S.stage>1){S.stage--;S.kills=0;save();lastHud='';banner={txt:'Zu stark! Zurück zu '+stageName(S.stage),t:2.2};}else banner={txt:'Neuer Versuch',t:1.5};}}
+  // Kein Zurückstufen mehr (08.11.2026): Wer in einer normalen Welle stirbt, bleibt auf der Stage, behält seine besiegten Gegner und kämpft mit vollem Leben weiter.
+  if(hero.hp<=0){if(boss)failBoss('Verloren');else{resetHero();enemies=[];banner={txt:'Besiegt! Neuer Versuch',t:1.6};}}
 }
 function failBoss(why){boss=false;enemies=[];S.kills=S.bossAuto===false?KILL_GOAL:Math.floor(KILL_GOAL*0.6);resetHero();banner={txt:why+', stärker werden!',t:2.2};save();}
 
@@ -3158,7 +3159,11 @@ const PATCHES=[
      ['Unverändert:','Preis und Level bleiben, wie sie sind.']]},
   {id:'pn40',date:'2026-11-07',title:'Hunde-Heilung besser sichtbar',
    hero:['🐾 Man sieht jetzt, wer heilt','Die Heilung von Schäferhund und Bernhardiner war kaum zu erkennen.'],
-   items:()=>[['Neu:','Heilt ein Hund, erscheint eine grüne Zahl mit Pfote über deinem Kaktus, und der Hund macht einen kleinen Hüpfer.']]}
+   items:()=>[['Neu:','Heilt ein Hund, erscheint eine grüne Zahl mit Pfote über deinem Kaktus, und der Hund macht einen kleinen Hüpfer.']]},
+  {id:'pn41',date:'2026-11-08',title:'Kein Zurückstufen mehr',
+   hero:['💪 Einmal geschafft bleibt geschafft','Wer in einer normalen Welle besiegt wird, fällt nicht mehr eine Stage zurück.'],
+   items:()=>[['Neu:','Du bleibst auf deiner Stage, behältst die bisher besiegten Gegner und kämpfst mit vollem Leben weiter.'],
+     ['Tipp:','Jede Welt greift mit einem eigenen Element an, oben links unter „Gegner“. Ausrüstung mit passender Resistenz macht dort einen großen Unterschied.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
