@@ -899,7 +899,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2975,6 +2975,8 @@ const TW_PRIZE=[null,{kak:30,caps:200,bump:2,n:'🥇'},{kak:20,caps:120,bump:1,n
 const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
   return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.56,keeper:f%10===0};};
 const twReward=f=>({kak:1+Math.floor(f/25),caps:2,item:true,bump:f%10===0});
+// Schnellaufstieg (08.11.2026): pro übersprungener Etage 2 Kapseln und Münzen wie 5 Gegner auf deiner besten Stage, keine Kakteen, keine Ausrüstung
+const twFastCoins=()=>Math.ceil(30*cPow(S.best));
 let twb={st:null,err:null,busy:false,msg:''};
 let tw={open:false,anim:null,res:null};
 function twRoll(f,n){if(n==null)n=twReward(f).bump?1:0;let it=rollItem();
@@ -3020,7 +3022,7 @@ function renderTower(){
     <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim||tw.auto?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
     <button class="btn twauto${tw.auto?' on':''}" id="twAuto" type="button" aria-pressed="${!!tw.auto}"><span class="sw"><i></i></span>${tw.auto?'Auto-Kampf läuft · Stoppen':'Auto-Kampf starten'}<small>${tw.auto?'Stoppt auch automatisch bei einer Niederlage':'Kämpft Etage für Etage weiter, bis du einen Kampf verlierst'}</small></button>
     <button class="btn twauto twtrash${S.twTrash?' on':''}" id="twTrash" type="button" aria-pressed="${!!S.twTrash}"><span class="sw"><i></i></span>Schlechtere Teile zerstören<small>${S.twTrash?'Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden sofort zu Münzen':'Aus: Du entscheidest bei jedem Teil selbst'}</small></button>
-    ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Etagen, die du schon geschafft hast, sofort durchziehen</small></button>`:''}
+    ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Bereits geschaffte Etagen sofort durchziehen · pro Etage +${fmt(twFastCoins())} Münzen und +2 Kapseln</small></button>`:''}
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
   $('twGo').onclick=twFight;drawTower();
@@ -3028,7 +3030,8 @@ function renderTower(){
   $('twTrash').onclick=()=>{S.twTrash=!S.twTrash;save();renderTower();};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
   {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
-    S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft.${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
+    const n=f-f0,gc=n*twFastCoins(),gk=n*2;S.coins+=gc;S.caps+=gk;lastHud='';
+    S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft. <em class="up">+${fmt(gc)} Münzen</em> · <em class="up">+${gk} Kapseln</em>${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
     renderTower();if(f>f0)twSubmit();};}
   {const b=$('twClaim');if(b)b.onclick=async()=>{if(twb.busy)return;twb.busy=true;renderTower();
     try{const r=await rpc('kk_tw_claim',{p_code:ON.code,p_key:ON.key});
@@ -3095,7 +3098,7 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
 function twFinish(A,f){tw.anim=null;
   if(A.end==='boss'){S.tower=f+1;
     if(f>S.twRec){const R=twReward(f),it=twRoll(f);S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.twRec=f;
-      const cur=S.gear[it.slot],worse=cur&&it.r<cur.r; // nur niedrigere Seltenheit wird zerstört, gleiche Seltenheit wird angezeigtlet itTxt;
+      const cur=S.gear[it.slot],worse=cur&&it.r<cur.r;let itTxt; // nur niedrigere Seltenheit wird zerstört, gleiche Seltenheit wird angezeigt
       if(S.twTrash&&worse){const c=sellValue(it);S.coins+=c;itTxt=`<span style="color:${RAR[it.r].c}">${it.name}</span> hat eine niedrigere Seltenheit als deins – zerstört für <em class="up">+${fmt(c)} Münzen</em>`;}
       else{itTxt=`Neues Teil: <span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n})`;tw.give=it;}
       tw.res=`<b>Etage ${f} geschafft – neuer Rekord!</b> <em class="up">+${R.kak} 🌵</em> · <em class="up">+${R.caps} Kapseln</em><br>${itTxt}`;}
@@ -3755,7 +3758,11 @@ const PATCHES=[
    items:()=>[['Warum?','Man konnte die Fähigkeiten viel zu schnell auf Lv 100 bringen.'],
      ['Neu:','Das höchste Level hängt an deiner Schwierigkeit: Leicht 25, Normal 50, Schwer 75, Ultra schwer 100.'],
      ['Ausweichen und Betäuben:','Sind noch gesperrt („Bald verfügbar“). Später wirken sie passiv und immer, ohne einen der 3 Plätze zu belegen.'],
-     ['SKILLS AUTO:','Bleibt wie es ist: einfach an oder aus.']]}
+     ['SKILLS AUTO:','Bleibt wie es ist: einfach an oder aus.']]},
+  {id:'pn66',date:'2026-11-08',title:'Schnellaufstieg lohnt sich',
+   hero:['⏩ Belohnung für den Schnellaufstieg','Springst du im Turm mit dem Schnellaufstieg zu deiner Etage vom Vortag, bekommst du jetzt etwas für die Etagen.'],
+   items:()=>[['Pro Etage:','+2 Kapseln und Münzen wie für 5 Gegner auf deiner besten Stage.'],
+     ['Nicht dabei:','Kakteen und Ausrüstung gibt es weiterhin nur für Etagen über deinem Rekord.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
