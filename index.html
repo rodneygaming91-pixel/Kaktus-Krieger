@@ -687,6 +687,15 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .wbtiers span{display:flex;flex-direction:column;align-items:center;gap:1px;background:#1c140f;border:2px solid #4a3a2e;border-radius:8px;padding:5px 2px;text-align:center;min-width:0}
 .wbtiers span b{font-size:.68rem;color:var(--tc);white-space:nowrap}.wbtiers span small{font-size:.56rem;color:#bfae94;line-height:1.2}
 .wbtiers span.on{border-color:var(--tc);box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 40%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
+.chestbtn{justify-self:end;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(#3a2c22,#2a1f18);border:2px solid var(--frame);border-radius:10px;padding:3px 8px 4px;color:#e8d4b0;font:inherit;cursor:pointer;min-width:58px;box-shadow:inset 0 0 0 1px var(--frameD),0 2px 0 #0008}
+.chestbtn b{font-size:1.25rem;line-height:1.1}.chestbtn span{font-size:.66rem;font-weight:900;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chestbtn.rd{border-color:#ffd447;color:#fff2a8;animation:mailpulse 1.4s ease-in-out infinite}.chestbtn.rd b{animation:mwob 1s ease-in-out infinite}
+.chestbtn.done{opacity:.6}
+.ptlist{display:flex;flex-direction:column;gap:6px;text-align:left}
+.ptc{display:flex;align-items:center;gap:10px;background:#2a1d12;border:2px solid #5a4430;border-radius:10px;padding:8px 10px}
+.ptc .pti{font-size:1.6rem}.ptc div{flex:1;min-width:0;display:flex;flex-direction:column}.ptc b{font-size:.95rem}.ptc small{font-size:.72rem;color:#c9b593}
+.ptc .ptst{font-size:.78rem;font-weight:800;color:#c9b593;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ptc.rd{border-color:#ffd447;box-shadow:0 0 0 2px #ffd44744}.ptc.got{opacity:.55}
 .dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
 .dslot .deff{position:absolute;top:16px;left:-5px;display:flex;align-items:center;gap:1px;height:18px;min-width:18px;padding:0 4px;border-radius:9px;
   background:#1c140f;border:2px solid var(--ec);color:var(--ec);font-size:.7rem;font-weight:900;line-height:1;box-shadow:0 1px 3px #000a;z-index:2}
@@ -809,6 +818,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
+    <button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button>
   </header>
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
@@ -848,7 +858,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2981,6 +2991,47 @@ function soonBox(t,ico,txt){if(!$('modal').hidden||editing)return;$('modal').hid
 $('dgBtn').onclick=()=>soonBox('Dungeons','🏰','Hier entstehen gerade Dungeons. Bald geht es hier los!');
 $('exBtn').onclick=()=>soonBox('Erkundung','🧭','Hier entsteht gerade die Erkundung. Bald geht es hier los!');
 
+// ---------- Spielzeit-Truhen: jeden Tag neu nach 15 min, 30 min, 1 h, 2 h und 3 h Spielzeit ----------
+const PT=[{m:15,coin:150,kc:.25,k:1,ic:0},{m:30,coin:300,kc:.35,k:1,ic:.35},{m:60,coin:600,kc:.5,k:2,ic:.5},{m:120,coin:1000,kc:.7,k:2,ic:.75},{m:180,coin:1500,kc:1,k:3,ic:1}];
+const ptDay=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
+function ptState(){if(!S.pt||S.pt.day!==ptDay())S.pt={day:ptDay(),sec:0,got:[]};return S.pt;}
+let ptOpen=false,ptMsg='',ptLastTxt='';
+function ptTick(dt){const P=ptState();P.sec+=dt;}
+const ptReady=i=>{const P=ptState();return !P.got.includes(i)&&P.sec>=PT[i].m*60;};
+function ptNext(){const P=ptState();for(let i=0;i<PT.length;i++)if(!P.got.includes(i)&&P.sec<PT[i].m*60)return i;return -1;}
+const mmss=sec=>{sec=Math.max(0,Math.ceil(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s2=sec%60;return h?h+':'+String(m).padStart(2,'0')+':'+String(s2).padStart(2,'0'):m+':'+String(s2).padStart(2,'0');};
+// Ausrüstung, die dich weiterbringt: besser als das, was du an diesem Platz trägst, und mit der passenden Resistenz für deine Welt
+function ptItem(){const Wd=world(),R=SLOTS.map(sl=>({sl,cur:S.gear[sl.id]})).sort((a,b)=>(a.cur?a.cur.r:-1)-(b.cur?b.cur.r:-1)||Math.random()-.5);
+  for(const {sl,cur} of R.slice(0,4)){const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
+    if(cur)r=Math.max(r,cur.r);let v=itemValue(sl,r,S.stage,ROLL_HI);
+    if(cur&&v<=cur.v&&r<RAR.length-1){r++;v=itemValue(sl,r,S.stage,ROLL_HI);}
+    if(cur&&v<=cur.v)continue;
+    const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),slot:sl.id,r,v,lvl:S.stage,name:sl.names[r]};
+    if(sl.id==='waffe')it.el=Wd.weak;else it.res={el:Wd.atkEl,v:Math.round(4*RAR[Math.max(1,r)].pm)};
+    return it;}
+  return null;}
+function ptClaim(i){if(!ptReady(i))return;const P=ptState(),C=PT[i],out=[];P.got.push(i);
+  const coins=Math.round(6*cPow(S.stage)*C.coin);S.coins+=coins;out.push(`<em class="up">+${fmt(coins)} Münzen</em>`);
+  if(Math.random()<C.kc){const k=C.k+diffIdx(S.stage);S.kak=(S.kak||0)+k;out.push(`<em class="up">+${k} 🌵</em>`);}
+  if(Math.random()<C.ic){const it=ptItem();if(it)out.push(twGive(it));else{S.caps+=5;out.push('<em class="up">+5 Kapseln</em>');}}
+  ptMsg=`🎁 <b>Truhe ${C.m<60?C.m+' Min':C.m/60+' Std'}:</b> `+out.join(' · ');save();lastHud='';renderPt();}
+function renderPt(){const P=ptState();
+  $('card').innerHTML=`<h2>🎁 Spielzeit-Truhen</h2><p class="hint" style="margin:0">Heute gespielt: <b>${mmss(P.sec)}</b> · Jeden Tag gibt es neue Truhen.</p>
+    <div class="ptlist">${PT.map((C,i)=>{const got=P.got.includes(i),rd=ptReady(i),left=C.m*60-P.sec;
+      return`<div class="ptc${got?' got':rd?' rd':''}"><span class="pti">${got?'📭':rd?'🎁':'🧰'}</span><div><b>${C.m<60?C.m+' Minuten':C.m/60+(C.m===60?' Stunde':' Stunden')}</b>
+        <small>Münzen${C.kc>=1?' · Kakteen':C.kc>0?' · ab und zu Kakteen':''}${C.ic>=1?' · Ausrüstung':C.ic>0?' · ab und zu Ausrüstung':''}</small></div>
+        ${got?'<span class="ptst">✓ Geöffnet</span>':rd?`<button class="sbtn go" type="button" data-pt="${i}">Öffnen</button>`:`<span class="ptst">noch ${mmss(left)}</span>`}</div>`;}).join('')}</div>
+    ${ptMsg?`<div class="wbres">${ptMsg}</div>`:''}
+    <div class="row"><button class="btn" id="ptX" type="button">Schließen</button></div>`;
+  $('card').querySelectorAll('[data-pt]').forEach(b=>b.onclick=()=>ptClaim(+b.dataset.pt));
+  $('ptX').onclick=()=>{ptOpen=false;ptMsg='';$('modal').hidden=true;};}
+$('chestBtn').onclick=()=>{if(!$('modal').hidden||editing)return;ptOpen=true;ptMsg='';$('modal').hidden=false;renderPt();};
+// Anzeige am Knopf: Zeit bis zur nächsten Truhe, leuchtet wenn eine bereit ist
+setInterval(()=>{if(!S.char)return;const P=ptState(),rd=PT.some((_,i)=>ptReady(i)),nx=ptNext();
+  const txt=rd?'Öffnen!':nx<0?'✓ alle':mmss(PT[nx].m*60-P.sec);if(txt!==ptLastTxt){$('chestTxt').textContent=txt;ptLastTxt=txt;}
+  $('chestBtn').classList.toggle('rd',rd);$('chestBtn').classList.toggle('done',!rd&&nx<0);},1000);
+setInterval(()=>{if(ptOpen&&!$('modal').hidden)renderPt();},5000);
+
 // ---------- Optionen: Energiesparmodus ----------
 function renderOpts(){
   $('card').innerHTML=`<h2>Optionen</h2>
@@ -3279,7 +3330,12 @@ const PATCHES=[
    hero:['∞ Der Weltboss ist unbesiegbar','Jetzt zählt nur noch, wie viel Schaden du in der Woche machst.'],
    items:()=>[['Kampf:','30 Sekunden so viel Schaden wie möglich. Nach 10 s wird der Boss wütend, nach 20 s rasend und schlägt härter zu.'],
      ['Wochenbelohnung:','🥉 Bronze ab 1 Angriff, 🥈 Silber ab 1 Mio., 🥇 Gold ab 100 Mio., 💠 Platin ab 10 Mrd., 💎 Diamant ab 1 Bio. Schaden.'],
-     ['Top 3:','Platz 1–3 der Woche bekommen zusätzlich Kakteen, Kapseln und ein besseres Ausrüstungsteil.']]}
+     ['Top 3:','Platz 1–3 der Woche bekommen zusätzlich Kakteen, Kapseln und ein besseres Ausrüstungsteil.']]},
+  {id:'pn47',date:'2026-11-08',title:'Spielzeit-Truhen',
+   hero:['🎁 Belohnung fürs Dranbleiben','Oben rechts gibt es jetzt jeden Tag 5 Truhen für deine Spielzeit.'],
+   items:()=>[['Wann:','Nach 15 Minuten, 30 Minuten, 1 Stunde, 2 Stunden und 3 Stunden Spielzeit am Tag.'],
+     ['Inhalt:','Immer Münzen, ab und zu Kakteen und ab und zu ein Ausrüstungsteil, das besser ist als deins und zur aktuellen Welt passt.'],
+     ['Jeden Tag neu:','Um Mitternacht starten die Truhen wieder von vorn.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
@@ -3336,6 +3392,7 @@ $('x2Btn').onclick=()=>{if(!$('modal').hidden||editing)return;
 // ---------- Schleife ----------
 let last=performance.now();
 function gameStep(dt){
+  if(!editing&&!offShow&&!(maint.on&&!maint.dev)&&S.char)ptTick(dt);
   if(editing||offShow){t+=dt;drawPreview();}
   else if(maint.on&&!maint.dev){t+=dt;}
   else{gardenTick();autoTick(dt);const sp=x2Active()&&S.x2On!==false?2:1;for(let k=0;k<sp;k++)update(dt);}
