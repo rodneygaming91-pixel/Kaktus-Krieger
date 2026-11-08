@@ -870,7 +870,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -993,14 +993,15 @@ const wsTotal=()=>WS.reduce((a,W)=>a+wsLv(W.id),0);
 const kakFor=st=>1+diffIdx(st);
 // Allianz-Upgrades (Stufen werden aus der Allianz geladen und hier zwischengespeichert)
 const GUPG=[
-  {id:'atk', n:'Kriegstrommel',  ico:'⚔',per:3,unit:'% Angriff',   base:5000,d:'Mehr Angriff für alle Mitglieder'},
-  {id:'hp',  n:'Wasserspeicher', ico:'♥',per:3,unit:'% Leben',     base:5000,d:'Mehr Leben für alle Mitglieder'},
-  {id:'coin',n:'Handelskarren',  ico:'●',per:3,unit:'% Münzen',    base:8000,d:'Mehr Münzen für alle Mitglieder'},
-  {id:'luck',n:'Glücksklee',     ico:'✤',per:2,unit:'% Kapselglück',base:12000,d:'Chance, dass ein Teil eine Seltenheit höher ausfällt'}
+  {id:'atk', n:'Kriegstrommel',  ico:'⚔',per:3,unit:'% Angriff',   base:50000,d:'Mehr Angriff für alle Mitglieder'},
+  {id:'hp',  n:'Wasserspeicher', ico:'♥',per:3,unit:'% Leben',     base:50000,d:'Mehr Leben für alle Mitglieder'},
+  {id:'coin',n:'Handelskarren',  ico:'●',per:3,unit:'% Münzen',    base:80000,d:'Mehr Münzen für alle Mitglieder'},
+  {id:'luck',n:'Glücksklee',     ico:'✤',per:1,unit:'% Kapselglück',base:120000,d:'Chance, dass ein Teil eine Seltenheit höher ausfällt'}
 ];
-const GUPG_MAX=10;
+// Allianz-Preise (08.11.2026): 20 Stufen, jede Stufe ×2,5 (vorher 10 Stufen, ×2, zehnmal billiger)
+const GUPG_MAX=20;
 const gUp=id=>(S.gUpg&&+S.gUpg[id])||0;
-const gUpCost=(U,lv)=>U.base*Math.pow(2,lv);
+const gUpCost=(U,lv)=>Math.round(U.base*Math.pow(2.5,lv));
 const coinMul=()=>1+((S.gBonus||0)+gUp('coin')*3)/100;
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
@@ -1046,7 +1047,7 @@ const gTime=L=>Math.round(Math.min(L>=20?4*3600+(L-20)*1800:4*3600,10*Math.pow(1
 function rollItem(){
   const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
   for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
-  if(r<RAR.length-1&&Math.random()<gUp('luck')*.02)r++; // Glücksklee der Allianz
+  if(r<RAR.length-1&&Math.random()<gUp('luck')*.01)r++; // Glücksklee der Allianz
   const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)];
   const lvl=S.stage;
   const v=itemValue(sl,r,lvl,rnd(ROLL_LO,ROLL_HI));
@@ -3389,7 +3390,12 @@ const PATCHES=[
   {id:'pn50',date:'2026-11-08',title:'Aus Gilde wird Allianz',
    hero:['🛡 Die Allianz','Gilden heißen ab jetzt Allianzen und haben oben rechts einen eigenen Knopf.'],
    items:()=>[['Allianz-Knopf:','Oben rechts neben den Truhen öffnet 🛡 Allianz direkt Mitglieder, Kasse, Ziele und Chat. Neue Nachrichten zeigt eine rote Zahl.'],
-     ['Turm behoben:','Im Auto-Kampf ist das Fenster für neue Teile manchmal sofort wieder verschwunden. Jetzt bleibt es stehen, bis du entschieden hast.']]}
+     ['Turm behoben:','Im Auto-Kampf ist das Fenster für neue Teile manchmal sofort wieder verschwunden. Jetzt bleibt es stehen, bis du entschieden hast.']]},
+  {id:'pn51',date:'2026-11-08',title:'Neue Allianz-Ausbauten',
+   hero:['⚔ 20 Stufen für deine Allianz','Die Allianz-Ausbauten haben jetzt 20 statt 10 Stufen und neue Preise.'],
+   items:()=>[['Preise:','Kriegstrommel und Wasserspeicher starten bei 50.000, Handelskarren bei 80.000, Glücksklee bei 120.000. Jede Stufe kostet 2,5-mal so viel.'],
+     ['Glücksklee:','+1 % pro Stufe, auf Stufe 20 also 20 % Chance auf eine höhere Seltenheit.'],
+     ['Zurückgesetzt:','Alle Ausbauten stehen wieder auf 0. Die dafür ausgegebenen Münzen sind zurück in der Allianzkasse.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
