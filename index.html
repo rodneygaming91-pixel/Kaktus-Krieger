@@ -134,6 +134,13 @@ h1 span{color:var(--bloom)}
 .bldh input:focus{outline:none;border-color:var(--gd)}
 .tag{background:linear-gradient(#ffd447,#c98a10);color:#2a1a0e;font-weight:800;font-size:.7rem;border-radius:4px;padding:2px 7px;text-transform:uppercase;letter-spacing:.06em}
 .bldi{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.bs{position:relative;padding:0;cursor:pointer;font:inherit;color:#8a7560}.bs i{font-style:normal;font-size:1rem;font-weight:900}.bs .eld{bottom:0;right:1px;font-size:.55rem}
+.bs.on{box-shadow:0 0 0 2px #ffd447}
+.bs canvas.ghost{position:absolute;inset:8%;width:84%;height:84%;opacity:.28;filter:grayscale(1)}.bs i{position:absolute;bottom:-2px;right:1px;font-size:.7rem;color:#ffd447;text-shadow:0 1px 0 #000}
+.bpick{background:#1a120d;border:2px solid #ffd447;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.bph{display:flex;align-items:center;gap:6px}.bph b{flex:1}.bph .sbtn{padding:4px 10px;font-size:.8rem}
+.bpl{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-height:220px;overflow:auto}
+.bpl .invc{position:relative}.bpl .bpv{position:absolute;bottom:0;left:3px;font-size:.58rem;color:#fff;text-shadow:0 1px 0 #000,0 0 3px #000}
 .bs{aspect-ratio:1;border:2px solid var(--rc);border-radius:4px;background:#1a120d;display:grid;place-items:center;min-width:0}
 .bs canvas{width:90%;height:90%}.bs em{font-style:normal;color:#ff8a7a;font-weight:800;font-size:.8rem}
 .hint.warn{color:#ff9a7a}
@@ -858,7 +865,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1941,32 +1948,46 @@ function ensureIds(){for(const k in S.gear)if(S.gear[k]&&!S.gear[k].id)S.gear[k]
 ensureIds();
 const findItem=id=>{for(const k in S.gear)if(S.gear[k]&&S.gear[k].id===id)return S.gear[k];return S.inv.find(it=>it.id===id)||null;};
 const inBuild=id=>S.builds.some(b=>b.ids&&Object.values(b.ids).includes(id));
-const buildActive=b=>b.ids&&SLOTS.every(sl=>(b.ids[sl.id]||null)===((S.gear[sl.id]&&S.gear[sl.id].id)||null));
+const buildActive=b=>b.ids&&SLOTS.some(sl=>b.ids[sl.id])&&SLOTS.every(sl=>!b.ids[sl.id]||b.ids[sl.id]===(S.gear[sl.id]&&S.gear[sl.id].id));
 function saveBuild(i){const ids={};for(const sl of SLOTS)ids[sl.id]=S.gear[sl.id]?S.gear[sl.id].id:null;S.builds[i].ids=ids;}
 function equipBuild(i){const b=S.builds[i];if(!b.ids)return 0;let miss=0;
   for(const sl of SLOTS){const want=b.ids[sl.id],cur=S.gear[sl.id];
-    if(!want){if(cur&&S.inv.length<invMax()){S.inv.push(cur);delete S.gear[sl.id];}continue;}
+    if(!want)continue; // leerer Platz im Build: aktuelles Teil bleibt an
     if(cur&&cur.id===want)continue;
     const j=S.inv.findIndex(it=>it.id===want);if(j<0){miss++;continue;}
     const it=S.inv.splice(j,1)[0];if(cur)S.inv.push(cur);S.gear[sl.id]=it;}
   return miss;}
+// Auswahl für einen Build-Platz: alle Teile dieses Platzes aus Ausrüstung und Inventar, das beste zuerst
+let bPick=null;
+function bPickHtml(b,slot){const sl=slotOf(slot),cur=b.ids&&b.ids[slot];
+  const L=[S.gear[slot],...S.inv.filter(it=>it.slot===slot)].filter(Boolean).sort((a,c)=>itemScore(c)-itemScore(a));
+  return`<div class="bpick"><div class="bph"><b>${sl.n} wählen</b>${cur?`<button type="button" class="sbtn" data-bclr="1">Platz leeren</button>`:''}<button type="button" class="sbtn" data-bpx="1">✕</button></div>
+    ${L.length?`<div class="bpl">${L.map(it=>`<button type="button" class="invc${cur===it.id?' sel':''}" data-bput="${it.id}" style="--rc:${RAR[it.r].c}" title="${it.name}"><canvas width="88" height="88" data-bicon="${it.id}"></canvas>${effBadges(it)}${S.gear[slot]===it?'<b class="star" title="angelegt">●</b>':''}<b class="bpv">+${fmtV(sl,it.v)}</b></button>`).join('')}</div>`
+      :'<p class="hint" style="margin:0">Du hast kein Teil für diesen Platz.</p>'}</div>`;}
 function buildsView(){
   return`<div class="blds">${S.builds.map((b,i)=>{const act=buildActive(b),miss=b.ids?SLOTS.filter(sl=>b.ids[sl.id]&&!findItem(b.ids[sl.id])).length:0;
     return`<div class="bld${act?' act':''}">
       <div class="bldh"><input id="bn_${i}" maxlength="16" value="${b.name.replace(/"/g,'&quot;')}" aria-label="Name von Build ${i+1}" autocomplete="off">${act?'<span class="tag">aktiv</span>':''}</div>
-      <div class="bldi">${SLOTS.map(sl=>{const id=b.ids&&b.ids[sl.id],it=id?findItem(id):null;
-        return`<span class="bs" style="--rc:${it?RAR[it.r].c:'#6b5644'}" title="${sl.n}">${it?`<canvas width="64" height="64" data-bicon="${it.id}"></canvas>`:id?'<em>?</em>':''}</span>`;}).join('')}</div>
+      <div class="bldi">${SLOTS.map(sl=>{const id=b.ids&&b.ids[sl.id],it=id?findItem(id):null,on=bPick&&bPick.i===i&&bPick.slot===sl.id;
+        return`<button type="button" class="bs${on?' on':''}" data-bslot="${i}:${sl.id}" style="--rc:${it?RAR[it.r].c:'#6b5644'}" title="${sl.n}" aria-label="${sl.n} wählen">${it?`<canvas width="64" height="64" data-bicon="${it.id}"></canvas>${effBadges(it)}`:id?'<em>?</em>':`<canvas class="ghost" width="64" height="64" data-bghost="${sl.id}"></canvas><i>+</i>`}</button>`;}).join('')}</div>
+      ${bPick&&bPick.i===i?bPickHtml(b,bPick.slot):''}
       ${b.ids?`<p class="bsum">${(()=>{const w=b.ids.waffe&&findItem(b.ids.waffe),r={};for(const sl of SLOTS){const it=b.ids[sl.id]&&findItem(b.ids[sl.id]);if(it&&it.res)r[it.res.el]=(r[it.res.el]||0)+it.res.v;}
         return 'Waffe: '+(w&&w.el?elTag(w.el):'–')+' · Resistenz: '+(Object.keys(r).length?Object.entries(r).map(([e,v])=>elTag(e)+' '+Math.min(75,v)+' %').join(' '):'–');})()}</p>`:''}
       ${miss?`<p class="hint warn">${miss} Teil${miss>1?'e':''} verkauft oder fehlt</p>`:''}
-      <div class="eqdb"><button class="sbtn" type="button" data-bsave="${i}">${b.ids?'Überschreiben':'Aktuelle speichern'}</button>
+      <div class="eqdb"><button class="sbtn" type="button" data-bsave="${i}">${b.ids?'Aktuelle übernehmen':'Aktuelle speichern'}</button>
         <button class="sbtn go" type="button" data-bload="${i}" ${!b.ids||act?'disabled':''}>Anlegen</button></div></div>`;}).join('')}</div>
-    <p class="hint">Speichere deine aktuelle Ausrüstung als Build und wechsle später mit einem Tipp. Teile in einem Build sind im Inventar mit ★ markiert.</p>`;
+    <p class="hint">Tippe auf einen Platz (+), um ein Teil aus Inventar oder Ausrüstung in den Build zu legen, ohne es anzulegen. Mit „Anlegen“ wechselst du alles auf einmal. Leere Plätze behalten dein aktuelles Teil. Build-Teile sind im Inventar mit ★ markiert.</p>`;
 }
 function wireBuilds(){
   $('card').querySelectorAll('canvas[data-bicon]').forEach(cv2=>{const it=findItem(cv2.dataset.bicon);if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});
+  $('card').querySelectorAll('canvas[data-bghost]').forEach(cv2=>{const sl=slotOf(cv2.dataset.bghost);drawItemIcon(cv2.getContext('2d'),{slot:sl.id,r:0,name:sl.names[0]},cv2.width);});
   S.builds.forEach((b,i)=>{const inp=$('bn_'+i);inp.onchange=()=>{b.name=inp.value.trim()||('Build '+(i+1));save();};});
-  $('card').querySelectorAll('[data-bsave]').forEach(x=>x.onclick=()=>{saveBuild(+x.dataset.bsave);save();renderEq();});
+  $('card').querySelectorAll('[data-bsave]').forEach(x=>x.onclick=()=>{saveBuild(+x.dataset.bsave);bPick=null;save();renderEq();});
+  $('card').querySelectorAll('[data-bslot]').forEach(x=>x.onclick=()=>{const [i,slot]=x.dataset.bslot.split(':');bPick=bPick&&bPick.i===+i&&bPick.slot===slot?null:{i:+i,slot};renderEq();});
+  $('card').querySelectorAll('[data-bput]').forEach(x=>x.onclick=()=>{const b=S.builds[bPick.i];if(!b.ids){b.ids={};for(const sl of SLOTS)b.ids[sl.id]=null;}
+    b.ids[bPick.slot]=x.dataset.bput;bPick=null;save();renderEq();});
+  {const c=$('card').querySelector('[data-bclr]');if(c)c.onclick=()=>{const b=S.builds[bPick.i];if(b.ids)b.ids[bPick.slot]=null;if(b.ids&&SLOTS.every(sl=>!b.ids[sl.id]))b.ids=null;bPick=null;save();renderEq();};}
+  {const c=$('card').querySelector('[data-bpx]');if(c)c.onclick=()=>{bPick=null;renderEq();};}
   $('card').querySelectorAll('[data-bload]').forEach(x=>x.onclick=()=>{const i=+x.dataset.bload,m=equipBuild(i);save();lastHud='';
     banner={txt:S.builds[i].name+' angelegt'+(m?' ('+m+' fehlt)':''),t:2};renderEq();});
 }
@@ -3335,7 +3356,12 @@ const PATCHES=[
    hero:['🎁 Belohnung fürs Dranbleiben','Oben rechts gibt es jetzt jeden Tag 5 Truhen für deine Spielzeit.'],
    items:()=>[['Wann:','Nach 15 Minuten, 30 Minuten, 1 Stunde, 2 Stunden und 3 Stunden Spielzeit am Tag.'],
      ['Inhalt:','Immer Münzen, ab und zu Kakteen und ab und zu ein Ausrüstungsteil, das besser ist als deins und zur aktuellen Welt passt.'],
-     ['Jeden Tag neu:','Um Mitternacht starten die Truhen wieder von vorn.']]}
+     ['Jeden Tag neu:','Um Mitternacht starten die Truhen wieder von vorn.']]},
+  {id:'pn48',date:'2026-11-08',title:'Builds selbst zusammenstellen',
+   hero:['🧩 Baue deinen Build','Unter Inventar → Builds kannst du jetzt jeden Platz einzeln belegen.'],
+   items:()=>[['Plus-Taste:','Tippe auf einen Platz (+) und wähle ein Teil aus Inventar oder Ausrüstung, ohne es anzulegen.'],
+     ['Anlegen:','Ein Tipp tauscht alle Teile des Builds auf einmal. Leere Plätze behalten dein aktuelles Teil.'],
+     ['Übersicht:','Unter jedem Build siehst du Waffen-Element und Resistenzen.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
