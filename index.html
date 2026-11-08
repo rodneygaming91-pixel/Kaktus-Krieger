@@ -882,7 +882,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1583,10 +1583,13 @@ const DOGLOOK={
   gluehw: {body:'#f4ede2',dark:'#9a5a2a',belly:'#ffffff',len:15,h:10,leg:6, ear:'flop',snout:4,patch:true,barrel:true}, // Bernhardiner
   eule:   {body:'#2e2620',dark:'#1c140e',belly:'#c98a4a',len:14,h:8, leg:7, ear:'up',snout:5,tan:true} // Schäferhund
 };
-const dogPos=i=>({x:HX+34+i*27,y:GROUND});
+// Hunde laufen nebeneinander am Boden; die Fledermaus fliegt auf Kopfhöhe direkt vor dem Kaktus
+const BAT_Y=-40;   // Höhe der Fledermaus über dem Boden (vor dem Kopf des Kaktus)
+const groundEq=()=>S.drEq.filter(id=>id!=='fleder');
+const dogPos=i=>{const id=S.drEq[i];if(id==='fleder')return{x:HX+58,y:GROUND+BAT_Y,air:true};const g2=groundEq().indexOf(id);return{x:HX+34+Math.max(0,g2)*27,y:GROUND};};
 // Wo ein Gegner stehen bleibt (hinter Kaktus und Hunden) und ab wann gekämpft wird.
 // Große Bosse mit 3 Hunden stehen weiter weg als 150 px, darum zählt auch die eigene Kampfposition.
-function stopX(e){return HX+28+e.ty.r+(S.drEq.length?14+S.drEq.length*27:0);}
+function stopX(e){const n=groundEq().length;return HX+28+e.ty.r+(n?14+n*27:0);}
 function isEngaged(f){return !!f&&f.x<Math.max(HX+150,stopX(f)+12);}
 const dogSt={};
 // Fledermaus: fliegt über den Hunden, schlägt mit den Flügeln, rote Augen und kleine Fangzähne
@@ -3635,7 +3638,10 @@ const PATCHES=[
    hero:['🧭 Schick deine Begleiter auf Mission','Begleiter, die gerade nicht kämpfen, können jetzt auf Erkundung gehen.'],
    items:()=>[['8 Missionen:','Je 2 pro Schwierigkeit, vom Kakteenhain (30 Min) bis zum Tempel des Urknalls (12 Std). Neue Missionen schaltest du mit deinem Fortschritt frei.'],
      ['Belohnung:','Immer Münzen, oft Kakteen und mit etwas Glück Ausrüstung in der Farbe der Mission.'],
-     ['Echtzeit:','Missionen laufen weiter, auch wenn das Spiel geschlossen ist. Höhere Begleiter-Level bringen mehr.']]}
+     ['Echtzeit:','Missionen laufen weiter, auch wenn das Spiel geschlossen ist. Höhere Begleiter-Level bringen mehr.']]},
+  {id:'pn57',date:'2026-11-08',title:'Die Fledermaus fliegt',
+   hero:['🦇 Ab in die Luft','Die Fledermaus fliegt jetzt auf Kopfhöhe vor deinem Kaktus statt am Boden zu laufen.'],
+   items:()=>[['Hunde:','Laufen weiter am Boden und rücken zusammen, weil die Fledermaus keinen Bodenplatz mehr braucht.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
