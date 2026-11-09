@@ -217,7 +217,7 @@ h1 span{color:var(--bloom)}
 .fixwin .dlist{gap:4px}.fixwin .drow{grid-template-columns:36px 1fr auto;gap:8px;padding:4px 8px}.fixwin .drow canvas{width:36px;height:36px}
 .fixwin .drow b{font-size:.86rem}.fixwin .drow small{font-size:.68rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fixwin .drow .bon{font-size:.68rem}
 .fixwin .dbtns{gap:3px}.fixwin .dbtns .btn{padding:4px 8px;font-size:.7rem}
-.skrow1{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.skrow1 b{white-space:nowrap}
+.skrow1{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;min-width:0}.skrow1 b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.skrow1 .sktog{flex:none}.fixwin small.skfx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fixwin .brow .wsb{padding:4px 8px}
 .fixwin .wshead h2{font-size:1.15rem;white-space:nowrap}
 .fixwin .sktog{margin:0;padding:1px 8px;font-size:.68rem}
 .odd{display:grid;grid-template-columns:7.5em 1fr 3.2em 3.6em;align-items:center;gap:8px;font-weight:800;font-size:.85rem;font-variant-numeric:tabular-nums}
@@ -917,7 +917,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1067,8 +1067,8 @@ const MODS=[
 // Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
 const SK=[
   {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`<b>${250+5*lv} %</b> Angriff an alle`},
-  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> · +30 % Tempo`},
-  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> an alle · betäubt <b>${(2+.02*lv).toFixed(2).replace(/0$/,'').replace('.',',')} s</b>`},
+  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> · Tempo +30 %`},
+  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> an alle · Betäubung <b>${(2+.02*lv).toFixed(2).replace(/0$/,'').replace('.',',')} s</b>`},
   {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'},
   {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'}
 ];
@@ -2014,13 +2014,13 @@ function renderWS(){
         <small>+${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
         ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`;
   const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
-    <p class="intro">Max-Level jetzt <b style="color:var(--sand)">${skCap()}</b> (Ultra schwer: 100) · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
+    <p class="intro">Max-Level <b style="color:var(--sand)">${skCap()}</b> · Ultra schwer 100 · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
     <div class="blist">${SK.filter(K=>!K.soon).map(K=>{
       const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=skCap(),c=skCost(lv),ok=!lock&&S.coins>=c;
-      return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><span class="skrow1"><b style="color:${K.c}">${K.ico} ${K.n}<em>Lv ${lv}/${skCap()}</em></b>
+      return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><span class="skrow1"><b style="color:${K.c}">${K.ico} ${K.n}</b>
         <button class="sktog${on?' on':''}" type="button" data-skon="${K.id}" ${full?'disabled':''}>${on?'✓ Aktiv':'Aktivieren'}</button></span>
-        <small>${K.txt(lv)}${M?` · alle ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
-        ${max?`<small class="skmax">Max${lv<SK_MAX?'<br><span>mehr ab '+DIFFS[skCap()/25].n.replace(' schwer','')+'</span>':''}</small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
+        <small class="skfx">${K.txt(lv)}${M?` · ⏱ ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
+        ${max?`<small class="skmax">Max<br><span>Lv ${lv}/${skCap()}</span></small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}/${skCap()}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
       ${SK.filter(K=>K.soon).map(K=>`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}</b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald</small></div>`).join('')}</div>`;
   $('card').innerHTML=`<div class="fixwin"><div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
     <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
@@ -3860,7 +3860,10 @@ const PATCHES=[
   {id:'pn70',date:'2026-11-09',title:'Noch kompakter',
    hero:['📐 Alles auf einen Blick','Auch die Begleiter haben jetzt ein festes Fenster ohne Scrollen.'],
    items:()=>[['Fähigkeiten:','Ausweichen und Betäuben haben wieder je ein eigenes Kästchen.'],
-     ['Enger:','Kürzere Texte und flachere Kästchen in Werkstatt, Fähigkeiten, Gärtnerei und Begleiter.']]}
+     ['Enger:','Kürzere Texte und flachere Kästchen in Werkstatt, Fähigkeiten, Gärtnerei und Begleiter.']]},
+  {id:'pn71',date:'2026-11-09',title:'Fähigkeiten einheitlich',
+   hero:['✶ Gleiche Zeilen','Alle Fähigkeiten sind jetzt gleich aufgebaut.'],
+   items:()=>[['Oben:','Name und „✓ Aktiv“ nebeneinander.'],['Unten:','Wirkung und ⏱ Abklingzeit. Rechts das Level oder der Kaufknopf.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
