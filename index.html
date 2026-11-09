@@ -27,6 +27,7 @@ body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-wi
   color-scheme:dark;
 }
 html,body{min-height:100%}
+html.fixhome,html.fixhome body{height:100%;overflow:hidden;overscroll-behavior:none}
 body{background:var(--night);color:var(--text);font-family:var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:12px;box-sizing:border-box;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden;overflow-y:auto;
@@ -373,7 +374,8 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .hdots{display:flex;gap:5px}.hdots i{width:7px;height:7px;border-radius:50%;background:#6b5644}.hdots i.on{background:var(--sand)}
 .hpg{overflow:hidden;touch-action:pan-y;transition:height .3s ease}
 .htrack{display:flex;width:200%;align-items:flex-start;transition:transform .3s ease}
-.htrack>.hp{width:50%;min-width:0;box-sizing:border-box;padding:10px 1px 0;display:flex;flex-direction:column;gap:10px}
+.htrack>.hp{width:50%;min-width:0;box-sizing:border-box;padding:10px 1px 0;overflow:visible}
+.hpin{display:flex;flex-direction:column;gap:10px;transform-origin:top center}
 .hpg{margin-top:-8px}
 .caprow .capsule{flex:1;min-width:0}
 .capauto{flex:none;width:68px;border:2px solid #1c140e;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
@@ -895,7 +897,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   </header>
   <div class="hnav" id="hNav"><button type="button" class="on" data-hp="0">⚔ Kampf</button><span class="hdots"><i class="on"></i><i></i></span><button type="button" data-hp="1">Ausrüstung <i>›</i></button></div>
   <div class="hpg" id="homePg"><div class="htrack" id="hTrack">
-  <section class="hp" data-i="0">
+  <section class="hp" data-i="0"><div class="hpin">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
@@ -918,10 +920,10 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     </select>
     <span class="multi" id="multiTxt"></span>
   </div>
-  </section>
-  <section class="hp" data-i="1">
+  </div></section>
+  <section class="hp" data-i="1"><div class="hpin">
   <button class="gearbtn" id="gearBtn" type="button"><span class="gh"><b>Ausrüstung</b><small id="invTxt">Inventar 0/30 ›</small></span><span class="doll" id="gear"></span></button>
-  </section>
+  </div></section>
   </div></div>
   <div class="actions">
     <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
@@ -944,18 +946,25 @@ function homeGo(pg,instant){homePage=pg;const tr=document.getElementById('hTrack
   const nb=document.querySelectorAll('#hNav [data-hp]');nb[0].innerHTML=(pg?'<i>‹</i> ':'')+'⚔ Kampf';nb[1].innerHTML='Ausrüstung'+(pg?'':' <i>›</i>');nb[0].classList.toggle('back',!!pg);
   document.querySelectorAll('#hNav .hdots i').forEach((d,i)=>d.className=i===pg?'on':'');
   if(instant){void tr.offsetWidth;tr.style.transition='';wrap.style.transition='';}}
-function homeFit(){const wrap=document.getElementById('homePg'),sec=document.querySelectorAll('#hTrack>.hp')[homePage];if(wrap&&sec)wrap.style.height=sec.offsetHeight+'px';}
+// Startbildschirm fest (09.11.2026): kein Scrollen. Passt eine Seite nicht zwischen Kopf und untere Leiste, wird sie etwas verkleinert.
+function homeFit(){const wrap=document.getElementById('homePg'),secs=document.querySelectorAll('#hTrack>.hp'),act=document.querySelector('.actions');if(!wrap||!secs.length)return;
+  const avail=(act?act.getBoundingClientRect().top:innerHeight)-wrap.getBoundingClientRect().top-6;
+  const hs=[...secs].map(x=>{const inn=x.firstElementChild;inn.style.transform='';inn.style.width='';x.style.height='';
+    const h=inn.offsetHeight+10,sc=avail>200&&h>avail+1?Math.max(.6,avail/h):1;
+    if(sc<1){inn.style.transform=`scale(${sc})`;x.style.height=Math.ceil(h*sc)+'px';}return Math.ceil(h*sc);});
+  wrap.style.height=hs[homePage]+'px';}
+addEventListener('resize',()=>homeFit());
 document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.dataset.hp));
 {const pg=document.getElementById('homePg');let sx=null,sy=0;
  pg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
  pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)homeGo(dx<0?1:0);});
  if(window.ResizeObserver)document.querySelectorAll('#hTrack>.hp').forEach(x=>new ResizeObserver(homeFit).observe(x));
- setTimeout(homeFit,0);}
+ document.documentElement.classList.add('fixhome');setTimeout(homeFit,0);setTimeout(homeFit,600);}
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3925,7 +3934,10 @@ const PATCHES=[
      ['Volles Inventar:','Belohnungen mit gleicher oder höherer Seltenheit landen trotzdem im Inventar, auch wenn es dann übervoll ist.']]},
   {id:'pn74',date:'2026-11-09',title:'Erkundung ohne Scrollen',
    hero:['🧭 Alles auf einen Blick','Auch die Erkundung hat jetzt ein festes Fenster ohne Scrollen.'],
-   items:()=>[['Kompakter:','Pro Mission eine Zeile mit Dauer, Seltenheit der Ausrüstung und wie oft es Kakteen gibt.']]}
+   items:()=>[['Kompakter:','Pro Mission eine Zeile mit Dauer, Seltenheit der Ausrüstung und wie oft es Kakteen gibt.']]},
+  {id:'pn75',date:'2026-11-09',title:'Fester Startbildschirm',
+   hero:['📱 Nichts wackelt mehr','Der Startbildschirm lässt sich nicht mehr scrollen – Kampf und Ausrüstung passen immer genau auf den Bildschirm.'],
+   items:()=>[['Kleine Handys:','Passt eine Seite nicht ganz, wird sie automatisch ein kleines Stück verkleinert.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
