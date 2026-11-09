@@ -364,6 +364,17 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 @media (max-width:420px){.mauto{right:7px;bottom:7px;font-size:.72rem;padding:4px 9px 4px 19px}.mauto::before{left:7px}}
 /* Auto-Öffnen direkt am Kapsel-Knopf (wie „Auto“ am Kern in Scrap Star) */
 .caprow{display:flex;gap:6px}
+/* Startbildschirm in zwei Seiten zum Wischen: Kampf und Ausrüstung (09.11.2026) */
+.hnav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-4px 0 -2px}
+.hnav button{flex:1;border:2px solid #6b5644;background:#2a1d12;color:#c9b593;border-radius:999px;font:inherit;font-weight:900;font-size:.82rem;padding:4px 10px;cursor:pointer}
+.hnav button.on{background:linear-gradient(#ffd447,#e0a020);border-color:#7a5410;color:#3a2410}
+.hnav button i{font-style:normal;display:inline-block;animation:wsnr 1.1s ease-in-out infinite}.hnav button.on i{animation:none}
+.hnav button.back i{animation-name:wsnl}
+.hdots{display:flex;gap:5px}.hdots i{width:7px;height:7px;border-radius:50%;background:#6b5644}.hdots i.on{background:var(--sand)}
+.hpg{overflow:hidden;touch-action:pan-y;transition:height .3s ease}
+.htrack{display:flex;width:200%;align-items:flex-start;transition:transform .3s ease}
+.htrack>.hp{width:50%;min-width:0;box-sizing:border-box;padding:10px 1px 0;display:flex;flex-direction:column;gap:10px}
+.hpg{margin-top:-8px}
 .caprow .capsule{flex:1;min-width:0}
 .capauto{flex:none;width:68px;border:2px solid #1c140e;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   background:linear-gradient(#4a3a2e,#2a1f18);color:#b8a488;box-shadow:inset 0 0 0 1px var(--frame),inset 0 2px 0 #ffffff1a,0 3px 0 #0b0806;font-family:var(--display)}
@@ -879,6 +890,9 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="hr"><button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
   </header>
+  <div class="hnav" id="hNav"><button type="button" class="on" data-hp="0">⚔ Kampf</button><span class="hdots"><i class="on"></i><i></i></span><button type="button" data-hp="1">Ausrüstung <i>›</i></button></div>
+  <div class="hpg" id="homePg"><div class="htrack" id="hTrack">
+  <section class="hp" data-i="0">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
@@ -891,12 +905,6 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   </div>
   <div class="caprow"><button class="capsule" id="capBtn" type="button">Samenkapsel öffnen <span class="n" id="capN">0</span></button>
     <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
-  <div class="actions">
-    <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
-    <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
-    <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
-    <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
-  </div>
   <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 6 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Missionen</span></button>
     <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
     <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
@@ -907,17 +915,44 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     </select>
     <span class="multi" id="multiTxt"></span>
   </div>
+  </section>
+  <section class="hp" data-i="1">
   <button class="gearbtn" id="gearBtn" type="button"><span class="gh"><b>Ausrüstung</b><small id="invTxt">Inventar 0/30 ›</small></span><span class="doll" id="gear"></span></button>
+  </section>
+  </div></div>
+  <div class="actions">
+    <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
+    <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
+    <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
+    <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
+  </div>
 </div>
 <div class="modal" id="modal" hidden><div class="card" id="card"></div></div>
 
 <script>
 (function(){
 const KEY='kaktus-krieger-v1';
+// Startbildschirm: Seite 0 = Kampf, Seite 1 = Ausrüstung. Wischen oder oben auf die Knöpfe tippen.
+let homePage=0;
+function homeGo(pg,instant){homePage=pg;const tr=document.getElementById('hTrack'),wrap=document.getElementById('homePg');if(!tr)return;
+  if(instant){tr.style.transition='none';wrap.style.transition='none';}
+  tr.style.transform=`translateX(-${pg*50}%)`;homeFit();
+  document.querySelectorAll('#hNav [data-hp]').forEach(b=>{const on=+b.dataset.hp===pg;b.classList.toggle('on',on);});
+  const nb=document.querySelectorAll('#hNav [data-hp]');nb[0].innerHTML=(pg?'<i>‹</i> ':'')+'⚔ Kampf';nb[1].innerHTML='Ausrüstung'+(pg?'':' <i>›</i>');nb[0].classList.toggle('back',!!pg);
+  document.querySelectorAll('#hNav .hdots i').forEach((d,i)=>d.className=i===pg?'on':'');
+  if(instant){void tr.offsetWidth;tr.style.transition='';wrap.style.transition='';}}
+function homeFit(){const wrap=document.getElementById('homePg'),sec=document.querySelectorAll('#hTrack>.hp')[homePage];if(wrap&&sec)wrap.style.height=sec.offsetHeight+'px';}
+document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.dataset.hp));
+{const pg=document.getElementById('homePg');let sx=null,sy=0;
+ pg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+ pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
+   if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)homeGo(dx<0?1:0);});
+ if(window.ResizeObserver)document.querySelectorAll('#hTrack>.hp').forEach(x=>new ResizeObserver(homeFit).observe(x));
+ setTimeout(homeFit,0);}
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3518,6 +3553,7 @@ function tutEnd(skipped){if(!tut.on)return;tut.on=false;if(tut.box)tut.box.remov
 function tutNext(){tut.i++;while(tut.i<TUT.length&&TUT[tut.i].el&&!tutVisible($(TUT[tut.i].el)))tut.i++;
   if(tut.i>=TUT.length){tutEnd(false);return;}tutShow();}
 function tutShow(){const st=TUT[tut.i],b=tut.box;if(!b)return;
+  {const el=st.el&&$(st.el),sec=el&&el.closest('.hp');homeGo(sec?+sec.dataset.i:0,true);}
   if(st.act==='cap'&&S.caps<1){S.caps=1;lastHud='';}
   const n=(S.char&&S.char.name)||'Kaktus',total=TUT.length;
   b.querySelector('.tbub').innerHTML=`<div class="tava">🌵</div><div class="ttx"><b class="tn">Opa Stachel</b><p>${st.t.replace('{name}',n)}</p>
@@ -3863,7 +3899,12 @@ const PATCHES=[
      ['Enger:','Kürzere Texte und flachere Kästchen in Werkstatt, Fähigkeiten, Gärtnerei und Begleiter.']]},
   {id:'pn71',date:'2026-11-09',title:'Fähigkeiten einheitlich',
    hero:['✶ Gleiche Zeilen','Alle Fähigkeiten sind jetzt gleich aufgebaut.'],
-   items:()=>[['Oben:','Name und „✓ Aktiv“ nebeneinander.'],['Unten:','Wirkung und ⏱ Abklingzeit. Rechts das Level oder der Kaufknopf.']]}
+   items:()=>[['Oben:','Name und „✓ Aktiv“ nebeneinander.'],['Unten:','Wirkung und ⏱ Abklingzeit. Rechts das Level oder der Kaufknopf.']]},
+  {id:'pn72',date:'2026-11-09',title:'Zwei Seiten zum Wischen',
+   hero:['👉 Kampf und Ausrüstung','Der Startbildschirm hat jetzt zwei Seiten.'],
+   items:()=>[['Kampf:','Kampfbox, Schwierigkeit, Samenkapseln und die Knöpfe für Dungeons, Erkundung, Arena und Turm.'],
+     ['Ausrüstung:','Nach links wischen (oder oben auf „Ausrüstung ›“ tippen) und du siehst deine Ausrüstung und das Inventar.'],
+     ['Zurück:','Nach rechts wischen oder auf „‹ Kampf“ tippen.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
