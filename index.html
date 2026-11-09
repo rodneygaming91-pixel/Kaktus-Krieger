@@ -652,7 +652,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .cc .cx{font-size:.68rem;font-weight:800}.cc .cx em{font-style:normal}
 .cc .cs{font-size:.6rem;color:#b8a488;font-weight:800}
 .verdict{font-weight:800;font-size:.95rem;border-radius:6px;padding:6px;background:#1c140e}
-.verdict.up{color:#7be86a}.verdict.down{color:#ff8a7a}
+.verdict.up{color:#7be86a}.verdict.down{color:#ff8a7a}.verdict.eq{color:#ffd447}
 .row.cmprow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.row.cmprow>.btn{min-width:0;padding-left:4px;padding-right:4px}
 .swapcol{display:flex;flex-direction:column;gap:6px}.swapcol .btn{width:100%;padding:7px 4px;font-size:.88rem}
 .btn.go.dk,.btn.go.dk:hover{background:linear-gradient(#2f7d2b,#1f561d)!important;border-color:#123512}
@@ -952,7 +952,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1282,7 +1282,8 @@ const ATK_ELS=['gift','eis','feuer','blitz','schatten'];
 const elMulFor=el=>{const Wd=world();return !el?1:el===Wd.weak?1.5:el===Wd.atkEl?0.6:1;};
 const elMul=()=>elMulFor(S.gear.waffe&&S.gear.waffe.el);
 // „Besser“ heißt: höherer Wert. Element und Resistenz sind nur Zusatzinfos und entscheiden höchstens bei exakt gleichem Wert.
-const itemScore=it=>it.v+((it.slot==='waffe'&&elMulFor(it.el)>1)||(it.res&&it.res.el===world().atkEl)?1e-6:0);
+// Waffen zählen mit ihrem Element in der aktuellen Welt (Schwäche ×1,5, gleiches Element wie die Gegner ×0,6) – 09.11.2026
+const itemScore=it=>it.v*(it.slot==='waffe'?elMulFor(it.el):1)+((it.res&&it.res.el===world().atkEl)?1e-6:0);
 // Effekt-Symbol an angelegten Teilen: genau wie im Inventar-Fenster (Element-Zeichen unten rechts in Elementfarbe)
 function effBadges(it){if(!it.el&&!it.res)return'';const E=ELEM[it.el||it.res.el];
   return`<b class="eld" style="--ec:${E.c}" title="${it.el?'Element: '+E.n:it.res.v+' % '+E.n+'-Resistenz'}">${E.ico}</b>`;}
@@ -1923,13 +1924,15 @@ function cmpCard(it,sl,label,other,id){
 function reveal(){
   clearTimeout(revealT);if(!pending)return;
   const it=pending,sl=SLOTS.find(s=>s.id===it.slot),cur=S.gear[it.slot],R=RAR[it.r];
-  const sNew=itemScore(it),sCur=cur?itemScore(cur):0,better=!cur||sNew>sCur,isNew=!S.seen.includes(it.r);
+  const sNew=itemScore(it),sCur=cur?itemScore(cur):0,isNew=!S.seen.includes(it.r);
+  // gleich stark (z. B. gleicher Wert, nur anderes Element): nicht mehr als schwächer anzeigen (09.11.2026)
+  const same=!!cur&&Math.abs(sNew-sCur)<=Math.max(1e-6,sCur*.005),better=!cur||(!same&&sNew>sCur);
   const pct=cur&&sCur>0?Math.round((sNew/sCur-1)*100):null;
   if(isNew)S.seen.push(it.r);
   $('card').innerHTML=`
     ${isNew?'<h2 style="color:'+R.c+'">Neue Seltenheit!</h2>':`<h2>${sl.n}</h2>`}
     <div class="cmpgrid">${cmpCard(cur,sl,'Aktuell',it,'cmpA')}<div class="cvs">VS</div>${cmpCard(it,sl,'Neu',cur,'cmpB')}</div>
-    <div class="verdict ${better?'up':'down'}">${!cur?'▲ Slot ist leer, das neue Teil ist ein Gewinn':better?`▲ Neu ist besser${pct!=null?' (+'+pct+' %)':''}`:`▼ Aktuell ist besser${pct!=null?' (neu '+pct+' %)':''}`}</div>
+    <div class="verdict ${same?'eq':better?'up':'down'}">${!cur?'▲ Slot ist leer, das neue Teil ist ein Gewinn':same?'＝ Gleich stark'+(it.el!==cur.el||(it.res&&it.res.el)!==(cur.res&&cur.res.el)?' – nur ein anderes Element':''):better?`▲ Neu ist besser${pct!=null?' (+'+pct+' %'+(it.slot==='waffe'&&it.v===cur.v?' in dieser Welt':'')+')':''}`:`▼ Aktuell ist besser${pct!=null?' (neu '+pct+' %'+(it.slot==='waffe'&&it.v===cur.v?' in dieser Welt':'')+')':''}`}</div>
     ${pending.auto?'<p class="hint" style="margin:0">Auto-Öffnen läuft danach weiter.</p>':''}
     <div class="row cmprow">
       <button class="btn red" id="bSell" type="button">Zerstören<small>+${fmt(sellValue(it))} Münzen</small></button>
@@ -1944,7 +1947,7 @@ function reveal(){
   $('bKeep').onclick=()=>{if(S.inv.length<invMax()){S.inv.push(it);close();}};
   $('bEquip').onclick=()=>{if(cur){if(S.inv.length>=invMax())return;S.inv.push(cur);}S.gear[it.slot]=it;feed(it,true);close();};
   {const b=$('bSwapSell');if(b)b.onclick=()=>{S.coins+=sellValue(cur);S.gear[it.slot]=it;feed(it,true);close();};}
-  (better?($('bEquip').disabled?$('bSwapSell'):$('bEquip')):$('bSell')).focus();
+  (same?($('bKeep').disabled?$('bSell'):$('bKeep')):better?($('bEquip').disabled?$('bSwapSell'):$('bEquip')):$('bSell')).focus();
 }
 function close(){const back=pending&&pending.tw,exb=pending&&pending.ex;if(back)delete pending.tw;if(exb)delete pending.ex;pending=null;
   if(exb&&exOpen){save();lastHud='';renderEx();return;}
@@ -2919,6 +2922,9 @@ function autoTick(dt){
     }
     if(!cur||itemScore(it)>itemScore(cur)){ // besser: Vergleich zeigen, Auto läuft danach weiter
       it.auto=true;pending=it;$('modal').hidden=false;reveal();save();lastHud='';return;}
+    else if(keepSafe(it)){ // gleiche Seltenheit: nie automatisch zerstören
+      if(S.inv.length<invMax())S.inv.push(it);
+      else{setAuto(false);pending=it;$('modal').hidden=false;reveal();banner={txt:'Auto hält an: Inventar voll',t:2};save();return;}}
     else{S.coins+=sellValue(it);feed(it,false);}
   }
   save();lastHud='';
@@ -3035,7 +3041,9 @@ let tw={open:false,anim:null,res:null};
 function twRoll(f,n){if(n==null)n=twReward(f).bump?1:0;let it=rollItem();
   if(n>0){const sl=SLOTS.find(x=>x.id===it.slot);it.r=Math.min(RAR.length-1,it.r+n);it.name=sl.names[it.r];it.v=itemValue(sl,it.r,it.lvl,1);if(it.res)it.res.v=Math.round(4*RAR[it.r].pm);}
   return it;}
-function twGive(it){if(S.inv.length<invMax()){S.inv.push(it);return`<span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n}) liegt im Inventar`;}
+// 09.11.2026: Teile mit gleicher oder höherer Seltenheit als das angelegte Teil werden NIE automatisch zerstört
+const keepSafe=it=>{const cur=S.gear[it.slot];return !cur||it.r>=cur.r;};
+function twGive(it){if(S.inv.length<invMax()||keepSafe(it)){S.inv.push(it);return`<span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n}) liegt im Inventar${S.inv.length>invMax()?' (Inventar übervoll – bitte Platz machen)':''}`;}
   const c=sellValue(it);S.coins+=c;return`<span style="color:${RAR[it.r].c}">${it.name}</span> – Inventar voll, für +${fmt(c)} Münzen zerstört`;}
 // Ohne Animation durchrechnen, ob eine Etage zu schaffen ist (für den Schnellaufstieg)
 function twSim(f){const G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
@@ -3904,7 +3912,14 @@ const PATCHES=[
    hero:['👉 Kampf und Ausrüstung','Der Startbildschirm hat jetzt zwei Seiten.'],
    items:()=>[['Kampf:','Kampfbox, Schwierigkeit, Samenkapseln und die Knöpfe für Dungeons, Erkundung, Arena und Turm.'],
      ['Ausrüstung:','Nach links wischen (oder oben auf „Ausrüstung ›“ tippen) und du siehst deine Ausrüstung und das Inventar.'],
-     ['Zurück:','Nach rechts wischen oder auf „‹ Kampf“ tippen.']]}
+     ['Zurück:','Nach rechts wischen oder auf „‹ Kampf“ tippen.']]},
+  {id:'pn73',date:'2026-11-09',title:'Gleich starke Teile',
+   hero:['＝ Gleich stark','Ein neues Teil, das genauso stark ist wie deins, wird nicht mehr als schwächer angezeigt.'],
+   items:()=>[['Neu:','Beim Vergleich steht dann „＝ Gleich stark – nur ein anderes Element“, und „Behalten“ ist vorausgewählt statt „Zerstören“.'],
+     ['Waffen-Element zählt:','Trifft das Element deiner Waffe die Schwäche der Gegner in deiner Welt (+50 %) oder ist es gleich wie ihres (−40 %), wird das beim Vergleich mitgerechnet.'],
+     ['Nie mehr gelöscht:','Ein Teil mit gleicher oder höherer Seltenheit als dein angelegtes wird nirgends mehr automatisch zerstört – nicht im Turm, nicht beim Auto-Öffnen und nicht bei Belohnungen.'],
+     ['Auto-Öffnen:','Gleich seltene Teile kommen ins Inventar. Ist es voll, hält Auto an und du entscheidest selbst.'],
+     ['Volles Inventar:','Belohnungen mit gleicher oder höherer Seltenheit landen trotzdem im Inventar, auch wenn es dann übervoll ist.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
