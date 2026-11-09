@@ -763,6 +763,9 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .exc .sbtn{padding:6px 10px;font-size:.82rem}.exc .exst{font-size:.72rem;font-weight:800;color:#d8c6a8;text-align:right;font-variant-numeric:tabular-nums}
 .exc .exbar{position:absolute;left:8px;right:8px;bottom:3px;height:3px;background:#0006;border-radius:2px}.exc .exbar i{display:block;height:100%;background:var(--rc);border-radius:2px}
 .exc.lock{opacity:.5;filter:saturate(.4)}.exc.rd{box-shadow:0 0 0 2px #ffd447,0 0 10px #ffd44766}
+.fixwin .exlist{max-height:none;overflow:visible;gap:4px}.fixwin .exc{flex-wrap:wrap}.fixwin .exc>div{flex:1 1 0}.fixwin .exc b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fixwin .exc small{line-height:1.2}
+.fixwin .expick .sbtn{padding:2px 7px 2px 2px;font-size:.72rem}.fixwin .expick canvas{width:22px;height:22px}.fixwin .exc .sbtn{min-width:76px}.fixwin .exc{padding:3px 8px 6px;gap:6px}.fixwin .exc .exi{font-size:1.2rem}.fixwin .exc b{font-size:.86rem}
+.fixwin .exc .sbtn{padding:4px 9px;font-size:.76rem}.fixwin .exc .exst{font-size:.66rem;line-height:1.15}.fixwin .wbres{font-size:.78rem;padding:4px 8px}
 .exc>.expick{flex:1 1 100%;display:flex;flex-direction:row;flex-wrap:wrap;gap:5px}.expick .sbtn{display:flex;align-items:center;gap:4px;padding:3px 8px 3px 3px}.expick canvas{width:28px;height:28px}
 .onbtn.exbtn.rd{border-color:#ffd447;box-shadow:0 0 0 2px #ffd44755}
 .dslot .eld{bottom:3px;right:5px;font-size:.8rem;z-index:2}
@@ -952,7 +955,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3403,18 +3406,18 @@ function exClaim(M){const R=exState().runs,run=R[M.id];if(!run||Date.now()<run.e
     exMsg+=` · <span style="color:${RAR[r].c}">${it.name}</span>`;save();lastHud='';it.ex=true;pending=it;reveal();return;}
   save();lastHud='';renderEx();}
 function renderEx(){if(pending)return;const R=exState().runs,free=exFree(),now=Date.now();
-  $('card').innerHTML=`<h2>🧭 Erkundung</h2><p class="hint" style="margin:0">Schicke Begleiter, die gerade nicht kämpfen, auf Mission. Höhere Begleiter-Level bringen mehr.</p>
+  $('card').innerHTML=`<div class="fixwin"><h2>🧭 Erkundung</h2><p class="intro">Höheres Begleiter-Level bringt mehr Beute.</p>
     ${exMsg?`<div class="wbres">${exMsg}</div>`:''}
     <div class="exlist">${EX.map(M=>{const Rr=RAR[M.r],run=R[M.id],un=exUnlocked(M);
-      if(!un)return`<div class="exc lock" style="--rc:${Rr.c}"><span class="exi">🔒</span><div><b>${M.n}</b><small>Frei ab ${exAtTxt(M)} · ${Rr.n}</small></div></div>`;
+      if(!un)return`<div class="exc lock" style="--rc:${Rr.c}"><span class="exi">🔒</span><div><b>${M.n}</b><small>Frei ab ${exAtTxt(M)}</small></div></div>`;
       let act;
       if(run){const left=run.end-now,D=DRONES.find(d=>d.id===run.dog),p=Math.min(1,(now-run.start)/(run.end-run.start));
         act=left<=0?`<button class="sbtn go" type="button" data-exc="${M.id}">Abholen</button>`:`<span class="exst">${D?D.n:''}<br>noch ${mmss(left/1000)}</span>`;
         act+=`<i class="exbar"><i style="width:${p*100}%"></i></i>`;}
-      else act=free.length?`<button class="sbtn" type="button" data-exp="${M.id}">Losschicken</button>`:'<span class="exst">Kein freier Begleiter</span>';
+      else act=free.length?`<button class="sbtn" type="button" data-exp="${M.id}">${exPick===M.id?'Abbrechen':'Schicken'}</button>`:'<span class="exst">Kein freier Begleiter</span>';
       const lvPick=exPick===M.id?`<div class="expick">${free.map(id=>{const D=DRONES.find(d=>d.id===id);return`<button type="button" class="sbtn" data-exs="${M.id}:${id}"><canvas width="56" height="56" data-exd="${id}"></canvas>${D.n} Lv ${S.dr[id].lv}</button>`;}).join('')}</div>`:'';
-      return`<div class="exc${run&&run.end<=now?' rd':''}" style="--rc:${Rr.c}"><span class="exi">${M.ico}</span><div><b>${M.n}</b><small>${exHM(M.h)} · Ausrüstung: <span style="color:${Rr.c}">${Rr.n}</span></small><small>Münzen${M.kc>=.5?' · oft Kakteen':' · ab und zu Kakteen'}</small></div>${act}${lvPick}</div>`;}).join('')}</div>
-    <div class="row"><button class="btn" id="exX" type="button">Schließen</button></div>`;
+      return`<div class="exc${run&&run.end<=now?' rd':''}" style="--rc:${Rr.c}"><span class="exi">${M.ico}</span><div><b>${M.n}</b><small>⏱ ${exHM(M.h)} · <span style="color:${Rr.c}">${Rr.n}</span> · ${M.kc>=.5?'oft':'selten'} 🌵</small></div>${act}${lvPick}</div>`;}).join('')}</div>
+    <div class="row"><button class="btn" id="exX" type="button">Schließen</button></div></div>`;
   $('card').querySelectorAll('[data-exp]').forEach(b=>b.onclick=()=>{exPick=exPick===b.dataset.exp?null:b.dataset.exp;renderEx();});
   $('card').querySelectorAll('[data-exs]').forEach(b=>b.onclick=()=>{const [m,id]=b.dataset.exs.split(':');exStart(EX.find(x=>x.id===m),id);});
   $('card').querySelectorAll('[data-exc]').forEach(b=>b.onclick=()=>exClaim(EX.find(x=>x.id===b.dataset.exc)));
@@ -3919,7 +3922,10 @@ const PATCHES=[
      ['Waffen-Element zählt:','Trifft das Element deiner Waffe die Schwäche der Gegner in deiner Welt (+50 %) oder ist es gleich wie ihres (−40 %), wird das beim Vergleich mitgerechnet.'],
      ['Nie mehr gelöscht:','Ein Teil mit gleicher oder höherer Seltenheit als dein angelegtes wird nirgends mehr automatisch zerstört – nicht im Turm, nicht beim Auto-Öffnen und nicht bei Belohnungen.'],
      ['Auto-Öffnen:','Gleich seltene Teile kommen ins Inventar. Ist es voll, hält Auto an und du entscheidest selbst.'],
-     ['Volles Inventar:','Belohnungen mit gleicher oder höherer Seltenheit landen trotzdem im Inventar, auch wenn es dann übervoll ist.']]}
+     ['Volles Inventar:','Belohnungen mit gleicher oder höherer Seltenheit landen trotzdem im Inventar, auch wenn es dann übervoll ist.']]},
+  {id:'pn74',date:'2026-11-09',title:'Erkundung ohne Scrollen',
+   hero:['🧭 Alles auf einen Blick','Auch die Erkundung hat jetzt ein festes Fenster ohne Scrollen.'],
+   items:()=>[['Kompakter:','Pro Mission eine Zeile mit Dauer, Seltenheit der Ausrüstung und wie oft es Kakteen gibt.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
