@@ -210,7 +210,13 @@ h1 span{color:var(--bloom)}
 .fixwin h2{margin:0;font-size:1.3rem}.fixwin .intro{margin:0;color:var(--muted);font-size:.8rem;line-height:1.3}
 .fixwin .odds{gap:2px}.fixwin .odd{font-size:.78rem;gap:6px;grid-template-columns:6.6em 1fr 3em 3.7em}.fixwin .odd .nx{font-size:.72rem;white-space:nowrap}.fixwin .odd>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fixwin .odd .track{height:7px}
 .fixwin .wspg{flex:1;min-height:0}.fixwin .wstrack{height:100%}.fixwin .wsdots{margin:0}
-.fixwin .brow{padding:6px 8px;gap:8px}.fixwin .blist{gap:5px}
+.fixwin .brow{padding:4px 8px;gap:8px;min-height:44px}.fixwin .blist{gap:4px}.fixwin .brow b{font-size:.86rem}.fixwin .brow small{font-size:.7rem;line-height:1.25}
+.fixwin .brow .btn{padding:5px 9px;font-size:.76rem}.fixwin .brow .btn small{font-size:.66rem}.fixwin .wsbank{padding:4px 10px;font-size:.88rem}
+.skmax{color:var(--sand)!important;font-weight:800;text-align:center;font-size:.76rem!important;line-height:1.1!important}.skmax span{font-size:.62rem;color:var(--muted)}
+.fixwin .sksoon{min-height:34px}
+.fixwin .dlist{gap:4px}.fixwin .drow{grid-template-columns:36px 1fr auto;gap:8px;padding:4px 8px}.fixwin .drow canvas{width:36px;height:36px}
+.fixwin .drow b{font-size:.86rem}.fixwin .drow small{font-size:.68rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fixwin .drow .bon{font-size:.68rem}
+.fixwin .dbtns{gap:3px}.fixwin .dbtns .btn{padding:4px 8px;font-size:.7rem}
 .skrow1{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.skrow1 b{white-space:nowrap}
 .fixwin .wshead h2{font-size:1.15rem;white-space:nowrap}
 .fixwin .sktog{margin:0;padding:1px 8px;font-size:.68rem}
@@ -911,7 +917,7 @@ const KEY='kaktus-krieger-v1';
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1060,11 +1066,11 @@ const MODS=[
 ];
 // Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
 const SK=[
-  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`Trifft alle Gegner mit <b>${250+5*lv} %</b> Angriff`},
-  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> Leben, 4 s lang +30 % Tempo`},
-  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> Angriff an alle, betäubt <b>${(2+.02*lv).toFixed(2).replace('.',',')} s</b>`},
-  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',soon:1,txt:()=>'Passiv: wirkt immer, ohne einen der 3 Plätze zu belegen'},
-  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',soon:1,txt:()=>'Passiv: wirkt immer, ohne einen der 3 Plätze zu belegen'}
+  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`<b>${250+5*lv} %</b> Angriff an alle`},
+  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> · +30 % Tempo`},
+  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> an alle · betäubt <b>${(2+.02*lv).toFixed(2).replace(/0$/,'').replace('.',',')} s</b>`},
+  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'},
+  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'}
 ];
 // 08.11.2026: bis Lv 100, kleinere Schritte pro Level, teurer (Start 5.000, jedes Level +14 %)
 const SK_MAX=100,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(5000*Math.pow(1.14,lv));
@@ -1940,9 +1946,9 @@ function renderGarden(){
       <div class="row"><button class="btn" id="gSkip" type="button" ${(S.kak||0)<1?'disabled':''}>−30 Min<small>1 🌵</small></button>
         <button class="btn go" id="gNow" type="button" ${(S.kak||0)<gSkipAll()?'disabled':''}>Sofort fertig<small id="gNowK">${gSkipAll()} 🌵</small></button></div>
       <p style="margin:0;color:var(--muted);font-size:.8rem">Mit Kakteen wächst es schneller: 1 🌵 = 30 Minuten. Du hast ${fmt(S.kak||0)} 🌵.</p>`;
-  else action=`<p class="intro">Ausbau auf Lv ${L+1}: ${fmt(cost)} Münzen · Wachstum ${fmtT(dur)}</p>`;
+  else action=`<p class="intro">Lv ${L+1}: ${fmt(cost)} Münzen · ${fmtT(dur)}</p>`;
   $('card').innerHTML=`<div class="fixwin"><h2>Gärtnerei <span style="color:var(--sand)">Lv ${L}</span></h2>
-    <p class="intro">Je weiter ausgebaut, desto öfter stecken seltene Teile in deinen Samenkapseln.</p>
+    <p class="intro">Höhere Stufe = seltenere Teile in den Kapseln.</p>
     <div class="odds">${rows}</div>${action}
     <div class="row"><button class="btn" id="gClose" type="button">Schließen</button>
     ${L<MAX_G&&!growing?`<button class="btn go" id="gBuild" type="button" ${S.coins<cost?'disabled':''}>Ausbauen · ${fmt(cost)}</button>`:''}</div></div>`;
@@ -1962,20 +1968,21 @@ setInterval(()=>{
 
 // ---------- Drohnen-Fenster ----------
 let dOpen=false;
+const DR_SHORT={biene:'Beißt alle 1,2 s (40 % Angriff)',kolibri:'Flinke Bisse alle 0,8 s',chihu:'Zwickt alle 0,6 s · mehr Krit',gluehw:'Heilt alle 3 s 3 % Leben',eule:'Heilt alle 6 s 8 % Leben',fleder:'Lebensraub alle 1 s (30 % Angriff)'};
 function renderDrones(){
   const slots=drSlots();
-  $('card').innerHTML=`<h2>Begleiter <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
-    <p style="margin:0;color:var(--muted)">Eingesetzte Begleiter laufen (oder fliegen) vor dir her, kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 wird ab Stage 10 frei.':''}</p>
+  $('card').innerHTML=`<div class="fixwin"><h2>Begleiter <span style="color:var(--sand)">${S.drEq.length}/${slots}</span></h2>
+    <p class="intro">Eingesetzte Begleiter kämpfen mit und geben einen Dauerbonus.${slots<3?' Platz 3 ab Stage 10.':''}</p>
     <div class="dlist">${DRONES.map(D=>{const o=S.dr[D.id],eq=S.drEq.includes(D.id),lv=o?o.lv:0;
       const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration pro s'}[D.stat];
       let btns;
       if(!o)btns=`<button class="btn go" type="button" data-buy="${D.id}" data-cost="${D.cost}">Kaufen · ${fmt(D.cost)}</button>`;
-      else btns=exBusy(D.id)?`<button class="btn" type="button" disabled>🧭 Auf Mission</button>`:`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
+      else btns=exBusy(D.id)?`<button class="btn" type="button" disabled>🧭 Mission</button>`:`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
         ${lv>=DR_MAX?'<button class="btn" type="button" disabled>Max</button>':`<button class="btn" type="button" data-up="${D.id}" data-cost="${drUp(D,lv)}">Lv ${lv+1} · ${fmt(drUp(D,lv))}</button>`}`;
       return`<div class="drow${eq?' eq':''}" style="--dc:${D.c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas>
-        <div><b style="color:${D.c}">${D.n}${o?`<em>Lv ${lv}</em>`:''}</b><small>${D.d}${o&&lv>1?` (×${drScale(lv).toFixed(2)})`:''}</small>
+        <div><b style="color:${D.c}">${D.n}${o?`<em>Lv ${lv}</em>`:''}</b><small>${DR_SHORT[D.id]||D.d}</small>
         <span class="bon">+${(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2)).toLocaleString('de-DE')} ${unit}${o?'':' ab Lv 1'}</span></div><div class="dbtns">${btns}</div></div>`;}).join('')}</div>
-    <div class="row"><button class="btn" id="dClose" type="button">Schließen</button></div>`;
+    <div class="row"><button class="btn" id="dClose" type="button">Schließen</button></div></div>`;
   $('card').querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{const D=DRONES.find(d=>d.id===b.dataset.buy);if(S.coins<D.cost)return;
     S.coins-=D.cost;S.dr[D.id]={lv:1};if(S.drEq.length<drSlots())S.drEq.push(D.id);save();lastHud='';renderDrones();});
   $('card').querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{const D=DRONES.find(d=>d.id===b.dataset.up),o=S.dr[D.id],k=drUp(D,o.lv);if(S.coins<k||o.lv>=DR_MAX)return;
@@ -1999,22 +2006,22 @@ let hqOpen=false,wsPage=0;
 function renderWS(){
   const kak=S.kak||0;
   const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
-    <p class="intro">Level deinen Kaktus mit Münzen. Jedes 10. Level braucht zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b> aus Bosskämpfen.</p>
+    <p class="intro">Jedes 10. Level kostet zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b>.</p>
     <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
     <div class="blist">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
       const now=wsVal(W.id),nx=wsVal(W.id,lv+1),f=x=>W.kind==='mul'?fmt(Math.round(x)):x;
       return`<div class="brow" style="--bc:${W.c}"><div><b style="color:${W.c}">${W.ico} ${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b>
-        <small>jetzt +${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
+        <small>+${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
         ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`;
   const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
-    <p class="intro">Max-Level: Leicht 25 · Normal 50 · Schwer 75 · Ultra 100 (jetzt <b style="color:var(--sand)">${skCap()}</b>).<br>Aktiv: <b style="color:var(--sand)">${skOn().length} / ${SK_ON}</b>${skOn().length>=SK_ON?' – zum Tauschen erst eine abwählen':''}</p>
+    <p class="intro">Max-Level jetzt <b style="color:var(--sand)">${skCap()}</b> (Ultra schwer: 100) · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
     <div class="blist">${SK.filter(K=>!K.soon).map(K=>{
       const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=skCap(),c=skCost(lv),ok=!lock&&S.coins>=c;
       return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><span class="skrow1"><b style="color:${K.c}">${K.ico} ${K.n}<em>Lv ${lv}/${skCap()}</em></b>
         <button class="sktog${on?' on':''}" type="button" data-skon="${K.id}" ${full?'disabled':''}>${on?'✓ Aktiv':'Aktivieren'}</button></span>
-        <small>${K.txt(lv)}${max?'':` → <span style="color:#7fe08a">${(K.txt(lv+1).match(/<b>[^<]*<\/b>/g)||[]).join(' · ').replace(/<\/?b>/g,'')}</span>`}${M?` · ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
-        ${max?`<small style="color:var(--sand);font-weight:800;text-align:center">Max${lv<SK_MAX?'<br><span style="font-size:.66rem;color:var(--muted)">mehr ab<br>'+DIFFS[skCap()/25].n+'</span>':''}</small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
-      <div class="brow sksoon" style="--bc:#9ad0ff"><div><b>${SK.filter(K=>K.soon).map(K=>`<span style="color:${K.c}">${K.ico} ${K.n}</span>`).join(' · ')}</b><small>Passiv: wirken immer, ohne einen der 3 Plätze zu belegen</small></div><small class="skbald">🔒 Bald<br>verfügbar</small></div></div>`;
+        <small>${K.txt(lv)}${M?` · alle ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
+        ${max?`<small class="skmax">Max${lv<SK_MAX?'<br><span>mehr ab '+DIFFS[skCap()/25].n.replace(' schwer','')+'</span>':''}</small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
+      ${SK.filter(K=>K.soon).map(K=>`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}</b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald</small></div>`).join('')}</div>`;
   $('card').innerHTML=`<div class="fixwin"><div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
     <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
     <div class="row"><button class="btn" id="hqClose" type="button">Schließen</button></div></div>`;
@@ -3849,7 +3856,11 @@ const PATCHES=[
      ['In den Fenstern:','Dort steht nur noch ein Hinweis, dass deine Belohnung in der Poststelle liegt.']]},
   {id:'pn69',date:'2026-11-09',title:'Aufgeräumte Fenster',
    hero:['📐 Feste Fenstergröße','Werkstatt, Fähigkeiten und Gärtnerei haben jetzt eine feste Größe und passen ohne Scrollen auf den Bildschirm.'],
-   items:()=>[['Kompakter:','Kürzere Texte und engere Kästchen, alles auf einen Blick.']]}
+   items:()=>[['Kompakter:','Kürzere Texte und engere Kästchen, alles auf einen Blick.']]},
+  {id:'pn70',date:'2026-11-09',title:'Noch kompakter',
+   hero:['📐 Alles auf einen Blick','Auch die Begleiter haben jetzt ein festes Fenster ohne Scrollen.'],
+   items:()=>[['Fähigkeiten:','Ausweichen und Betäuben haben wieder je ein eigenes Kästchen.'],
+     ['Enger:','Kürzere Texte und flachere Kästchen in Werkstatt, Fähigkeiten, Gärtnerei und Begleiter.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
