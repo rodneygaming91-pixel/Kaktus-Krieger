@@ -906,6 +906,11 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   .onrow .onbtn.sm b{font-size:.74rem}.hnav button{font-size:.74rem}
   .actions .garden b{font-size:.92rem}.actions .garden small{font-size:.55rem;letter-spacing:.02em}
 }
+.adgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-content:start}
+.adch{border:2px solid #4a3a2c;border-left:5px solid var(--rc);border-radius:8px;background:#241a14;color:var(--rc);font:inherit;padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
+.adch b{font-size:.8rem;white-space:nowrap}.adch small{color:var(--muted);font-size:.68rem}
+.adch.on{background:#3a2c1a;border-color:var(--rc);box-shadow:0 0 0 2px var(--rc),0 0 12px var(--rc)}
+.adlg{height:auto}
 </style>
 
 <div class="game">
@@ -985,7 +990,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2962,10 +2967,23 @@ function autoTick(dt){
   }
   save();lastHud='';
 }
-function setAuto(on){S.auto.on=on;const b=$('autoBtn');b.setAttribute('aria-pressed',on);$('autoState').textContent=on?'an':'aus';$('autoRow').hidden=!on;save();}
-$('autoBtn').onclick=()=>{setAuto(!S.auto.on);autoT=0.3;};
-$('stopSel').value=String(S.auto.stopAt);
-$('stopSel').onchange=e=>{S.auto.stopAt=+e.target.value;save();};
+function setAuto(on){S.auto.on=on;const b=$('autoBtn');b.setAttribute('aria-pressed',on);$('autoState').textContent=on?'bis '+RAR[S.auto.stopAt].n:'aus';$('autoRow').hidden=true;save();}
+// 09.11.2026: Vor dem Start wählen, bei welcher Seltenheit Auto anhält
+function autoDlg(){const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);
+  let top=0;w.forEach((x,i)=>{if(x>0)top=i;});top=Math.min(RAR.length-1,top+(gUp('luck')>0?1:0));
+  if(S.auto.stopAt>top)S.auto.stopAt=top;if(S.auto.stopAt<1)S.auto.stopAt=1;
+  const pct=r=>{let p=0;for(let i=r;i<w.length;i++)p+=w[i];return p/tot*100;};
+  const rows=[];for(let r=1;r<=top;r++){const p=pct(r);rows.push(`<button type="button" class="adch${r===S.auto.stopAt?' on':''}" data-st="${r}" style="--rc:${RAR[r].c}"><b>${RAR[r].n}+</b><small>${p>=1?p.toFixed(0):p>=.1?p.toFixed(1).replace('.',','):'<0,1'} %</small></button>`);}
+  $('card').innerHTML=`<div class="fixwin adlg"><h2>🌱 Auto-Öffnen</h2>
+    <p class="intro">Bei welcher Seltenheit soll Auto anhalten und dir das Teil zeigen? Bessere Teile zeigt Auto sowieso, neue Seltenheiten auch.</p>
+    <div class="adgrid">${rows.join('')}</div>
+    <p class="intro">Die Zahl ist die Chance pro Kapsel. ${multiOpen()>1?multiOpen()+' Kapseln pro Runde · ':''}${S.caps} Kapseln da.</p>
+    <div class="row"><button class="btn" id="adX" type="button">Abbrechen</button><button class="btn go" id="adGo" type="button" ${S.caps<1?'disabled':''}>Starten</button></div></div>`;
+  $('modal').hidden=false;
+  $('card').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{S.auto.stopAt=+b.dataset.st;$('card').querySelectorAll('.adch').forEach(x=>x.classList.toggle('on',x===b));save();});
+  $('adX').onclick=()=>{$('modal').hidden=true;};
+  $('adGo').onclick=()=>{$('modal').hidden=true;setAuto(true);autoT=0.3;};}
+$('autoBtn').onclick=()=>{if(S.auto.on){setAuto(false);return;}if(!$('modal').hidden||pending)return;autoDlg();};
 setAuto(S.auto.on);
 setInterval(()=>{const m=multiOpen();$('multiTxt').textContent=m>1?m+' Kapseln pro Runde':'';},500);
 
@@ -3963,7 +3981,12 @@ const PATCHES=[
    hero:['📱 Für jedes Handy','Auf kleineren oder niedrigeren Bildschirmen (z. B. im Safari-Browser oder mit vergrößerter Anzeige) wird nichts mehr winzig.'],
    items:()=>[['Kompakter:','Untere Leiste, Samenkapsel-Knopf und Dungeon-Knöpfe werden dort flacher, statt alles zu verkleinern.'],
      ['Schmale Handys:','Kopfzeile und Kampf-Knöpfe rücken enger zusammen, nichts überlappt mehr.'],
-     ['Notfall:','Passt es trotzdem nicht, darf ausnahmsweise wieder gescrollt werden, statt dass alles zu klein wird.']]}
+     ['Notfall:','Passt es trotzdem nicht, darf ausnahmsweise wieder gescrollt werden, statt dass alles zu klein wird.']]},
+  {id:'pn77',date:'2026-11-09',title:'Auto-Öffnen mit Auswahl',
+   hero:['🌱 Erst wählen, dann starten','Tippst du bei den Samenkapseln auf AUTO, wählst du zuerst, bei welcher Seltenheit Auto anhalten soll.'],
+   items:()=>[['Auswahl:','Alle Seltenheiten, die deine Gärtnerei gerade schaffen kann, mit der Chance pro Kapsel.'],
+     ['Starten:','„Starten“ tippen. Am AUTO-Knopf steht dann, bis zu welcher Seltenheit er läuft.'],
+     ['Anhalten:','Nochmal auf AUTO tippen stoppt sofort.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
