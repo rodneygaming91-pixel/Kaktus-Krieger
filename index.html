@@ -886,6 +886,26 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 .mdots{display:flex;justify-content:center;gap:6px}.mdots i{width:8px;height:8px;border-radius:50%;background:#7fe08a;animation:mdot 1.2s infinite}.mdots i:nth-child(2){animation-delay:.2s}.mdots i:nth-child(3){animation-delay:.4s}
 @keyframes mdot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
 .devtag{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:90;background:#ffd447;color:#2a1d10;font-weight:900;font-size:.7rem;padding:2px 10px;border-radius:0 0 8px 8px;box-shadow:0 2px 6px #0008}
+
+/* Kleine / niedrige Bildschirme (09.11.2026): kompakter statt winzig verkleinert */
+@media (max-height:760px){
+  .actions{padding-top:5px;gap:6px}.actions .resbar{margin:-1px 0 0}.actions .resbar .chip{font-size:.88rem;padding:1px 10px}
+  .actions .garden{padding:3px 4px}.actions .garden span{display:none}.actions .garden b{font-size:1.02rem}.actions .garden small{font-size:.6rem}
+  .game{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  .caprow .capsule{padding:7px 12px;font-size:1.05rem}.caprow .capauto{padding-block:3px}
+  .onrow .onbtn.sm{padding:4px 3px}.onrow .onbtn.sm span{display:none}
+  .hpin{gap:7px}.hnav button{padding:2px 10px}
+}
+@media (max-width:359px){
+  header{gap:4px}header h1{font-size:.92rem}.hbtns{gap:3px}.setbtn{width:26px;height:26px;font-size:.8rem}#ecoTag{display:none!important}
+  .who{padding:3px 6px;min-width:0}.who b{font-size:.78rem}.who small{display:none}.who .pow{font-size:.72rem;padding:1px 6px}
+  .chestbtn{min-width:0;padding:3px 5px;font-size:.66rem}.chestbtn b{font-size:.9rem}
+  .mods{gap:3px;left:4px}.mod{width:32px;height:32px}.mod .ring{width:28px;height:28px}.mod .ring span{width:22px;height:22px;font-size:.85rem}
+  .fbr{right:4px;gap:3px}.mauto{font-size:.58rem!important;padding:2px 6px 2px 15px!important}.x2btn{min-width:34px;padding:1px 4px}.x2btn b{font-size:.8rem}
+  .diffrow button{font-size:.7rem;padding:3px 2px}
+  .onrow .onbtn.sm b{font-size:.74rem}.hnav button{font-size:.74rem}
+  .actions .garden b{font-size:.92rem}.actions .garden small{font-size:.55rem;letter-spacing:.02em}
+}
 </style>
 
 <div class="game">
@@ -949,10 +969,11 @@ function homeGo(pg,instant){homePage=pg;const tr=document.getElementById('hTrack
 // Startbildschirm fest (09.11.2026): kein Scrollen. Passt eine Seite nicht zwischen Kopf und untere Leiste, wird sie etwas verkleinert.
 function homeFit(){const wrap=document.getElementById('homePg'),secs=document.querySelectorAll('#hTrack>.hp'),act=document.querySelector('.actions');if(!wrap||!secs.length)return;
   const avail=(act?act.getBoundingClientRect().top:innerHeight)-wrap.getBoundingClientRect().top-6;
+  let tight=false; // passt es auch mit 85 % nicht, darf ausnahmsweise gescrollt werden statt winzig zu werden
   const hs=[...secs].map(x=>{const inn=x.firstElementChild;inn.style.transform='';inn.style.width='';x.style.height='';
-    const h=inn.offsetHeight+10,sc=avail>200&&h>avail+1?Math.max(.6,avail/h):1;
+    const h=inn.offsetHeight+10,need=avail>200&&h>avail+1?avail/h:1,sc=Math.max(.85,need);tight=tight||need<.85;
     if(sc<1){inn.style.transform=`scale(${sc})`;x.style.height=Math.ceil(h*sc)+'px';}return Math.ceil(h*sc);});
-  wrap.style.height=hs[homePage]+'px';}
+  wrap.style.height=hs[homePage]+'px';document.documentElement.classList.toggle('fixhome',!tight);}
 addEventListener('resize',()=>homeFit());
 document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.dataset.hp));
 {const pg=document.getElementById('homePg');let sx=null,sy=0;
@@ -964,7 +985,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3937,7 +3958,12 @@ const PATCHES=[
    items:()=>[['Kompakter:','Pro Mission eine Zeile mit Dauer, Seltenheit der Ausrüstung und wie oft es Kakteen gibt.']]},
   {id:'pn75',date:'2026-11-09',title:'Fester Startbildschirm',
    hero:['📱 Nichts wackelt mehr','Der Startbildschirm lässt sich nicht mehr scrollen – Kampf und Ausrüstung passen immer genau auf den Bildschirm.'],
-   items:()=>[['Kleine Handys:','Passt eine Seite nicht ganz, wird sie automatisch ein kleines Stück verkleinert.']]}
+   items:()=>[['Kleine Handys:','Passt eine Seite nicht ganz, wird sie automatisch ein kleines Stück verkleinert.']]},
+  {id:'pn76',date:'2026-11-09',title:'Besser auf kleinen Bildschirmen',
+   hero:['📱 Für jedes Handy','Auf kleineren oder niedrigeren Bildschirmen (z. B. im Safari-Browser oder mit vergrößerter Anzeige) wird nichts mehr winzig.'],
+   items:()=>[['Kompakter:','Untere Leiste, Samenkapsel-Knopf und Dungeon-Knöpfe werden dort flacher, statt alles zu verkleinern.'],
+     ['Schmale Handys:','Kopfzeile und Kampf-Knöpfe rücken enger zusammen, nichts überlappt mehr.'],
+     ['Notfall:','Passt es trotzdem nicht, darf ausnahmsweise wieder gescrollt werden, statt dass alles zu klein wird.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
