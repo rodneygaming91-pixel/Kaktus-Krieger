@@ -990,7 +990,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3084,8 +3084,10 @@ const twFloor=()=>S.tower||1;
 const TW_PRIZE=[null,{kak:30,caps:200,bump:2,n:'🥇'},{kak:20,caps:120,bump:1,n:'🥈'},{kak:10,caps:80,bump:0,n:'🥉'}];
 const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
   return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.56,keeper:f%10===0};};
-const twReward=f=>({kak:1+Math.floor(f/25),caps:2,item:true,bump:f%10===0});
-// Schnellaufstieg (08.11.2026): pro übersprungener Etage 2 Kapseln und Münzen wie 5 Gegner auf deiner besten Stage, keine Kakteen, keine Ausrüstung
+const twReward=f=>({kak:1+Math.floor(f/25),caps:TW_CAPS,item:true,bump:f%10===0});
+// 10.11.2026: 20 Kapseln pro Etage (vorher 2), auch beim Schnellaufstieg
+const TW_CAPS=20;
+// Schnellaufstieg (08.11.2026): pro übersprungener Etage Kapseln und Münzen wie 5 Gegner auf deiner besten Stage, keine Kakteen, keine Ausrüstung
 const twFastCoins=()=>Math.ceil(30*cPow(S.best));
 let twb={st:null,err:null,busy:false,msg:''};
 let tw={open:false,anim:null,res:null};
@@ -3134,7 +3136,7 @@ function renderTower(){
     <div class="row"><button class="btn" id="twClose" type="button" ${tw.anim?'disabled':''}>Schließen</button><button class="btn go" id="twGo" type="button" ${tw.anim||tw.auto?'disabled':''}>${tw.anim?'Kampf läuft …':'Kämpfen'}</button></div>
     <button class="btn twauto${tw.auto?' on':''}" id="twAuto" type="button" aria-pressed="${!!tw.auto}"><span class="sw"><i></i></span>${tw.auto?'Auto-Kampf läuft · Stoppen':'Auto-Kampf starten'}<small>${tw.auto?'Stoppt auch automatisch bei einer Niederlage':'Kämpft Etage für Etage weiter, bis du einen Kampf verlierst'}</small></button>
     <button class="btn twauto twtrash${S.twTrash?' on':''}" id="twTrash" type="button" aria-pressed="${!!S.twTrash}"><span class="sw"><i></i></span>Schlechtere Teile zerstören<small>${S.twTrash?'Teile mit niedrigerer Seltenheit als dein angelegtes Teil werden sofort zu Münzen':'Aus: Du entscheidest bei jedem Teil selbst'}</small></button>
-    ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Bereits geschaffte Etagen sofort durchziehen · pro Etage +${fmt(twFastCoins())} Münzen und +2 Kapseln</small></button>`:''}
+    ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Bereits geschaffte Etagen sofort durchziehen · pro Etage +${fmt(twFastCoins())} Münzen und +${TW_CAPS} Kapseln</small></button>`:''}
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
   $('twGo').onclick=twFight;drawTower();
@@ -3142,7 +3144,7 @@ function renderTower(){
   $('twTrash').onclick=()=>{S.twTrash=!S.twTrash;save();renderTower();};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
   {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
-    const n=f-f0,gc=n*twFastCoins(),gk=n*2;S.coins+=gc;S.caps+=gk;lastHud='';
+    const n=f-f0,gc=n*twFastCoins(),gk=n*TW_CAPS;S.coins+=gc;S.caps+=gk;lastHud='';
     S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft. <em class="up">+${fmt(gc)} Münzen</em> · <em class="up">+${gk} Kapseln</em>${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
     renderTower();if(f>f0)twSubmit();};}
   {const b=$('twClaim');if(b)b.onclick=async()=>{if(twb.busy)return;twb.busy=true;renderTower();
@@ -3986,7 +3988,10 @@ const PATCHES=[
    hero:['🌱 Erst wählen, dann starten','Tippst du bei den Samenkapseln auf AUTO, wählst du zuerst, bei welcher Seltenheit Auto anhalten soll.'],
    items:()=>[['Auswahl:','Alle Seltenheiten, die deine Gärtnerei gerade schaffen kann, mit der Chance pro Kapsel.'],
      ['Starten:','„Starten“ tippen. Am AUTO-Knopf steht dann, bis zu welcher Seltenheit er läuft.'],
-     ['Anhalten:','Nochmal auf AUTO tippen stoppt sofort.']]}
+     ['Anhalten:','Nochmal auf AUTO tippen stoppt sofort.']]},
+  {id:'pn78',date:'2026-11-10',title:'10× mehr Kapseln im Turm',
+   hero:['🗼 20 Kapseln pro Etage','Jede Turm-Etage gibt jetzt 20 Samenkapseln statt 2 – auch beim Schnellaufstieg.'],
+   items:()=>[['Nachzahlung:','Wer heute schon Etagen geschafft hat, bekommt die fehlenden Kapseln als Brief in die ✉ Poststelle.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
