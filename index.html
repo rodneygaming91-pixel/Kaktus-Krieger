@@ -990,7 +990,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3293,12 +3293,15 @@ const DG_FREE=3,dgKeyCost=n=>5+5*n;   // 1. gekaufter Schlüssel 5 🌵, dann 10
 const dgSt=lv=>lv*5;                    // Stufe 1 entspricht Stage 5, jede Stufe +5 Stages
 // Zwei Dungeons nach demselben Prinzip (08.11.2026: Kapsel-Dungeon dazu), jeder mit eigenen Schlüsseln und Stufen
 const DGT={coin:{key:'dg',ico:'🪙',n:'Münz-Dungeon',boss:'Münzkönig',unit:'Münzen',col:'#ffd447',
-    full:st=>Math.round(6*cPow(st)*800),desc:'Besiege den Münzkönig und räume seine Schatzkammer aus.'},
+    full:st=>Math.round(6*cPow(Math.max(st,S.best||1))*800*coinMul()),desc:'Besiege den Münzkönig und räume seine Schatzkammer aus.'},
   caps:{key:'dgc',ico:'🌱',n:'Kapsel-Dungeon',boss:'Samenkönig',unit:'Kapseln',col:'#9be36a',
-    full:st=>10+Math.round(st*.4),desc:'Besiege den Samenkönig und plündere seinen Kapselgarten.'}};
+    full:st=>10+Math.round(Math.max(st,S.best||1)*.4),desc:'Besiege den Samenkönig und plündere seinen Kapselgarten.'}};
 const dgT=()=>DGT[dg.type]||DGT.coin;
 function dgState(T){T=T||dgT();const d=ptDay();if(!S[T.key])S[T.key]={max:Math.max(1,Math.floor(S.best*.8/5)),lv:0,day:d,used:0,bought:0,extra:0};const D=S[T.key];
-  if(D.day!==d){D.day=d;D.used=0;D.bought=0;D.extra=0;}if(!D.lv||D.lv>D.max)D.lv=D.max;return D;}
+  if(D.day!==d){D.day=d;D.used=0;D.bought=0;D.extra=0;}
+  // 10.11.2026: Dungeon-Stufe wächst mit deinem Fortschritt mit, Belohnung richtet sich mindestens nach deiner besten Stage
+  {const base=Math.max(1,Math.floor((S.best||1)*.8/5));if(D.max<base){if(D.lv===D.max)D.lv=base;D.max=base;}}
+  if(!D.lv||D.lv>D.max)D.lv=D.max;return D;}
 const dgKeys=T=>{const D=dgState(T);return Math.max(0,DG_FREE+D.extra-D.used);};
 const dgBoss=(lv,T)=>{T=T||dgT();const st=dgSt(lv),p=pow(st);return{st,hp:24*16*p,atk:6*3*p*.56,full:T.full(st)};};
 let dg={open:false,view:'list',type:'coin',anim:null,res:null};
@@ -3991,7 +3994,12 @@ const PATCHES=[
      ['Anhalten:','Nochmal auf AUTO tippen stoppt sofort.']]},
   {id:'pn78',date:'2026-11-10',title:'10× mehr Kapseln im Turm',
    hero:['🗼 20 Kapseln pro Etage','Jede Turm-Etage gibt jetzt 20 Samenkapseln statt 2 – auch beim Schnellaufstieg.'],
-   items:()=>[['Nachzahlung:','Wer heute schon Etagen geschafft hat, bekommt die fehlenden Kapseln als Brief in die ✉ Poststelle.']]}
+   items:()=>[['Nachzahlung:','Wer heute schon Etagen geschafft hat, bekommt die fehlenden Kapseln als Brief in die ✉ Poststelle.']]},
+  {id:'pn79',date:'2026-11-10',title:'Dungeons wachsen mit',
+   hero:['🏰 Belohnung passt zu dir','Die Dungeon-Belohnungen richten sich jetzt nach deinem Fortschritt.'],
+   items:()=>[['Münz-Dungeon:','Voller Sieg = so viele Münzen wie 800 Gegner auf deiner besten Stage (inkl. Allianz-Münzbonus).'],
+     ['Kapsel-Dungeon:','Die Kapseln richten sich ebenfalls mindestens nach deiner besten Stage.'],
+     ['Stufen:','Die Dungeon-Stufe wird automatisch angehoben, wenn du im Spiel weiter kommst.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
