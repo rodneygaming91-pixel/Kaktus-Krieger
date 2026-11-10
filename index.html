@@ -911,6 +911,12 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 .adch b{font-size:.8rem;white-space:nowrap}.adch small{color:var(--muted);font-size:.68rem}
 .adch.on{background:#3a2c1a;border-color:var(--rc);box-shadow:0 0 0 2px var(--rc),0 0 12px var(--rc)}
 .adlg{height:auto}
+.card.nopt{pointer-events:none}
+/* Immer hochkant (10.11.2026): im Querformat erscheint ein Hinweis statt des Spiels */
+#rotNote{display:none;position:fixed;inset:0;z-index:9999;background:#140d08;color:var(--sand);flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;font-weight:900;font-size:1.2rem;padding:20px}
+#rotNote i{font-style:normal;font-size:3.2rem;display:inline-block;animation:rotHint 1.8s ease-in-out infinite}
+@keyframes rotHint{0%,30%{transform:rotate(90deg)}60%,100%{transform:rotate(0)}}
+@media (orientation:landscape) and (max-height:560px){#rotNote{display:flex}}
 </style>
 
 <div class="game">
@@ -962,6 +968,8 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 <script>
 (function(){
 const KEY='kaktus-krieger-v1';
+{const r=document.createElement('div');r.id='rotNote';r.innerHTML='<i>📱</i>Bitte halte dein Handy hochkant.<small style="font-size:.8rem;color:#c9b593;font-weight:700">Kaktus-Krieger spielt man im Hochformat.</small>';document.body.appendChild(r);
+ try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('portrait').catch(()=>{});}catch(e){}}
 // Startbildschirm: Seite 0 = Kampf, Seite 1 = Ausrüstung. Wischen oder oben auf die Knöpfe tippen.
 let homePage=0;
 function homeGo(pg,instant){homePage=pg;const tr=document.getElementById('hTrack'),wrap=document.getElementById('homePg');if(!tr)return;
@@ -990,7 +998,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3143,10 +3151,11 @@ function renderTower(){
   $('twX2').onclick=()=>{S.twX2=!S.twX2;save();const b=$('twX2');b.classList.toggle('on',S.twX2);b.setAttribute('aria-pressed',S.twX2);};
   $('twTrash').onclick=()=>{S.twTrash=!S.twTrash;save();renderTower();};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
-  {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim)return;twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
+  {const b=$('twFast');if(b)b.onclick=()=>{if(tw.anim||tw.fastBusy)return;tw.fastBusy=true;b.disabled=true;b.firstChild.textContent='⏩ Schnellaufstieg läuft …';
+   $('card').classList.add('nopt');setTimeout(()=>{twDayCheck();let f0=twFloor(),f=f0;while(f<=S.twRec&&twSim(f))f++;
     const n=f-f0,gc=n*twFastCoins(),gk=n*TW_CAPS;S.coins+=gc;S.caps+=gk;lastHud='';
     S.tower=f;save();tw.res=f>f0?`<b>⏩ Schnellaufstieg:</b> Etage ${f0}–${f-1} geschafft. <em class="up">+${fmt(gc)} Münzen</em> · <em class="up">+${gk} Kapseln</em>${f<=S.twRec?' <span class="down">Etage '+f+' ist im Moment zu schwer, kämpfe selbst oder werde stärker.</span>':''}`:'<span class="down">Etage '+f0+' ist im Moment zu schwer für den Schnellaufstieg. Versuche es selbst!</span>';
-    renderTower();if(f>f0)twSubmit();};}
+    tw.fastBusy=false;renderTower();if(f>f0)twSubmit();setTimeout(()=>{const c=$('card');if(c)c.classList.remove('nopt');},600);},30);};}
   {const b=$('twClaim');if(b)b.onclick=async()=>{if(twb.busy)return;twb.busy=true;renderTower();
     try{const r=await rpc('kk_tw_claim',{p_code:ON.code,p_key:ON.key});
       if(r&&r.ok){const P=TW_PRIZE[r.rk];S.kak=(S.kak||0)+P.kak;S.caps+=P.caps;const it=twRoll(twFloor(),P.bump),t2=twGive(it);save();lastHud='';
@@ -3999,7 +4008,10 @@ const PATCHES=[
    hero:['🏰 Belohnung passt zu dir','Die Dungeon-Belohnungen richten sich jetzt nach deinem Fortschritt.'],
    items:()=>[['Münz-Dungeon:','Voller Sieg = so viele Münzen wie 800 Gegner auf deiner besten Stage (inkl. Allianz-Münzbonus).'],
      ['Kapsel-Dungeon:','Die Kapseln richten sich ebenfalls mindestens nach deiner besten Stage.'],
-     ['Stufen:','Die Dungeon-Stufe wird automatisch angehoben, wenn du im Spiel weiter kommst.']]}
+     ['Stufen:','Die Dungeon-Stufe wird automatisch angehoben, wenn du im Spiel weiter kommst.']]},
+  {id:'pn80',date:'2026-11-10',title:'Immer hochkant',
+   hero:['📱 Nur noch Hochformat','Drehst du dein Handy quer, erscheint ein Hinweis, es wieder hochkant zu halten.'],
+   items:()=>[['Turm:','Nach dem Schnellaufstieg wird kein zweiter Tipp mehr aus Versehen auf den Knopf darunter gezählt.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
