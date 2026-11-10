@@ -917,6 +917,7 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 #rotNote i{font-style:normal;font-size:3.2rem;display:inline-block;animation:rotHint 1.8s ease-in-out infinite}
 @keyframes rotHint{0%,30%{transform:rotate(90deg)}60%,100%{transform:rotate(0)}}
 @media (orientation:landscape) and (max-height:560px){#rotNote{display:flex}}
+.card.fightlock button,.card.fightlock [data-otab],.card.fightlock [data-sub]{pointer-events:none;opacity:.45}
 </style>
 
 <div class="game">
@@ -998,7 +999,7 @@ document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2483,7 +2484,7 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
         X.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen.</small>':''}`;}
       else X.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
     catch(e){X.res='<span class="down">Keine Verbindung, Angriff nicht gezählt.</span>';}
-    X.busy=false;X.anim=null;await X.load();};
+    X.busy=false;X.anim=null;if(olOpen)renderOnline();await X.load();};
   requestAnimationFrame(step);}
 
 // Weltboss und Allianz-Boss teilen sich Kampf und Anzeige; hier steht, was sich unterscheidet
@@ -2694,7 +2695,7 @@ function renderOnline(){
         <small>zuletzt online ${agoTxt(new Date(friend.updated_at).getTime())}</small></div></div>`:''}`;
   }
   $('card').innerHTML=`<div class="eqwin">${tabs}${body}<button class="sbtn wide" type="button" id="oClose">Schließen</button></div>`;
-  $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
+  $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{if(wb.busy||ab.busy)return;olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
   if(olTab==='gilde')wireGuild();
   {const wg=$('wbGo');if(wg)wg.onclick=()=>wbAttack(wb);if($('wbcv'))drawWb(wb);}
   {const ag=$('abGo');if(ag)ag.onclick=()=>wbAttack(ab);if($('abcv'))drawWb(ab);const ac=$('abClaim');if(ac)ac.onclick=abClaim;}
@@ -2702,7 +2703,9 @@ function renderOnline(){
   $('card').querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{lbBy=b.dataset.lb;lbData=null;renderOnline();loadLb();});
   $('card').querySelectorAll('[data-fc]').forEach(b=>b.onclick=async()=>{friendBack=olTab==='freunde'?null:olTab;olTab='freunde';friendErr='';try{friend=await rpc('kk_profile',{p_code:b.dataset.fc});}catch(e){friend=null;friendErr='Keine Verbindung.';}renderOnline();});
   {const rb=$('lbRe');if(rb)rb.onclick=()=>{lbData=null;renderOnline();loadLb();};}
-  $('oClose').onclick=()=>{olOpen=false;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
+  $('oClose').onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
+  // 10.11.2026: Während Weltboss- oder Allianz-Boss-Kampf kann man das Fenster nicht verlassen
+  $('card').classList.toggle('fightlock',!!(wb.busy||ab.busy));
   const copy=(txt,btn)=>{const done=()=>{btn.textContent='Kopiert ✓';};
     try{navigator.clipboard.writeText(txt).then(done,()=>{prompt2(txt,btn);});}catch(e){prompt2(txt,btn);}};
   const prompt2=(txt,btn)=>{const i=$('oRecIn')||$('oFriend');if(i){i.value=txt;i.select();}btn.textContent='Text markiert, bitte kopieren';};
@@ -4011,7 +4014,11 @@ const PATCHES=[
      ['Stufen:','Die Dungeon-Stufe wird automatisch angehoben, wenn du im Spiel weiter kommst.']]},
   {id:'pn80',date:'2026-11-10',title:'Immer hochkant',
    hero:['📱 Nur noch Hochformat','Drehst du dein Handy quer, erscheint ein Hinweis, es wieder hochkant zu halten.'],
-   items:()=>[['Turm:','Nach dem Schnellaufstieg wird kein zweiter Tipp mehr aus Versehen auf den Knopf darunter gezählt.']]}
+   items:()=>[['Turm:','Nach dem Schnellaufstieg wird kein zweiter Tipp mehr aus Versehen auf den Knopf darunter gezählt.']]},
+  {id:'pn81',date:'2026-11-10',title:'Weltboss zählt wieder',
+   hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
+   items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
+     ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
