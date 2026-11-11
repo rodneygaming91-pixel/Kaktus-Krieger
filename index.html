@@ -69,6 +69,26 @@ h1 span{color:var(--bloom)}
 .ktinfo{display:flex;flex-direction:column;gap:2px;min-width:0}.ktinfo b{font-size:1rem}.ktpro{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:.7rem}.ktpro em{font-style:normal;font-weight:700}
 .ktpro em.up{color:#7fe08a}.ktpro em.down{color:#ff8a7a}.ktbtn{justify-self:stretch;padding:6px 8px;font-size:.9rem}.ktbtn small{font-size:.72rem;margin-left:6px;opacity:.85}
 .ktgrid{grid-template-columns:repeat(4,1fr)!important}.skbig .ktbig{width:76px;height:76px}.skdet .ktpro{justify-content:center;margin:2px 0 4px}
+.ktbtns{display:flex;gap:6px}.ktbtns .ktbtn{flex:1;white-space:nowrap;font-size:.78rem;padding:7px 4px}.ktbtns .ktbtn small{margin-left:3px}
+.ovw{display:flex;flex-direction:column;gap:8px}.ovw h2{margin:0;text-align:center}
+.ovtop{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ovpic{position:relative;border:3px solid var(--rc);border-radius:12px;background:radial-gradient(circle at 50% 55%,#4a3a5a,#1c1424);display:flex;flex-direction:column;align-items:center;padding:4px}
+.ovpic canvas{width:100%;max-width:150px;aspect-ratio:1}.ovpic b{font-size:.9rem}.ovr{position:absolute;top:4px;left:7px;font-weight:900;font-size:.72rem}
+.ovpic.sm{padding:2px}.ovpic.sm canvas{width:74px}
+.ovgears{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-content:center}
+.ovgear{aspect-ratio:1;border:2px solid var(--rc);border-radius:8px;background:#241a14;display:grid;place-items:center;overflow:hidden}
+.ovgear canvas{width:100%;height:100%}.ovgear i{font-style:normal;font-size:.5rem;color:var(--muted);text-align:center}
+.ovlv{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:center;font-weight:900}.ovlv span{color:#ffd447}
+.ovstats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;background:#0005;border:2px solid #6b5644;border-radius:10px;padding:6px 9px}
+.ovstats div{display:flex;justify-content:space-between;gap:6px;font-size:.74rem;border-bottom:1px solid #ffffff10;padding:2px 0}
+.ovstats span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ovstats span i{font-style:normal;display:inline-block;width:16px}.ovstats b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ovhead{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.ovname{display:flex;flex-direction:column;gap:1px}.ovname b{font-size:1.1rem}.ovname small{font-size:.74rem;color:var(--muted)}
+.ovsec{background:#0005;border:2px solid #6b5644;border-radius:10px;padding:5px 7px;display:flex;flex-direction:column;gap:4px}.ovsec>b{font-size:.8rem;color:#ffd447}
+.ovsec.soon{flex-direction:row;justify-content:space-between;opacity:.55}.ovsec.soon small{color:var(--sand);font-weight:800}
+.ovrow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.ovrow.g5{grid-template-columns:repeat(5,1fr);padding:0 6%}.ovrow.g9{grid-template-columns:repeat(9,1fr);gap:3px}
+.ovico{position:relative;aspect-ratio:1;border:2px solid var(--rc);border-radius:8px;background:#241a14;display:grid;place-items:center}
+.ovico i{font-style:normal;font-size:1.2rem;color:var(--ic)}.ovico canvas{width:90%;height:90%}.ovico span{position:absolute;bottom:-1px;left:0;right:0;text-align:center;font-size:.5rem;font-weight:900;text-shadow:0 1px 0 #000}
+.ovico.empty{--rc:#4a3a2c;opacity:.5}
 .wsgrid{display:flex;flex-direction:column;gap:5px}
 .wst{display:grid;grid-template-columns:36px 1fr 104px;align-items:center;gap:8px;background:var(--night);border:2px solid #6b5644;border-left:5px solid var(--bc);border-radius:10px;padding:5px 7px;box-shadow:inset 0 0 10px #0008;min-width:0}
 .wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
@@ -2388,7 +2408,7 @@ function ktCardHtml(){const K=curKt(),lv=ktLv(K.id),f=ktLvM(lv),rc=RAR[K.r].c,up
   return`<div class="ktcard" style="--rc:${rc}"><canvas width="160" height="160" data-kt="${K.id}" class="ktpv"></canvas>
     <div class="ktinfo"><span class="skrar" style="color:${rc}">${RAR[K.r].n} · Lv ${lv}/${KT_MAX}</span><b>${K.n}</b>
       <span class="ktpro">${ktRun(K)}${lv>1?`<em class="up">Level: +${Math.round((f-1)*100)} % Angriff &amp; Leben</em>`:''}</span></div>
-    <button class="btn go ktbtn${up?' up':''}" type="button" data-ktcoll="1">🌵 Kaktus-Sammlung<small>${Object.keys(S.kt).length}/${KAKTI.length}</small></button></div>`;}
+    <div class="ktbtns"><button class="btn ktbtn" type="button" data-ktov="1">📋 Übersicht</button><button class="btn go ktbtn${up?' up':''}" type="button" data-ktcoll="1">🌵 Sammlung<small>${Object.keys(S.kt).length}/${KAKTI.length}</small></button></div></div>`;}
 const ktNeed=lv=>lv+1;
 const ktSumLv=()=>{const n=(S.ktSum&&S.ktSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
 function ktRoll(){const w=SUMW[ktSumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
@@ -2399,7 +2419,44 @@ function ktDraw(R){(R||document).querySelectorAll('canvas[data-kt]').forEach(cv2
   g.fillStyle='#0004';g.beginPath();g.ellipse(45,80,22,4,0,0,7);g.fill();
   const ch=Object.assign({},S.char||DEFAULT_CH,{cls:K.id,shape:K.shape,color:own?K.color:'#3a3040'});
   if(!own){ch.eyes='entschlossen';}drawCactus(g,ch,{x:45,y:82,bob:0});});}
-function ktBind(H,re){H.querySelectorAll('[data-ktcoll]').forEach(b=>b.onclick=()=>{if($('modal').hidden)ktColl(re);});ktDraw(H);}
+function ktBind(H,re){H.querySelectorAll('[data-ktcoll]').forEach(b=>b.onclick=()=>{if($('modal').hidden)ktColl(re);});
+  H.querySelectorAll('[data-ktov],.ktpv').forEach(b=>b.onclick=()=>{if($('modal').hidden)ktOverview(re);});ktDraw(H);}
+// ---------- Übersichten (wie in Legend of Slime): Kaktus-Werte und Mein Profil ----------
+const pc=x=>(+(+x).toFixed(1)).toLocaleString('de-DE')+' %';
+function statRows(){const st=heroStats(),el=world().atkEl;
+  return[['⚔','Angriff',fmt(st.atk)],['♥','Leben',fmt(st.hp)],['✚','Regeneration',fmt(st.hp*st.reg/100)+'/s'],['☀','Angriffe pro s',(1/st.spd).toFixed(2).replace('.',',')],
+    ['✦','Krit-Chance',pc(st.crit)],['💥','Krit-Schaden',pc(st.critM*100)],['🛡','Schild-Schutz',pc(st.block)],['⛨','Panzerung',pc(st.armor)],
+    ['💨','Ausweichen',pc(st.dodge)],['💫','Betäuben',pc(st.stun)],['🩸','Lebensraub',pc(st.steal)],['●','Münzen',pc((coinMul()-1)*100)],
+    [ELEM[el].ico,'Resistenz '+ELEM[el].n,pc(st.res[el]||0)]];}
+const gearMini=id=>{const it=S.gear[id],sl=slotOf(id);return`<div class="ovgear" style="--rc:${it?RAR[it.r].c:'#4a3a2c'}" title="${sl.n}">${it?`<canvas width="80" height="80" data-ovg="${id}"></canvas>`:`<i>${sl.n}</i>`}</div>`;};
+function ovDraw(){$('card').querySelectorAll('canvas[data-ovg]').forEach(cv2=>{const it=S.gear[cv2.dataset.ovg];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});ktDraw($('card'));drawDroneIcons($('card'));}
+function ktOverview(re){const K=curKt(),lv=ktLv(K.id),rc=RAR[K.r].c,o=S.kt[K.id],need=ktNeed(lv);
+  $('card').innerHTML=`<div class="ovw"><h2>🌵 ${esc2((S.char||DEFAULT_CH).name)}</h2>
+    <div class="ovtop"><div class="ovpic" style="--rc:${rc}"><span class="ovr" style="color:${rc}">${RAR[K.r].n}</span><canvas width="200" height="200" data-kt="${K.id}"></canvas><b>${K.n}</b></div>
+      <div class="ovgears">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
+    <div class="ovlv"><span>Lv ${lv}</span><div class="skbar big"><span style="width:${lv>=KT_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=KT_MAX?'Höchstes Level':'Kopien '+o.n+'/'+need}</em></div></div>
+    <div class="ovstats">${statRows().map(([i,n,v])=>`<div><span><i>${i}</i>${n}</span><b>${v}</b></div>`).join('')}</div>
+    <div class="row"><button class="btn go" id="ovColl" type="button">🌵 Meine Kakteen</button><button class="btn" type="button" disabled>🎖 Meisterschaft · bald</button></div>
+    <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
+  $('modal').hidden=false;ovDraw();
+  $('ovX').onclick=()=>{$('modal').hidden=true;re&&re();};$('ovColl').onclick=()=>ktColl(re||(()=>{}));}
+function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn();
+  const sk=Array.from({length:SK_ON},(_,i)=>{const m=on[i]&&skDef(on[i]);return m?`<div class="ovico" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><span>Lv ${skLv(m.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
+  const dr=Array.from({length:DR_SLOTS},(_,i)=>{const id=S.drEq[i],D=id&&DRONES.find(d=>d.id===id);return D?`<div class="ovico" style="--rc:${RAR[D.r].c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas><span>Lv ${drLv(D.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
+  $('card').innerHTML=`<div class="ovw"><h2>Mein Profil</h2>
+    <div class="ovhead"><div class="ovpic sm" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas></div>
+      <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · Lv ${ktLv(K.id)}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
+        <small>Beste Stage ${S.best||0} · Turm ${S.twRec||0} · Werkstatt Lv ${wsTotal()}</small></div></div>
+    <div class="ovsec"><b>✶ Fähigkeiten</b><div class="ovrow">${sk}</div></div>
+    <div class="ovsec"><b>🐾 Begleiter</b><div class="ovrow g5">${dr}</div></div>
+    <div class="ovsec"><b>🎒 Ausrüstung</b><div class="ovrow g9">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
+    <div class="ovsec soon"><b>🏺 Relikte</b><small>bald</small></div>
+    <div class="row"><button class="btn" id="ovEd" type="button">✎ Name &amp; Aussehen</button><button class="btn go" id="ovKt" type="button">📋 Kaktus-Werte</button></div>
+    <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
+  $('modal').hidden=false;ovDraw();
+  $('ovX').onclick=()=>{$('modal').hidden=true;};
+  $('ovEd').onclick=()=>{$('modal').hidden=true;openEditor();};
+  $('ovKt').onclick=()=>ktOverview(()=>{if(curTab==='kampf')renderTabKampf();});}
 function ktColl(re){const L=ktSumLv(),cur=curKt().id,kak=S.kak||0;
   $('card').innerHTML=`<div class="sumres"><h2>🌵 Kaktus-Sammlung</h2>
     <div class="skgrid ktgrid">${KAKTI.map(K=>{const lv=ktLv(K.id),o=S.kt[K.id],rc=RAR[K.r].c;
@@ -3247,7 +3304,7 @@ function drawPreview(){
   g.clearRect(0,0,160,110);g.fillStyle='#c98f52';g.beginPath();g.ellipse(80,96,46,8,0,0,7);g.fill();
   g.save();g.translate(80,98);drawCactus(g,draft,{x:0,y:0,bob:Math.sin(t*3)});g.restore();
 }
-$('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden)openEditor();};
+$('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden){if(S.char)profileOverview();else openEditor();}};
 if(!S.char)openEditor();
 
 // ---------- Modul-Leiste ----------
@@ -4431,7 +4488,8 @@ const PATCHES=[
      ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
      ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
-     ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.']]}
+     ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.'],
+     ['📋 Übersichten:','Tippe auf deinen Namen oben für dein Profil (Fähigkeiten, Begleiter, Ausrüstung) oder auf „Übersicht“ beim Kaktus für alle Werte auf einen Blick.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
