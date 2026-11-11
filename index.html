@@ -918,6 +918,28 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 @keyframes rotHint{0%,30%{transform:rotate(90deg)}60%,100%{transform:rotate(0)}}
 @media (orientation:landscape) and (max-height:560px){#rotNote{display:flex}}
 .card.fightlock button,.card.fightlock [data-otab],.card.fightlock [data-sub]{pointer-events:none;opacity:.45}
+/* ===== Neue Oberfläche (11.11.2026) ===== */
+html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
+.topbox{display:flex;flex-direction:column;gap:6px;flex:none}
+.tstrip{display:flex;align-items:center;gap:6px;flex:none}
+.tstrip .tres{display:flex;gap:6px;margin:0}.tstrip .tres .chip{padding:2px 10px;font-size:.92rem}
+.tstrip .tcap{margin-left:auto;padding:2px 10px;font-size:.92rem;color:#c8ff9a}.tstrip .tcap b{margin-right:4px}
+.tpanel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  border:3px solid #4a3a2c;border-radius:14px;background:#2a1d14;padding:8px;margin-bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+.tab{display:flex;flex-direction:column;gap:10px}.tab[hidden]{display:none}
+.tsec{display:flex;flex-direction:column;gap:5px}
+.thead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 2px}
+.thead b{font-family:var(--fd,inherit);font-size:1.05rem;color:var(--sand);white-space:nowrap}.thead small{text-align:right}.thead b em{font-style:normal;color:#fff;font-size:.9rem}.thead small{color:var(--muted);font-size:.72rem}
+.tpanel .blist{gap:5px}.tpanel .brow{padding:5px 8px;min-height:46px}.tpanel .brow b{font-size:.9rem}.tpanel .brow small{font-size:.72rem}
+.tpanel .brow .btn{padding:6px 10px;font-size:.8rem}.tpanel .brow .btn small{font-size:.66rem}.tpanel .sktog{margin:0;padding:1px 8px;font-size:.68rem}
+.tpanel .skrow1{flex-wrap:nowrap}.tpanel small.skfx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tpanel .onrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tpanel .onrow .onbtn.sm{padding:16px 8px}.tpanel .onrow .onbtn.sm span{display:block}
+.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(5,1fr);
+  background:#1c130d;border-top:3px solid #4a3a2c;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px))}
+.tabbar button{border:0;background:none;color:#a8957a;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 0;border-radius:10px;cursor:pointer}
+.tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
+.tabbar button span{font-size:.62rem;font-weight:800;letter-spacing:.02em}
+.tabbar button.on{background:#3a2a1a;color:var(--sand);box-shadow:inset 0 0 0 2px #7a5a2a}.tabbar button.on i{filter:none}
 </style>
 
 <div class="game">
@@ -927,14 +949,17 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="hr"><button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
   </header>
-  <div class="hnav" id="hNav"><button type="button" class="on" data-hp="0">⚔ Kampf</button><span class="hdots"><i class="on"></i><i></i></span><button type="button" data-hp="1">Ausrüstung <i>›</i></button></div>
-  <div class="hpg" id="homePg"><div class="htrack" id="hTrack">
-  <section class="hp" data-i="0"><div class="hpin">
+  <div class="topbox">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
+  </div>
+  <div class="tstrip"><div class="res resbar tres"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div><div class="chip tcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div>
+  <div class="tpanel" id="tPanel">
+  <section class="tab" id="tabKampf" data-t="kampf"></section>
+  <section class="tab" id="tabAusr" data-t="ausr" hidden>
   <div class="foot">
     <span class="fst" title="Angriff"><em>⚔</em><b id="sAtk">0</b></span>
     <span class="fst" title="Leben"><em style="color:#ff6fae">♥</em><b id="sHp">0</b></span>
@@ -942,9 +967,6 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
   </div>
   <div class="caprow"><button class="capsule" id="capBtn" type="button">Samenkapsel öffnen <span class="n" id="capN">0</span></button>
     <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
-  <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 6 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Missionen</span></button>
-    <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
-    <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
   <div class="autorow" id="autoRow" hidden>
     <label for="stopSel">Anhalten bei</label>
     <select id="stopSel">
@@ -952,13 +974,23 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
     </select>
     <span class="multi" id="multiTxt"></span>
   </div>
-  </div></section>
-  <section class="hp" data-i="1"><div class="hpin">
   <button class="gearbtn" id="gearBtn" type="button"><span class="gh"><b>Ausrüstung</b><small id="invTxt">Inventar 0/30 ›</small></span><span class="doll" id="gear"></span></button>
-  </div></section>
-  </div></div>
-  <div class="actions">
-    <div class="res resbar"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
+  </section>
+  <section class="tab" id="tabMehr" data-t="mehr" hidden>
+  <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 6 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Missionen</span></button>
+    <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
+    <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
+  </section>
+  </div>
+  <nav class="tabbar" id="tabBar">
+    <button type="button" data-tab2="kampf" class="on"><i>⚔</i><span>Kampf</span></button>
+    <button type="button" data-tab2="ausr"><i>🎒</i><span>Ausrüstung</span></button>
+    <button type="button" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
+    <button type="button" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
+    <button type="button" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
+  </nav>
+  <div class="actions" hidden>
+    
     <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
     <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
     <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
@@ -971,35 +1003,13 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 const KEY='kaktus-krieger-v1';
 {const r=document.createElement('div');r.id='rotNote';r.innerHTML='<i>📱</i>Bitte halte dein Handy hochkant.<small style="font-size:.8rem;color:#c9b593;font-weight:700">Kaktus-Krieger spielt man im Hochformat.</small>';document.body.appendChild(r);
  try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('portrait').catch(()=>{});}catch(e){}}
-// Startbildschirm: Seite 0 = Kampf, Seite 1 = Ausrüstung. Wischen oder oben auf die Knöpfe tippen.
-let homePage=0;
-function homeGo(pg,instant){homePage=pg;const tr=document.getElementById('hTrack'),wrap=document.getElementById('homePg');if(!tr)return;
-  if(instant){tr.style.transition='none';wrap.style.transition='none';}
-  tr.style.transform=`translateX(-${pg*50}%)`;homeFit();
-  document.querySelectorAll('#hNav [data-hp]').forEach(b=>{const on=+b.dataset.hp===pg;b.classList.toggle('on',on);});
-  const nb=document.querySelectorAll('#hNav [data-hp]');nb[0].innerHTML=(pg?'<i>‹</i> ':'')+'⚔ Kampf';nb[1].innerHTML='Ausrüstung'+(pg?'':' <i>›</i>');nb[0].classList.toggle('back',!!pg);
-  document.querySelectorAll('#hNav .hdots i').forEach((d,i)=>d.className=i===pg?'on':'');
-  if(instant){void tr.offsetWidth;tr.style.transition='';wrap.style.transition='';}}
-// Startbildschirm fest (09.11.2026): kein Scrollen. Passt eine Seite nicht zwischen Kopf und untere Leiste, wird sie etwas verkleinert.
-function homeFit(){const wrap=document.getElementById('homePg'),secs=document.querySelectorAll('#hTrack>.hp'),act=document.querySelector('.actions');if(!wrap||!secs.length)return;
-  const avail=(act?act.getBoundingClientRect().top:innerHeight)-wrap.getBoundingClientRect().top-6;
-  let tight=false; // passt es auch mit 85 % nicht, darf ausnahmsweise gescrollt werden statt winzig zu werden
-  const hs=[...secs].map(x=>{const inn=x.firstElementChild;inn.style.transform='';inn.style.width='';x.style.height='';
-    const h=inn.offsetHeight+10,need=avail>200&&h>avail+1?avail/h:1,sc=Math.max(.85,need);tight=tight||need<.85;
-    if(sc<1){inn.style.transform=`scale(${sc})`;x.style.height=Math.ceil(h*sc)+'px';}return Math.ceil(h*sc);});
-  wrap.style.height=hs[homePage]+'px';document.documentElement.classList.toggle('fixhome',!tight);}
-addEventListener('resize',()=>homeFit());
-document.querySelectorAll('#hNav [data-hp]').forEach(b=>b.onclick=()=>homeGo(+b.dataset.hp));
-{const pg=document.getElementById('homePg');let sx=null,sy=0;
- pg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
- pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
-   if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)homeGo(dx<0?1:0);});
- if(window.ResizeObserver)document.querySelectorAll('#hTrack>.hp').forEach(x=>new ResizeObserver(homeFit).observe(x));
- document.documentElement.classList.add('fixhome');setTimeout(homeFit,0);setTimeout(homeFit,600);}
+// Neue Oberfläche (11.11.2026): oben Kampfbox, darunter scrollbarer Bereich, unten Symbol-Leiste
+let homePage=0,curTab='kampf';function homeGo(){}function homeFit(){}
+document.documentElement.classList.add('fixhome');
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2088,25 +2098,35 @@ setInterval(()=>{if(dOpen){refreshDroneBtns();drawDroneIcons();}
 
 // ---------- Werkstatt: den Kaktus leveln (ersetzt das Hauptquartier) ----------
 let hqOpen=false,wsPage=0;
-function renderWS(){
-  const kak=S.kak||0;
-  const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
-    <p class="intro">Jedes 10. Level kostet zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b>.</p>
-    <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
-    <div class="blist">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
+function wsLists(){const kak=S.kak||0;return{list0:`<div class="blist">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
       const now=wsVal(W.id),nx=wsVal(W.id,lv+1),f=x=>W.kind==='mul'?fmt(Math.round(x)):x;
       return`<div class="brow" style="--bc:${W.c}"><div><b style="color:${W.c}">${W.ico} ${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b>
         <small>+${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
-        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`;
-  const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
-    <p class="intro">Max-Level <b style="color:var(--sand)">${skCap()}</b> · Ultra schwer 100 · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
-    <div class="blist">${SK.filter(K=>!K.soon).map(K=>{
+        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
+  list1:`<div class="blist">${SK.filter(K=>!K.soon).map(K=>{
       const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=skCap(),c=skCost(lv),ok=!lock&&S.coins>=c;
       return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><span class="skrow1"><b style="color:${K.c}">${K.ico} ${K.n}</b>
         <button class="sktog${on?' on':''}" type="button" data-skon="${K.id}" ${full?'disabled':''}>${on?'✓ Aktiv':'Aktivieren'}</button></span>
         <small class="skfx">${K.txt(lv)}${M?` · ⏱ ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
         ${max?`<small class="skmax">Max<br><span>Lv ${lv}/${skCap()}</span></small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}/${skCap()}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
-      ${SK.filter(K=>K.soon).map(K=>`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}</b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald</small></div>`).join('')}</div>`;
+      ${SK.filter(K=>K.soon).map(K=>`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}</b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald</small></div>`).join('')}</div>`};}
+function wsBind(H,re){
+  H.querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{const id=b.dataset.sk,lv=skLv(id),c=skCost(lv),M=MODS.find(m=>m.id===id);
+    if(lv>=skCap()||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderModBar();re();});
+  H.querySelectorAll('[data-skon]').forEach(b=>b.onclick=()=>{const id=b.dataset.skon,on=skOn();
+    if(SK.find(k=>k.id===id).soon)return;if(on.includes(id))S.skOn=on.filter(x=>x!==id);else if(on.length<SK_ON)S.skOn=[...on,id];else return;save();renderModBar();re();});
+  H.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
+    if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
+    if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};re();});}
+function renderWS(){
+  const kak=S.kak||0,L=wsLists();
+  const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
+    <p class="intro">Jedes 10. Level kostet zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b>.</p>
+    <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
+    ${L.list0}`;
+  const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
+    <p class="intro">Max-Level <b style="color:var(--sand)">${skCap()}</b> · Ultra schwer 100 · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
+    ${L.list1}`;
   $('card').innerHTML=`<div class="fixwin"><div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
     <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
     <div class="row"><button class="btn" id="hqClose" type="button">Schließen</button></div></div>`;
@@ -2116,15 +2136,24 @@ function renderWS(){
    pg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
    pg.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(dx<0?1:0);});}
-  $('card').querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{const id=b.dataset.sk,lv=skLv(id),c=skCost(lv),M=MODS.find(m=>m.id===id);
-    if(lv>=skCap()||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderModBar();renderWS();});
-  $('card').querySelectorAll('[data-skon]').forEach(b=>b.onclick=()=>{const id=b.dataset.skon,on=skOn();
-    if(SK.find(k=>k.id===id).soon)return;if(on.includes(id))S.skOn=on.filter(x=>x!==id);else if(on.length<SK_ON)S.skOn=[...on,id];else return;save();renderModBar();renderWS();});
-  $('card').querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
-    if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
-    if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};renderWS();});
+  wsBind($('card'),renderWS);
   $('hqClose').onclick=()=>{hqOpen=false;$('modal').hidden=true;lastHud='';};
 }
+// Bereich ⚔ Kampf: Werkstatt und Fähigkeiten direkt unter der Kampfbox
+function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();
+  H.innerHTML=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Jedes 10. Level kostet zusätzlich 🌵</small></div>${L.list0}</div>
+    <div class="tsec"><div class="thead"><b>✶ Fähigkeiten</b><small>Max-Level ${skCap()} · Aktiv ${skOn().length}/${SK_ON}</small></div>${L.list1}</div>`;
+  wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});tkSig=tkSigNow();}
+let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
+  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),SK.map(K=>S.coins>=skCost(skLv(K.id))?1:0).join('')].join('|');
+setInterval(()=>{if(curTab==='kampf'&&S.char&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
+  const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
+function tabGo(t){if(t==='begl'){$('dBtn').click();return;}if(t==='gart'){$('gBtn').click();return;}
+  curTab=t;document.querySelectorAll('#tPanel>.tab').forEach(x=>x.hidden=x.dataset.t!==t);
+  document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.classList.toggle('on',b.dataset.tab2===t));
+  if(t==='kampf')renderTabKampf();$('tPanel').scrollTop=0;}
+document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.onclick=()=>tabGo(b.dataset.tab2));
+setTimeout(()=>renderTabKampf(),0);
 const wsCanBuy=()=>WS.some(W=>!wsMax(W)&&S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W));
 $('hqBtn').onclick=()=>{if(pending||gOpen||dOpen||editing||!$('modal').hidden)return;hqOpen=true;$('modal').hidden=false;lastHud='';renderWS();};
 let wsSig='';
@@ -3629,7 +3658,7 @@ function tutEnd(skipped){if(!tut.on)return;tut.on=false;if(tut.box)tut.box.remov
 function tutNext(){tut.i++;while(tut.i<TUT.length&&TUT[tut.i].el&&!tutVisible($(TUT[tut.i].el)))tut.i++;
   if(tut.i>=TUT.length){tutEnd(false);return;}tutShow();}
 function tutShow(){const st=TUT[tut.i],b=tut.box;if(!b)return;
-  {const el=st.el&&$(st.el),sec=el&&el.closest('.hp');homeGo(sec?+sec.dataset.i:0,true);}
+  {const el=st.el&&$(st.el),sec=el&&el.closest('.tab');if(sec)tabGo(sec.dataset.t);}
   if(st.act==='cap'&&S.caps<1){S.caps=1;lastHud='';}
   const n=(S.char&&S.char.name)||'Kaktus',total=TUT.length;
   b.querySelector('.tbub').innerHTML=`<div class="tava">🌵</div><div class="ttx"><b class="tn">Opa Stachel</b><p>${st.t.replace('{name}',n)}</p>
@@ -4018,7 +4047,13 @@ const PATCHES=[
   {id:'pn81',date:'2026-11-10',title:'Weltboss zählt wieder',
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
-     ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]}
+     ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn82',date:'2026-11-11',title:'Neue Oberfläche',
+   hero:['✨ Alles neu angeordnet','Oben die Kampfbox, darunter ein Bereich zum Scrollen und ganz unten eine Leiste mit Symbolen.'],
+   items:()=>[['⚔ Kampf:','Werkstatt und Fähigkeiten direkt unter der Kampfbox – leveln ohne extra Fenster.'],
+     ['🎒 Ausrüstung:','Deine Werte, Samenkapseln öffnen und deine Ausrüstung.'],
+     ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
+     ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
