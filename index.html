@@ -64,6 +64,11 @@ h1 span{color:var(--bloom)}
 .wsbank b{color:#ffd447}.wsbank span:first-child b{color:#7fe08a}.wsbank i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;background:radial-gradient(circle at 35% 35%,#fff2a8,#e0a800 55%,#8a6200);border:1.5px solid #5a3e00;vertical-align:-1px}
 .wsb{display:flex;flex-direction:column;align-items:center;line-height:1.1;min-width:86px}.wsb small{font-size:.68rem;color:inherit;opacity:.9}
 .chip.kak{color:#7fe08a}.chip.kak b{font-size:.85rem}
+.ktcard{display:grid;grid-template-columns:84px 1fr;grid-template-rows:auto auto;gap:4px 10px;align-items:center;background:var(--night);border:2px solid var(--rc);border-radius:12px;padding:6px 8px;margin-bottom:8px;box-shadow:inset 0 0 14px #0009}
+.ktpv{grid-row:1/3;width:84px;height:84px;border-radius:10px;background:radial-gradient(circle at 50% 60%,#ffffff18,#0000 70%)}
+.ktinfo{display:flex;flex-direction:column;gap:2px;min-width:0}.ktinfo b{font-size:1rem}.ktpro{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:.7rem}.ktpro em{font-style:normal;font-weight:700}
+.ktpro em.up{color:#7fe08a}.ktpro em.down{color:#ff8a7a}.ktbtn{justify-self:stretch;padding:6px 8px;font-size:.9rem}.ktbtn small{font-size:.72rem;margin-left:6px;opacity:.85}
+.ktgrid{grid-template-columns:repeat(4,1fr)!important}.skbig .ktbig{width:76px;height:76px}.skdet .ktpro{justify-content:center;margin:2px 0 4px}
 .wsgrid{display:flex;flex-direction:column;gap:5px}
 .wst{display:grid;grid-template-columns:36px 1fr 104px;align-items:center;gap:8px;background:var(--night);border:2px solid #6b5644;border-left:5px solid var(--bc);border-radius:10px;padding:5px 7px;box-shadow:inset 0 0 10px #0008;min-width:0}
 .wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
@@ -1153,17 +1158,39 @@ if(!S.v2){const old=Object.values(S.gear||{}).filter(Boolean).length;S.gear={};S
   if(old||S.stage>1){S.caps+=5+old*2;S.v2msg=5+old*2;}
   if(S.auto)S.auto.stopAt=({2:3,3:4,4:5}[S.auto.stopAt])??S.auto.stopAt;S.v2=true;}
 // Klassen: Vor- und Nachteile wie in Scrap Star (m = Multiplikatoren)
-const CLASSES={
-  schuetze:{n:'Stachelschütze',role:'Schaden',c:'#ff8a3d',d:'Wirft schwere Stacheln, die richtig wehtun.',
-    pro:['+30 % Angriff','Module +30 % Schaden'],con:['15 % langsamer'],m:{atk:1.3,hp:1,spd:.85,reg:1,mod:1.3,cd:1,heal:1}},
-  fass:{n:'Fasskaktus',role:'Tank',c:'#4fb8ff',d:'Dick, zäh und kaum umzuhauen.',
+// ===== Kaktus-Sammlung (11.11.2026): 10 Kakteen in 6 Seltenheiten, aus Beschwörungen (Kakteen 🌵), Leveln mit Doppelten =====
+// Die alten 4 Klassen sind die ersten Kakteen. m = Werte-Faktoren, x = Zusatz-Boni (crit/dodge/steal in %, critd in %, coin Faktor)
+// Jedes Level: +3 % Angriff und Leben
+const KAKTI=[
+  {id:'schuetze',n:'Stachelschütze',r:0,shape:'saeule', color:'#63c74d',role:'Schaden',d:'Wirft schwere Stacheln, die richtig wehtun.',
+    pro:['+30 % Angriff','Fähigkeiten +30 % Schaden'],con:['15 % langsamer'],m:{atk:1.3,hp:1,spd:.85,reg:1,mod:1.3,cd:1,heal:1}},
+  {id:'fass',    n:'Fasskaktus',    r:0,shape:'kugel',  color:'#4fb8ff',role:'Tank',d:'Dick, zäh und kaum umzuhauen.',
     pro:['+50 % Leben','+50 % Heilung'],con:['20 % weniger Angriff'],m:{atk:.8,hp:1.5,spd:1,reg:1.5,mod:1,cd:1,heal:1.5}},
-  flink:{n:'Flinkdorn',role:'Tempo',c:'#7be86a',d:'Wirft Stacheln schneller als jeder andere.',
-    pro:['+35 % Wurf-Tempo'],con:['20 % weniger Leben'],m:{atk:1,hp:.8,spd:1.35,reg:1,mod:1,cd:1,heal:1}},
-  bluete:{n:'Blütenmagier',role:'Module',c:'#ff6fae',d:'Lebt von seinen Fähigkeiten.',
-    pro:['Module laden 25 % schneller','Sonnenheilung +50 %'],con:['10 % weniger Angriff'],m:{atk:.9,hp:1,spd:1,reg:1,mod:1,cd:.75,heal:1.5}}
-};
-const clsM=()=>CLASSES[(S.char&&S.char.cls)||'schuetze'].m;
+  {id:'flink',   n:'Flinkdorn',     r:1,shape:'schlank',color:'#7be86a',role:'Tempo',d:'Wirft Stacheln schneller als jeder andere.',
+    pro:['+35 % Tempo','+5 % Ausweichen'],con:['15 % weniger Leben'],m:{atk:1,hp:.85,spd:1.35,reg:1,mod:1,cd:1,heal:1},x:{dodge:5}},
+  {id:'bluete',  n:'Blütenmagier',  r:1,shape:'feige',  color:'#ff6fae',role:'Fähigkeiten',d:'Lebt von seinen Fähigkeiten.',
+    pro:['Fähigkeiten laden 25 % schneller','Heilung +50 %'],con:['10 % weniger Angriff'],m:{atk:.9,hp:1.05,spd:1,reg:1,mod:1.1,cd:.75,heal:1.5}},
+  {id:'igel',    n:'Igelkaktus',    r:2,shape:'igel',   color:'#c8a070',role:'Krit',d:'Jeder Stachel kann ins Schwarze treffen.',
+    pro:['+10 % Angriff','+10 % Krit-Chance','+50 % Krit-Schaden'],con:[],m:{atk:1.1,hp:1,spd:1,reg:1,mod:1,cd:1,heal:1},x:{crit:10,critd:50}},
+  {id:'saguaro', n:'Wüstenwächter', r:2,shape:'saguaro',color:'#3fb59a',role:'Abwehr',d:'Steht seit hundert Jahren in der Wüste.',
+    pro:['+25 % Leben','+10 % Ausweichen','+20 % Heilung'],con:[],m:{atk:1,hp:1.25,spd:1,reg:1.2,mod:1,cd:1,heal:1.2},x:{dodge:10}},
+  {id:'mond',    n:'Mondkaktus',    r:3,shape:'kugel',  color:'#8a6aff',role:'Lebensraub',d:'Blüht nur nachts und saugt Kraft aus Gegnern.',
+    pro:['+30 % Angriff','+20 % Leben','+5 % Lebensraub'],con:[],m:{atk:1.3,hp:1.2,spd:1,reg:1,mod:1,cd:1,heal:1},x:{steal:5}},
+  {id:'gold',    n:'Goldkaktus',    r:3,shape:'saeule', color:'#ffd447',role:'Reichtum',d:'Glänzt so sehr, dass Münzen von selbst kommen.',
+    pro:['+25 % Angriff','+25 % Leben','+50 % Münzen'],con:[],m:{atk:1.25,hp:1.25,spd:1,reg:1,mod:1,cd:1,heal:1},x:{coin:1.5}},
+  {id:'feuer',   n:'Feuerdorn',     r:4,shape:'schlank',color:'#ff6a3a',role:'Zerstörer',d:'Seine Stacheln glühen wie Lava.',
+    pro:['+60 % Angriff','Fähigkeiten +50 % Schaden','+10 % Krit-Chance'],con:[],m:{atk:1.6,hp:1.1,spd:1.1,reg:1,mod:1.5,cd:.9,heal:1},x:{crit:10}},
+  {id:'ur',      n:'Urkaktus',      r:5,shape:'saguaro',color:'#e0e0ff',role:'Legende',d:'Der allererste Kaktus der Welt.',
+    pro:['+80 % Angriff und Leben','+20 % Tempo','+10 % Ausweichen und Lebensraub'],con:[],m:{atk:1.8,hp:1.8,spd:1.2,reg:1.5,mod:1.5,cd:.85,heal:1.5},x:{dodge:10,steal:10,critd:50}}
+];
+const CLASSES=Object.fromEntries(KAKTI.map(K=>[K.id,Object.assign({c:K.color},K)]));
+const KT_MAX=50,KT_SUM1=10,KT_SUM10=90;
+const ktDef=id=>CLASSES[id]||CLASSES.schuetze;
+const ktLv=id=>(S.kt&&S.kt[id]&&S.kt[id].lv)||0;
+const ktLvM=lv=>1+.03*(Math.max(1,lv)-1);
+const curKt=()=>ktDef(S.char&&S.char.cls);
+const clsM=()=>{const K=curKt(),f=ktLvM(ktLv(K.id));return Object.assign({},K.m,{atk:K.m.atk*f,hp:K.m.hp*f});};
+const ktX=k=>{const x=curKt().x;return(x&&x[k])||0;};
 // Drohnen: Helfer, die mitkämpfen und einen Dauerbonus geben (wie DRONES in Scrap Star)
 // ===== Begleiter aus Beschwörungen (11.11.2026): 30 Tiere in 6 Seltenheiten, Leveln mit Doppelten, 5 Plätze =====
 // act: shot (beißen), heal (heilen), steal (Lebensraub), stun (beißen + kurz betäuben). air: fliegt auf Kopfhöhe. em: Emoji-Bild (die 6 alten Tiere sind gezeichnet)
@@ -1248,13 +1275,13 @@ const GUPG=[
 const GUPG_MAX=20;
 const gUp=id=>(S.gUpg&&+S.gUpg[id])||0;
 const gUpCost=(U,lv)=>Math.round(U.base*Math.pow(2.5,lv));
-const coinMul=()=>1+((S.gBonus||0)+gUp('coin')*3)/100;
+const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1);
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
   return{atk:(25+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((300+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
-    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg+wsV('reg'),block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+drBonus('crit')+wsV('crit')),res:resSum(),
-    critM:2+wsV('critd')/100,dodge:wsV('dodge'),stun:wsV('stun'),steal:wsV('steal')};
+    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg+wsV('reg'),block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+drBonus('crit')+wsV('crit')+ktX('crit')),res:resSum(),
+    critM:2+(wsV('critd')+ktX('critd'))/100,dodge:Math.min(60,wsV('dodge')+ktX('dodge')),stun:wsV('stun'),steal:wsV('steal')+ktX('steal')};
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
 // Sie zünden automatisch, sobald ein Gegner in Reichweite ist; antippen zündet sofort, wenn bereit
@@ -1333,7 +1360,10 @@ function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;A.skc=A.skc||{};
 function skDpsMul(){let x=0;for(const id of skOn()){const m=skDef(id),L=skLvM(skLv(id));
   if(['aoe','single','meteor','dot'].includes(m.k))x+=m.v*L/m.cd;else if(m.k==='chain')x+=m.v*L/m.cd;else if(m.k==='buff'&&m.v)x+=0.25*m.v*L*m.d/m.cd;}return x;}
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
-let haste=0,dodgeT=0;skInit();drInit();
+function ktInit(){if(!S.kt||typeof S.kt!=='object')S.kt={};if(!S.ktSum)S.ktSum={n:0};
+  if(S.char){if(!CLASSES[S.char.cls])S.char.cls='schuetze';if(!S.kt[S.char.cls])S.kt[S.char.cls]={lv:1,n:0};ktLook(S.char);}}
+function ktLook(ch){const K=ktDef(ch.cls);ch.shape=K.shape;ch.color=K.color;}
+let haste=0,dodgeT=0;skInit();drInit();ktInit();
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
@@ -2352,15 +2382,68 @@ function renderWS(){
 // Unter-Reiter im Bereich ⚔ (11.11.2026): Kaktus · Fähigkeiten · Relikte · Meisterschaft · Merkmale
 let kSub='kaktus';
 const KSUBS=[['kaktus','🌵','Kaktus'],['skill','✶','Fähigkeiten'],['relic','🏺','Relikte'],['mast','🎖','Meister'],['trait','🧬','Merkmale']];
+// ---------- Kaktus-Sammlung ----------
+const ktRun=K=>K.pro.map(p=>`<em class="up">${p}</em>`).join('')+K.con.map(p=>`<em class="down">− ${p}</em>`).join('');
+function ktCardHtml(){const K=curKt(),lv=ktLv(K.id),f=ktLvM(lv),rc=RAR[K.r].c,up=KAKTI.some(k=>{const o=S.kt[k.id];return o&&o.lv<KT_MAX&&o.n>=ktNeed(o.lv);});
+  return`<div class="ktcard" style="--rc:${rc}"><canvas width="160" height="160" data-kt="${K.id}" class="ktpv"></canvas>
+    <div class="ktinfo"><span class="skrar" style="color:${rc}">${RAR[K.r].n} · Lv ${lv}/${KT_MAX}</span><b>${K.n}</b>
+      <span class="ktpro">${ktRun(K)}${lv>1?`<em class="up">Level: +${Math.round((f-1)*100)} % Angriff &amp; Leben</em>`:''}</span></div>
+    <button class="btn go ktbtn${up?' up':''}" type="button" data-ktcoll="1">🌵 Kaktus-Sammlung<small>${Object.keys(S.kt).length}/${KAKTI.length}</small></button></div>`;}
+const ktNeed=lv=>lv+1;
+const ktSumLv=()=>{const n=(S.ktSum&&S.ktSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
+function ktRoll(){const w=SUMW[ktSumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
+  r=Math.min(r,5);const pool=KAKTI.filter(k=>k.r===r);return pool[Math.floor(Math.random()*pool.length)];}
+function ktLevelAll(id){const o=S.kt[id];let k=0;while(o&&o.lv<KT_MAX&&o.n>=ktNeed(o.lv)){o.n-=ktNeed(o.lv);o.lv++;k++;}return k;}
+function ktDraw(R){(R||document).querySelectorAll('canvas[data-kt]').forEach(cv2=>{const g=cv2.getContext('2d'),K=ktDef(cv2.dataset.kt),own=!!S.kt[K.id],W2=cv2.width;
+  g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,W2,W2);const sc=W2/90;g.setTransform(sc,0,0,sc,0,0);
+  g.fillStyle='#0004';g.beginPath();g.ellipse(45,80,22,4,0,0,7);g.fill();
+  const ch=Object.assign({},S.char||DEFAULT_CH,{cls:K.id,shape:K.shape,color:own?K.color:'#3a3040'});
+  if(!own){ch.eyes='entschlossen';}drawCactus(g,ch,{x:45,y:82,bob:0});});}
+function ktBind(H,re){H.querySelectorAll('[data-ktcoll]').forEach(b=>b.onclick=()=>{if($('modal').hidden)ktColl(re);});ktDraw(H);}
+function ktColl(re){const L=ktSumLv(),cur=curKt().id,kak=S.kak||0;
+  $('card').innerHTML=`<div class="sumres"><h2>🌵 Kaktus-Sammlung</h2>
+    <div class="skgrid ktgrid">${KAKTI.map(K=>{const lv=ktLv(K.id),o=S.kt[K.id],rc=RAR[K.r].c;
+      if(!lv)return`<button class="skc lockd" type="button" data-ktd="${K.id}" style="--rc:${rc}"><canvas width="96" height="96" data-kt="${K.id}" class="drico"></canvas><b>${RAR[K.r].n}</b></button>`;
+      const need=ktNeed(lv),up=lv<KT_MAX&&o.n>=need,eq=cur===K.id;
+      return`<button class="skc${eq?' eq':''}${up?' up':''}" type="button" data-ktd="${K.id}" style="--rc:${rc}"><span class="sklv">Lv ${lv}</span><canvas width="96" height="96" data-kt="${K.id}" class="drico"></canvas>
+        ${eq?'<em class="skeqt">Aktiv</em>':`<b>${K.n}</b>`}<span class="skbar"><span style="width:${lv>=KT_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=KT_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
+    <p class="intro" style="text-align:center;margin:0">Beschwörungsstufe ${L} · Du hast <b style="color:#7fe08a">${fmt(kak)} 🌵</b></p>
+    <div class="row"><button class="btn go" type="button" id="kt1" ${kak<KT_SUM1?'disabled':''}>1× · ${KT_SUM1} 🌵</button><button class="btn go" type="button" id="kt10" ${kak<KT_SUM10?'disabled':''}>10× · ${KT_SUM10} 🌵</button></div>
+    <div class="row"><button class="btn" type="button" id="ktX">Schließen</button><button class="btn go" type="button" id="ktAll" ${KAKTI.some(k=>{const o=S.kt[k.id];return o&&o.lv<KT_MAX&&o.n>=ktNeed(o.lv);})?'':'disabled'}>Alle leveln</button></div></div>`;
+  $('modal').hidden=false;ktDraw($('card'));
+  $('ktX').onclick=()=>{$('modal').hidden=true;re();};
+  $('kt1').onclick=()=>ktSummon(1,re);$('kt10').onclick=()=>ktSummon(10,re);
+  $('ktAll').onclick=()=>{let k=0;for(const K of KAKTI)k+=ktLevelAll(K.id);save();lastHud='';banner={txt:k+' Kaktus-Level aufgestiegen!',t:1.6};ktColl(re);};
+  $('card').querySelectorAll('[data-ktd]').forEach(b=>b.onclick=()=>ktDetail(b.dataset.ktd,re));}
+function ktSummon(n,re){const cost=n===10?KT_SUM10:KT_SUM1;if((S.kak||0)<cost)return;
+  S.kak-=cost;const got=[];
+  for(let i=0;i<n;i++){const K=ktRoll(),o=S.kt[K.id];let neu=false;if(!o){S.kt[K.id]={lv:1,n:0};neu=true;}else o.n++;got.push({K,neu});}
+  S.ktSum.n=(S.ktSum.n||0)+n;save();lastHud='';got.sort((a,b)=>b.K.r-a.K.r);
+  $('card').innerHTML=`<div class="sumres"><h2>🌵 Beschwörung</h2><div class="skgrid res">${got.map(({K,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[K.r].c}"><canvas width="96" height="96" data-kt="${K.id}" class="drico"></canvas><b>${K.n}</b><small style="color:${RAR[K.r].c}">${RAR[K.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
+  ktDraw($('card'));
+  $('sumOk').onclick=()=>ktColl(re);$('sumAgain').onclick=()=>ktSummon(n,re);}
+function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,eq=curKt().id===id,need=ktNeed(Math.max(1,lv)),up=lv>0&&lv<KT_MAX&&o.n>=need;
+  $('card').innerHTML=`<div class="skdet" style="--rc:${rc}"><div class="skbig"><canvas width="192" height="192" data-kt="${id}" class="ktbig"></canvas></div>
+    <h2>${lv?K.n:'Noch nicht gefunden'}</h2><span class="skrar" style="color:${rc}">${RAR[K.r].n} · ${K.role}${lv?` · Lv ${lv}/${KT_MAX}`:''}</span>
+    <p>${K.d}</p><span class="ktpro">${ktRun(K)}</span>
+    ${lv?(lv<KT_MAX?`<p class="sknext">Jedes Level: +3 % Angriff &amp; Leben (jetzt +${Math.round((ktLvM(lv)-1)*100)} %)</p><div class="skbar big"><span style="width:${Math.min(100,o.n/need*100)}%"></span><em>Kopien ${o.n}/${need}</em></div>`:'<p class="sknext">Höchstes Level erreicht</p>')
+      :`<p><small>Diesen Kaktus bekommst du beim 🌵 Beschwören in der Sammlung.</small></p>`}
+    <div class="row">${lv?`<button class="btn go" id="ktEq" type="button" ${eq?'disabled':''}>${eq?'Aktiv':'Auswählen'}</button>`:''}
+      ${up?`<button class="btn go" id="ktUp" type="button">Level-Up</button>`:''}<button class="btn" id="ktB" type="button">Zurück</button></div></div>`;
+  ktDraw($('card'));
+  $('ktB').onclick=()=>ktColl(re);
+  const e=$('ktEq');if(e&&!eq)e.onclick=()=>{S.char.cls=id;ktLook(S.char);save();lastHud='';banner={txt:K.n+' ist jetzt dein Kaktus!',t:1.6};ktDetail(id,re);};
+  const u=$('ktUp');if(u)u.onclick=()=>{ktLevelAll(id);save();lastHud='';ktDetail(id,re);};}
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
-  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
+  if(kSub==='kaktus')body=ktCardHtml()+`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
   else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
   H.querySelectorAll('[data-ksub]').forEach(b=>b.onclick=()=>{kSub=b.dataset.ksub;renderTabKampf();$('tPanel').scrollTop=0;});
-  wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});tkSig=tkSigNow();}
+  wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});ktBind(H,renderTabKampf);tkSig=tkSigNow();}
 let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
-  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,S.caps,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n].join('|');
+  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,S.caps,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n,JSON.stringify(S.kt||{}),S.char&&S.char.cls].join('|');
 setInterval(()=>{if(curTab==='kampf'&&S.char&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
 function tabGo(t){
@@ -3124,24 +3207,23 @@ const pick=o=>{const k=Object.keys(o);return k[Math.floor(Math.random()*k.length
 const NAMES=['Stachel','Dorny','Pieks','Kaktor','Spina','Opuntius','Kakti','Nadelix','Sandor','Blütenkralle'];
 function randomDraft(keep){return{name:keep&&keep.name||NAMES[Math.floor(Math.random()*NAMES.length)],shape:pick(SHAPES),
   color:COLORS[Math.floor(Math.random()*COLORS.length)][1],eyes:pick(EYES),hat:pick(HATS),cls:(keep&&keep.cls)||'schuetze'};}
-function openEditor(){editing=true;draft=Object.assign({},S.char||DEFAULT_CH);step=1;$('modal').hidden=false;lastHud='';renderEditor();}
+function openEditor(){editing=true;draft=Object.assign({},S.char||DEFAULT_CH);ktLook(draft);step=1;$('modal').hidden=false;lastHud='';renderEditor();}
 const chips=(key,opts)=>Object.entries(opts).map(([v,n])=>`<button type="button" class="chip2${draft[key]===v?' on':''}" data-k="${key}" data-v="${v}">${n}</button>`).join('');
 function renderEditor(){
   const card=$('card');
   if(step===1){
-    card.innerHTML=`<span class="rar" style="color:var(--muted)">Schritt 1 von 2</span><h2>Dein Kaktus</h2>
+    card.innerHTML=`<h2>Dein Kaktus</h2><small class="hint" style="text-align:center;display:block">Weitere Kakteen bekommst du später in der 🌵 Sammlung</small>
       <canvas id="pv" class="pv" width="320" height="220"></canvas>
       <label class="fld" for="nm"><small>Name</small><input id="nm" maxlength="14" value="${draft.name.replace(/"/g,'&quot;')}" autocomplete="off"></label>
-      <div class="opt"><small>Form</small><div>${chips('shape',Object.fromEntries(Object.entries(SHAPES).map(([k,v])=>[k,v.n])))}</div></div>
-      <div class="opt"><small>Farbe</small><div>${COLORS.map(([n,col])=>`<button type="button" class="sw${draft.color===col?' on':''}" data-k="color" data-v="${col}" style="background:${col}" aria-label="${n}" title="${n}"></button>`).join('')}</div></div>
       <div class="opt"><small>Augen</small><div>${chips('eyes',EYES)}</div></div>
       <div class="opt"><small>Aufsatz</small><div>${chips('hat',HATS)}</div></div>
-      <div class="row"><button class="btn" id="eRnd" type="button">Zufall</button><button class="btn go" id="eNext" type="button">Weiter</button></div>
+      <div class="row"><button class="btn" id="eRnd" type="button">Zufall</button><button class="btn go" id="eNext" type="button">${S.char?'Fertig':'Los geht\'s'}</button></div>
       ${S.char?'':'<button class="lnk" id="eHave" type="button">Ich habe schon ein Konto</button>'}`;
     card.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{draft[b.dataset.k]=b.dataset.v;renderEditor();});
     $('nm').oninput=e=>{draft.name=e.target.value;};
-    $('eRnd').onclick=()=>{draft=randomDraft({name:$('nm').value,cls:draft.cls});renderEditor();};
-    $('eNext').onclick=()=>{draft.name=($('nm').value.trim()||'Stachel').slice(0,14);step=2;renderEditor();};
+    $('eRnd').onclick=()=>{draft=randomDraft({name:$('nm').value,cls:draft.cls});ktLook(draft);renderEditor();};
+    $('eNext').onclick=()=>{draft.name=($('nm').value.trim()||'Stachel').slice(0,14);const neu=!S.char;if(!CLASSES[draft.cls])draft.cls='schuetze';ktLook(draft);
+      S.char=draft;ktInit();editing=false;$('modal').hidden=true;if(neu)resetHero();save();lastHud='';if(neu)banner={txt:'Los, '+draft.name+'!',t:2};};
     if($('eHave'))$('eHave').onclick=()=>{step='login';renderEditor();};
   }else if(step==='login'){
     card.innerHTML=`<h2>Konto laden</h2><p style="margin:0;color:var(--muted)">Gib den Freundescode und die PIN deines Kontos ein. Die PIN setzt du auf dem alten Gerät unter Online → Profil.</p>
@@ -4348,7 +4430,8 @@ const PATCHES=[
      ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
      ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
-     ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.']]}
+     ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
+     ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
