@@ -953,6 +953,27 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .field .mod.lockd{filter:grayscale(1);opacity:.75;cursor:default;box-shadow:0 2px 0 #0009,0 0 0 2px #5a4a3c}.field .mod.lockd .ring{background:#3a2c22}
 .field .mod.offd{opacity:.55;box-shadow:0 2px 0 #0009,0 0 0 2px #5a4a3c}.field .mod.offd .ring{background:#3a2c22}
 @media (max-width:359px){.field .mod{width:30px;height:30px}.field .mod .ring{width:27px;height:27px}.field .mod .ring span{width:21px;height:21px;font-size:.75rem}}
+/* Fähigkeiten-Sammlung */
+.sksum{display:flex;gap:8px;align-items:center;background:#3a2a1a;border:2px solid #7a5a2a;border-radius:12px;padding:7px 8px}
+.sksl{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}.sksl b{color:var(--sand);font-size:.95rem}.sksl b em{font-style:normal;color:#fff;font-size:.8rem;margin-left:4px}
+.sksl small{color:var(--muted);font-size:.66rem;line-height:1.2}.sksl .track{height:6px;border-radius:4px;background:#1c130d;overflow:hidden}.sksl .track div{height:100%;background:linear-gradient(90deg,#b07cff,#ff9ad0)}
+.sksb{display:flex;gap:5px}.sksb .skall{background:linear-gradient(#b07cff,#7a4ad0)!important;border-color:#3a2070!important}
+.sksb .btn{padding:5px 10px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.05}.sksb .btn small{font-size:.66rem}
+.skgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.skc{position:relative;border:2px solid var(--rc);border-radius:10px;background:#241a14;color:#fff;font:inherit;padding:5px 3px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;min-width:0}
+.skc i{font-style:normal;font-size:1.4rem;line-height:1.2;color:var(--ic)}.skc b{font-size:.62rem;line-height:1.1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.skc small{font-size:.6rem;color:var(--muted)}
+.skc.lockd{opacity:.5}.skc.lockd i{filter:grayscale(1) brightness(.5)}
+.skc.eq{box-shadow:0 0 0 2px var(--rc),0 0 8px var(--rc)}.skc u{position:absolute;top:-6px;right:-5px;text-decoration:none;background:#2f7d2b;color:#fff;border-radius:999px;font-size:.6rem;font-weight:900;padding:1px 5px}
+.skc.neu u{background:#d84a8a}.skc.up{animation:skup 1s ease-in-out infinite alternate}@keyframes skup{to{box-shadow:0 0 0 2px #7fe08a,0 0 12px #7fe08a}}
+.skbar{position:relative;width:100%;height:10px;border-radius:5px;background:#120c08;overflow:hidden;margin-top:2px}.skbar span{position:absolute;inset:0 auto 0 0;background:#3fa83a}
+.skbar em{position:relative;display:block;font-style:normal;font-size:.55rem;line-height:10px;text-align:center;font-weight:900;text-shadow:0 1px 0 #000}
+.skbar.big{height:16px;border-radius:8px}.skbar.big em{font-size:.75rem;line-height:16px}
+.skdet{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}.skdet h2{margin:0}.skdet p{margin:0;font-size:.9rem}.skdet .sknext{color:#7fe08a;font-size:.8rem}
+.skbig{width:84px;height:84px;border-radius:50%;border:4px solid var(--rc);background:radial-gradient(circle at 40% 35%,#4f3d30,#241a14);display:grid;place-items:center;box-shadow:0 0 18px var(--rc)}
+.skbig i{font-style:normal;font-size:2.6rem;color:var(--ic)}.skrar{font-weight:900;font-size:.85rem}
+.sumres{display:flex;flex-direction:column;gap:10px}.sumres h2{margin:0;text-align:center}.skgrid.res{grid-template-columns:repeat(5,1fr)}.skgrid.res .skc{cursor:default}
+.field .mod.offd .ring span{color:#a8957a;font-weight:900}
 </style>
 
 <div class="game">
@@ -1166,32 +1187,82 @@ function heroStats(){
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
 // Sie zünden automatisch, sobald ein Gegner in Reichweite ist; antippen zündet sofort, wenn bereit
+// ===== Fähigkeiten aus Beschwörungen (11.11.2026) =====
+// 25 Fähigkeiten in 6 Seltenheiten (r = Index in RAR). k = Art: aoe (alle), single (stärkster Treffer auf den vordersten), chain (mehrere),
+// heal, stun, dodge, dot (Gift/Brand über 4 s), buff (Angriff +%), shield (weniger Schaden), meteor (verzögert, sehr stark), steal (Lebensraub)
 const MODS=[
-  {id:'regen',n:'Stachelregen',ico:'✶',c:'#fff6d8',cd:8, unlock:1,d:'Trifft alle Gegner mit 250 % Angriff'},
-  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',cd:12,unlock:3,d:'Heilt 25 % Leben, 4 s lang +30 % Tempo'},
-  {id:'falle',n:'Wurzelfalle',ico:'⌇',c:'#c98a3e',cd:15,unlock:5,d:'100 % Angriff an alle, betäubt 2 s'}
+  {id:'regen', n:'Stachelregen',  ico:'✶', c:'#fff6d8',r:0,cd:8, k:'aoe',   v:2.5},
+  {id:'sonne', n:'Sonnenheilung', ico:'☀', c:'#ffd447',r:0,cd:12,k:'heal',  v:.25,h:4},
+  {id:'falle', n:'Wurzelfalle',   ico:'⌇', c:'#c98a3e',r:0,cd:15,k:'aoe',   v:1,  s:2},
+  {id:'stich', n:'Dornenstich',   ico:'🌵',c:'#7fe08a',r:0,cd:6, k:'single',v:4},
+  {id:'sand',  n:'Sandwirbel',    ico:'🌪',c:'#e8c88a',r:0,cd:14,k:'stun',  v:.5, d:1.5},
+  {id:'dodge', n:'Ausweichen',    ico:'💨',c:'#9ad0ff',r:1,cd:20,k:'dodge', d:2},
+  {id:'gift',  n:'Giftstachel',   ico:'🧪',c:'#9be36a',r:1,cd:10,k:'dot',   v:3},
+  {id:'wut',   n:'Kaktuswut',     ico:'💢',c:'#ff7a5a',r:1,cd:18,k:'buff',  v:.3, d:6},
+  {id:'wind',  n:'Rückenwind',    ico:'🍃',c:'#b6f0a0',r:1,cd:15,k:'buff',  v:0,  d:5,h:5},
+  {id:'stun',  n:'Betäuben',      ico:'💫',c:'#ffe066',r:2,cd:18,k:'stun',  v:0,  d:2.5},
+  {id:'blitz', n:'Blitzschlag',   ico:'⚡',c:'#ffe14d',r:2,cd:9, k:'chain', v:3,  n2:3},
+  {id:'rinde', n:'Eisenrinde',    ico:'🛡',c:'#b8c4d0',r:2,cd:20,k:'shield',v:.5, d:5},
+  {id:'saft',  n:'Lebenssaft',    ico:'🩸',c:'#ff6f8a',r:2,cd:18,k:'steal', v:.2, d:6},
+  {id:'feuer', n:'Feuerball',     ico:'🔥',c:'#ff8a3a',r:3,cd:10,k:'single',v:8,  burn:2},
+  {id:'eis',   n:'Eisregen',      ico:'❄', c:'#9ad8ff',r:3,cd:14,k:'aoe',   v:3,  s:1.5},
+  {id:'bluete',n:'Blütenheilung', ico:'🌸',c:'#ff9ad0',r:3,cd:16,k:'heal',  v:.4},
+  {id:'dornen',n:'Dornenwall',    ico:'🌿',c:'#5ac85a',r:3,cd:22,k:'shield',v:.7, d:4},
+  {id:'meteor',n:'Meteor',        ico:'☄', c:'#ff9a3a',r:4,cd:20,k:'meteor',v:12},
+  {id:'sturm', n:'Sandsturm',     ico:'🏜',c:'#e0b060',r:4,cd:18,k:'dot',   v:8,  s:1},
+  {id:'strahl',n:'Sonnenstrahl',  ico:'🌞',c:'#ffd447',r:4,cd:12,k:'single',v:15},
+  {id:'zorn',  n:'Wüstenzorn',    ico:'🔱',c:'#ff5a3a',r:4,cd:25,k:'buff',  v:.8, d:6},
+  {id:'urknall',n:'Urknall',      ico:'💥',c:'#ff6af0',r:5,cd:25,k:'aoe',   v:20},
+  {id:'phoenix',n:'Phönixblüte',  ico:'🔆',c:'#ffb03a',r:5,cd:30,k:'heal',  v:.7, h:6},
+  {id:'zeit',  n:'Zeitstillstand',ico:'⏳',c:'#c8a8ff',r:5,cd:30,k:'stun',  v:0,  d:4},
+  {id:'gott',  n:'Kaktusgott',    ico:'👑',c:'#ffd447',r:5,cd:35,k:'buff',  v:1.5,d:8,h:8}
 ];
-// Fähigkeiten-Seite in der Werkstatt (08.11.2026): alle fünf Fähigkeiten mit Münzen levelbar, Ausweichen und Betäuben sind neu und passiv
-const SK=[
-  {id:'regen',n:'Stachelregen', ico:'✶',c:'#fff6d8',act:1,txt:lv=>`<b>${250+5*lv} %</b> Angriff an alle`},
-  {id:'sonne',n:'Sonnenheilung',ico:'☀',c:'#ffd447',act:1,txt:lv=>`Heilt <b>${(25+.25*lv).toFixed(2).replace(/\.?0+$/,'').replace('.',',')} %</b> · Tempo +30 %`},
-  {id:'falle',n:'Wurzelfalle',  ico:'⌇',c:'#c98a3e',act:1,txt:lv=>`<b>${100+5*lv} %</b> an alle · Betäubung <b>${(2+.02*lv).toFixed(2).replace(/0$/,'').replace('.',',')} s</b>`},
-  {id:'dodge',n:'Ausweichen',   ico:'💨',c:'#9ad0ff',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'},
-  {id:'stun', n:'Betäuben',     ico:'💫',c:'#ffe066',soon:1,txt:()=>'Passiv, wirkt immer – belegt keinen Platz'}
-];
-// 08.11.2026: bis Lv 100, kleinere Schritte pro Level, teurer (Start 5.000, jedes Level +14 %)
-const SK_MAX=100,skLv=id=>(S.sk&&S.sk[id])||0,skCost=lv=>Math.round(5000*Math.pow(1.14,lv));
-// Höchstens 3 der 5 Fähigkeiten sind aktiv (08.11.2026), der Spieler wählt sie in der Werkstatt aus
-const SK_ON=3,skOn=()=>Array.isArray(S.skOn)?S.skOn.filter(id=>SK.some(k=>k.id===id&&!k.soon)).slice(0,SK_ON):['regen','sonne','falle'],skActive=id=>skOn().includes(id);
-// Höchstes Fähigkeits-Level hängt an der freigeschalteten Schwierigkeit: Leicht 25, Normal 50, Schwer 75, Ultra schwer 100
-const skCap=()=>[25,50,75,100][Math.min(3,diffIdx(S.best))];
-const dodgeDur=()=>2+.04*skLv('dodge'),stunDur=()=>1.5+.025*skLv('stun');
-// In Turm, Dungeon und Bosskämpfen (dort gibt es keine Knöpfe) lösen Ausweichen und Betäuben nach ihrer Abklingzeit von selbst aus
-function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;
-  if(skActive('dodge')){A.dgC=(A.dgC==null?2:A.dgC)-dt;if(A.dgC<=0){A.dgC=20*cm.cd;A.dgOn=dodgeDur();A.fl.push({x:70,y:50,txt:'Ausweichen!',c:'#9ad0ff',t:.9});}}
-  if(skActive('stun')){A.snC=(A.snC==null?3:A.snC)-dt;if(A.snC<=0){A.snC=18*cm.cd;A.bossT+=stunDur();A.fl.push({x:265,y:80,txt:'Betäubt!',c:'#ffe066',t:.9});}}}
+for(const m of MODS){m.unlock=1;}
+const SKL_MAX=50,SK_ON=6,SK_START=['regen','sonne','falle'];
+const skNeed=lv=>lv+1;                          // Kopien für das nächste Level
+const skLvM=lv=>1+.12*Math.max(0,lv-1);          // Stärke pro Level
+const skDef=id=>MODS.find(m=>m.id===id);
+function skInit(){if(!S.skl||typeof S.skl!=='object'){S.skl={};for(const id of SK_START)S.skl[id]={lv:1,n:0};}
+  if(!Array.isArray(S.skEq))S.skEq=SK_START.slice();if(!S.skSum)S.skSum={n:0};}
+const skLv=id=>(S.skl&&S.skl[id]&&S.skl[id].lv)||0;
+const skOn=()=>(Array.isArray(S.skEq)?S.skEq:SK_START).filter(id=>skLv(id)>0&&skDef(id)).slice(0,SK_ON);
+const skActive=id=>skOn().includes(id);
+const skCost=lv=>Math.round(5000*Math.pow(1.14,lv)); // alt, nur noch für die Erstattung vom 08.11.
+const pctS=x=>(Math.round(x*10)/10).toString().replace('.',',');
+function skTxt(m,lv){const L=skLvM(Math.max(1,lv));
+  switch(m.k){
+    case'aoe':return`<b>${Math.round(m.v*L*100)} %</b> Angriff an alle${m.s?` · Betäubung ${pctS(m.s)} s`:''}`;
+    case'single':return`<b>${Math.round(m.v*L*100)} %</b> Angriff auf einen${m.burn?' · brennt nach':''}`;
+    case'chain':return`<b>${Math.round(m.v*L*100)} %</b> Angriff auf ${m.n2} Gegner`;
+    case'heal':return`Heilt <b>${pctS(Math.min(100,m.v*L*100))} %</b> Leben${m.h?` · Tempo +30 % (${m.h} s)`:''}`;
+    case'stun':return`Betäubt alle <b>${pctS(m.d*(1+.02*(lv-1)))} s</b>${m.v?` · ${Math.round(m.v*L*100)} % Angriff`:''}`;
+    case'dodge':return`Weicht <b>${pctS(m.d*(1+.02*(lv-1)))} s</b> allen Treffern aus`;
+    case'dot':return`<b>${Math.round(m.v*L*100)} %</b> Gift-Schaden über 4 s an alle${m.s?` · Betäubung ${pctS(m.s)} s`:''}`;
+    case'buff':return m.v?`Angriff <b>+${Math.round(m.v*L*100)} %</b> für ${m.d} s${m.h?' · Tempo +30 %':''}`:`Tempo <b>+30 %</b> für ${pctS(m.d*(1+.02*(lv-1)))} s`;
+    case'shield':return`<b>${Math.round(Math.min(.9,m.v*(1+.01*(lv-1)))*100)} %</b> weniger Schaden für ${m.d} s`;
+    case'meteor':return`Meteor mit <b>${Math.round(m.v*L*100)} %</b> Angriff an alle`;
+    case'steal':return`Lebensraub <b>${Math.round(m.v*L*100)} %</b> für ${m.d} s`;}
+  return'';}
+// Beschwören: Level steigt mit der Anzahl der Beschwörungen, höhere Level bringen öfter seltene Fähigkeiten
+const SUMW=[[70,22,7,1,0,0],[62,25,10,2.6,.4,0],[55,27,13,4,1,0],[48,28,16,6,1.8,.2],[42,28,18,8.5,3,.5],
+  [36,28,20,11,4.2,.8],[30,28,22,13.5,5.3,1.2],[25,27,24,16,6.3,1.7],[20,26,26,18,7.7,2.3],[15,25,27,20,10,3]];
+const sumAt=l=>12.5*l*(l-1); // Beschwörungen, ab denen Level l erreicht ist (L2 25, L3 75, … L10 1125)
+const sumLv=()=>{const n=(S.skSum&&S.skSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
+const SUM1=5,SUM10=45;
+function skRoll(){const w=SUMW[sumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
+  r=Math.min(r,5);const pool=MODS.filter(m=>m.r===r);return pool[Math.floor(Math.random()*pool.length)];}
+let atkBuffT=0,atkBuffM=1,shieldT=0,shieldP=0,stealT=0,stealP=0;
+// In Turm, Dungeon und Bosskämpfen gibt es keine Knöpfe: Ausweichen und Betäuben lösen dort nach der Abklingzeit von selbst aus
+function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;A.skc=A.skc||{};
+  for(const id of skOn()){const m=skDef(id);if(m.k!=='dodge'&&m.k!=='stun')continue;A.skc[id]=(A.skc[id]==null?2+Math.random()*2:A.skc[id])-dt;
+    if(A.skc[id]<=0){A.skc[id]=m.cd*cm.cd;const lv=skLv(id),d=m.d*(1+.02*(lv-1));
+      if(m.k==='dodge'){A.dgOn=d;A.fl.push({x:70,y:50,txt:'Ausweichen!',c:'#9ad0ff',t:.9});}
+      else{A.bossT+=d;A.fl.push({x:265,y:80,txt:m.n+'!',c:m.c,t:.9});}}}}
+// Schaden pro Sekunde, den die ausgerüsteten Angriffs-Fähigkeiten zusätzlich bringen (für Weltboss & Co.), als Vielfaches vom Angriff
+function skDpsMul(){let x=0;for(const id of skOn()){const m=skDef(id),L=skLvM(skLv(id));
+  if(['aoe','single','meteor','dot'].includes(m.k))x+=m.v*L/m.cd;else if(m.k==='chain')x+=m.v*L/m.cd;else if(m.k==='buff'&&m.v)x+=0.25*m.v*L*m.d/m.cd;}return x;}
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
-let haste=0,dodgeT=0;
+let haste=0,dodgeT=0;skInit();
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
@@ -1392,7 +1463,8 @@ function update(dt){
   for(const p of spines){
     const e=p.tx;if(e.dying){p.dead=true;continue;}
     const ex=e.x,ey=e.y-(e.ty.r);const dx=ex-p.x,dy=ey-p.y,d=Math.hypot(dx,dy);
-    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100;hitEnemy(e,p.dmg!=null?p.dmg:hs.atk*rnd(.9,1.1)*(cr?2:1),cr);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);}
+    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100,dd=p.dmg!=null?p.dmg:hs.atk*atkBuffM*rnd(.9,1.1)*(cr?2:1);hitEnemy(e,dd,cr);
+      if(stealT>0&&p.dmg==null)hero.hp=Math.min(hero.max,hero.hp+dd*stealP*.05);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);}
     else{p.x+=dx/d*p.v*dt;p.y+=dy/d*p.v*dt;p.a=Math.atan2(dy,dx);}
   }
   spines=spines.filter(p=>!p.dead);
@@ -1400,6 +1472,7 @@ function update(dt){
   for(const e of enemies){
     e.hit=Math.max(0,e.hit-dt*5);
     if(e.dying){e.dying-=dt;continue;}
+    if(e.dot){e.dot.t-=dt;e.dot.acc+=dt;if(e.dot.acc>=.5){e.dot.acc-=.5;hitEnemy(e,e.dot.dps*.5);}if(e.dot.t<=0)e.dot=null;if(e.dying)continue;}
     if(e.stun>0){e.stun-=dt;continue;}
     const stop=stopX(e);
     if(e.x>stop)e.x-=e.ty.sp*dt*(engaged?1:1.6);
@@ -1430,7 +1503,8 @@ function update(dt){
     drT[id]=D.every;st.j=1;st.hit=false;st.e=f;st.tx=f.x-f.ty.r-pos.x;
   });
   // Module laden auf und zünden automatisch, wenn gekämpft wird
-  haste=Math.max(0,haste-dt);dodgeT=Math.max(0,dodgeT-dt);
+  haste=Math.max(0,haste-dt);dodgeT=Math.max(0,dodgeT-dt);shieldT=Math.max(0,shieldT-dt);stealT=Math.max(0,stealT-dt);
+  if(atkBuffT>0){atkBuffT-=dt;if(atkBuffT<=0)atkBuffM=1;}
   for(const m of MODS){if(S.best<m.unlock||!skActive(m.id))continue;modCd[m.id]=Math.max(0,modCd[m.id]-dt);
     if(modCd[m.id]<=0&&engaged&&S.modAuto!==false)castMod(m);}
   for(const x of fx){x.t-=dt;if(x.kind==='drop'){x.y+=x.v*dt;if(!x.done&&x.y>=x.ty){x.done=true;x.t=Math.min(x.t,.15);}}}
@@ -1453,27 +1527,36 @@ function hitEnemy(e,dmg,crit){
   }
 }
 function castMod(m){
-  if(modCd[m.id]>0||S.best<m.unlock||!skActive(m.id))return;
+  if(modCd[m.id]>0||!skActive(m.id))return;
   const targets=alive().filter(e=>e.x<W+10);
-  if(m.id!=='sonne'&&m.id!=='dodge'&&!targets.length)return;
-  const cm=clsM();modCd[m.id]=m.cd*cm.cd;const atk=heroStats().atk*cm.mod;
-  if(m.id==='regen'){
-    for(const e of targets)for(let i=0;i<5;i++)fx.push({kind:'drop',x:e.x+rnd(-14,14),y:-rnd(0,80),ty:e.y-e.ty.r,v:520,t:1.2});
-    setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*(2.5+.05*skLv('regen')));shake=Math.max(shake,3);},350);
-  }else if(m.id==='sonne'){
-    const h=hero.max*(.25+.0025*skLv('sonne'))*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);haste=4;
-    fx.push({kind:'sun',t:.8});floats.push({x:HX,y:GROUND-96,txt:'+'+fmt(h),col:'#63c74d',t:.9});
-  }else if(m.id==='dodge'){
-    dodgeT=dodgeDur();
-  }else if(m.id==='stun'){
-    const d=stunDur();for(const e of targets)if(!e.dying)e.stun=Math.max(e.stun||0,d);shake=Math.max(shake,2);
-  }else{
-    const fl=skLv('falle');for(const e of targets){hitEnemy(e,atk*(1+.05*fl));if(!e.dying)e.stun=2+.02*fl;fx.push({kind:'root',e,t:2});}
+  if(['aoe','single','chain','stun','dot','meteor'].includes(m.k)&&!targets.length)return;
+  const cm=clsM();modCd[m.id]=m.cd*cm.cd;const lv=skLv(m.id),L=skLvM(lv),atk=heroStats().atk*cm.mod*atkBuffM;
+  const burst=(e,col,r)=>fx.push({kind:'burst',x:e.x,y:e.y-e.ty.r,col:col||m.c,r:r||e.ty.r*1.6,t:.5});
+  const front=()=>targets.slice().sort((a,b)=>a.x-b.x)[0];
+  switch(m.k){
+    case'aoe':
+      if(m.id==='regen'){for(const e of targets)for(let i=0;i<5;i++)fx.push({kind:'drop',x:e.x+rnd(-14,14),y:-rnd(0,80),ty:e.y-e.ty.r,v:520,t:1.2});
+        setTimeout(()=>{for(const e of targets)if(!e.dying)hitEnemy(e,atk*m.v*L);shake=Math.max(shake,3);},350);}
+      else{for(const e of targets){hitEnemy(e,atk*m.v*L);if(m.s&&!e.dying)e.stun=Math.max(e.stun||0,m.s);if(m.id==='falle')fx.push({kind:'root',e,t:2});else burst(e);}shake=Math.max(shake,m.v>=10?6:3);}
+      break;
+    case'single':{const e=front();hitEnemy(e,atk*m.v*L);burst(e,m.c,e.ty.r*2.2);if(m.burn&&!e.dying)e.dot={t:4,dps:atk*m.burn*L/4,acc:0,c:m.c};shake=Math.max(shake,3);break;}
+    case'chain':{const ts=targets.slice().sort(()=>Math.random()-.5).slice(0,m.n2);for(const e of ts){hitEnemy(e,atk*m.v*L);burst(e,m.c);}shake=Math.max(shake,3);break;}
+    case'heal':{const h=hero.max*Math.min(1,m.v*L)*cm.heal;hero.hp=Math.min(hero.max,hero.hp+h);if(m.h)haste=Math.max(haste,m.h);
+      fx.push({kind:'sun',t:.8});floats.push({x:HX,y:GROUND-96,txt:'+'+fmt(h),col:'#63c74d',t:.9});break;}
+    case'stun':{const d=m.d*(1+.02*(lv-1));for(const e of targets){if(m.v)hitEnemy(e,atk*m.v*L);if(!e.dying)e.stun=Math.max(e.stun||0,d);burst(e);}shake=Math.max(shake,2);break;}
+    case'dodge':dodgeT=m.d*(1+.02*(lv-1));break;
+    case'dot':for(const e of targets){e.dot={t:4,dps:atk*m.v*L/4,acc:0,c:m.c};if(m.s&&!e.dying)e.stun=Math.max(e.stun||0,m.s);burst(e);}break;
+    case'buff':if(m.v){atkBuffM=1+m.v*L;atkBuffT=m.d;}if(m.h||!m.v)haste=Math.max(haste,m.h||m.d*(1+.02*(lv-1)));fx.push({kind:'sun',t:.8});break;
+    case'shield':shieldT=m.d;shieldP=Math.min(.9,m.v*(1+.01*(lv-1)));break;
+    case'steal':stealT=m.d;stealP=m.v*L;break;
+    case'meteor':{const tx=targets.reduce((a,e)=>a+e.x,0)/targets.length;fx.push({kind:'meteor',x:tx,t:.7});
+      setTimeout(()=>{for(const e of alive().filter(e=>e.x<W+10)){hitEnemy(e,atk*m.v*L);burst(e,'#ff9a3a',e.ty.r*2.5);}shake=Math.max(shake,9);},650);break;}
   }
   floats.push({x:HX+4,y:GROUND-108,txt:m.n+'!',col:m.c,t:1});
 }
 function hurtHero(dmg){
   if(dodgeT>0){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
+  if(shieldT>0)dmg*=1-shieldP;
   const hs=heroStats();dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
   hero.hp-=dmg;hero.hit=1;shake=Math.max(shake,2);
   floats.push({x:HX,y:GROUND-70,txt:'-'+fmt(dmg),col:'#ff6fae',t:.7});
@@ -1911,6 +1994,9 @@ function draw(){
       c.stroke();}}
   for(const e of enemies)drawEnemy(e);
   // Sonnenheilung: goldener Schein um den Kaktus
+  for(const x of fx)if(x.kind==='burst'){const k=1-x.t/.5;c.globalAlpha=Math.max(0,1-k);c.strokeStyle=x.col;c.lineWidth=4;c.beginPath();c.arc(x.x,x.y,x.r*(.4+k),0,7);c.stroke();c.globalAlpha=1;}
+  for(const x of fx)if(x.kind==='meteor'){const k=1-x.t/.7;c.fillStyle='#ff9a3a';c.globalAlpha=.9;c.beginPath();c.arc(x.x+60*(1-k),GROUND-260*(1-k)-30,14+6*k,0,7);c.fill();c.fillStyle='#ffe08a';c.beginPath();c.arc(x.x+60*(1-k),GROUND-260*(1-k)-30,7,0,7);c.fill();c.globalAlpha=1;}
+  if(shieldT>0){c.globalAlpha=.3+.15*Math.sin(t*8);c.strokeStyle='#b8c4d0';c.lineWidth=4;c.beginPath();c.arc(HX,GROUND-36,38,0,7);c.stroke();c.globalAlpha=1;}
   for(const x of fx)if(x.kind==='sun'){const k=1-x.t/.8;c.globalAlpha=1-k;c.strokeStyle='#ffd447';c.lineWidth=4;
     c.beginPath();c.arc(HX,GROUND-36,20+k*40,0,7);c.stroke();c.globalAlpha=1;}
   if(dodgeT>0){c.globalAlpha=.35+.2*Math.sin(t*12);c.strokeStyle='#9ad0ff';c.lineWidth=3;c.beginPath();c.ellipse(HX,GROUND-34,30,42,0,0,7);c.stroke();c.globalAlpha=1;}
@@ -2115,18 +2201,9 @@ function wsLists(){const kak=S.kak||0;return{list0:`<div class="blist">${WS.map(
       return`<div class="brow" style="--bc:${W.c}"><div><b style="color:${W.c}">${W.ico} ${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b>
         <small>+${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
         ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
-  list1:`<div class="blist">${SK.filter(K=>!K.soon).map(K=>{
-      const on=skActive(K.id),full=!on&&skOn().length>=SK_ON;const lv=skLv(K.id),M=K.act&&MODS.find(m=>m.id===K.id),lock=M&&S.best<M.unlock,max=lv>=skCap(),c=skCost(lv),ok=!lock&&S.coins>=c;
-      return`<div class="brow${on?' skact':''}" style="--bc:${K.c}"><div><span class="skrow1"><b style="color:${K.c}">${K.ico} ${K.n}</b>
-        <button class="sktog${on?' on':''}" type="button" data-skon="${K.id}" ${full?'disabled':''}>${on?'✓ Aktiv':'Aktivieren'}</button></span>
-        <small class="skfx">${K.txt(lv)}${M?` · ⏱ ${M.cd} s`:''}${lock?` · <span style="color:#ff8a7a">ab Stage ${M.unlock}</span>`:''}</small></div>
-        ${max?`<small class="skmax">Max<br><span>Lv ${lv}/${skCap()}</span></small>`:`<button class="btn go wsb" type="button" data-sk="${K.id}" ${ok?'':'disabled'}>Lv ${lv+1}/${skCap()}<small>${fmt(c)}</small></button>`}</div>`;}).join('')}
-      ${SK.filter(K=>K.soon).map(K=>`<div class="brow sksoon" style="--bc:${K.c}"><div><b style="color:${K.c}">${K.ico} ${K.n}</b><small>${K.txt()}</small></div><small class="skbald">🔒 Bald</small></div>`).join('')}</div>`};}
+  list1:skSectionHtml()};}
 function wsBind(H,re){
-  H.querySelectorAll('[data-sk]').forEach(b=>b.onclick=()=>{const id=b.dataset.sk,lv=skLv(id),c=skCost(lv),M=MODS.find(m=>m.id===id);
-    if(lv>=skCap()||S.coins<c||(M&&S.best<M.unlock))return;S.coins-=c;S.sk=S.sk||{};S.sk[id]=lv+1;save();lastHud='';renderModBar();re();});
-  H.querySelectorAll('[data-skon]').forEach(b=>b.onclick=()=>{const id=b.dataset.skon,on=skOn();
-    if(SK.find(k=>k.id===id).soon)return;if(on.includes(id))S.skOn=on.filter(x=>x!==id);else if(on.length<SK_ON)S.skOn=[...on,id];else return;save();renderModBar();re();});
+  skBind(H,re);
   H.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
     if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
     if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};re();});}
@@ -2137,7 +2214,7 @@ function renderWS(){
     <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
     ${L.list0}`;
   const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
-    <p class="intro">Max-Level <b style="color:var(--sand)">${skCap()}</b> · Ultra schwer 100 · Aktiv <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
+    <p class="intro">Ausgerüstet <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
     ${L.list1}`;
   $('card').innerHTML=`<div class="fixwin"><div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
     <div class="wsdots"><i class="${wsPage?'':'on'}"></i><i class="${wsPage?'on':''}"></i></div>
@@ -2154,10 +2231,10 @@ function renderWS(){
 // Bereich ⚔ Kampf: Werkstatt und Fähigkeiten direkt unter der Kampfbox
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();
   H.innerHTML=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Jedes 10. Level kostet zusätzlich 🌵</small></div>${L.list0}</div>
-    <div class="tsec"><div class="thead"><b>✶ Fähigkeiten</b><small>Max-Level ${skCap()} · Aktiv ${skOn().length}/${SK_ON}</small></div>${L.list1}</div>`;
+    <div class="tsec" id="skSec"><div class="thead"><b>✶ Fähigkeiten</b><small>Ausgerüstet ${skOn().length}/${SK_ON} · 🌵 ${fmt(S.kak||0)}</small></div>${L.list1}</div>`;
   wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});tkSig=tkSigNow();}
 let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
-  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),SK.map(K=>S.coins>=skCost(skLv(K.id))?1:0).join('')].join('|');
+  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n].join('|');
 setInterval(()=>{if(curTab==='kampf'&&S.char&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
 function tabGo(t){
@@ -2410,7 +2487,7 @@ function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp
 function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
 function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100)/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
-  dps+=st.atk*cm.mod*((skActive('regen')?(2.5+.05*skLv('regen'))/8:0)+(skActive('falle')?(1+.05*skLv('falle'))/15:0))/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
+  dps+=st.atk*cm.mod*skDpsMul()/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
 async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
   if(olOpen&&olTab==='boss')renderOnline();}
 // Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
@@ -2968,17 +3045,57 @@ if(!S.char)openEditor();
 // ---------- Modul-Leiste ----------
 // 11.11.2026: Fähigkeiten-Reihe am Boden der Kampfbox wie im Vorbild – alle Plätze sichtbar, gesperrte mit 🔒
 function renderModBar(){const on=skOn();
-  // 7 Kreise: der erste ist ein Platzhalter (für später), danach 6 Fähigkeiten-Plätze – freie Plätze für kommende Fähigkeiten mit 🔒
-  const extra=Math.max(0,6-SK.length);
-  $('mods').innerHTML='<span class="mod slot0" aria-hidden="true"><span class="ring"><span></span></span></span>'+SK.map(K=>{const m=MODS.find(x=>x.id===K.id);
-    if(K.soon||(m&&S.best<m.unlock))return`<span class="mod lockd" title="${K.n}: ${K.soon?'bald verfügbar':'frei ab Stage '+m.unlock}"><span class="ring"><span>🔒</span></span><span class="sr">${K.n} gesperrt</span></span>`;
-    if(!on.includes(K.id))return`<button class="mod offd" type="button" data-skgo="1" style="--c:${K.c}" title="${K.n} ist nicht aktiv – unter ⚔ Kampf aktivieren"><span class="ring"><span style="color:${K.c}">${K.ico}</span></span><span class="sr">${K.n} (nicht aktiv)</span></button>`;
-    return`<button class="mod" id="m_${m.id}" type="button" style="--c:${m.c}" title="${m.d}">
-  <span class="ring"><span style="color:${m.c}">${m.ico}</span></span><small></small><span class="sr">${m.n}</span></button>`;}).join('')
-    +'<span class="mod lockd" title="Neue Fähigkeit – bald verfügbar"><span class="ring"><span>🔒</span></span><span class="sr">Bald verfügbar</span></span>'.repeat(extra);
+  // 7 Kreise: der erste ist ein Platzhalter (für später), danach 6 Plätze für ausgerüstete Fähigkeiten
+  let h='<span class="mod slot0" aria-hidden="true"><span class="ring"><span></span></span></span>';
+  for(let i=0;i<SK_ON;i++){const m=on[i]&&skDef(on[i]);
+    h+=m?`<button class="mod" id="m_${m.id}" type="button" style="--c:${m.c}" title="${m.n}"><span class="ring"><span style="color:${m.c}">${m.ico}</span></span><small></small><span class="sr">${m.n}</span></button>`
+       :`<button class="mod offd" type="button" data-skgo="1" title="Freier Platz – Fähigkeit ausrüsten"><span class="ring"><span>+</span></span><span class="sr">Freier Platz</span></button>`;}
+  $('mods').innerHTML=h;
   for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);
-  $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{tabGo('kampf');setTimeout(()=>{const t=$('tabKampf').querySelectorAll('.tsec')[1];if(t)$('tPanel').scrollTop=t.offsetTop-8;},30);});}
-let mbSig='';setInterval(()=>{const sg=S.best+'|'+skOn().join();if(sg!==mbSig){mbSig=sg;renderModBar();}},1000);
+  $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{tabGo('kampf');setTimeout(()=>{const t=$('skSec'),P=$('tPanel');if(t)P.scrollTop+=t.getBoundingClientRect().top-P.getBoundingClientRect().top-6;},30);});}
+// ---------- Fähigkeiten: Beschwören, Sammlung, Leveln mit Doppelten (11.11.2026) ----------
+function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,on=skOn();
+  const pct=L<10?Math.min(100,(n-a)/(b-a)*100):100;
+  return`<div class="sksum"><div class="sksl"><b>🔮 Beschwören <em>Stufe ${L}</em></b><small>${L<10?`${n-a}/${b-a} bis Stufe ${L+1} · höhere Stufe = seltenere Fähigkeiten`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${pct}%"></div></div></div>
+      <div class="sksb">${skCanUp()?'<button class="btn go skall" type="button" data-skall="1">Alle<small>leveln</small></button>':''}<button class="btn go" type="button" data-sum="1" ${kak<SUM1?'disabled':''}>1×<small>${SUM1} 🌵</small></button><button class="btn go" type="button" data-sum="10" ${kak<SUM10?'disabled':''}>10×<small>${SUM10} 🌵</small></button></div></div>
+    <div class="skgrid">${MODS.slice().sort((x,y)=>(skLv(y.id)>0)-(skLv(x.id)>0)||x.r-y.r).map(m=>{const lv=skLv(m.id),o=S.skl[m.id],rc=RAR[m.r].c;
+      if(!lv)return`<button class="skc lockd" type="button" data-skd="${m.id}" style="--rc:${rc}"><i>${m.ico}</i><b>???</b><small>${RAR[m.r].n}</small></button>`;
+      const need=skNeed(lv),up=lv<SKL_MAX&&o.n>=need;
+      return`<button class="skc${on.includes(m.id)?' eq':''}${up?' up':''}" type="button" data-skd="${m.id}" style="--rc:${rc};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small>Lv ${lv}</small>
+        <span class="skbar"><span style="width:${lv>=SKL_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=SKL_MAX?'Max':o.n+'/'+need}</em></span>${on.includes(m.id)?'<u>✓</u>':''}</button>`;}).join('')}</div>`;}
+function skBind(H,re){
+  H.querySelectorAll('[data-sum]').forEach(b=>b.onclick=()=>skSummon(+b.dataset.sum,re));
+  H.querySelectorAll('[data-skd]').forEach(b=>b.onclick=()=>skDetail(b.dataset.skd,re));
+  H.querySelectorAll('[data-skall]').forEach(b=>b.onclick=()=>{let k=0;for(const m of MODS)k+=skLevelAll(m.id);save();banner={txt:k+' Fähigkeits-Level aufgestiegen!',t:1.6};re();});}
+function skSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.kak||0)<cost||!$('modal').hidden)return;
+  S.kak-=cost;const got=[];
+  for(let i=0;i<n;i++){const m=skRoll(),o=S.skl[m.id];let neu=false;
+    if(!o){S.skl[m.id]={lv:1,n:0};neu=true;if(S.skEq.length<SK_ON&&!S.skEq.includes(m.id))S.skEq.push(m.id);}else o.n++;
+    got.push({m,neu});}
+  S.skSum.n=(S.skSum.n||0)+n;save();lastHud='';renderModBar();
+  got.sort((a,b)=>b.m.r-a.m.r);
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({m,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small style="color:${RAR[m.r].c}">${RAR[m.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
+  $('modal').hidden=false;
+  $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
+  $('sumAgain').onclick=()=>{$('modal').hidden=true;skSummon(n,re);};}
+function skDetail(id,re){const m=skDef(id),lv=skLv(id),o=S.skl[id],rc=RAR[m.r].c;
+  const eq=skOn().includes(id),need=skNeed(Math.max(1,lv)),up=lv>0&&lv<SKL_MAX&&o.n>=need;
+  $('card').innerHTML=`<div class="skdet" style="--rc:${rc};--ic:${m.c}"><div class="skbig"><i>${lv?m.ico:'?'}</i></div>
+    <h2>${lv?m.n:'Noch nicht gefunden'}</h2><span class="skrar" style="color:${rc}">${RAR[m.r].n}${lv?` · Lv ${lv}/${SKL_MAX}`:''}</span>
+    ${lv?`<p>${skTxt(m,lv)}<br><small>Abklingzeit ${m.cd} s</small></p>
+      ${lv<SKL_MAX?`<p class="sknext">Nächstes Level: ${skTxt(m,lv+1)}</p><div class="skbar big"><span style="width:${Math.min(100,o.n/need*100)}%"></span><em>Kopien ${o.n}/${need}</em></div>`:'<p class="sknext">Höchstes Level erreicht</p>'}`
+      :`<p>Diese Fähigkeit bekommst du beim 🔮 Beschwören.<br><small>Seltenheit: ${RAR[m.r].n}</small></p>`}
+    <div class="row">${lv?`<button class="btn${eq?'':' go'}" id="skEqB" type="button" ${!eq&&skOn().length>=SK_ON?'disabled':''}>${eq?'Ablegen':'Ausrüsten'}</button>`:''}
+      ${up?`<button class="btn go" id="skUpB" type="button">Level-Up${o.n>=need+skNeed(lv+1)?' (alle)':''}</button>`:''}<button class="btn" id="skX" type="button">Schließen</button></div>
+    ${lv&&!eq&&skOn().length>=SK_ON?'<small class="hint">Alle 6 Plätze belegt – lege erst eine Fähigkeit ab.</small>':''}</div>`;
+  $('modal').hidden=false;
+  $('skX').onclick=()=>{$('modal').hidden=true;re();};
+  const e=$('skEqB');if(e)e.onclick=()=>{S.skEq=skOn();if(eq)S.skEq=S.skEq.filter(x=>x!==id);else if(S.skEq.length<SK_ON)S.skEq.push(id);save();renderModBar();skDetail(id,re);};
+  const u=$('skUpB');if(u)u.onclick=()=>{const l0=o.lv;skLevelAll(id);save();banner={txt:m.n+' Lv '+o.lv+(o.lv-l0>1?' (+'+(o.lv-l0)+')':'')+'!',t:1.4};skDetail(id,re);};}
+function skLevelAll(id){const o=S.skl[id];let k=0;while(o&&o.lv<SKL_MAX&&o.n>=skNeed(o.lv)){o.n-=skNeed(o.lv);o.lv++;k++;}return k;}
+const skCanUp=()=>MODS.some(m=>{const o=S.skl[m.id];return o&&o.lv<SKL_MAX&&o.n>=skNeed(o.lv);});
+let mbSig='';setInterval(()=>{const sg=skOn().join();if(sg!==mbSig){mbSig=sg;renderModBar();}},1000);
 renderModBar();
 // Auto-Schalter für die Fähigkeiten (rechts unten im Kampffeld)
 function setModAuto(on){S.modAuto=on;$('modAutoBtn').setAttribute('aria-pressed',on);$('modAutoState').textContent=on?'an':'aus';save();}
@@ -4074,7 +4191,8 @@ const PATCHES=[
      ['🎒 Ausrüstung:','Deine Werte, Samenkapseln öffnen und deine Ausrüstung.'],
      ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
      ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
-     ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.']]}
+     ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
+     ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Kakteen (1× 5 🌵, 10× 45 🌵), level sie mit Doppelten und rüste bis zu 6 aus.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
