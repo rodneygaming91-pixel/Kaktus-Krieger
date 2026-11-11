@@ -1075,6 +1075,33 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .skeqt{font-style:normal;font-size:.56rem;color:#7fe08a;font-weight:900}.skc.eq{filter:saturate(.75)}
 .sklock{position:absolute;top:-6px;right:-4px;font-size:.8rem}.skc.lockd b{font-size:.56rem;color:var(--rc)}
 .skgrid{grid-template-columns:repeat(5,1fr)}
+/* 11.11.2026: Kacheln wie in Legend of Slime – quadratisch, Seltenheitsfarbe als Verlauf, großes Symbol, keine Namen im Raster */
+.skgrid:not(.res) .skc{aspect-ratio:1/1.06;padding:0;justify-content:center;border-width:2px;border-radius:11px;
+  background:linear-gradient(165deg,color-mix(in srgb,var(--rc) 55%,#241a14) 0%,color-mix(in srgb,var(--rc) 18%,#1c130d) 62%,#160f0a 100%);
+  box-shadow:inset 0 1px 0 #ffffff30,inset 0 -10px 14px #0006,0 2px 0 #0008}
+.skgrid:not(.res) .skc>b,.skgrid:not(.res) .skc .skeqt{display:none}
+.skgrid:not(.res) .skc>i{font-size:1.75rem;line-height:1;margin-top:-8px;text-shadow:0 2px 0 #0009,0 0 10px color-mix(in srgb,var(--ic) 50%,#0000)}
+.skgrid:not(.res) .skc .drico{width:50px;height:50px;margin:-10px 0 0}
+.skgrid:not(.res) .skc .sklv{top:3px;left:4px;font-size:.5rem;background:#000a;border-radius:6px;padding:0 4px;line-height:12px}
+.skgrid:not(.res) .skc .skbar{position:absolute;left:4px;right:4px;bottom:4px;width:auto;height:9px;margin:0;border:1px solid #0008}
+.skgrid:not(.res) .skc .skbar em{font-size:.5rem;line-height:8px}
+.skgrid:not(.res) .skc .skpm{top:2px;right:2px;width:15px;height:15px;font-size:.7rem;line-height:13px;box-shadow:0 1px 0 #0008}
+.skgrid:not(.res) .skc.eq{filter:none;box-shadow:0 0 0 2px #7fe08a,inset 0 -10px 14px #0006,0 0 10px #7fe08a88}
+.skgrid:not(.res) .skc.eq::after{content:'✓';position:absolute;left:3px;bottom:14px;font-size:.62rem;font-weight:900;color:#1c130d;background:#7fe08a;border-radius:50%;width:13px;height:13px;line-height:13px;text-align:center}
+.skgrid:not(.res) .skc.lockd{opacity:1;background:linear-gradient(165deg,#2a2028,#140e0a);border-color:color-mix(in srgb,var(--rc) 40%,#2a2028)}
+.skgrid:not(.res) .skc.lockd>i{color:#5a4a44;text-shadow:none;margin-top:0}.skgrid:not(.res) .skc.lockd .drico{opacity:.35;margin:0}
+.skgrid:not(.res) .skc .sklock{top:3px;right:4px;font-size:.62rem;opacity:.7}
+.skgrid:not(.res) .skc.up{animation:skup2 1s ease-in-out infinite alternate}@keyframes skup2{to{box-shadow:0 0 0 2px #ffe066,0 0 12px #ffe066,inset 0 -10px 14px #0006}}
+/* Ausgerüstet-Reihe: runde Plätze wie in der Kampfbox */
+.skeqrow{gap:6px;padding:8px 6px}
+.skeqrow .skc.eqs{aspect-ratio:1;border-radius:50%;padding:0;justify-content:center;border-width:3px;
+  background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--rc) 50%,#241a14),#160f0a 75%);box-shadow:0 2px 0 #0008,inset 0 -6px 10px #0007}
+.skeqrow .skc.eqs>b{display:none}.skeqrow .skc.eqs>i{font-size:1.5rem;line-height:1;text-shadow:0 2px 0 #0009}
+.skeqrow .skc.eqs .drico{width:44px;height:44px;margin:-4px 0 0}
+.skeqrow .skc.eqs .sklv{top:auto;bottom:-7px;left:50%;transform:translateX(-50%);font-size:.5rem;background:#1c130d;border:1px solid var(--rc);border-radius:7px;padding:0 4px;line-height:11px;white-space:nowrap}
+.skeqrow .skc.eqs .skpm{top:-3px;right:-3px;width:15px;height:15px;font-size:.7rem;line-height:13px}
+.skeqrow .skc.eqs.empty{border-width:2px;background:#1c130d}
+.skfoot .btn{padding:6px 6px;font-size:.84rem}.skfoot .btn small{font-size:.58rem}.skeqrow .skc.eqs.empty>i{font-size:1.1rem}
 .drpage .skfoot{bottom:-8px;padding-bottom:10px;margin-bottom:-8px} /* Begleiter: keine Unterleiste darunter → ganz unten fixieren */
 .skfoot{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:sticky;bottom:52px;z-index:2;background:#2a1d14;padding:6px 0 4px;margin-bottom:-4px}.skfoot .btn{padding:8px 6px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.1}.skfoot .btn small{font-size:.62rem}
 .sksumb{background:linear-gradient(#ffb03a,#e07a10)!important;border-color:#7a3a08!important;color:#fff!important}
@@ -4801,7 +4828,8 @@ const PATCHES=[
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
   {id:'pn83',date:'2026-11-11',title:'Begleiter neu gezeichnet',
-   items:[['🐾 Alle 30 Begleiter:','Jetzt im gleichen Stil wie die Hunde – vom Igel mit Stacheln über den Löwen mit Mähne bis zum feuerspuckenden Drachen.']]},
+   hero:['🐾 Alle 30 Begleiter','Jetzt im gleichen Stil wie die Hunde – vom Igel mit Stacheln über den Löwen mit Mähne bis zum feuerspuckenden Drachen.'],
+   items:()=>[['🎨 Gleicher Stil:','Dicke Umrisse, böse Augen und Halsband wie bei den Hunden. Eule, Papagei, Adler und Drache flattern, der Drache spuckt sogar Feuer.']]},
   {id:'pn82',date:'2026-11-11',title:'Neue Oberfläche',
    hero:['✨ Alles neu angeordnet','Oben die Kampfbox, darunter ein Bereich zum Scrollen und ganz unten eine Leiste mit Symbolen.'],
    items:()=>[['⚔ Kampf:','Werkstatt und Fähigkeiten direkt unter der Kampfbox – leveln ohne extra Fenster.'],
