@@ -2277,7 +2277,7 @@ function gardenTick(){
     S.gUp=0;S.glv++;save();lastHud='';
     const nu=RAR.findIndex((r,i)=>gUnlock(i)===S.glv);
     banner={txt:'Gärtnerei Lv '+S.glv+(nu>=0?' · '+RAR[nu].n+' frei!':''),t:2.4};shake=3;
-    if(gOpen)renderGarden();
+    if(gOpen||curTab==='gart')renderGarden(); // 11.11.2026: auch im Gärtnerei-Bereich neu zeichnen (blieb sonst bei „1 s“ stehen)
   }
 }
 const gSkipAll=()=>S.gUp?Math.max(1,Math.ceil((S.gUp-Date.now())/1800000)):0;   // Kakteen für sofort fertig
@@ -4568,6 +4568,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
+     ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen.'],
      ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
