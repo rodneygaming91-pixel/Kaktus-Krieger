@@ -961,6 +961,7 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .sksb .btn{padding:5px 10px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.05}.sksb .btn small{font-size:.66rem}
 .skgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .skc{position:relative;border:2px solid var(--rc);border-radius:10px;background:#241a14;color:#fff;font:inherit;padding:5px 3px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;min-width:0}
+.skc .drico{width:40px;height:40px;margin:-2px 0 -3px}.skbig .drico{width:96px;height:96px}.skeqrow.dreq{grid-template-columns:repeat(5,1fr)}
 .skc i{font-style:normal;font-size:1.4rem;line-height:1.2;color:var(--ic)}.skc b{font-size:.62rem;line-height:1.1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .skc small{font-size:.6rem;color:var(--muted)}
 .skc.lockd{opacity:.5}.skc.lockd i{filter:grayscale(1) brightness(.5)}
@@ -1157,18 +1158,52 @@ const CLASSES={
 };
 const clsM=()=>CLASSES[(S.char&&S.char.cls)||'schuetze'].m;
 // Drohnen: Helfer, die mitkämpfen und einen Dauerbonus geben (wie DRONES in Scrap Star)
+// ===== Begleiter aus Beschwörungen (11.11.2026): 30 Tiere in 6 Seltenheiten, Leveln mit Doppelten, 5 Plätze =====
+// act: shot (beißen), heal (heilen), steal (Lebensraub), stun (beißen + kurz betäuben). air: fliegt auf Kopfhöhe. em: Emoji-Bild (die 6 alten Tiere sind gezeichnet)
 const DRONES=[
-  {id:'biene',   n:'Dackel',       c:'#ffd447',cost:100, act:'shot',every:1.2,dmg:.4, stat:'atk',per:2,d:'Beißt alle 1,2 s für 40 % Angriff'},
-  {id:'kolibri', n:'Windhund',     c:'#3fe0c0',cost:300, act:'shot',every:.8, dmg:.25,stat:'spd',per:1.5,d:'Flinke Bisse alle 0,8 s'},
-  {id:'chihu',   n:'Chihuahua',    c:'#ff8a3d',cost:600, act:'shot',every:.6, dmg:.15,stat:'crit',per:1,d:'Kläfft und zwickt alle 0,6 s. Macht dich wütend: mehr kritische Treffer'},
-  {id:'gluehw',  n:'Bernhardiner', c:'#ff6fae',cost:1000,act:'heal',every:3,  heal:3, stat:'hp', per:3,d:'Heilt alle 3 s 3 % Leben mit seinem Fässchen'},
-  {id:'eule',    n:'Schäferhund',  c:'#b48cff',cost:3000,act:'heal',every:6,  heal:8, stat:'reg',per:.05,d:'Sanitätshund: heilt alle 6 s 8 % Leben und stärkt deine Regeneration'},
-  {id:'fleder',  n:'Fledermaus',   c:'#c87bff',cost:5000,act:'steal',every:1,dmg:.3,steal:1,stat:'hp',per:2,d:'Lebensraub: beißt alle 1 s für 30 % Angriff, der Schaden kommt dir als Leben zugute'}
+  {id:'biene',  n:'Dackel',      r:0,c:'#ffd447',act:'shot', every:1.2,dmg:.4, stat:'atk', per:2},
+  {id:'chihu',  n:'Chihuahua',   r:0,c:'#ff8a3d',act:'shot', every:.6, dmg:.15,stat:'crit',per:1},
+  {id:'igel',   n:'Igel',        r:0,c:'#c8a070',act:'shot', every:1,  dmg:.3, stat:'hp',  per:2, em:'🦔'},
+  {id:'maus',   n:'Maus',        r:0,c:'#c0b8b0',act:'shot', every:.7, dmg:.18,stat:'spd', per:1, em:'🐭'},
+  {id:'hase',   n:'Hase',        r:0,c:'#e8dcc8',act:'shot', every:.9, dmg:.25,stat:'spd', per:1.2,em:'🐇'},
+  {id:'schneck',n:'Schnecke',    r:0,c:'#d8a8ff',act:'stun', every:2.5,dmg:.2, stat:'hp',  per:2.5,em:'🐌'},
+  {id:'kolibri',n:'Windhund',    r:1,c:'#3fe0c0',act:'shot', every:.8, dmg:.25,stat:'spd', per:1.5},
+  {id:'gluehw', n:'Bernhardiner',r:1,c:'#ff6fae',act:'heal', every:3,  heal:3, stat:'hp',  per:3},
+  {id:'fuchs',  n:'Fuchs',       r:1,c:'#ff8a3a',act:'shot', every:1,  dmg:.5, stat:'crit',per:1.3,em:'🦊'},
+  {id:'eule2',  n:'Eule',        r:1,c:'#c8a070',act:'shot', every:1.3,dmg:.55,stat:'atk', per:2.5,em:'🦉',air:1},
+  {id:'frosch', n:'Frosch',      r:1,c:'#7fe08a',act:'stun', every:2.2,dmg:.3, stat:'hp',  per:3, em:'🐸'},
+  {id:'waschb', n:'Waschbär',    r:1,c:'#a8a8b8',act:'steal',every:1.2,dmg:.3, stat:'atk', per:2, em:'🦝'},
+  {id:'eule',   n:'Schäferhund', r:2,c:'#b48cff',act:'heal', every:6,  heal:8, stat:'reg', per:.05},
+  {id:'fleder', n:'Fledermaus',  r:2,c:'#c87bff',act:'steal',every:1,  dmg:.3, stat:'hp',  per:2, air:1},
+  {id:'wolf',   n:'Wolf',        r:2,c:'#a0a8b8',act:'shot', every:1,  dmg:.8, stat:'atk', per:3, em:'🐺'},
+  {id:'papag',  n:'Papagei',     r:2,c:'#5ad05a',act:'shot', every:.8, dmg:.5, stat:'spd', per:2, em:'🦜',air:1},
+  {id:'skorp',  n:'Skorpion',    r:2,c:'#e05a3a',act:'stun', every:2,  dmg:.6, stat:'crit',per:1.6,em:'🦂'},
+  {id:'loewe',  n:'Löwe',        r:3,c:'#ffb03a',act:'shot', every:1.1,dmg:1.2,stat:'atk', per:4, em:'🦁'},
+  {id:'adler',  n:'Adler',       r:3,c:'#d8b080',act:'shot', every:.9, dmg:1,  stat:'crit',per:2, em:'🦅',air:1},
+  {id:'baer',   n:'Bär',         r:3,c:'#a8743e',act:'shot', every:1.4,dmg:1.2,stat:'hp',  per:5, em:'🐻'},
+  {id:'kroete', n:'Schildkröte', r:3,c:'#5ac85a',act:'heal', every:4,  heal:6, stat:'hp',  per:5, em:'🐢'},
+  {id:'kobra',  n:'Kobra',       r:3,c:'#9be36a',act:'steal',every:1,  dmg:.8, stat:'atk', per:3.5,em:'🐍'},
+  {id:'tiger',  n:'Tiger',       r:4,c:'#ff9a3a',act:'shot', every:1,  dmg:2,  stat:'atk', per:6, em:'🐯'},
+  {id:'einhorn',n:'Einhorn',     r:4,c:'#ff9ad0',act:'heal', every:4,  heal:12,stat:'reg', per:.12,em:'🦄'},
+  {id:'gorilla',n:'Gorilla',     r:4,c:'#8a8278',act:'stun', every:2.5,dmg:1.5,stat:'hp',  per:7, em:'🦍'},
+  {id:'elefant',n:'Elefant',     r:4,c:'#b8c4d0',act:'shot', every:1.6,dmg:2.4,stat:'hp',  per:8, em:'🐘'},
+  {id:'drache', n:'Drache',      r:5,c:'#5ad05a',act:'shot', every:1,  dmg:4,  stat:'atk', per:10,em:'🐉',air:1},
+  {id:'kraken', n:'Kraken',      r:5,c:'#ff6af0',act:'steal',every:1,  dmg:2.5,stat:'atk', per:8, em:'🦑'},
+  {id:'mammut', n:'Mammut',      r:5,c:'#c8a070',act:'stun', every:2.5,dmg:3,  stat:'hp',  per:12,em:'🦣'},
+  {id:'dino',   n:'Dino',        r:5,c:'#7fe08a',act:'shot', every:.9, dmg:4.5,stat:'crit',per:4, em:'🦖'}
 ];
-const DR_MAX=25;                                                    // Höchststufe der Hunde
-const drUp=(D,lv)=>Math.round(D.cost*Math.pow(1.85,lv));          // Kosten für das nächste Level
-const drScale=lv=>1+0.12*(Math.min(lv,DR_MAX)-1);                                    // Schaden/Heilung steigen pro Level
-const drSlots=()=>S.best>=10?3:2;
+const DR_MAX=50,DR_SLOTS=5,DR_START=['biene'];
+const drScale=lv=>1+0.12*(Math.min(lv,DR_MAX)-1);   // Schaden/Heilung steigen pro Level
+const drSlots=()=>DR_SLOTS;
+const drNeed=lv=>lv+1;                               // Kopien fürs nächste Level
+const drUp=()=>Infinity;                             // (alt) Kaufen mit Münzen gibt es nicht mehr
+function drInit(){if(!S.dr||typeof S.dr!=='object')S.dr={};if(!Array.isArray(S.drEq))S.drEq=[];
+  for(const id in S.dr){if(!DRONES.find(d=>d.id===id)){delete S.dr[id];continue;}if(S.dr[id].n==null)S.dr[id].n=0;}
+  if(!Object.keys(S.dr).length)for(const id of DR_START){S.dr[id]={lv:1,n:0};if(!S.drEq.includes(id))S.drEq.push(id);}
+  S.drEq=S.drEq.filter(id=>S.dr[id]).slice(0,DR_SLOTS);if(!S.drSum)S.drSum={n:0};}
+const drSumLv=()=>{const n=(S.drSum&&S.drSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
+function drRoll(){const w=SUMW[drSumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
+  r=Math.min(r,5);const pool=DRONES.filter(d=>d.r===r);return pool[Math.floor(Math.random()*pool.length)];}
 const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.stat===k)s+=D.per*Math.min(o.lv,DR_MAX);}return s;};
 // Werkstatt: den Kaktus selbst leveln. Münzen kosten jedes Level, jedes 10. Level braucht zusätzlich Kakteen.
 // Angriff und Leben haben keine Obergrenze und wachsen je Level um 2,5 % (aufeinander aufbauend) –
@@ -1283,7 +1318,7 @@ function simSk(A,dt){const cm=clsM();A.dgOn=(A.dgOn||0)-dt;A.skc=A.skc||{};
 function skDpsMul(){let x=0;for(const id of skOn()){const m=skDef(id),L=skLvM(skLv(id));
   if(['aoe','single','meteor','dot'].includes(m.k))x+=m.v*L/m.cd;else if(m.k==='chain')x+=m.v*L/m.cd;else if(m.k==='buff'&&m.v)x+=0.25*m.v*L*m.d/m.cd;}return x;}
 const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
-let haste=0,dodgeT=0;skInit();
+let haste=0,dodgeT=0;skInit();drInit();
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
@@ -1510,9 +1545,9 @@ function update(dt){
   // Hunde laufen vorneweg, springen den vordersten Gegner an und kommen zurück
   S.drEq.forEach((id,i)=>{const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(!D||!o)return;
     const st=dogSt[id]||(dogSt[id]={j:0,hit:false,tx:0});if(st.j>0){st.j=Math.max(0,st.j-dt/.45);
-      if(!st.hit&&st.j<.5){st.hit=true;const e=st.e;if(e&&!e.dying){const dd=heroStats().atk*D.dmg*drScale(o.lv);hitEnemy(e,dd);if(D.act==='stun'&&!e.dying)e.stun=Math.max(e.stun||0,.6);
+      if(!st.hit&&st.j<.5){st.hit=true;const e=st.e;if(e&&!e.dying){const dd=heroStats().atk*D.dmg*drScale(o.lv);hitEnemy(e,dd);if(D.act==='stun'&&!e.dying)e.stun=Math.max(e.stun||0,1);
         // Lebensraub der Fledermaus: der verursachte Schaden kommt als Leben zurück
-        if(D.act==='steal'&&hero.hp<hero.max){const h=Math.min(hero.max-hero.hp,dd*elMul()*(D.steal||1));hero.hp+=h;floats.push({x:HX+6,y:GROUND-96,txt:'🦇 +'+fmt(h),col:'#d79bff',t:.9});}}}}
+        if(D.act==='steal'&&hero.hp<hero.max){const h=Math.min(hero.max-hero.hp,dd*elMul()*(D.steal||1));hero.hp+=h;floats.push({x:HX+6,y:GROUND-96,txt:(D.em||'🦇')+' +'+fmt(h),col:'#d79bff',t:.9});}}}}
     drT[id]=(drT[id]??rnd(0,D.every))-dt;
     if(drT[id]>0||!f)return;
     const pos=dogPos(i);
@@ -1858,8 +1893,9 @@ const DOGLOOK={
 };
 // Hunde laufen nebeneinander am Boden; die Fledermaus fliegt auf Kopfhöhe direkt vor dem Kaktus
 const BAT_Y=-40;   // Höhe der Fledermaus über dem Boden (vor dem Kopf des Kaktus)
-const groundEq=()=>S.drEq.filter(id=>id!=='fleder');
-const dogPos=i=>{const id=S.drEq[i];if(id==='fleder')return{x:HX+58,y:GROUND+BAT_Y,air:true};const g2=groundEq().indexOf(id);return{x:HX+34+Math.max(0,g2)*27,y:GROUND};};
+const drAir=id=>{const D=DRONES.find(d=>d.id===id);return!!(D&&D.air);};
+const groundEq=()=>S.drEq.filter(id=>!drAir(id));const airEq=()=>S.drEq.filter(drAir);
+const dogPos=i=>{const id=S.drEq[i];if(drAir(id)){const a=airEq().indexOf(id);return{x:HX+58+a*30,y:GROUND+BAT_Y-(a%2)*14,air:true};}const g2=groundEq().indexOf(id);return{x:HX+34+Math.max(0,g2)*27,y:GROUND};};
 // Wo ein Gegner stehen bleibt (hinter Kaktus und Hunden) und ab wann gekämpft wird.
 // Große Bosse mit 3 Hunden stehen weiter weg als 150 px, darum zählt auch die eigene Kampfposition.
 function stopX(e){const n=groundEq().length;return HX+28+e.ty.r+(n?14+n*27:0);}
@@ -1879,7 +1915,11 @@ function drawBat(g,D,x,y,s,o){o=o||{};const ph=t*16+(o.ph||0),fl=Math.sin(ph),bo
   g.fillStyle='#fff';g.beginPath();g.moveTo(-1.6,3);g.lineTo(-1,5.2);g.lineTo(-.4,3);g.moveTo(.4,3);g.lineTo(1,5.2);g.lineTo(1.6,3);g.fill();
   g.fillStyle=D.c;g.fillRect(-2,5.5,4,1.6);
   g.restore();}
-function drawDog(g,D,x,y,s,o){if(D.id==='fleder'){drawBat(g,D,x,y,s,o);return;}o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o.run??0,ph=t*14+(o.ph||0);
+function drawDog(g,D,x,y,s,o){if(D.id==='fleder'){drawBat(g,D,x,y,s,o);return;}
+  if(D.em){o=o||{};const bob=o.menu?0:Math.abs(Math.sin(t*(o.run?12:3)+(o.ph||0)))*3*s/1.4,sz=Math.round(19*s);g.save();g.translate(x,y);
+    if(!D.air&&!o.menu){g.globalAlpha=.25;g.fillStyle='#000';g.beginPath();g.ellipse(0,0,sz*.38,sz*.1,0,0,7);g.fill();g.globalAlpha=1;}
+    g.scale(-1,1);g.font=sz+'px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif';g.textAlign='center';g.textBaseline='bottom';
+    g.fillText(D.em,0,(o.bite?-2:0)-bob+sz*.08);g.restore();return;}o=o||{};const L=DOGLOOK[D.id]||DOGLOOK.biene,run=o.run??0,ph=t*14+(o.ph||0);
   g.save();g.translate(x,y);g.scale(s,s);
   g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(0,1,L.len*.75,2.5,0,0,7);g.fill();
   const bob=run?Math.abs(Math.sin(ph))*-1.5:0,by=-L.leg-L.h/2+bob;
@@ -2183,37 +2223,81 @@ setInterval(()=>{
 
 // ---------- Drohnen-Fenster ----------
 let dOpen=false;
-const DR_SHORT={biene:'Beißt alle 1,2 s (40 % Angriff)',kolibri:'Flinke Bisse alle 0,8 s',chihu:'Zwickt alle 0,6 s · mehr Krit',gluehw:'Heilt alle 3 s 3 % Leben',eule:'Heilt alle 6 s 8 % Leben',fleder:'Lebensraub alle 1 s (30 % Angriff)'};
-function renderDrones(){
-  const slots=drSlots();
-  const H=$('tabBegl');
-  H.innerHTML=`<div class="tsec"><div class="thead"><b>🐾 Begleiter <em>${S.drEq.length}/${slots}</em></b><small>Kämpfen mit und geben einen Dauerbonus${slots<3?' · Platz 3 ab Stage 10':''}</small></div>
-    <div class="dlist">${DRONES.map(D=>{const o=S.dr[D.id],eq=S.drEq.includes(D.id),lv=o?o.lv:0;
-      const unit={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration pro s'}[D.stat];
-      let btns;
-      if(!o)btns=`<button class="btn go" type="button" data-buy="${D.id}" data-cost="${D.cost}">Kaufen · ${fmt(D.cost)}</button>`;
-      else btns=exBusy(D.id)?`<button class="btn" type="button" disabled>🧭 Mission</button>`:`<button class="btn${eq?'':' go'}" type="button" data-eq="${D.id}" ${!eq&&S.drEq.length>=slots?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>
-        ${lv>=DR_MAX?'<button class="btn" type="button" disabled>Max</button>':`<button class="btn" type="button" data-up="${D.id}" data-cost="${drUp(D,lv)}">Lv ${lv+1} · ${fmt(drUp(D,lv))}</button>`}`;
-      return`<div class="drow${eq?' eq':''}" style="--dc:${D.c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas>
-        <div><b style="color:${D.c}">${D.n}${o?`<em>Lv ${lv}</em>`:''}</b><small>${DR_SHORT[D.id]||D.d}</small>
-        <span class="bon">+${(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2)).toLocaleString('de-DE')} ${unit}${o?'':' ab Lv 1'}</span></div><div class="dbtns">${btns}</div></div>`;}).join('')}</div>
-    </div>`;
-  H.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{const D=DRONES.find(d=>d.id===b.dataset.buy);if(S.coins<D.cost)return;
-    S.coins-=D.cost;S.dr[D.id]={lv:1};if(S.drEq.length<drSlots())S.drEq.push(D.id);save();lastHud='';renderDrones();});
-  H.querySelectorAll('[data-up]').forEach(b=>b.onclick=()=>{const D=DRONES.find(d=>d.id===b.dataset.up),o=S.dr[D.id],k=drUp(D,o.lv);if(S.coins<k||o.lv>=DR_MAX)return;
-    S.coins-=k;o.lv++;save();lastHud='';renderDrones();});
-  H.querySelectorAll('[data-eq]').forEach(b=>b.onclick=()=>{const id=b.dataset.eq,i=S.drEq.indexOf(id);
-    if(i>=0)S.drEq.splice(i,1);else if(S.drEq.length<drSlots())S.drEq.push(id);save();lastHud='';renderDrones();});
-  refreshDroneBtns();drawDroneIcons();
-}
-function refreshDroneBtns(){$('tabBegl').querySelectorAll('[data-cost]').forEach(b=>b.disabled=S.coins<+b.dataset.cost);}
-function drawDroneIcons(){$('tabBegl').querySelectorAll('canvas[data-dr]').forEach(cv2=>{const g=cv2.getContext('2d'),D=DRONES.find(d=>d.id===cv2.dataset.dr);
-  g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,96,96);g.fillStyle='#2a1c4d';g.beginPath();g.arc(48,48,46,0,7);g.fill();drawDrone(g,D,48,52,3);});}
+const DR_UNIT={atk:'% Angriff',spd:'% Tempo',hp:'% Leben',crit:'% Krit',reg:'% Regeneration/s'};
+const drLv=id=>(S.dr[id]&&S.dr[id].lv)||0;
+const drBon=(D,lv)=>(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2)).toLocaleString('de-DE');
+function drTxt(D,lv){const k=drScale(Math.max(1,lv)),p=x=>Math.round(x*k*100)+' %',sec=String(D.every).replace('.',',')+' s';
+  const a={shot:`Beißt alle ${sec} für ${p(D.dmg)} Angriff`,stun:`Beißt alle ${sec} für ${p(D.dmg)} Angriff und betäubt 1 s`,
+    steal:`Lebensraub alle ${sec}: ${p(D.dmg)} Angriff`,heal:`Heilt alle ${sec} ${Math.round(D.heal*k*10)/10} % Leben`}[D.act];
+  return a+`<br><span style="color:#7fe08a">+${drBon(D,lv)} ${DR_UNIT[D.stat]}</span> solange eingesetzt`;}
+const drIco=D=>`<canvas width="96" height="96" data-dr="${D.id}" class="drico"></canvas>`;
+function renderDrones(){const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqRow='';
+  for(let i=0;i<DR_SLOTS;i++){const D=S.drEq[i]&&DRONES.find(d=>d.id===S.drEq[i]);
+    eqRow+=D?`<button class="skc eqs" type="button" data-drd="${D.id}" style="--rc:${RAR[D.r].c};--ic:${D.c}"><span class="sklv">Lv ${drLv(D.id)}</span>${drIco(D)}<b>${D.n}</b><span class="skpm" data-droff="${D.id}">−</span></button>`
+      :`<div class="skc eqs empty"><i>+</i><b>frei</b></div>`;}
+  H.innerHTML=`<div class="tsec drpage"><div class="thead"><b>🐾 Begleiter <em>${S.drEq.length}/${DR_SLOTS}</em></b><small>Bis zu ${DR_SLOTS} kämpfen mit · Doppelte bringen Level</small></div>
+    <div class="skeqrow dreq">${eqRow}</div>
+    <div class="skgrid">${DRONES.slice().sort((x,y)=>(drLv(y.id)>0)-(drLv(x.id)>0)||x.r-y.r).map(D=>{const lv=drLv(D.id),o=S.dr[D.id],rc=RAR[D.r].c;
+      if(!lv)return`<button class="skc lockd" type="button" data-drd="${D.id}" style="--rc:${rc}"><span class="sklock">🔒</span><i>?</i><b>${RAR[D.r].n}</b></button>`;
+      const need=drNeed(lv),up=lv<DR_MAX&&o.n>=need,eq=S.drEq.includes(D.id),busy=exBusy(D.id);
+      return`<button class="skc${eq?' eq':''}${up?' up':''}" type="button" data-drd="${D.id}" style="--rc:${rc};--ic:${D.c}"><span class="sklv">Lv ${lv}</span>
+        ${busy?'<span class="skpm">🧭</span>':`<span class="skpm" data-${eq?'droff':'dron'}="${D.id}">${eq?'−':'+'}</span>`}${drIco(D)}${eq?'<em class="skeqt">Dabei</em>':`<b>${D.n}</b>`}
+        <span class="skbar"><span style="width:${lv>=DR_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=DR_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
+    <div class="skfoot"><button class="btn sksumb" type="button" data-drsum="1">🔮 Beschwören<small>Stufe ${L} · 🌵 ${fmt(S.kak||0)}</small></button>
+      <button class="btn go" type="button" data-drall="1" ${drCanUp()?'':'disabled'}>Alle leveln</button></div></div>`;
+  H.querySelectorAll('[data-drsum]').forEach(b=>b.onclick=()=>{if($('modal').hidden)drSumDlg(re);});
+  H.querySelectorAll('[data-droff]').forEach(b=>b.onclick=e=>{e.stopPropagation();S.drEq=S.drEq.filter(x=>x!==b.dataset.droff);save();lastHud='';re();});
+  H.querySelectorAll('[data-dron]').forEach(b=>b.onclick=e=>{e.stopPropagation();drEquip(b.dataset.dron);re();});
+  H.querySelectorAll('[data-drd]').forEach(b=>b.onclick=()=>drDetail(b.dataset.drd,re));
+  H.querySelectorAll('[data-drall]').forEach(b=>b.onclick=()=>{let k=0;for(const D of DRONES)k+=drLevelAll(D.id);save();lastHud='';banner={txt:k+' Begleiter-Level aufgestiegen!',t:1.6};re();});
+  drawDroneIcons();}
+function drEquip(id){if(S.drEq.includes(id)||exBusy(id))return false;if(S.drEq.length>=DR_SLOTS){banner={txt:'Alle 5 Plätze belegt – erst einen abziehen (−)',t:1.8};return false;}
+  S.drEq.push(id);save();lastHud='';return true;}
+function drLevelAll(id){const o=S.dr[id];let k=0;while(o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv)){o.n-=drNeed(o.lv);o.lv++;k++;}return k;}
+const drCanUp=()=>DRONES.some(D=>{const o=S.dr[D.id];return o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv);});
+function drSumDlg(re){const L=drSumLv(),n=(S.drSum&&S.drSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Begleiter beschwören</h2>
+    <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
+    <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
+    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌵</b></p>
+    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌵</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌵</button></div>
+    <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
+  $('modal').hidden=false;
+  $('sumX').onclick=()=>{$('modal').hidden=true;re();};
+  $('sum1').onclick=()=>{$('modal').hidden=true;drSummon(1,re);};$('sum10').onclick=()=>{$('modal').hidden=true;drSummon(10,re);};}
+function drSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.kak||0)<cost||!$('modal').hidden)return;
+  S.kak-=cost;const got=[];
+  for(let i=0;i<n;i++){const D=drRoll(),o=S.dr[D.id];let neu=false;
+    if(!o){S.dr[D.id]={lv:1,n:0};neu=true;if(S.drEq.length<DR_SLOTS&&!S.drEq.includes(D.id))S.drEq.push(D.id);}else o.n++;
+    got.push({D,neu});}
+  S.drSum.n=(S.drSum.n||0)+n;save();lastHud='';
+  got.sort((a,b)=>b.D.r-a.D.r);
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({D,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[D.r].c};--ic:${D.c}">${drIco(D)}<b>${D.n}</b><small style="color:${RAR[D.r].c}">${RAR[D.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
+  $('modal').hidden=false;drawDroneIcons($('card'));
+  $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
+  $('sumAgain').onclick=()=>{$('modal').hidden=true;drSummon(n,re);};}
+function drDetail(id,re){const D=DRONES.find(d=>d.id===id),lv=drLv(id),o=S.dr[id],rc=RAR[D.r].c;
+  const eq=S.drEq.includes(id),need=drNeed(Math.max(1,lv)),up=lv>0&&lv<DR_MAX&&o.n>=need,busy=lv&&exBusy(id);
+  $('card').innerHTML=`<div class="skdet" style="--rc:${rc};--ic:${D.c}"><div class="skbig">${lv?drIco(D):'<i>?</i>'}</div>
+    <h2>${lv?D.n:'Noch nicht gefunden'}</h2><span class="skrar" style="color:${rc}">${RAR[D.r].n}${lv?` · Lv ${lv}/${DR_MAX}`:''}</span>
+    ${lv?`<p>${drTxt(D,lv)}</p>
+      ${lv<DR_MAX?`<p class="sknext">Nächstes Level: ${drTxt(D,lv+1)}</p><div class="skbar big"><span style="width:${Math.min(100,o.n/need*100)}%"></span><em>Kopien ${o.n}/${need}</em></div>`:'<p class="sknext">Höchstes Level erreicht</p>'}`
+      :`<p>Diesen Begleiter bekommst du beim 🔮 Beschwören.<br><small>Seltenheit: ${RAR[D.r].n}</small></p>`}
+    <div class="row">${lv?(busy?`<button class="btn" type="button" disabled>🧭 Auf Mission</button>`:`<button class="btn${eq?'':' go'}" id="drEqB" type="button" ${!eq&&S.drEq.length>=DR_SLOTS?'disabled':''}>${eq?'Abziehen':'Einsetzen'}</button>`):''}
+      ${up?`<button class="btn go" id="drUpB" type="button">Level-Up${o.n>=need+drNeed(lv+1)?' (alle)':''}</button>`:''}<button class="btn" id="drX" type="button">Schließen</button></div>
+    ${lv&&!eq&&!busy&&S.drEq.length>=DR_SLOTS?'<small class="hint">Alle 5 Plätze belegt – ziehe erst einen Begleiter ab.</small>':''}</div>`;
+  $('modal').hidden=false;drawDroneIcons($('card'));
+  $('drX').onclick=()=>{$('modal').hidden=true;re();};
+  const e=$('drEqB');if(e)e.onclick=()=>{if(eq){S.drEq=S.drEq.filter(x=>x!==id);save();lastHud='';}else drEquip(id);drDetail(id,re);};
+  const u=$('drUpB');if(u)u.onclick=()=>{const l0=o.lv;drLevelAll(id);save();lastHud='';banner={txt:D.n+' Lv '+o.lv+(o.lv-l0>1?' (+'+(o.lv-l0)+')':'')+'!',t:1.4};drDetail(id,re);};}
+function refreshDroneBtns(){}
+function drawDroneIcons(R){(R||$('tabBegl')).querySelectorAll('canvas[data-dr]').forEach(cv2=>{const g=cv2.getContext('2d'),D=DRONES.find(d=>d.id===cv2.dataset.dr);
+  g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,96,96);drawDrone(g,D,48,D.em?70:56,D.em?2.4:3);});}
 $('dBtn').onclick=()=>{if(pending||gOpen||editing||!$('modal').hidden)return;dOpen=true;$('modal').hidden=false;lastHud='';renderDrones();};
-setInterval(()=>{if(curTab==='begl'){refreshDroneBtns();drawDroneIcons();}
+setInterval(()=>{
   $('dCnt').textContent=S.drEq.length+'/'+drSlots();
-  const cheap=DRONES.some(D=>S.dr[D.id]?S.dr[D.id].lv<DR_MAX&&S.coins>=drUp(D,S.dr[D.id].lv):S.coins>=D.cost);
-  $('dBtn').classList.toggle('ready',cheap);$('dSub').textContent=cheap?'Upgrade!':'Begleiter';},250);
+  const cheap=drCanUp();$('dBtn').classList.toggle('ready',cheap);$('dSub').textContent=cheap?'Level-Up!':'Begleiter';},500);
 
 // ---------- Werkstatt: den Kaktus leveln (ersetzt das Hauptquartier) ----------
 let hqOpen=false,wsPage=0;
@@ -4247,7 +4331,8 @@ const PATCHES=[
      ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
      ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
      ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
-     ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Kakteen (1× 5 🌵, 10× 45 🌵), level sie mit Doppelten und rüste bis zu 6 aus.']]}
+     ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Kakteen (1× 5 🌵, 10× 45 🌵), level sie mit Doppelten und rüste bis zu 6 aus.'],
+     ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Kakteen, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
