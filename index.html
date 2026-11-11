@@ -84,6 +84,7 @@ h1 span{color:var(--bloom)}
 .ovstats span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ovstats span i{font-style:normal;display:inline-block;width:16px}.ovstats b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ovhead{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.ovname{display:flex;flex-direction:column;gap:1px}.ovname b{font-size:1.1rem}.ovname small{font-size:.74rem;color:var(--muted)}
 .ovsec{background:#0005;border:2px solid #6b5644;border-radius:10px;padding:5px 7px;display:flex;flex-direction:column;gap:4px}.ovsec>b{font-size:.8rem;color:#ffd447}
+.osolo{display:flex;align-items:center;gap:10px;justify-content:space-between}.osolo b{font-size:1rem}
 .ovbtns{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ovbtns .btn{font-size:.82rem;padding:8px 4px;white-space:nowrap}
 .ovsec.soon{flex-direction:row;justify-content:space-between;opacity:.55}.ovsec.soon small{color:var(--sand);font-weight:800}
 .ovrow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.ovrow.g5{grid-template-columns:repeat(5,1fr);padding:0 6%}.ovrow.g9{grid-template-columns:repeat(9,1fr);gap:3px}
@@ -453,6 +454,9 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .stagebox small{font-size:.56rem;font-weight:800;color:#d8c8a8;text-transform:uppercase;letter-spacing:.08em;font-variant-numeric:tabular-nums;line-height:1}
 .elbox{display:flex;flex-direction:column;gap:3px;padding:4px 7px;max-width:29%}
 .elbox.l{left:6px}.elbox.r{right:6px}
+.fright{position:absolute;top:6px;right:6px;display:flex;flex-direction:column;align-items:flex-end;gap:5px;max-width:29%;z-index:2}
+.fright .elbox.r{position:static;max-width:none}
+.fchest{pointer-events:auto;min-width:0;padding:2px 7px 3px;border-radius:9px;background:linear-gradient(#3a2c22e6,#2a1f18e6)}.fchest b{font-size:1.05rem}.fchest span{font-size:.6rem}
 .er{display:flex;align-items:center;gap:5px;min-width:0}
 .elbox.r .er{flex-direction:row-reverse;text-align:right}
 .er span{display:flex;flex-direction:column;line-height:1;min-width:0;gap:1px}
@@ -1052,11 +1056,11 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
     <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
-    <div class="hr"><button class="chestbtn" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
+    <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
   </header>
   <div class="topbox">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
-    <div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div>
+    <div class="elbox l" id="elEnemy"></div><div class="fright"><div class="elbox r" id="elYou"></div><button class="chestbtn fchest" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
@@ -1086,7 +1090,9 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
   <section class="tab" id="tabMehr" data-t="mehr" hidden>
   <div class="onrow"><button class="onbtn dgbtn sm" id="dgBtn" type="button"><b>🏰 Dungeons</b><span>🗝 6 Schlüssel</span></button><button class="onbtn exbtn sm" id="exBtn" type="button"><b>🧭 Erkundung</b><span>Missionen</span></button>
     <button class="onbtn arbtn sm" id="arBtn" type="button"><b>⚔ Arena</b><span id="arSub">Kämpfen</span></button>
-    <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button></div>
+    <button class="onbtn twbtn sm" id="twBtn" type="button"><b>🗼 Turm</b><span id="twSub">Etage 1</span></button>
+    <button class="onbtn wbbtn2 sm" id="wbBtn2" type="button"><b>👹 Weltboss</b><span>Jede Woche</span></button>
+    <button class="onbtn abbtn2 sm" id="abBtn2" type="button"><b>🛡 Allianzboss</b><span>Mit deiner Allianz</span></button></div>
   </section>
   </div>
   <nav class="tabbar" id="tabBar">
@@ -2512,7 +2518,7 @@ function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=
   $('ovEd').onclick=()=>{$('modal').hidden=true;openEditor();};
   const back=()=>{lastHud='';profileOverview();};
   $('ovKt').onclick=()=>ktOverview(back);
-  $('card').querySelectorAll('[data-ovon]').forEach(b=>b.onclick=()=>{olOpen=true;olTab=b.dataset.ovon;friendBack=null;$('card').classList.add('wide');
+  $('card').querySelectorAll('[data-ovon]').forEach(b=>b.onclick=()=>{olOpen=true;olSolo='profil';olTab=b.dataset.ovon;friendBack=null;$('card').classList.add('wide');
     if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();lastHud='';renderOnline();});$('ovColl').onclick=()=>ktColl(back);$('ovPic').onclick=()=>ktColl(back);}
 function ktColl(re){const L=ktSumLv(),cur=curKt().id,kak=S.kak||0;
   $('card').innerHTML=`<div class="sumres"><h2>🌵 Kaktus-Sammlung</h2>
@@ -2758,7 +2764,7 @@ const OKEY='kaktus-krieger-online';
 let ON={code:null,key:null};try{ON=Object.assign(ON,JSON.parse(localStorage.getItem(OKEY)||'{}'));}catch(e){}
 const saveOn=()=>{try{localStorage.setItem(OKEY,JSON.stringify(ON));}catch(e){}};
 let onState='idle',onLast=0,onMsg='';   // idle | ok | off | err
-let olOpen=false,olTab='profil';
+let olOpen=false,olTab='profil',olSolo=false; // olSolo: 'profil' (aus „Mein Profil“) oder 'mehr' (Weltboss) – nur dieses Thema, ohne Reiter
 const fmtCode=c=>c?c.slice(0,3)+'-'+c.slice(3):'';
 const normCode=s=>String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'').replace(/O/g,'0').replace(/I/g,'1');
 async function rpc(fn,body){
@@ -2938,7 +2944,7 @@ const abTier=d=>{let T=AB_TIERS[0];for(const x of AB_TIERS)if(d>=x.min)T=x;retur
 function abBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS[(n+6)%WORLDS.length],W1=WORLDS[(n*3+2)%WORLDS.length];
   return{n:'Allianz-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak};}
 let ab={st:null,err:'',busy:false,res:null,anim:null,hitRpc:'kk_ab_hit',cv:'abcv',go:'abGo',loading:'Lade Allianz-Boss …',boss:p=>abBoss(p),
-  prize:()=>abPrizeHtml(),load:()=>loadAb(),alive:()=>olOpen&&olTab==='gilde'&&gd.sub==='boss',
+  prize:()=>abPrizeHtml(),load:()=>loadAb(),alive:()=>olOpen&&olTab==='abs',
   info:()=>`Diese Woche: ${ab.st.top.length} Mitglieder dabei · dein Schaden ${fmt(ab.st.mine)} · Allianz gesamt ${fmt(ab.st.total)}`};
 async function loadAb(){ab.err='';try{ab.st=await rpc('kk_ab_status',{p_code:ON.code});if(ab.st&&!ab.st.guild){ab.st=null;ab.err='Du bist in keiner Allianz.';}}
   catch(e){ab.st=null;ab.err='Keine Verbindung. Den Allianz-Boss gibt es nur auf kaktus-krieger.pages.dev.';}
@@ -3007,12 +3013,12 @@ function guildBody(){
   if(gd.my===undefined)return'<p class="hint">Lade Allianz …</p>';
   const msg=gd.msg?`<p class="hint warn">${esc2(gd.msg)}</p>`:'';
   if(gd.info){const G=gd.info,lead=G.leader===ON.code;
-    const sub=`<div class="lbsw"><button type="button" class="${gd.sub==='halle'?'on':''}" data-gsub="halle">Mitglieder</button><button type="button" class="${gd.sub==='kasse'?'on':''}" data-gsub="kasse">Kasse</button><button type="button" class="${gd.sub==='ziele'?'on':''}" data-gsub="ziele">Ziele</button><button type="button" class="${gd.sub==='boss'?'on':''}" data-gsub="boss">Boss</button><button type="button" class="${gd.sub==='chat'?'on':''}" data-gsub="chat">Chat${chat.unread?' <i class="cdot">'+chat.unread+'</i>':''}</button></div>`;
+    const sub=`<div class="lbsw"><button type="button" class="${gd.sub==='halle'?'on':''}" data-gsub="halle">Mitglieder</button><button type="button" class="${gd.sub==='kasse'?'on':''}" data-gsub="kasse">Kasse</button><button type="button" class="${gd.sub==='ziele'?'on':''}" data-gsub="ziele">Ziele</button><button type="button" class="${gd.sub==='chat'?'on':''}" data-gsub="chat">Chat${chat.unread?' <i class="cdot">'+chat.unread+'</i>':''}</button></div>`;
 
     const head=`<div class="ghead"><div><b>${esc2(G.name)} <em>[${esc2(G.tag)}]</em></b><small>${esc2(G.about)}</small></div>
         <span class="glv">Lv ${G.level}<small>+${G.level*2}% Münzen</small></span></div>`;
     if(gd.sub==='ziele')return head+sub+msg+goalsHtml();
-    if(gd.sub==='boss')return head+sub+msg+wbBody(ab);
+    if(gd.sub==='boss')gd.sub='halle';
     if(gd.sub==='chat')return head+sub+msg+`<div class="gchat" id="gchat">${chatHtml()}</div>
       <div class="ofind"><input id="gMsg" class="oin" maxlength="200" placeholder="Nachricht an die Allianz …" autocomplete="off"><button class="sbtn go" type="button" id="gSend">Senden</button></div>
       <p class="hint">Bitte freundlich bleiben. Links sind nicht erlaubt.</p>`;
@@ -3097,7 +3103,7 @@ function bindLogin(p,rerender){
   $(p+'LGo').onclick=go;$(p+'LPin').onkeydown=e=>{if(e.key==='Enter')go();};
 }
 function renderOnline(){
-  const tabs=`<div class="eqtabs" role="tablist">${[['profil','Profil'],['freunde','Freunde'],['liste','Rangliste'],['boss','Weltboss'],['gilde','Allianz']].map(([k,n])=>`<button type="button" role="tab" aria-selected="${olTab===k}" data-otab="${k}">${n}</button>`).join('')}</div>`;
+  const tabs=`<div class="eqtabs" role="tablist">${[['profil','Profil'],['freunde','Freunde'],['liste','Rangliste'],['gilde','Allianz']].map(([k,n])=>`<button type="button" role="tab" aria-selected="${olTab===k}" data-otab="${k}">${n}</button>`).join('')}</div>`;
   let body='';
   if(olTab==='profil'){
     const st=onState==='ok'?`<span class="ost ok">● Online gespeichert ${agoTxt(onLast)}</span>`:onState==='off'?'<span class="ost off">● Keine Verbindung. Online-Funktionen gibt es nur auf kaktus-krieger.pages.dev.</span>':onState==='err'?`<span class="ost err">● Fehler beim Speichern: ${onMsg.replace(/</g,'&lt;')}</span>`:'<span class="ost">● Verbinde …</span>';
@@ -3117,6 +3123,8 @@ function renderOnline(){
     body=guildBody();
   }else if(olTab==='boss'){
     body=wbBody();
+  }else if(olTab==='abs'){ // Allianzboss (11.11.2026 aus der Allianz nach „Mehr“ verschoben)
+    body=gd.err?`<p class="hint warn">${gd.err}</p>`:gd.my===undefined?'<p class="hint">Lade Allianz …</p>':!gd.info?'<p class="hint">Du bist in keiner Allianz. Tritt oben rechts unter 🛡 Allianz einer Allianz bei oder gründe eine – dann kämpft ihr hier gemeinsam gegen den Allianzboss.</p>':wbBody(ab);
   }else if(olTab==='liste'){
     const medal=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
     body=`<div class="lbsw"><button type="button" class="${lbBy==='best'?'on':''}" data-lb="best">Höchste Stage</button><button type="button" class="${lbBy==='power'?'on':''}" data-lb="power">Kampfkraft</button></div>
@@ -3126,7 +3134,7 @@ function renderOnline(){
         <span class="vl">${lbBy==='best'?stageName(r.best):fmt(r.power)}</span></button></li>`).join('')}</ol>`}
       ${lbData?`<p class="hint">Stand ${agoTxt(lbAt)} · <button type="button" class="lnk" id="lbRe">aktualisieren</button> · Antippen zeigt das Profil</p>`:''}`;
   }else{
-    body=`${friendBack?`<button type="button" class="lnk back" id="fBack">← zurück zu ${friendBack==='gilde'?'Allianz':friendBack==='boss'?'Weltboss':'Rangliste'}</button>`:''}<div class="ofind"><input id="oFriend" class="oin" maxlength="7" placeholder="Freundescode, z. B. KXT-4PQ" autocomplete="off" spellcheck="false"><button class="sbtn go" type="button" id="oFind">Ansehen</button></div>
+    body=`${friendBack?`<button type="button" class="lnk back" id="fBack">← zurück zu ${friendBack==='gilde'?'Allianz':friendBack==='boss'?'Weltboss':friendBack==='abs'?'Allianzboss':'Rangliste'}</button>`:''}<div class="ofind"><input id="oFriend" class="oin" maxlength="7" placeholder="Freundescode, z. B. KXT-4PQ" autocomplete="off" spellcheck="false"><button class="sbtn go" type="button" id="oFind">Ansehen</button></div>
       ${friendErr?`<p class="hint warn">${friendErr}</p>`:''}
       ${friend?`<div class="fcard"><canvas id="fcv" width="240" height="260"></canvas><div>
         <b class="fname">${String(friend.name).replace(/</g,'&lt;')}</b><small>${friend.cls||''} · ${fmtCode(friend.code)}${friend.guild?' · ['+esc2(friend.guild.tag)+'] '+esc2(friend.guild.name):''}</small>
@@ -3135,7 +3143,9 @@ function renderOnline(){
         <span class="fgear">${SLOTS.map(sl=>{const it=friend.card&&friend.card.gear&&friend.card.gear[sl.id];return`<i style="--rc:${it?RAR[it.r].c:'#4a3a2e'}" title="${sl.n}${it?': '+it.name:''}"></i>`;}).join('')}</span>
         <small>zuletzt online ${agoTxt(new Date(friend.updated_at).getTime())}</small></div></div>`:''}`;
   }
-  $('card').innerHTML=`<div class="eqwin">${tabs}${body}<button class="sbtn wide" type="button" id="oClose">Schließen</button></div>`;
+  const solo=olSolo?`<div class="osolo">${olSolo==='profil'?'<button type="button" class="lnk back" id="oSoloBack">← Mein Profil</button>':'<span></span>'}<b>${{profil:'👤 Profil &amp; Code',freunde:'👥 Freunde',liste:'🏆 Rangliste',boss:'👹 Weltboss',abs:'🛡 Allianzboss',gilde:'Allianz'}[olTab]}</b></div>`:'';
+  $('card').innerHTML=`<div class="eqwin">${olSolo?solo:tabs}${body}<button class="sbtn wide" type="button" id="oClose">Schließen</button></div>`;
+  {const sb=$('oSoloBack');if(sb)sb.onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;olSolo=false;$('card').classList.remove('wide');lastHud='';profileOverview();};}
   $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{if(wb.busy||ab.busy)return;olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
   if(olTab==='gilde')wireGuild();
   {const wg=$('wbGo');if(wg)wg.onclick=()=>wbAttack(wb);if($('wbcv'))drawWb(wb);}
@@ -3144,7 +3154,7 @@ function renderOnline(){
   $('card').querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{lbBy=b.dataset.lb;lbData=null;renderOnline();loadLb();});
   $('card').querySelectorAll('[data-fc]').forEach(b=>b.onclick=async()=>{friendBack=olTab==='freunde'?null:olTab;olTab='freunde';friendErr='';try{friend=await rpc('kk_profile',{p_code:b.dataset.fc});}catch(e){friend=null;friendErr='Keine Verbindung.';}renderOnline();});
   {const rb=$('lbRe');if(rb)rb.onclick=()=>{lbData=null;renderOnline();loadLb();};}
-  $('oClose').onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
+  $('oClose').onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;olSolo=false;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
   // 10.11.2026: Während Weltboss- oder Allianz-Boss-Kampf kann man das Fenster nicht verlassen
   $('card').classList.toggle('fightlock',!!(wb.busy||ab.busy));
   const copy=(txt,btn)=>{const done=()=>{btn.textContent='Kopiert ✓';};
@@ -3175,7 +3185,10 @@ function renderOnline(){
   }
 }
 $('allyBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olTab='gilde';loadGuild();$('onBtn').onclick();};
-$('onBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();};
+$('abBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='abs';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';
+  if(gd.my===undefined||!gd.info)loadGuild().then(()=>{if(olOpen&&olTab==='abs')renderOnline();if(gd.info&&!ab.busy)loadAb();});else if(!ab.busy)loadAb();renderOnline();};
+$('wbBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='boss';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';if(!wb.busy)loadWb();renderOnline();};
+$('onBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo=false;if(olTab==='boss'||olTab==='abs')olTab='profil';$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();};
 renderOnBadge();
 
 // ---------- Arena: Kämpfe gegen andere Spieler (der Server entscheidet) ----------
@@ -3268,7 +3281,7 @@ function renderArena(){
   $('card').querySelectorAll('canvas[data-avi]').forEach(cv2=>{const o=ar.opp[ar.view],it=o&&o.card&&o.card.gear&&o.card.gear[cv2.dataset.avi];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});
   {const cv2=$('arvcv');if(cv2){const o=ar.opp[ar.view],g=cv2.getContext('2d');g.save();g.translate(80,170);g.scale(1.5,1.5);drawCactus(g,o.card&&o.card.char||DEFAULT_CH,{x:0,y:0,gear:(o.card&&o.card.gear)||{}});g.restore();}}
   $('card').querySelectorAll('[data-afc]').forEach(b=>b.onclick=async()=>{try{friend=await rpc('kk_profile',{p_code:b.dataset.afc});}catch(e){friend=null;}
-    ar.open=false;olOpen=true;olTab='freunde';friendBack=null;renderOnline();});
+    ar.open=false;olOpen=true;olSolo=false;olTab='freunde';friendBack=null;renderOnline();});
   if(ar.fight)drawArena();
 }
 async function arFight(o){if(ar.fight)return;ar.msg='';ar.res=null;
@@ -4547,7 +4560,9 @@ const PATCHES=[
      ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
      ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.'],
      ['📋 Übersichten:','Tippe oben auf deinen Namen: Dort siehst du Fähigkeiten, Begleiter und Ausrüstung, alle Kaktus-Werte auf einen Blick, wechselst und levelst deine Kakteen und kommst zu Freunden und Rangliste.'],
-     ['🌱 Gärtnerei:','Neu gestaltet – mit Gewächshaus, das mit jeder Stufe wächst, und übersichtlichen Kapsel-Chancen.']]}
+     ['🌱 Gärtnerei:','Neu gestaltet – mit Gewächshaus, das mit jeder Stufe wächst, und übersichtlichen Kapsel-Chancen.'],
+     ['🎁 Spielzeit-Truhen:','Jetzt in der Kampfbox oben rechts unter Waffe und Resistenz.'],
+     ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
