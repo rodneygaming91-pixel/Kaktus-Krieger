@@ -1458,7 +1458,7 @@ const fmtV=(sl,v)=>sl.pct?v.toFixed(1):fmt(v);
 
 // ---------- Canvas ----------
 const cv=document.getElementById('cv'),c=cv.getContext('2d');
-const W=480,H=300,GROUND=238,HX=90;
+const W=480,H=300,GROUND=238,HX=68; // 11.11.2026: Kaktus und Begleiter etwas weiter links (vorher 90)
 c.scale(2,2);
 let eco=!!S.eco;const ECO_MS=40;
 function applyEco(){const k=eco?1:2;if(cv.width!==480*k){cv.width=480*k;cv.height=300*k;c.setTransform(k,0,0,k,0,0);}
@@ -3146,7 +3146,7 @@ function renderOnline(){
         <span class="fgear">${SLOTS.map(sl=>{const it=friend.card&&friend.card.gear&&friend.card.gear[sl.id];return`<i style="--rc:${it?RAR[it.r].c:'#4a3a2e'}" title="${sl.n}${it?': '+it.name:''}"></i>`;}).join('')}</span>
         <small>zuletzt online ${agoTxt(new Date(friend.updated_at).getTime())}</small></div></div>`:''}`;
   }
-  const solo=olSolo?`<div class="osolo">${olSolo==='profil'?'<button type="button" class="lnk back" id="oSoloBack">← Mein Profil</button>':'<span></span>'}<b>${{profil:'👤 Profil &amp; Code',freunde:'👥 Freunde',liste:'🏆 Rangliste',boss:'👹 Weltboss',abs:'🛡 Allianzboss',gilde:'Allianz'}[olTab]}</b></div>`:'';
+  const solo=olSolo?`<div class="osolo">${olSolo==='profil'?'<button type="button" class="lnk back" id="oSoloBack">← Mein Profil</button>':'<span></span>'}<b>${{profil:'👤 Profil &amp; Code',freunde:'👥 Freunde',liste:'🏆 Rangliste',boss:'👹 Weltboss',abs:'🛡 Allianzboss',gilde:'🛡 Allianz'}[olTab]}</b></div>`:'';
   $('card').innerHTML=`<div class="eqwin">${olSolo?solo:tabs}${body}<button class="sbtn wide" type="button" id="oClose">Schließen</button></div>`;
   {const sb=$('oSoloBack');if(sb)sb.onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;olSolo=false;$('card').classList.remove('wide');lastHud='';profileOverview();};}
   $('card').querySelectorAll('[data-otab]').forEach(b=>b.onclick=()=>{if(wb.busy||ab.busy)return;olTab=b.dataset.otab;if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();if(olTab==='boss'&&!wb.busy)loadWb();if(olTab==='gilde')loadGuild();renderOnline();});
@@ -3187,7 +3187,7 @@ function renderOnline(){
       drawCactus(g,(friend.card&&friend.card.char)||DEFAULT_CH,{x:0,y:0,gear});g.restore();}
   }
 }
-$('allyBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olTab='gilde';loadGuild();$('onBtn').onclick();};
+$('allyBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='ally';olTab='gilde';friendBack=null;loadGuild();$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();}; // 11.11.2026: nur die Allianz, ohne Reiter
 $('abBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='abs';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';
   if(gd.my===undefined||!gd.info)loadGuild().then(()=>{if(olOpen&&olTab==='abs')renderOnline();if(gd.info&&!ab.busy)loadAb();});else if(!ab.busy)loadAb();renderOnline();};
 $('wbBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='boss';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';if(!wb.busy)loadWb();renderOnline();};
@@ -4570,6 +4570,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
+     ['🛡 Allianz-Knopf:','Oben rechts öffnet jetzt nur noch deine Allianz – Profil, Freunde und Rangliste findest du in deinem Profil.'],
      ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen. Bei den Begleitern stehen „Beschwören“ und „Alle leveln“ jetzt fest unten.'],
      ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
 ];
