@@ -944,6 +944,15 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
 .tabbar button span{font-size:.62rem;font-weight:800;letter-spacing:.02em}
 .tabbar button.on{background:#3a2a1a;color:var(--sand);box-shadow:inset 0 0 0 2px #7a5a2a}.tabbar button.on i{filter:none}
+#modAutoBtn,#bossAutoBtn,#x2Btn{display:none!important}
+/* Fähigkeiten-Reihe als Leiste am Boden der Kampfbox */
+.field .fbl{position:absolute;left:6px;right:6px;bottom:6px;display:block}
+.field .fbl .mods{position:static;display:flex;justify-content:space-between;gap:2px;width:100%}
+.field .mod{width:42px;height:42px}.field .mod .ring{width:38px;height:38px}.field .mod .ring span{width:30px;height:30px;font-size:1.05rem}.field .mod small{font-size:.9rem}
+.field .mod.slot0{cursor:default;opacity:.7;box-shadow:0 2px 0 #0009,0 0 0 2px #5a4a3c}.field .mod.slot0 .ring{background:#2a1f18}
+.field .mod.lockd{filter:grayscale(1);opacity:.75;cursor:default;box-shadow:0 2px 0 #0009,0 0 0 2px #5a4a3c}.field .mod.lockd .ring{background:#3a2c22}
+.field .mod.offd{opacity:.55;box-shadow:0 2px 0 #0009,0 0 0 2px #5a4a3c}.field .mod.offd .ring{background:#3a2c22}
+@media (max-width:359px){.field .mod{width:36px;height:36px}.field .mod .ring{width:32px;height:32px}.field .mod .ring span{width:25px;height:25px;font-size:.9rem}}
 </style>
 
 <div class="game">
@@ -989,11 +998,11 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
   </section>
   </div>
   <nav class="tabbar" id="tabBar">
-    <button type="button" data-tab2="kampf" class="on"><i>⚔</i><span>Kampf</span></button>
-    <button type="button" data-tab2="ausr"><i>🎒</i><span>Ausrüstung</span></button>
-    <button type="button" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
-    <button type="button" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
-    <button type="button" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
+    <button type="button" id="tbKampf" data-tab2="kampf" class="on"><i>⚔</i><span>Kampf</span></button>
+    <button type="button" id="tbAusr" data-tab2="ausr"><i>🎒</i><span>Ausrüstung</span></button>
+    <button type="button" id="tbBegl" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
+    <button type="button" id="tbGart" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
+    <button type="button" id="tbMehr" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
   </nav>
   <div class="actions" hidden>
     
@@ -2957,11 +2966,19 @@ $('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden)openEditor();};
 if(!S.char)openEditor();
 
 // ---------- Modul-Leiste ----------
+// 11.11.2026: Fähigkeiten-Reihe am Boden der Kampfbox wie im Vorbild – alle Plätze sichtbar, gesperrte mit 🔒
 function renderModBar(){const on=skOn();
-  $('mods').innerHTML=SK.filter(K=>on.includes(K.id)).map(K=>{const m=MODS.find(x=>x.id===K.id);return m?`<button class="mod" id="m_${m.id}" type="button" style="--c:${m.c}" title="${m.d}">
-  <span class="ring"><span style="color:${m.c}">${m.ico}</span></span><small></small><span class="sr">${m.n}</span></button>`
-  :`<button class="mod ready pas" type="button" style="--c:${K.c};--p:1" title="${K.n} (passiv): ${K.txt(skLv(K.id)).replace(/<\/?b>/g,'')}"><span class="ring"><span>${K.ico}</span></span><small></small><span class="sr">${K.n}</span></button>`;}).join('');
-  for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);}
+  // 7 Kreise: der erste ist ein Platzhalter (für später), danach 6 Fähigkeiten-Plätze – freie Plätze für kommende Fähigkeiten mit 🔒
+  const extra=Math.max(0,6-SK.length);
+  $('mods').innerHTML='<span class="mod slot0" aria-hidden="true"><span class="ring"><span></span></span></span>'+SK.map(K=>{const m=MODS.find(x=>x.id===K.id);
+    if(K.soon||(m&&S.best<m.unlock))return`<span class="mod lockd" title="${K.n}: ${K.soon?'bald verfügbar':'frei ab Stage '+m.unlock}"><span class="ring"><span>🔒</span></span><span class="sr">${K.n} gesperrt</span></span>`;
+    if(!on.includes(K.id))return`<button class="mod offd" type="button" data-skgo="1" style="--c:${K.c}" title="${K.n} ist nicht aktiv – unter ⚔ Kampf aktivieren"><span class="ring"><span style="color:${K.c}">${K.ico}</span></span><span class="sr">${K.n} (nicht aktiv)</span></button>`;
+    return`<button class="mod" id="m_${m.id}" type="button" style="--c:${m.c}" title="${m.d}">
+  <span class="ring"><span style="color:${m.c}">${m.ico}</span></span><small></small><span class="sr">${m.n}</span></button>`;}).join('')
+    +'<span class="mod lockd" title="Neue Fähigkeit – bald verfügbar"><span class="ring"><span>🔒</span></span><span class="sr">Bald verfügbar</span></span>'.repeat(extra);
+  for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);
+  $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{tabGo('kampf');setTimeout(()=>{const t=$('tabKampf').querySelectorAll('.tsec')[1];if(t)$('tPanel').scrollTop=t.offsetTop-8;},30);});}
+let mbSig='';setInterval(()=>{const sg=S.best+'|'+skOn().join();if(sg!==mbSig){mbSig=sg;renderModBar();}},1000);
 renderModBar();
 // Auto-Schalter für die Fähigkeiten (rechts unten im Kampffeld)
 function setModAuto(on){S.modAuto=on;$('modAutoBtn').setAttribute('aria-pressed',on);$('modAutoState').textContent=on?'an':'aus';save();}
@@ -2970,11 +2987,11 @@ function setBossAuto(on){S.bossAuto=on;const b=$('bossAutoBtn');b.setAttribute('
   b.title=on?'Boss startet automatisch (antippen: hier weiter farmen)':'Du farmst hier weiter – Boss per Tipp auf die Stage-Anzeige starten';
   if(on&&!boss&&S.kills>=KILL_GOAL&&S.char)startBoss();save();lastHud='';}
 $('bossAutoBtn').onclick=()=>setBossAuto(S.bossAuto===false);
-setBossAuto(S.bossAuto!==false);
+setBossAuto(true); // 11.11.2026: Boss-Kampf startet immer automatisch
 const tryBoss=()=>{if(!boss&&S.kills>=KILL_GOAL&&$('modal').hidden){startBoss();lastHud='';}};
 $('stageBox').onclick=tryBoss;$('stageBox').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tryBoss();}};
 $('modAutoBtn').onclick=()=>setModAuto(S.modAuto===false);
-setModAuto(S.modAuto!==false);
+setModAuto(true); // 11.11.2026: Fähigkeiten werden immer automatisch eingesetzt
 setInterval(()=>{for(const m of MODS){const b=$('m_'+m.id),lock=S.best<m.unlock,cd=modCd[m.id];if(!b)continue;
   b.disabled=lock;b.classList.toggle('ready',!lock&&cd<=0);
   b.style.setProperty('--p',lock?0:1-cd/(m.cd*clsM().cd));
@@ -3642,10 +3659,10 @@ const TUT=[
   {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
   {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Samenkapsel öffnen“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
-  {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Ist AUTO an, setzt er sie von selbst ein.'},
-  {el:'hqBtn',t:'In der Werkstatt steckst du Münzen in Angriff, Leben, Panzer und Tempo deines Kaktus.'},
-  {el:'gBtn',t:'Baust du die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
-  {el:'dBtn',t:'Begleiter wie Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
+  {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Er setzt sie ganz von selbst ein.'},
+  {el:'tbKampf',t:'Unter ⚔ Kampf steckst du in der Werkstatt Münzen in Angriff, Leben, Panzer und Tempo – und levelst deine Fähigkeiten.'},
+  {el:'tbGart',t:'Baust du unter 🌱 die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
+  {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
   {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Allianzen, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
@@ -4056,7 +4073,8 @@ const PATCHES=[
    items:()=>[['⚔ Kampf:','Werkstatt und Fähigkeiten direkt unter der Kampfbox – leveln ohne extra Fenster.'],
      ['🎒 Ausrüstung:','Deine Werte, Samenkapseln öffnen und deine Ausrüstung.'],
      ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
-     ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.']]}
+     ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
+     ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
@@ -4088,7 +4106,7 @@ const PATCHES=[
 
 // ---------- ×2-Tempo: wird für 30 Minuten durch ein Werbevideo freigeschaltet (zurzeit ein Platzhalter mit 5-s-Countdown) ----------
 const X2_MIN=30;
-const x2Active=()=>(S.x2Until||0)>Date.now();
+const x2Active=()=>false; // 11.11.2026: ×2-Video entfernt
 function renderX2(){const b=$('x2Btn');if(!b)return;const act=x2Active(),on=act&&S.x2On!==false;
   b.setAttribute('aria-pressed',on);b.classList.toggle('locked',!act);
   const left=Math.max(0,((S.x2Until||0)-Date.now())/1000);
