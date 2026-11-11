@@ -1001,7 +1001,8 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
 .tabbar button span{font-size:.62rem;font-weight:800;letter-spacing:.02em}
 .tabbar button.on{background:#3a2a1a;color:var(--sand);box-shadow:inset 0 0 0 2px #7a5a2a}.tabbar button.on i{filter:none}
-#modAutoBtn,#bossAutoBtn,#x2Btn{display:none!important}
+#modAutoBtn,#bossAutoBtn{display:none!important}
+.field .fbr{right:6px;bottom:48px;z-index:3}
 /* Fähigkeiten-Reihe als Leiste am Boden der Kampfbox */
 .field .fbl{position:absolute;left:6px;right:6px;bottom:6px;display:block}
 .field .fbl .mods{position:static;display:flex;justify-content:space-evenly;gap:2px;width:100%}
@@ -4558,7 +4559,7 @@ const PATCHES=[
      ['🎒 Ausrüstung:','Deine Werte, Samenkapseln öffnen und deine Ausrüstung.'],
      ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
      ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
-     ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
+     ['Aufgeräumt:','BOSS AUTO und SKILLS AUTO sind weg – Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch. Das ×2-Tempo per Video findest du unten rechts in der Kampfbox.'],
      ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
      ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
@@ -4602,7 +4603,7 @@ const PATCHES=[
 
 // ---------- ×2-Tempo: wird für 30 Minuten durch ein Werbevideo freigeschaltet (zurzeit ein Platzhalter mit 5-s-Countdown) ----------
 const X2_MIN=30;
-const x2Active=()=>false; // 11.11.2026: ×2-Video entfernt
+const x2Active=()=>(S.x2Until||0)>Date.now(); // 11.11.2026: ×2-Video wieder da – unten rechts in der Kampfbox über den Fähigkeiten
 function renderX2(){const b=$('x2Btn');if(!b)return;const act=x2Active(),on=act&&S.x2On!==false;
   b.setAttribute('aria-pressed',on);b.classList.toggle('locked',!act);
   const left=Math.max(0,((S.x2Until||0)-Date.now())/1000);
