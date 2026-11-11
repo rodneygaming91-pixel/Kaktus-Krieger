@@ -2243,7 +2243,7 @@ function renderDrones(){const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqR
       return`<button class="skc${eq?' eq':''}${up?' up':''}" type="button" data-drd="${D.id}" style="--rc:${rc};--ic:${D.c}"><span class="sklv">Lv ${lv}</span>
         ${busy?'<span class="skpm">🧭</span>':`<span class="skpm" data-${eq?'droff':'dron'}="${D.id}">${eq?'−':'+'}</span>`}${drIco(D)}${eq?'<em class="skeqt">Dabei</em>':`<b>${D.n}</b>`}
         <span class="skbar"><span style="width:${lv>=DR_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=DR_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
-    <div class="skfoot"><button class="btn sksumb" type="button" data-drsum="1">🔮 Beschwören<small>Stufe ${L} · 🌵 ${fmt(S.kak||0)}</small></button>
+    <div class="skfoot"><button class="btn sksumb" type="button" data-drsum="1">🔮 Beschwören<small>Stufe ${L} · 🌱 ${fmt(S.caps||0)}</small></button>
       <button class="btn go" type="button" data-drall="1" ${drCanUp()?'':'disabled'}>Alle leveln</button></div></div>`;
   H.querySelectorAll('[data-drsum]').forEach(b=>b.onclick=()=>{if($('modal').hidden)drSumDlg(re);});
   H.querySelectorAll('[data-droff]').forEach(b=>b.onclick=e=>{e.stopPropagation();S.drEq=S.drEq.filter(x=>x!==b.dataset.droff);save();lastHud='';re();});
@@ -2255,25 +2255,25 @@ function drEquip(id){if(S.drEq.includes(id)||exBusy(id))return false;if(S.drEq.l
   S.drEq.push(id);save();lastHud='';return true;}
 function drLevelAll(id){const o=S.dr[id];let k=0;while(o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv)){o.n-=drNeed(o.lv);o.lv++;k++;}return k;}
 const drCanUp=()=>DRONES.some(D=>{const o=S.dr[D.id];return o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv);});
-function drSumDlg(re){const L=drSumLv(),n=(S.drSum&&S.drSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+function drSumDlg(re){const L=drSumLv(),n=(S.drSum&&S.drSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Begleiter beschwören</h2>
     <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
     <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
-    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌵</b></p>
-    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌵</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌵</button></div>
+    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌱</b></p>
+    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌱</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌱</button></div>
     <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
   $('modal').hidden=false;
   $('sumX').onclick=()=>{$('modal').hidden=true;re();};
   $('sum1').onclick=()=>{$('modal').hidden=true;drSummon(1,re);};$('sum10').onclick=()=>{$('modal').hidden=true;drSummon(10,re);};}
-function drSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.kak||0)<cost||!$('modal').hidden)return;
-  S.kak-=cost;const got=[];
+function drSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.caps||0)<cost||!$('modal').hidden)return;
+  S.caps-=cost;const got=[];
   for(let i=0;i<n;i++){const D=drRoll(),o=S.dr[D.id];let neu=false;
     if(!o){S.dr[D.id]={lv:1,n:0};neu=true;if(S.drEq.length<DR_SLOTS&&!S.drEq.includes(D.id))S.drEq.push(D.id);}else o.n++;
     got.push({D,neu});}
   S.drSum.n=(S.drSum.n||0)+n;save();lastHud='';
   got.sort((a,b)=>b.D.r-a.D.r);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({D,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[D.r].c};--ic:${D.c}">${drIco(D)}<b>${D.n}</b><small style="color:${RAR[D.r].c}">${RAR[D.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
-    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
+    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.caps||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌱</button></div></div>`;
   $('modal').hidden=false;drawDroneIcons($('card'));
   $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
   $('sumAgain').onclick=()=>{$('modal').hidden=true;drSummon(n,re);};}
@@ -2345,7 +2345,7 @@ function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();l
   H.querySelectorAll('[data-ksub]').forEach(b=>b.onclick=()=>{kSub=b.dataset.ksub;renderTabKampf();$('tPanel').scrollTop=0;});
   wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});tkSig=tkSigNow();}
 let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
-  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n].join('|');
+  WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,S.caps,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n].join('|');
 setInterval(()=>{if(curTab==='kampf'&&S.char&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
 function tabGo(t){
@@ -3165,10 +3165,10 @@ function renderModBar(){const on=skOn();
   for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);
   $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{kSub='skill';tabGo('kampf');});}
 // ---------- Fähigkeiten: Beschwören, Sammlung, Leveln mit Doppelten (11.11.2026) ----------
-function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,on=skOn();
+function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,on=skOn();
   const pct=L<10?Math.min(100,(n-a)/(b-a)*100):100;
   return`<div class="sksum"><div class="sksl"><b>🔮 Beschwören <em>Stufe ${L}</em></b><small>${L<10?`${n-a}/${b-a} bis Stufe ${L+1} · höhere Stufe = seltenere Fähigkeiten`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${pct}%"></div></div></div>
-      <div class="sksb">${skCanUp()?'<button class="btn go skall" type="button" data-skall="1">Alle<small>leveln</small></button>':''}<button class="btn go" type="button" data-sum="1" ${kak<SUM1?'disabled':''}>1×<small>${SUM1} 🌵</small></button><button class="btn go" type="button" data-sum="10" ${kak<SUM10?'disabled':''}>10×<small>${SUM10} 🌵</small></button></div></div>
+      <div class="sksb">${skCanUp()?'<button class="btn go skall" type="button" data-skall="1">Alle<small>leveln</small></button>':''}<button class="btn go" type="button" data-sum="1" ${kak<SUM1?'disabled':''}>1×<small>${SUM1} 🌱</small></button><button class="btn go" type="button" data-sum="10" ${kak<SUM10?'disabled':''}>10×<small>${SUM10} 🌱</small></button></div></div>
     <div class="skgrid">${MODS.slice().sort((x,y)=>(skLv(y.id)>0)-(skLv(x.id)>0)||x.r-y.r).map(m=>{const lv=skLv(m.id),o=S.skl[m.id],rc=RAR[m.r].c;
       if(!lv)return`<button class="skc lockd" type="button" data-skd="${m.id}" style="--rc:${rc}"><i>${m.ico}</i><b>???</b><small>${RAR[m.r].n}</small></button>`;
       const need=skNeed(lv),up=lv<SKL_MAX&&o.n>=need;
@@ -3186,14 +3186,14 @@ function skPageHtml(){const on=skOn();let eqRow='';
       return`<button class="skc${eq?' eq':''}${up?' up':''}" type="button" data-skd="${m.id}" style="--rc:${rc};--ic:${m.c}"><span class="sklv">Lv ${lv}</span>
         <span class="skpm" data-${eq?'skoff':'skon2'}="${m.id}">${eq?'−':'+'}</span><i>${m.ico}</i>${eq?'<em class="skeqt">Ausgerüstet</em>':`<b>${m.n}</b>`}
         <span class="skbar"><span style="width:${lv>=SKL_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=SKL_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
-    <div class="skfoot"><button class="btn sksumb" type="button" data-sumdlg="1">🔮 Beschwören<small>Stufe ${L} · 🌵 ${fmt(S.kak||0)}</small></button>
+    <div class="skfoot"><button class="btn sksumb" type="button" data-sumdlg="1">🔮 Beschwören<small>Stufe ${L} · 🌱 ${fmt(S.caps||0)}</small></button>
       <button class="btn go" type="button" data-skall="1" ${skCanUp()?'':'disabled'}>Alle leveln</button></div>`;}
-function skSumDlg(re){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+function skSumDlg(re){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Fähigkeiten beschwören</h2>
     <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
     <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
-    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌵</b></p>
-    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌵</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌵</button></div>
+    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌱</b></p>
+    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌱</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌱</button></div>
     <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
   $('modal').hidden=false;
   $('sumX').onclick=()=>{$('modal').hidden=true;re();};
@@ -3206,15 +3206,15 @@ function skBind(H,re){
   H.querySelectorAll('[data-sum]').forEach(b=>b.onclick=()=>skSummon(+b.dataset.sum,re));
   H.querySelectorAll('[data-skd]').forEach(b=>b.onclick=()=>skDetail(b.dataset.skd,re));
   H.querySelectorAll('[data-skall]').forEach(b=>b.onclick=()=>{let k=0;for(const m of MODS)k+=skLevelAll(m.id);save();banner={txt:k+' Fähigkeits-Level aufgestiegen!',t:1.6};re();});}
-function skSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.kak||0)<cost||!$('modal').hidden)return;
-  S.kak-=cost;const got=[];
+function skSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.caps||0)<cost||!$('modal').hidden)return;
+  S.caps-=cost;const got=[];
   for(let i=0;i<n;i++){const m=skRoll(),o=S.skl[m.id];let neu=false;
     if(!o){S.skl[m.id]={lv:1,n:0};neu=true;if(S.skEq.length<SK_ON&&!S.skEq.includes(m.id))S.skEq.push(m.id);}else o.n++;
     got.push({m,neu});}
   S.skSum.n=(S.skSum.n||0)+n;save();lastHud='';renderModBar();
   got.sort((a,b)=>b.m.r-a.m.r);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({m,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small style="color:${RAR[m.r].c}">${RAR[m.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
-    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
+    <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.caps||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌱</button></div></div>`;
   $('modal').hidden=false;
   $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
   $('sumAgain').onclick=()=>{$('modal').hidden=true;skSummon(n,re);};}
@@ -4331,8 +4331,8 @@ const PATCHES=[
      ['🏰 Mehr:','Dungeons, Erkundung, Arena und Turm.'],
      ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
      ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
-     ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Kakteen (1× 5 🌵, 10× 45 🌵), level sie mit Doppelten und rüste bis zu 6 aus.'],
-     ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Kakteen, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.']]}
+     ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
+     ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
