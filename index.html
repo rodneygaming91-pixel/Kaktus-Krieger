@@ -672,6 +672,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .onrow{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px}
 .onbtn.sm{flex-direction:column;justify-content:center;gap:1px;padding:6px 4px;text-align:center}.onbtn.sm b{font-size:1rem}.onbtn.sm span{font-size:.7rem}
 .twbtn b{color:#9ad8ff}.twbtn span::before{display:none}.twbtn.ready{border-color:#9ad8ff;box-shadow:0 0 0 2px #9ad8ff55,inset 0 0 0 2px var(--frameD)}
+#twview{display:block;width:100%;aspect-ratio:720/380;border:3px solid var(--stl);border-radius:8px;margin-bottom:6px}
 #twcv{width:100%;aspect-ratio:720/420;border:3px solid var(--stl);border-radius:8px;box-shadow:inset 0 0 0 2px var(--std)}
 .card.twc{max-width:440px;gap:10px}
 .twrank{display:flex;flex-direction:column;gap:6px;background:#1c140f;border:2px solid #6b5644;border-radius:10px;padding:8px;text-align:left}
@@ -3676,6 +3677,7 @@ function renderTower(){
   if(pending&&pending.tw)return;
   const f=twFloor(),G=twGuard(f),R=twReward(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
   $('card').innerHTML=`<div class="twhead"><b>🗼 Turm · Etage ${f}</b><span>Rekord: ${S.twRec}</span><button class="twx2${S.twX2?' on':''}" id="twX2" type="button" aria-pressed="${!!S.twX2}" title="Doppelte Geschwindigkeit">⏩ ×2</button></div>
+    <canvas id="twview" width="720" height="380"></canvas>
     <canvas id="twcv" width="720" height="420"></canvas>
     <div class="wbel"><span>${G.keeper?'★ Wächter-Etage · ':''}${G.ty.n}</span><span>Greift an mit ${elTag(G.Wd.atkEl)}</span><span>Schwach gegen ${elTag(G.Wd.weak)}</span>
       <span>Deine Waffe: ${el?elTag(el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
@@ -3688,7 +3690,7 @@ function renderTower(){
     ${f<=S.twRec&&!tw.anim?`<button class="btn" id="twFast" type="button">⏩ Schnellaufstieg bis Etage ${S.twRec}<small>Bereits geschaffte Etagen sofort durchziehen · pro Etage +${fmt(twFastCoins())} Münzen und +${TW_CAPS} Kapseln</small></button>`:''}
     ${twBoardHtml()}`;
   $('twClose').onclick=()=>{if(tw.anim)return;tw.auto=false;tw.open=false;tw.res=null;$('card').classList.remove('twc');$('modal').hidden=true;lastHud='';};
-  $('twGo').onclick=twFight;drawTower();
+  $('twGo').onclick=twFight;drawTower();twViewGo();
   $('twX2').onclick=()=>{S.twX2=!S.twX2;save();const b=$('twX2');b.classList.toggle('on',S.twX2);b.setAttribute('aria-pressed',S.twX2);};
   $('twTrash').onclick=()=>{S.twTrash=!S.twTrash;save();renderTower();};
   $('twAuto').onclick=()=>{tw.auto=!tw.auto;if(tw.auto&&!tw.anim){tw.res=null;twFight();}else renderTower();};
@@ -3704,6 +3706,58 @@ function renderTower(){
       else twb.msg=(r&&r.reason)||'Kein Preis abzuholen';}
     catch(e){twb.msg='Keine Verbindung.';}
     twb.busy=false;await twLoad();};}
+}
+// ---------- Turm von außen (11.11.2026): Etagen zum Hochklettern, die Kamera fährt nach jedem Sieg eine Etage nach oben ----------
+let twViewF=null,twViewRaf=0;
+function twViewGo(){const f=twFloor();if(twViewF==null||Math.abs(twViewF-f)>6)twViewF=f-(f>1&&tw.climbFrom!=null?f-tw.climbFrom:0);tw.climbFrom=null;
+  if(twViewRaf)return;let last2=performance.now();
+  const step=now=>{const dt=Math.min(.1,(now-last2)/1000);last2=now;const tgt=twFloor();
+    twViewF+= (tgt-twViewF)*Math.min(1,dt*3.2);if(Math.abs(tgt-twViewF)<.004)twViewF=tgt;
+    drawTwView();if(tw.open&&$('twview'))twViewRaf=requestAnimationFrame(step);else twViewRaf=0;};
+  twViewRaf=requestAnimationFrame(step);}
+function drawTwView(){const cv2=$('twview');if(!cv2)return;const g=cv2.getContext('2d'),W2=720,H2=380,FH=86,cur=twFloor(),vf=twViewF==null?cur:twViewF,tt=performance.now()/1000;
+  g.setTransform(1,0,0,1,0,0);
+  // Himmel: je höher, desto dunkler und sternenreicher
+  const hgt=Math.min(1,vf/300),sky=g.createLinearGradient(0,0,0,H2);
+  sky.addColorStop(0,`hsl(${230+hgt*30},${45}%,${Math.max(6,26-hgt*20)}%)`);sky.addColorStop(1,`hsl(${20+hgt*220},${40}%,${Math.max(10,40-hgt*28)}%)`);
+  g.fillStyle=sky;g.fillRect(0,0,W2,H2);
+  for(let i=0;i<40;i++){const sx=(i*137.5)%W2,sy=((i*71.3+vf*FH*.15)%H2+H2)%H2;g.globalAlpha=.15+hgt*.6*((i%3)/3+.3);g.fillStyle='#fff';g.fillRect(sx,sy,2,2);}g.globalAlpha=1;
+  // Wolken ziehen vorbei
+  for(let i=0;i<4;i++){const cx=((i*230+tt*12*(i%2?1:-1))%(W2+200)+W2+200)%(W2+200)-100,cy=((i*97+vf*FH*.4)%(H2+80)+H2+80)%(H2+80)-40;
+    g.fillStyle='#ffffff18';g.beginPath();g.ellipse(cx,cy,70,16,0,0,7);g.ellipse(cx+40,cy-8,40,14,0,0,7);g.fill();}
+  const TX=210,TW2=300,baseY=H2/2+FH/2; // Mittelpunkt: aktuelle Etage in der Mitte
+  const yOf=fl=>baseY-(fl-vf)*FH; // Unterkante der Etage fl
+  // Boden, wenn man unten ist
+  {const gy=yOf(1);if(gy<H2+10){const Wd=WORLDS[0];g.fillStyle=Wd.ground[1];g.fillRect(0,gy,W2,H2-gy+10);g.fillStyle=Wd.ground[0];g.fillRect(0,gy,W2,6);}}
+  const f0=Math.max(1,Math.floor(vf)-3),f1=Math.ceil(vf)+3;
+  for(let fl=f0;fl<=f1;fl++){const yb=yOf(fl),yt=yb-FH;if(yt>H2||yb<0)continue;const G=twGuard(fl),Wd=G.Wd,done=fl<cur,here=fl===cur,rec=fl===S.twRec;
+    // Mauer in der Farbe der Welt dieser Etage
+    const wall=g.createLinearGradient(TX,0,TX+TW2,0);wall.addColorStop(0,shade(Wd.mesa,-.25));wall.addColorStop(.5,shade(Wd.mesa,.12));wall.addColorStop(1,shade(Wd.mesa,-.35));
+    g.fillStyle=wall;g.fillRect(TX,yt,TW2,FH);
+    g.strokeStyle='#0005';g.lineWidth=2;for(let r=0;r<3;r++){const ry=yt+r*FH/3;g.beginPath();g.moveTo(TX,ry);g.lineTo(TX+TW2,ry);g.stroke();
+      for(let x=TX+((r%2)?25:0);x<TX+TW2;x+=50){g.beginPath();g.moveTo(x,ry);g.lineTo(x,ry+FH/3);g.stroke();}}
+    // Gesims
+    g.fillStyle=G.keeper?'#c0392b':shade(Wd.mesa,-.5);g.fillRect(TX-10,yb-8,TW2+20,10);g.fillStyle='#ffffff22';g.fillRect(TX-10,yb-8,TW2+20,2);
+    // Fenster links/rechts
+    for(const wx of[TX+40,TX+TW2-70]){g.fillStyle='#1a1008';g.beginPath();g.roundRect(wx,yt+18,30,40,[15,15,2,2]);g.fill();
+      if(done||here){g.fillStyle=here?`rgba(255,210,110,${.75+.25*Math.sin(tt*4)})`:'#ffcf6a55';g.beginPath();g.roundRect(wx+4,yt+22,22,34,[11,11,1,1]);g.fill();}}
+    // Tor in der Mitte
+    const dx=TX+TW2/2-34;g.fillStyle=here?'#2a1a10':'#140c06';g.beginPath();g.roundRect(dx,yt+14,68,FH-22,[34,34,0,0]);g.fill();
+    if(here){g.save();g.beginPath();g.roundRect(dx,yt+14,68,FH-22,[34,34,0,0]);g.clip();const gl=g.createRadialGradient(dx+34,yb-20,4,dx+34,yb-20,60);gl.addColorStop(0,'#ffd47a88');gl.addColorStop(1,'#0000');g.fillStyle=gl;g.fillRect(dx,yt,68,FH);
+      g.translate(dx+34,yb-10);g.scale(.55,.55);drawCactus(g,S.char||DEFAULT_CH,{x:0,y:0,bob:Math.sin(tt*4),gear:S.gear});g.restore();}
+    else if(!done){g.fillStyle=Wd.boss.col;g.globalAlpha=.55;g.beginPath();g.ellipse(dx+34,yb-26,16,14,0,0,7);g.fill();g.globalAlpha=1;g.fillStyle='#fff';g.font='900 20px Nunito,sans-serif';g.textAlign='center';g.fillText('?',dx+34,yb-19);}
+    else{g.fillStyle='#7fe08a';g.font='900 26px Nunito,sans-serif';g.textAlign='center';g.fillText('✓',dx+34,yb-20);}
+    // Schild mit Etagennummer links
+    const px=TX-108,py=yt+FH/2-18;g.fillStyle=here?'#ffd447':done?'#3a5a2a':'#2a2030';g.strokeStyle='#1c140e';g.lineWidth=3;g.beginPath();g.roundRect(px,py,92,36,8);g.fill();g.stroke();
+    g.fillStyle=here?'#1c140e':done?'#c8ffb0':'#c8b8d8';g.font='900 19px "Lilita One","Arial Black",sans-serif';g.textAlign='center';g.fillText((G.keeper?'★ ':'')+fl,px+46,py+25);
+    g.strokeStyle=here?'#ffd447':'#ffffff30';g.lineWidth=2;g.beginPath();g.moveTo(px+92,py+18);g.lineTo(TX-10,py+18);g.stroke();
+    // rechts: Rekord-Fahne / Wächter
+    const rx=TX+TW2+18;g.textAlign='left';g.font='800 15px Nunito,sans-serif';
+    if(rec){g.fillStyle='#ffd447';g.fillRect(rx,yt+16,4,44);g.beginPath();g.moveTo(rx+4,yt+16);g.lineTo(rx+40,yt+26);g.lineTo(rx+4,yt+36);g.fill();g.fillText('Rekord',rx+8,yt+56+12);}
+    else if(G.keeper){g.fillStyle='#ff8a7a';g.fillText('Wächter',rx,yt+FH/2+5);}
+  }
+  // Rand
+  g.strokeStyle='#0008';g.lineWidth=4;{const gy=Math.min(H2+4,yOf(1));g.beginPath();g.moveTo(TX,0);g.lineTo(TX,gy);g.moveTo(TX+TW2,0);g.lineTo(TX+TW2,gy);g.stroke();}
 }
 function drawTower(){const cv2=$('twcv');if(!cv2)return;const g=cv2.getContext('2d'),f=twFloor(),G=twGuard(f),A=tw.anim;
   g.setTransform(1,0,0,1,0,0);
@@ -4576,6 +4630,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
+     ['🗼 Turm von außen:','Oben im Turm siehst du jetzt den Turm mit seinen Etagen – geschaffte Etagen mit ✓, Wächter-Etagen, deine Rekord-Fahne. Nach jedem Sieg kletterst du sichtbar eine Etage höher.'],
      ['💰 Währungen oben:','Münzen und Samenkapseln stehen jetzt oben links, Kakteen oben rechts unter der Allianz – so ist unter der Kampfbox mehr Platz.'],
      ['🛡 Allianz-Knopf:','Oben rechts öffnet jetzt nur noch deine Allianz – Profil, Freunde und Rangliste findest du in deinem Profil.'],
      ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen. Bei den Begleitern stehen „Beschwören“ und „Alle leveln“ jetzt fest unten.'],
