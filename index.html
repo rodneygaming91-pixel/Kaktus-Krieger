@@ -1668,9 +1668,9 @@ function hitEnemy(e,dmg,crit){
     const gain=Math.ceil(e.coin*coinMul());
     e.dying=.35;S.coins+=gain;floats.push({x:e.x,y:e.y-e.ty.r*2-20,txt:'+'+fmt(gain),col:'#f0b866',t:1});
     for(let i=0;i<(eco?3:10);i++)parts.push({x:e.x,y:e.y-e.ty.r,vx:rnd(-120,120),vy:rnd(-220,-60),t:rnd(.3,.6),col:e.ty.col});
-    if(e.boss){boss=false;const kk=kakFor(S.stage);S.kak=(S.kak||0)+kk;floats.push({x:e.x,y:e.y-60,txt:'+'+kk+' 🌵',col:'#7fe08a',t:1.4});const firstTime=S.stage+1>S.best;S.stage++;S.kills=0;S.best=Math.max(S.best,S.stage);S.caps+=3;const nd=diffIdx(S.stage)>diffIdx(S.stage-1),nw=!nd&&(S.stage-1)%STAGES_PER_WORLD===0&&worldIdx(S.stage)>worldIdx(S.stage-1);banner={txt:nd?diffOf(S.stage).n+(firstTime?' freigeschaltet!':'!'):nw?'Neue Welt: '+world().n+' ('+ELEM[world().atkEl].n+')':'Stage geschafft! +3 Kapseln · +'+kk+' Kakteen',t:nd?3.5:nw?3:2.2};shake=nd?10:6;}
+    if(e.boss){boss=false;const kk=kakFor(S.stage);S.kak=(S.kak||0)+kk;floats.push({x:e.x,y:e.y-60,txt:'+'+kk+' 🌵',col:'#7fe08a',t:1.4});const firstTime=S.stage+1>S.best;S.stage++;S.kills=0;S.best=Math.max(S.best,S.stage);S.caps+=9;const nd=diffIdx(S.stage)>diffIdx(S.stage-1),nw=!nd&&(S.stage-1)%STAGES_PER_WORLD===0&&worldIdx(S.stage)>worldIdx(S.stage-1);banner={txt:nd?diffOf(S.stage).n+(firstTime?' freigeschaltet!':'!'):nw?'Neue Welt: '+world().n+' ('+ELEM[world().atkEl].n+')':'Stage geschafft! +9 Kapseln · +'+kk+' Kakteen',t:nd?3.5:nw?3:2.2};shake=nd?10:6;}
     else if(!boss){S.kills=Math.min(KILL_GOAL,S.kills+1);if(S.kills>=KILL_GOAL&&S.bossAuto!==false)startBoss();}
-    if(!e.boss&&Math.random()<0.12){S.caps++;floats.push({x:e.x,y:e.y-e.ty.r*2-34,txt:'+1 Kapsel',col:'#63c74d',t:1.1});}
+    if(!e.boss&&Math.random()<0.18){S.caps+=2;floats.push({x:e.x,y:e.y-e.ty.r*2-34,txt:'+2 Kapseln',col:'#63c74d',t:1.1});}
     save();
   }
 }
@@ -2821,11 +2821,11 @@ async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.
   if(olOpen&&olTab==='boss')renderOnline();}
 // Weltboss-Belohnung: nach Wochenende für alle, die angegriffen haben, Platz 1–3 bekommt mehr
 // Weltboss hat unendlich Leben (08.11.2026): Belohnung richtet sich nach dem eigenen Schaden der ganzen Woche, Platz 1–3 bekommt zusätzlich einen Bonus
-const WB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:8},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e6,kak:10,caps:12},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e8,kak:15,caps:16},
-  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e10,kak:22,caps:22},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e12,kak:30,caps:30}];
+const WB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:24},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e6,kak:10,caps:36},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e8,kak:15,caps:48},
+  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e10,kak:22,caps:66},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e12,kak:30,caps:90}];
 const wbTier=d=>{let T=WB_TIERS[0];for(const x of WB_TIERS)if(d>=x.min)T=x;return T;};
-const WB_PART={kak:10,caps:10};
-const WB_PRIZE=[null,{kak:40,caps:30,bump:2,n:'🥇'},{kak:25,caps:20,bump:1,n:'🥈'},{kak:15,caps:12,bump:0,n:'🥉'}];
+const WB_PART={kak:10,caps:30};
+const WB_PRIZE=[null,{kak:40,caps:90,bump:2,n:'🥇'},{kak:25,caps:60,bump:1,n:'🥈'},{kak:15,caps:36,bump:0,n:'🥉'}];
 function wbPrizeHtml(){const P=wb.st&&wb.st.prize;
   const mine=wb.st?+wb.st.mine:0,T=wbTier(mine),nx=WB_TIERS[WB_TIERS.indexOf(T)+1];
   const legend=`<div class="wbtiers">${WB_TIERS.map(x=>`<span class="${x===T&&mine>0?'on':''}" style="--tc:${x.c}"><b>${x.ico} ${x.n}</b><small>${x.min?'ab '+fmt(x.min):'ab 1 Angriff'}</small><small>${x.kak} 🌵 · ${x.caps} Kapseln</small></span>`).join('')}</div>
@@ -2926,7 +2926,7 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
     if(alive&&!(A.end&&A.endT>1.6))requestAnimationFrame(step);else finish(A);};
   const finish=async A=>{const total=Math.round(A.dmg),why=A.end==='boss'?'Boss besiegt!':A.end==='dead'?'Du bist gefallen.':A.end==='time'?'Zeit abgelaufen.':'Kampf abgebrochen.';
     try{const r=await rpc(X.hitRpc,{p_code:ON.code,p_key:ON.key,p_dmg:total});
-      if(r&&r.ok){const bonus=A.end==='boss'?3:0,caps=Math.min(10,2+bonus+Math.floor(Math.log10(r.added+1)/2)),coins=Math.round(r.added*.25*(A.end==='boss'?1.5:1));
+      if(r&&r.ok){const bonus=A.end==='boss'?3:0,caps=3*Math.min(10,2+bonus+Math.floor(Math.log10(r.added+1)/2)),coins=Math.round(r.added*.25*(A.end==='boss'?1.5:1));
         S.caps+=caps;S.coins+=coins;save();lastHud='';
         X.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen.</small>':''}`;}
       else X.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
@@ -2938,8 +2938,8 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
 Object.assign(wb,{hitRpc:'kk_wb_hit',cv:'wbcv',go:'wbGo',loading:'Lade Weltboss …',boss:p=>wbBoss(p),prize:()=>wbPrizeHtml(),load:()=>loadWb(),
   alive:()=>olOpen&&olTab==='boss',info:()=>`Diese Woche: ${wb.st.players} Spieler · dein Schaden ${fmt(wb.st.mine)} · Gesamtschaden ${fmt(wb.st.total)}`});
 // ---------- Allianz-Boss: wie der Weltboss, aber nur für die eigene Allianz; Belohnung nach dem Gesamtschaden der ganzen Allianz ----------
-const AB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:8},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e7,kak:10,caps:12},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e9,kak:15,caps:16},
-  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e11,kak:22,caps:22},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e13,kak:30,caps:30}];
+const AB_TIERS=[{n:'Bronze',ico:'🥉',c:'#d08a4a',min:0,kak:5,caps:24},{n:'Silber',ico:'🥈',c:'#cfd6e0',min:1e7,kak:10,caps:36},{n:'Gold',ico:'🥇',c:'#ffd447',min:1e9,kak:15,caps:48},
+  {n:'Platin',ico:'💠',c:'#8fe8e0',min:1e11,kak:22,caps:66},{n:'Diamant',ico:'💎',c:'#9ad0ff',min:1e13,kak:30,caps:90}];
 const abTier=d=>{let T=AB_TIERS[0];for(const x of AB_TIERS)if(d>=x.min)T=x;return T;};
 function abBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS[(n+6)%WORLDS.length],W1=WORLDS[(n*3+2)%WORLDS.length];
   return{n:'Allianz-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak};}
@@ -2984,7 +2984,7 @@ setInterval(()=>{const open=olOpen&&olTab==='gilde'&&gd.sub==='chat';if(open||Da
 setTimeout(pollChat,7000);
 // Allianz-Wochenziel
 let goals={d:null,err:''};
-const GOAL_REW={kills:[5,10,20],wb:[5,10,20]},GOAL_COIN=[100,250,600],TIERN=['Bronze','Silber','Gold'],TIERC=['#cd8a4a','#c8d0e0','#ffd447'];
+const GOAL_REW={kills:[15,30,60],wb:[15,30,60]},GOAL_COIN=[100,250,600],TIERN=['Bronze','Silber','Gold'],TIERC=['#cd8a4a','#c8d0e0','#ffd447'];
 async function loadGoals(){goals.err='';try{goals.d=await rpc('kk_guild_goals',{p_code:ON.code});}catch(e){goals.err='Keine Verbindung.';}
   if(olOpen&&olTab==='gilde'&&gd.sub==='ziele')renderOnline();}
 function goalsHtml(){
@@ -3206,7 +3206,7 @@ function makeBots(n,pts){const me=arStats(),out=[];for(let i=0;i<n;i++){const f=
       card:{char:{name:'',shape:pick(SHAPES),color:COLORS[Math.floor(Math.random()*COLORS.length)][1],eyes:pick(EYES),hat:pick(HATS),cls:'schuetze'},gear:G}});}
   return out;}
 // Tagesrangliste der Arena: heute gewonnene Punkte, Platz 1–3 bekommen am nächsten Tag Kakteen und Samenkapseln
-const AR_PRIZE=[null,{kak:30,caps:20,n:'🥇'},{kak:20,caps:12,n:'🥈'},{kak:10,caps:8,n:'🥉'}];
+const AR_PRIZE=[null,{kak:30,caps:60,n:'🥇'},{kak:20,caps:36,n:'🥈'},{kak:10,caps:24,n:'🥉'}];
 function arDayHtml(){const D=ar.day;
   const nx=new Date();nx.setHours(24,0,0,0);const left=(nx-Date.now())/1000,hh=Math.floor(left/3600),mm=Math.floor(left%3600/60);
   const prizes=`<div class="twprz">${[1,2,3].map(r=>`<span>${AR_PRIZE[r].n} ${AR_PRIZE[r].kak} 🌵 · ${AR_PRIZE[r].caps} Samenkapseln</span>`).join('')}</div>`;
@@ -3321,7 +3321,7 @@ function drawArena(){const cv2=$('arcv'),F=ar.fight;if(!cv2||!F)return;const g=c
   g.font='18px "Lilita One","Arial Black",sans-serif';g.fillStyle='#ffe08a';g.fillText('VS',180,90);
   if(F.done){const txt=F.r.win?'Sieg!':'Niederlage';g.font='28px "Lilita One","Arial Black",sans-serif';g.fillStyle='#1c120c';g.fillText(txt,182,72);g.fillStyle=F.r.win?'#ffe08a':'#ff8a7a';g.fillText(txt,180,70);}}
 function arFinish(){const F=ar.fight;if(!F)return;const r=F.r;
-  if(r.win){const caps=2,coins=Math.ceil(3*cPow(S.stage))*40;S.caps+=caps;S.coins+=coins;save();lastHud='';
+  if(r.win){const caps=6,coins=Math.ceil(3*cPow(S.stage))*40;S.caps+=caps;S.coins+=coins;save();lastHud='';
     ar.res=`<b>Sieg gegen ${esc2(F.o.name)}!</b> <em class="up">+${r.delta} Punkte</em> · +${caps} Kapseln · +${fmt(coins)} Münzen`;}
   else ar.res=`<b>Niederlage gegen ${esc2(F.o.name)}.</b> <em class="down">${r.delta} Punkte</em><br><small>Tipp: Mehr Angriff, Tempo oder ein besseres Schild helfen.</small>`;
   ar.fight=null;ar.opp=null;loadArena();renderArena();}
@@ -3534,7 +3534,7 @@ let offPending=null;
 function offlineGain(sec){
   sec=Math.min(OFFLINE_CAP,sec);if(sec<60||!S.char)return;
   const kills=Math.floor(sec/3),coinPer=Math.ceil(6*cPow(S.stage));
-  const coins=Math.round(kills*coinPer*OFF_EFF*coinMul()),caps=Math.floor(kills*0.05);
+  const coins=Math.round(kills*coinPer*OFF_EFF*coinMul()),caps=Math.floor(kills*0.15);
   const prog=Math.min(KILL_GOAL-S.kills,kills);
   offPending={sec,kills,coins,caps,prog};
   if($('modal').hidden)showOffline();
@@ -3621,12 +3621,12 @@ function twDayCheck(){let ch=false;if(S.twRec==null){S.twRec=Math.max(0,(S.tower
 twDayCheck();
 const twFloor=()=>S.tower||1;
 // Tagespreise Turm Platz 1–3 (08.11.2026: Kapseln ×10, Kakteen bleiben selten)
-const TW_PRIZE=[null,{kak:30,caps:200,bump:2,n:'🥇'},{kak:20,caps:120,bump:1,n:'🥈'},{kak:10,caps:80,bump:0,n:'🥉'}];
+const TW_PRIZE=[null,{kak:30,caps:400,bump:2,n:'🥇'},{kak:20,caps:240,bump:1,n:'🥈'},{kak:10,caps:160,bump:0,n:'🥉'}];
 const twGuard=f=>{const Wd=WORLDS[(f-1)%WORLDS.length],st=2*f+10,p=pow(st),ty=Wd.boss,hp=24*ty.hp*p*1.1;
   return{f,st,Wd,ty,hp,atk:6*ty.atk*p*.56,keeper:f%10===0};};
 const twReward=f=>({kak:1+Math.floor(f/25),caps:TW_CAPS,item:true,bump:f%10===0});
-// 10.11.2026: 20 Kapseln pro Etage (vorher 2), auch beim Schnellaufstieg
-const TW_CAPS=20;
+// 10.11.2026: 20 Kapseln pro Etage (vorher 2), auch beim Schnellaufstieg · 11.11.2026: 40
+const TW_CAPS=40;
 // Schnellaufstieg (08.11.2026): pro übersprungener Etage Kapseln und Münzen wie 5 Gegner auf deiner besten Stage, keine Kakteen, keine Ausrüstung
 const twFastCoins=()=>Math.ceil(30*cPow(S.best));
 let twb={st:null,err:null,busy:false,msg:''};
@@ -3789,13 +3789,13 @@ maintCheck();setInterval(maintCheck,30000);
 // Einmal pro Tag abholen. Wer am Folgetag wiederkommt, rückt einen Tag weiter; nach Tag 7 beginnt es von vorn.
 // Wer einen Tag auslässt, startet wieder bei Tag 1. Münzen wachsen mit der besten Stage.
 const DAILY=[
-  {caps:5},
+  {caps:15},
   {coins:300},
   {kak:5},
-  {caps:10},
+  {caps:30},
   {coins:600},
   {kak:10},
-  {caps:25,kak:20,item:1}
+  {caps:75,kak:20,item:1}
 ];
 const dailyCoins=n=>Math.round(3*cPow(Math.max(1,S.best||1))*n);
 const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
@@ -3836,7 +3836,7 @@ const dgSt=lv=>lv*5;                    // Stufe 1 entspricht Stage 5, jede Stuf
 const DGT={coin:{key:'dg',ico:'🪙',n:'Münz-Dungeon',boss:'Münzkönig',unit:'Münzen',col:'#ffd447',
     full:st=>Math.round(6*cPow(Math.max(st,S.best||1))*800*coinMul()),desc:'Besiege den Münzkönig und räume seine Schatzkammer aus.'},
   caps:{key:'dgc',ico:'🌱',n:'Kapsel-Dungeon',boss:'Samenkönig',unit:'Kapseln',col:'#9be36a',
-    full:st=>10+Math.round(Math.max(st,S.best||1)*.4),desc:'Besiege den Samenkönig und plündere seinen Kapselgarten.'}};
+    full:st=>2*(10+Math.round(Math.max(st,S.best||1)*.4)),desc:'Besiege den Samenkönig und plündere seinen Kapselgarten.'}};
 const dgT=()=>DGT[dg.type]||DGT.coin;
 function dgState(T){T=T||dgT();const d=ptDay();if(!S[T.key])S[T.key]={max:Math.max(1,Math.floor(S.best*.8/5)),lv:0,day:d,used:0,bought:0,extra:0};const D=S[T.key];
   if(D.day!==d){D.day=d;D.used=0;D.bought=0;D.extra=0;}
@@ -4023,8 +4023,9 @@ setInterval(()=>{if(exOpen&&!$('modal').hidden&&!pending&&!exPick)renderEx();},1
 setInterval(()=>{if(!S.char)return;const R=exState().runs,n=Object.values(R).filter(r=>Date.now()>=r.end).length,k=Object.keys(R).length,e=$('exBtn').querySelector('span');
   const tx=n?n+' zurück!':k?k+' unterwegs':'Missionen';if(e&&e.textContent!==tx)e.textContent=tx;$('exBtn').classList.toggle('rd',n>0);},1000);
 
-// ---------- Spielzeit-Truhen: jeden Tag neu nach 15 min, 30 min, 1 h, 2 h und 3 h Spielzeit ----------
-const PT=[{m:15,coin:150,kc:.25,k:1,ic:0},{m:30,coin:300,kc:.35,k:1,ic:.35},{m:60,coin:600,kc:.5,k:2,ic:.5},{m:120,coin:1000,kc:.7,k:2,ic:.75},{m:180,coin:1500,kc:1,k:3,ic:1}];
+// ---------- Spielzeit-Truhen: jeden Tag neu nach 15 min, 30 min, 1 h, 2 h, 3 h, 4 h, 5 h und 6 h Spielzeit ----------
+const PT=[{m:15,coin:150,kc:.25,k:1,ic:0,cap:10},{m:30,coin:300,kc:.35,k:1,ic:.35,cap:15},{m:60,coin:600,kc:.5,k:2,ic:.5,cap:20},{m:120,coin:1000,kc:.7,k:2,ic:.75,cap:30},
+  {m:180,coin:1500,kc:1,k:3,ic:1,cap:40},{m:240,coin:2000,kc:1,k:3,ic:1,cap:50},{m:300,coin:2500,kc:1,k:4,ic:1,cap:60},{m:360,coin:3500,kc:1,k:5,ic:1,cap:80}];
 const ptDay=()=>{const d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();};
 function ptState(){if(!S.pt||S.pt.day!==ptDay())S.pt={day:ptDay(),sec:0,got:[]};return S.pt;}
 let ptOpen=false,ptMsg='',ptLastTxt='';
@@ -4044,6 +4045,7 @@ function ptItem(){const Wd=world(),R=SLOTS.map(sl=>({sl,cur:S.gear[sl.id]})).sor
   return null;}
 function ptClaim(i){if(!ptReady(i))return;const P=ptState(),C=PT[i],out=[];P.got.push(i);
   const coins=Math.round(6*cPow(S.stage)*C.coin);S.coins+=coins;out.push(`<em class="up">+${fmt(coins)} Münzen</em>`);
+  if(C.cap){S.caps+=C.cap;out.push(`<em class="up">+${C.cap} Kapseln</em>`);}
   if(Math.random()<C.kc){const k=C.k+diffIdx(S.stage);S.kak=(S.kak||0)+k;out.push(`<em class="up">+${k} 🌵</em>`);}
   if(Math.random()<C.ic){const it=ptItem();if(it)out.push(twGive(it));else{S.caps+=5;out.push('<em class="up">+5 Kapseln</em>');}}
   ptMsg=`🎁 <b>Truhe ${C.m<60?C.m+' Min':C.m/60+' Std'}:</b> `+out.join(' · ');save();lastHud='';renderPt();}
@@ -4051,7 +4053,7 @@ function renderPt(){const P=ptState();
   $('card').innerHTML=`<h2>🎁 Spielzeit-Truhen</h2><p class="hint" style="margin:0">Heute gespielt: <b>${mmss(P.sec)}</b> · Jeden Tag gibt es neue Truhen.</p>
     <div class="ptlist">${PT.map((C,i)=>{const got=P.got.includes(i),rd=ptReady(i),left=C.m*60-P.sec;
       return`<div class="ptc${got?' got':rd?' rd':''}"><span class="pti">${got?'📭':rd?'🎁':'🧰'}</span><div><b>${C.m<60?C.m+' Minuten':C.m/60+(C.m===60?' Stunde':' Stunden')}</b>
-        <small>Münzen${C.kc>=1?' · Kakteen':C.kc>0?' · ab und zu Kakteen':''}${C.ic>=1?' · Ausrüstung':C.ic>0?' · ab und zu Ausrüstung':''}</small></div>
+        <small>Münzen · ${C.cap} Kapseln${C.kc>=1?' · Kakteen':C.kc>0?' · ab und zu Kakteen':''}${C.ic>=1?' · Ausrüstung':C.ic>0?' · ab und zu Ausrüstung':''}</small></div>
         ${got?'<span class="ptst">✓ Geöffnet</span>':rd?`<button class="sbtn go" type="button" data-pt="${i}">Öffnen</button>`:`<span class="ptst">noch ${mmss(left)}</span>`}</div>`;}).join('')}</div>
     ${ptMsg?`<div class="wbres">${ptMsg}</div>`:''}
     <div class="row"><button class="btn" id="ptX" type="button">Schließen</button></div>`;
@@ -4562,7 +4564,9 @@ const PATCHES=[
      ['📋 Übersichten:','Tippe oben auf deinen Namen: Dort siehst du Fähigkeiten, Begleiter und Ausrüstung, alle Kaktus-Werte auf einen Blick, wechselst und levelst deine Kakteen und kommst zu Freunden und Rangliste.'],
      ['🌱 Gärtnerei:','Neu gestaltet – mit Gewächshaus, das mit jeder Stufe wächst, und übersichtlichen Kapsel-Chancen.'],
      ['🎁 Spielzeit-Truhen:','Jetzt in der Kampfbox oben rechts unter Waffe und Resistenz.'],
-     ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.']]}
+     ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
+     ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
+     ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
