@@ -761,6 +761,26 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 @media (max-width:370px){header h1{font-size:.9rem}.who.plate{min-width:84px;padding:4px 7px}}
 .dtag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--body);font-weight:900;font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
   padding:1px 8px;border-radius:999px;background:#1c140f;color:var(--dc,#7fe08a);border:1.5px solid var(--dc,#7fe08a);box-shadow:0 1px 0 #000}
+.wm{display:flex;flex-direction:column;gap:8px}.wm h2{margin:0;text-align:center}
+.wmtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.wmtab{position:relative;font:inherit;font-size:.7rem;font-weight:800;padding:6px 2px;border-radius:8px;border:2px solid var(--dc);background:#241a14;color:var(--dc);cursor:pointer}
+.wmtab.on{background:var(--dc);color:#1c140e}.wmtab:disabled{opacity:.45;border-color:#6b5644;color:var(--muted);cursor:default}.wmtab i{position:absolute;top:-7px;right:-5px;font-style:normal;background:#e0283a;color:#fff;border-radius:9px;min-width:17px;height:17px;font-size:.62rem;display:grid;place-items:center}
+.wmsum{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px}.wmsum b{color:var(--dc)}.wmsum span{font-size:.78rem;color:var(--muted)}
+.wmlist{max-height:56vh;overflow-y:auto;padding:6px 4px;border-radius:12px;background:radial-gradient(circle at 30% 20%,#3a2a1c,#1c140e);border:2px solid #6b5644;display:flex;flex-direction:column;align-items:stretch}
+.wmnode{display:grid;grid-template-columns:62px 1fr;gap:9px;align-items:center;padding:4px 6px;margin-right:16%}
+.wmnode.r{grid-template-columns:1fr 62px;margin-right:0;margin-left:16%}.wmnode.r .wmorb{order:2}.wmnode.r .wminfo{text-align:right;align-items:flex-end}
+.wmorb{position:relative;width:62px;height:62px;border-radius:50%;background:linear-gradient(var(--s1),var(--s2) 55%,var(--m) 56%,var(--g) 80%);border:3px solid #6b5644;box-shadow:0 3px 0 #0008;display:grid;place-items:center}
+.wmnum{position:absolute;top:-6px;left:-6px;background:#1c140e;border:2px solid #6b5644;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-size:.7rem;font-weight:900}
+.wmme{font-size:1.6rem;animation:mwob 1.2s ease-in-out infinite}.wmok{font-size:1.4rem;color:#7fe08a;font-weight:900;text-shadow:0 2px 0 #000}.wmlk{font-size:1rem;opacity:.8}
+.wmnode.here .wmorb{border-color:#ffd447;box-shadow:0 0 14px #ffd447aa,0 3px 0 #0008}.wmnode.done .wmorb{border-color:#7fe08a}.wmnode.lock{opacity:.55}.wmnode.lock .wmorb{filter:grayscale(.6)}
+.wminfo{display:flex;flex-direction:column;gap:2px;min-width:0;text-align:left;align-items:flex-start}.wminfo b{font-size:.9rem}.wminfo small{font-size:.62rem;color:var(--muted)}
+.wmbar{position:relative;height:13px;border-radius:7px;background:#0007;overflow:hidden;width:100%}.wmbar div{height:100%;background:linear-gradient(90deg,#3fb59a,#7fe08a)}.wmbar em{position:absolute;inset:0;font-style:normal;font-size:.58rem;font-weight:900;display:grid;place-items:center;text-shadow:0 1px 0 #000}
+.wmchest{font-size:.66rem;font-weight:800;color:var(--sand)}.wmchest.got{color:#7fe08a}
+button.wmchest.rd{font:inherit;font-size:.74rem;font-weight:900;padding:3px 10px;border-radius:9px;border:2px solid #1c140e;background:linear-gradient(#ffe066,#ffae00);color:#1c140e;cursor:pointer;animation:mailpulse 1.4s ease-in-out infinite;align-self:flex-start}
+.wmnode.r button.wmchest.rd{align-self:flex-end}
+.wmpath{height:16px;width:4px;margin:0 auto;background:repeating-linear-gradient(#c49a6c 0 4px,#0000 4px 8px)}
+.wmgoal,.wmstart{text-align:center;font-size:.78rem;font-weight:800;color:var(--sand);padding:4px}
+.field .stagebox{pointer-events:auto;cursor:pointer} /* Tipp öffnet die Weltkarte */
+.stagebox.wmrd::after{content:'🎁';position:absolute;right:-6px;top:-8px;font-size:.9rem;animation:mwob 1s ease-in-out infinite}
 .diffrow{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:-4px}
 .dchip{border:2px solid var(--dc);border-radius:8px;background:linear-gradient(#3a2c22,#2a1f18);color:var(--dc);font:inherit;font-weight:900;font-size:.72rem;padding:5px 2px;cursor:pointer;white-space:nowrap;
   box-shadow:inset 0 0 0 1px #0006,0 2px 0 #0008;text-shadow:0 1px 0 #000}
@@ -3479,7 +3499,41 @@ function setBossAuto(on){S.bossAuto=on;const b=$('bossAutoBtn');b.setAttribute('
 $('bossAutoBtn').onclick=()=>setBossAuto(S.bossAuto===false);
 setBossAuto(true); // 11.11.2026: Boss-Kampf startet immer automatisch
 const tryBoss=()=>{if(!boss&&S.kills>=KILL_GOAL&&$('modal').hidden){startBoss();lastHud='';}};
-$('stageBox').onclick=tryBoss;$('stageBox').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tryBoss();}};
+// 11.11.2026: Tipp auf das Gebiet öffnet die Weltkarte (Boss startet ohnehin automatisch)
+$('stageBox').onclick=()=>{if($('modal').hidden&&!editing&&S.char)wmOpen();};$('stageBox').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('stageBox').onclick();}};
+// ---------- Weltkarte: 12 Gebiete je Schwierigkeit, für jedes geschaffte Gebiet eine Truhe zum Abholen ----------
+let wmDiff=null;
+const wmGi=(d,w)=>d*WORLDS.length+w;                               // fortlaufende Gebietsnummer über alle Schwierigkeiten
+const wmEnd=(d,w)=>d*STAGES_PER_DIFF+(w+1)*STAGES_PER_WORLD;        // letzte Stage des Gebiets
+const wmDone=(d,w)=>S.best>wmEnd(d,w);
+const wmRew=(d,w)=>{const gi=wmGi(d,w),st=wmEnd(d,w);return{kak:5+gi*2,caps:30+gi*12,coins:Math.round(6*cPow(st)*400)};};
+const wmGot=gi=>!!(S.wm&&S.wm[gi]);
+const wmOpenCount=()=>{let n=0;for(let d=0;d<DIFFS.length;d++)for(let w=0;w<WORLDS.length;w++)if(wmDone(d,w)&&!wmGot(wmGi(d,w)))n++;return n;};
+function wmOpen(){wmDiff=Math.min(diffIdx(S.stage),DIFFS.length-1);$('modal').hidden=false;lastHud='';renderWm();
+  setTimeout(()=>{const c=$('card').querySelector('.wmnode.here');if(c)c.scrollIntoView({block:'center'});},30);}
+function renderWm(){const d=wmDiff,curD=diffIdx(S.stage),curW=worldIdx(S.stage),D=DIFFS[d];
+  const tabs=DIFFS.map((x,i)=>{const open=S.best>i*STAGES_PER_DIFF,n=WORLDS.reduce((a,_,w)=>a+(wmDone(i,w)&&!wmGot(wmGi(i,w))?1:0),0);
+    return`<button type="button" class="wmtab${i===d?' on':''}" data-wmd="${i}" style="--dc:${x.c}" ${open?'':'disabled'}>${open?'':'🔒 '}${x.n}${n?`<i>${n}</i>`:''}</button>`;}).join('');
+  const nodes=WORLDS.map((Wd,w)=>{const done=wmDone(d,w),here=d===curD&&w===curW,lock=!done&&!here,gi=wmGi(d,w),R=wmRew(d,w),got=wmGot(gi);
+    const st0=d*STAGES_PER_DIFF+w*STAGES_PER_WORLD,prog=here?Math.max(0,Math.min(STAGES_PER_WORLD,S.best-1-st0)):done?STAGES_PER_WORLD:0;
+    const chest=done?(got?'<span class="wmchest got">✓ abgeholt</span>':`<button type="button" class="wmchest rd" data-wmc="${gi}">🎁 Abholen</button>`)
+      :`<span class="wmchest">🎁 ${R.kak} 🌵 · ${R.caps} 🌱</span>`;
+    return`<div class="wmnode${done?' done':''}${here?' here':''}${lock?' lock':''}${w%2?' r':''}" style="--s1:${Wd.sky[0]};--s2:${Wd.sky[1]};--g:${Wd.ground[0]};--m:${Wd.mesa}">
+      <div class="wmorb"><span class="wmnum">${w+1}</span>${here?'<span class="wmme">🌵</span>':done?'<span class="wmok">✓</span>':lock?'<span class="wmlk">🔒</span>':''}</div>
+      <div class="wminfo"><b>${Wd.n}</b><small>${ELEM[Wd.atkEl].ico} ${ELEM[Wd.atkEl].n} · schwach gegen ${ELEM[Wd.weak].ico} · Boss ${Wd.boss.n}</small>
+        <div class="wmbar"><div style="width:${prog/STAGES_PER_WORLD*100}%"></div><em>${here?'Du bist hier · ':''}${prog}/${STAGES_PER_WORLD}</em></div>${chest}</div></div>`;}).reverse().join('<div class="wmpath"></div>');
+  const nd=WORLDS.reduce((a,_,w)=>a+(wmDone(d,w)?1:0),0);
+  $('card').innerHTML=`<div class="wm"><h2>🗺 Weltkarte</h2><div class="wmtabs">${tabs}</div>
+    <div class="wmsum" style="--dc:${D.c}"><b>${D.n}</b><span>${nd}/${WORLDS.length} Gebiete geschafft</span></div>
+    <div class="wmlist">${d<DIFFS.length-1?`<div class="wmgoal">⛰ Danach: <b style="color:${DIFFS[d+1].c}">${DIFFS[d+1].n}</b></div><div class="wmpath"></div>`:''}${nodes}<div class="wmstart">🏁 Start</div></div>
+    <p class="hint" style="margin:0;text-align:center">Für jedes geschaffte Gebiet gibt es einmal eine Truhe – auf jeder Schwierigkeit neu und immer größer.</p>
+    <div class="row"><button class="btn" id="wmX" type="button">Schließen</button></div></div>`;
+  $('wmX').onclick=()=>{$('modal').hidden=true;lastHud='';};
+  $('card').querySelectorAll('[data-wmd]').forEach(b=>b.onclick=()=>{wmDiff=+b.dataset.wmd;renderWm();const c=$('card').querySelector('.wmnode.here')||$('card').querySelector('.wmchest.rd');if(c)c.scrollIntoView({block:'center'});});
+  $('card').querySelectorAll('[data-wmc]').forEach(b=>b.onclick=()=>{const gi=+b.dataset.wmc,d2=Math.floor(gi/WORLDS.length),w2=gi%WORLDS.length;if(!wmDone(d2,w2)||wmGot(gi))return;
+    const R=wmRew(d2,w2);S.wm=S.wm||{};S.wm[gi]=1;S.kak=(S.kak||0)+R.kak;S.caps+=R.caps;S.coins+=R.coins;save();lastHud='';
+    banner={txt:'🎁 '+WORLDS[w2].n+': +'+R.kak+' 🌵 · +'+R.caps+' Kapseln · +'+fmt(R.coins)+' Münzen',t:2.6};renderWm();});}
+setInterval(()=>{const b=$('stageBox');if(b)b.classList.toggle('wmrd',wmOpenCount()>0);},1500);
 $('modAutoBtn').onclick=()=>setModAuto(S.modAuto===false);
 setModAuto(true); // 11.11.2026: Fähigkeiten werden immer automatisch eingesetzt
 setInterval(()=>{for(const m of MODS){const b=$('m_'+m.id),lock=S.best<m.unlock,cd=modCd[m.id];if(!b)continue;
@@ -4630,6 +4684,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
+     ['🗺 Weltkarte:','Tippe in der Kampfbox auf dein Gebiet: Du siehst alle 12 Gebiete jeder Schwierigkeit, wo du gerade bist und was noch kommt. Für jedes geschaffte Gebiet wartet eine Truhe mit Kakteen, Kapseln und Münzen zum Abholen – auf jeder Schwierigkeit neu und immer größer.'],
      ['🗼 Turm von außen:','Oben im Turm siehst du jetzt den Turm mit seinen Etagen – geschaffte Etagen mit ✓, Wächter-Etagen, deine Rekord-Fahne. Nach jedem Sieg kletterst du sichtbar eine Etage höher.'],
      ['💰 Währungen oben:','Münzen und Samenkapseln stehen jetzt oben links, Kakteen oben rechts unter der Allianz – so ist unter der Kampfbox mehr Platz.'],
      ['🛡 Allianz-Knopf:','Oben rechts öffnet jetzt nur noch deine Allianz – Profil, Freunde und Rangliste findest du in deinem Profil.'],
