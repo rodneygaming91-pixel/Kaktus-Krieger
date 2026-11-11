@@ -979,6 +979,12 @@ header .hl{justify-self:start;display:flex;flex-direction:column;align-items:fle
 html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .topbox{display:flex;flex-direction:column;gap:6px;flex:none}
 .tstrip{display:flex;align-items:center;gap:6px;flex:none}
+/* 11.11.2026: Währungen in der Kopfzeile – Münzen unter ⚙, Kapseln unter ✉, Kakteen unter Allianz */
+.hres{display:flex;gap:5px;align-items:center}
+header .chip.hcoin,header .chip.hcap,header .chip.hkak{padding:2px 6px;font-size:.76rem;gap:3px;white-space:nowrap;border-width:2px}
+.hres{gap:3px;min-width:0;flex-direction:column;align-items:flex-start}header .chip.hcoin i{width:10px;height:10px}header .hl{min-width:0;overflow:visible}
+header .chip.hcap{color:#c8ff9a}header .chip.hcap b,header .chip.hkak b{font-size:.75rem}
+header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .tstrip .tres{display:flex;gap:6px;margin:0}.tstrip .tres .chip{padding:2px 10px;font-size:.92rem}
 .tstrip .tcap{margin-left:auto;padding:2px 10px;font-size:.92rem;color:#c8ff9a}.tstrip .tcap b{margin-right:4px}
 .tpanel{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
@@ -1056,10 +1062,10 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 
 <div class="game">
   <header>
-    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
+    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div><div class="hres"><div class="chip hcoin" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip hcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
-    <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
+    <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button><div class="chip kak hkak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
   </header>
   <div class="topbox">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
@@ -1068,7 +1074,7 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   </div>
-  <div class="tstrip"><div class="res resbar tres"><div class="chip" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip kak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div><div class="chip tcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div>
+  
   <div class="tpanel" id="tPanel">
   <section class="tab" id="tabKampf" data-t="kampf"></section>
   <section class="tab" id="tabAusr" data-t="ausr" hidden>
@@ -4570,6 +4576,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
+     ['💰 Währungen oben:','Münzen und Samenkapseln stehen jetzt oben links, Kakteen oben rechts unter der Allianz – so ist unter der Kampfbox mehr Platz.'],
      ['🛡 Allianz-Knopf:','Oben rechts öffnet jetzt nur noch deine Allianz – Profil, Freunde und Rangliste findest du in deinem Profil.'],
      ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen. Bei den Begleitern stehen „Beschwören“ und „Alle leveln“ jetzt fest unten.'],
      ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
