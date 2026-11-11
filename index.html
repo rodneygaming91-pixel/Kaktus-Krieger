@@ -1047,6 +1047,7 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .skeqt{font-style:normal;font-size:.56rem;color:#7fe08a;font-weight:900}.skc.eq{filter:saturate(.75)}
 .sklock{position:absolute;top:-6px;right:-4px;font-size:.8rem}.skc.lockd b{font-size:.56rem;color:var(--rc)}
 .skgrid{grid-template-columns:repeat(5,1fr)}
+.drpage .skfoot{bottom:-8px;padding-bottom:10px;margin-bottom:-8px} /* Begleiter: keine Unterleiste darunter → ganz unten fixieren */
 .skfoot{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:sticky;bottom:52px;z-index:2;background:#2a1d14;padding:6px 0 4px;margin-bottom:-4px}.skfoot .btn{padding:8px 6px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.1}.skfoot .btn small{font-size:.62rem}
 .sksumb{background:linear-gradient(#ffb03a,#e07a10)!important;border-color:#7a3a08!important;color:#fff!important}
 .sumodds{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:.78rem}.sumodds span{display:flex;justify-content:space-between}
@@ -4568,7 +4569,7 @@ const PATCHES=[
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
      ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
-     ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen.'],
+     ['🐞 Behoben:','Beim Ausbau der Gärtnerei blieb die Anzeige bei „1 s“ stehen. Bei den Begleitern stehen „Beschwören“ und „Alle leveln“ jetzt fest unten.'],
      ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
