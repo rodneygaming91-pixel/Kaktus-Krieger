@@ -74,7 +74,7 @@ h1 span{color:var(--bloom)}
 .ovtop{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ovpic{position:relative;border:3px solid var(--rc);border-radius:12px;background:radial-gradient(circle at 50% 55%,#4a3a5a,#1c1424);display:flex;flex-direction:column;align-items:center;padding:4px}
 .ovpic canvas{width:100%;max-width:150px;aspect-ratio:1}.ovpic b{font-size:.9rem}.ovr{position:absolute;top:4px;left:7px;font-weight:900;font-size:.72rem}
-.ovpic.sm{padding:2px}.ovpic.sm canvas{width:74px}
+.ovpic.sm{padding:2px;font:inherit;color:#fff;cursor:pointer}.ovpic.sm em{font-style:normal;font-size:.58rem;font-weight:900;color:#7fe08a;margin-top:-4px}.ovpic.sm.up{box-shadow:0 0 10px #7fe08a}.ovpic.sm canvas{width:74px}
 .ovgears{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;align-content:center}
 .ovgear{aspect-ratio:1;border:2px solid var(--rc);border-radius:8px;background:#241a14;display:grid;place-items:center;overflow:hidden}
 .ovgear canvas{width:100%;height:100%}.ovgear i{font-style:normal;font-size:.5rem;color:var(--muted);text-align:center}
@@ -2440,23 +2440,25 @@ function ktOverview(re){const K=curKt(),lv=ktLv(K.id),rc=RAR[K.r].c,o=S.kt[K.id]
     <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
   $('modal').hidden=false;ovDraw();
   $('ovX').onclick=()=>{$('modal').hidden=true;re&&re();};$('ovColl').onclick=()=>ktColl(re||(()=>{}));}
-function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn();
+function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=KAKTI.some(k=>{const o=S.kt[k.id];return o&&o.lv<KT_MAX&&o.n>=ktNeed(o.lv);});
   const sk=Array.from({length:SK_ON},(_,i)=>{const m=on[i]&&skDef(on[i]);return m?`<div class="ovico" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><span>Lv ${skLv(m.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
   const dr=Array.from({length:DR_SLOTS},(_,i)=>{const id=S.drEq[i],D=id&&DRONES.find(d=>d.id===id);return D?`<div class="ovico" style="--rc:${RAR[D.r].c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas><span>Lv ${drLv(D.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
   $('card').innerHTML=`<div class="ovw"><h2>Mein Profil</h2>
-    <div class="ovhead"><div class="ovpic sm" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas></div>
+    <div class="ovhead"><button class="ovpic sm${ktUp?' up':''}" type="button" id="ovPic" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas><em>🌵 wechseln</em></button>
       <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · Lv ${ktLv(K.id)}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
         <small>Beste Stage ${S.best||0} · Turm ${S.twRec||0} · Werkstatt Lv ${wsTotal()}</small></div></div>
     <div class="ovsec"><b>✶ Fähigkeiten</b><div class="ovrow">${sk}</div></div>
     <div class="ovsec"><b>🐾 Begleiter</b><div class="ovrow g5">${dr}</div></div>
     <div class="ovsec"><b>🎒 Ausrüstung</b><div class="ovrow g9">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
     <div class="ovsec soon"><b>🏺 Relikte</b><small>bald</small></div>
-    <div class="row"><button class="btn" id="ovEd" type="button">✎ Name &amp; Aussehen</button><button class="btn go" id="ovKt" type="button">📋 Kaktus-Werte</button></div>
+    <div class="row"><button class="btn go${ktUp?' up':''}" id="ovColl" type="button">🌵 Meine Kakteen <small>${Object.keys(S.kt).length}/${KAKTI.length}</small></button><button class="btn go" id="ovKt" type="button">📋 Kaktus-Werte</button></div>
+    <div class="row"><button class="btn" id="ovEd" type="button">✎ Name &amp; Aussehen</button></div>
     <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
   $('modal').hidden=false;ovDraw();
   $('ovX').onclick=()=>{$('modal').hidden=true;};
   $('ovEd').onclick=()=>{$('modal').hidden=true;openEditor();};
-  $('ovKt').onclick=()=>ktOverview(()=>{if(curTab==='kampf')renderTabKampf();});}
+  const back=()=>{lastHud='';profileOverview();};
+  $('ovKt').onclick=()=>ktOverview(back);$('ovColl').onclick=()=>ktColl(back);$('ovPic').onclick=()=>ktColl(back);}
 function ktColl(re){const L=ktSumLv(),cur=curKt().id,kak=S.kak||0;
   $('card').innerHTML=`<div class="sumres"><h2>🌵 Kaktus-Sammlung</h2>
     <div class="skgrid ktgrid">${KAKTI.map(K=>{const lv=ktLv(K.id),o=S.kt[K.id],rc=RAR[K.r].c;
@@ -2493,7 +2495,7 @@ function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,
   const e=$('ktEq');if(e&&!eq)e.onclick=()=>{S.char.cls=id;ktLook(S.char);save();lastHud='';banner={txt:K.n+' ist jetzt dein Kaktus!',t:1.6};ktDetail(id,re);};
   const u=$('ktUp');if(u)u.onclick=()=>{ktLevelAll(id);save();lastHud='';ktDetail(id,re);};}
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
-  if(kSub==='kaktus')body=ktCardHtml()+`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
+  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
   else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
@@ -4489,7 +4491,7 @@ const PATCHES=[
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
      ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
      ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.'],
-     ['📋 Übersichten:','Tippe auf deinen Namen oben für dein Profil (Fähigkeiten, Begleiter, Ausrüstung) oder auf „Übersicht“ beim Kaktus für alle Werte auf einen Blick.']]}
+     ['📋 Übersichten:','Tippe oben auf deinen Namen: Dort siehst du Fähigkeiten, Begleiter und Ausrüstung, alle Kaktus-Werte auf einen Blick und wechselst und levelst deine Kakteen.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
