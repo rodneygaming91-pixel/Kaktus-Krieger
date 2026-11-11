@@ -974,6 +974,24 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 .skbig i{font-style:normal;font-size:2.6rem;color:var(--ic)}.skrar{font-weight:900;font-size:.85rem}
 .sumres{display:flex;flex-direction:column;gap:10px}.sumres h2{margin:0;text-align:center}.skgrid.res{grid-template-columns:repeat(5,1fr)}.skgrid.res .skc{cursor:default}
 .field .mod.offd .ring span{color:#a8957a;font-weight:900}
+.tpanel:has(#tabKampf:not([hidden])){padding-bottom:0}
+#tabKampf{min-height:100%;gap:0}.kbody{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:8px}
+.ksub{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:0 -8px;padding:5px 5px 6px;background:#1c130d;border-top:2px solid #4a3a2c;z-index:2}
+.ksub button{border:2px solid #4a3a2c;background:#2a1d14;color:#a8957a;font:inherit;font-size:.6rem;font-weight:800;border-radius:9px;padding:3px 1px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;white-space:nowrap;overflow:hidden}
+.ksub button i{font-style:normal;font-size:1rem;line-height:1.1}.ksub button.on{background:linear-gradient(#b07cff,#7a4ad0);border-color:#3a2070;color:#fff}
+.tsoon{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:200px;color:var(--muted)}.tsoon i{font-style:normal;font-size:3rem;opacity:.6}
+.tsoon b{font-size:1.2rem;color:var(--sand)}.tsoon span{font-weight:900;background:#3a2a1a;border:2px solid #7a5a2a;border-radius:999px;padding:2px 14px;color:var(--sand)}
+.skeqrow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:6px;border:2px solid #7a5a2a;border-radius:12px;background:#3a2a1a}
+.skc.eqs{padding:3px 2px}.skc.eqs i{font-size:1.25rem}.skc.eqs b{font-size:.52rem}.skc.eqs.empty{border-style:dashed;border-color:#6b5644;opacity:.6}.skc.eqs.empty i{color:#a8957a}
+.sklv{position:absolute;top:-1px;left:3px;font-size:.52rem;font-weight:900;color:#fff;text-shadow:0 1px 0 #000}
+.skpm{position:absolute;top:-6px;right:-5px;width:18px;height:18px;border-radius:50%;background:#2f7d2b;color:#fff;font-weight:900;font-size:.85rem;line-height:16px;text-align:center;border:1px solid #123512;z-index:1}
+.skc.eq .skpm,.skc.eqs .skpm{background:#c84a3a;border-color:#5a1a10}
+.skeqt{font-style:normal;font-size:.56rem;color:#7fe08a;font-weight:900}.skc.eq{filter:saturate(.75)}
+.sklock{position:absolute;top:-6px;right:-4px;font-size:.8rem}.skc.lockd b{font-size:.56rem;color:var(--rc)}
+.skgrid{grid-template-columns:repeat(5,1fr)}
+.skfoot{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:sticky;bottom:52px;z-index:2;background:#2a1d14;padding:6px 0 4px;margin-bottom:-4px}.skfoot .btn{padding:8px 6px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.1}.skfoot .btn small{font-size:.62rem}
+.sksumb{background:linear-gradient(#ffb03a,#e07a10)!important;border-color:#7a3a08!important;color:#fff!important}
+.sumodds{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:.78rem}.sumodds span{display:flex;justify-content:space-between}
 </style>
 
 <div class="game">
@@ -1042,6 +1060,9 @@ const KEY='kaktus-krieger-v1';
 // Neue Oberfläche (11.11.2026): oben Kampfbox, darunter scrollbarer Bereich, unten Symbol-Leiste
 let homePage=0,curTab='kampf';function homeGo(){}function homeFit(){}
 document.documentElement.classList.add('fixhome');
+// Seite darf nie verrutschen (z. B. wenn ein Knopf im Fenster den Fokus bekommt)
+document.addEventListener('scroll',e=>{if(!document.documentElement.classList.contains('fixhome'))return;const t=e.target;
+  if(t===document||t===document.documentElement){if(scrollY||scrollX)scrollTo(0,0);}else if(t===document.body&&(t.scrollTop||t.scrollLeft)){t.scrollTop=0;t.scrollLeft=0;}},{passive:true,capture:true});
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
@@ -2229,9 +2250,15 @@ function renderWS(){
   $('hqClose').onclick=()=>{hqOpen=false;$('modal').hidden=true;lastHud='';};
 }
 // Bereich ⚔ Kampf: Werkstatt und Fähigkeiten direkt unter der Kampfbox
-function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();
-  H.innerHTML=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Jedes 10. Level kostet zusätzlich 🌵</small></div>${L.list0}</div>
-    <div class="tsec" id="skSec"><div class="thead"><b>✶ Fähigkeiten</b><small>Ausgerüstet ${skOn().length}/${SK_ON} · 🌵 ${fmt(S.kak||0)}</small></div>${L.list1}</div>`;
+// Unter-Reiter im Bereich ⚔ (11.11.2026): Kaktus · Fähigkeiten · Relikte · Meisterschaft · Merkmale
+let kSub='kaktus';
+const KSUBS=[['kaktus','🌵','Kaktus'],['skill','✶','Fähigkeiten'],['relic','🏺','Relikte'],['mast','🎖','Meister'],['trait','🧬','Merkmale']];
+function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
+  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Jedes 10. Level kostet zusätzlich 🌵</small></div>${L.list0}</div>`;
+  else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
+  else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
+  H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
+  H.querySelectorAll('[data-ksub]').forEach(b=>b.onclick=()=>{kSub=b.dataset.ksub;renderTabKampf();$('tPanel').scrollTop=0;});
   wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});tkSig=tkSigNow();}
 let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
   WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n].join('|');
@@ -3052,7 +3079,7 @@ function renderModBar(){const on=skOn();
        :`<button class="mod offd" type="button" data-skgo="1" title="Freier Platz – Fähigkeit ausrüsten"><span class="ring"><span>+</span></span><span class="sr">Freier Platz</span></button>`;}
   $('mods').innerHTML=h;
   for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);
-  $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{tabGo('kampf');setTimeout(()=>{const t=$('skSec'),P=$('tPanel');if(t)P.scrollTop+=t.getBoundingClientRect().top-P.getBoundingClientRect().top-6;},30);});}
+  $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{kSub='skill';tabGo('kampf');});}
 // ---------- Fähigkeiten: Beschwören, Sammlung, Leveln mit Doppelten (11.11.2026) ----------
 function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,on=skOn();
   const pct=L<10?Math.min(100,(n-a)/(b-a)*100):100;
@@ -3063,7 +3090,35 @@ function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=
       const need=skNeed(lv),up=lv<SKL_MAX&&o.n>=need;
       return`<button class="skc${on.includes(m.id)?' eq':''}${up?' up':''}" type="button" data-skd="${m.id}" style="--rc:${rc};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small>Lv ${lv}</small>
         <span class="skbar"><span style="width:${lv>=SKL_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=SKL_MAX?'Max':o.n+'/'+need}</em></span>${on.includes(m.id)?'<u>✓</u>':''}</button>`;}).join('')}</div>`;}
+function skPageHtml(){const on=skOn();let eqRow='';
+  for(let i=0;i<SK_ON;i++){const m=on[i]&&skDef(on[i]);
+    eqRow+=m?`<button class="skc eqs" type="button" data-skd="${m.id}" style="--rc:${RAR[m.r].c};--ic:${m.c}"><span class="sklv">Lv ${skLv(m.id)}</span><i>${m.ico}</i><b>${m.n}</b><span class="skpm" data-skoff="${m.id}">−</span></button>`
+      :`<div class="skc eqs empty"><i>+</i><b>frei</b></div>`;}
+  const L=sumLv();
+  return`<div class="skeqrow">${eqRow}</div>
+    <div class="skgrid">${MODS.slice().sort((x,y)=>(skLv(y.id)>0)-(skLv(x.id)>0)||x.r-y.r).map(m=>{const lv=skLv(m.id),o=S.skl[m.id],rc=RAR[m.r].c;
+      if(!lv)return`<button class="skc lockd" type="button" data-skd="${m.id}" style="--rc:${rc}"><span class="sklock">🔒</span><i>${m.ico}</i><b>${RAR[m.r].n}</b></button>`;
+      const need=skNeed(lv),up=lv<SKL_MAX&&o.n>=need,eq=on.includes(m.id);
+      return`<button class="skc${eq?' eq':''}${up?' up':''}" type="button" data-skd="${m.id}" style="--rc:${rc};--ic:${m.c}"><span class="sklv">Lv ${lv}</span>
+        <span class="skpm" data-${eq?'skoff':'skon2'}="${m.id}">${eq?'−':'+'}</span><i>${m.ico}</i>${eq?'<em class="skeqt">Ausgerüstet</em>':`<b>${m.n}</b>`}
+        <span class="skbar"><span style="width:${lv>=SKL_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=SKL_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
+    <div class="skfoot"><button class="btn sksumb" type="button" data-sumdlg="1">🔮 Beschwören<small>Stufe ${L} · 🌵 ${fmt(S.kak||0)}</small></button>
+      <button class="btn go" type="button" data-skall="1" ${skCanUp()?'':'disabled'}>Alle leveln</button></div>`;}
+function skSumDlg(re){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.kak||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Fähigkeiten beschwören</h2>
+    <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
+    <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
+    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌵</b></p>
+    <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌵</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌵</button></div>
+    <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
+  $('modal').hidden=false;
+  $('sumX').onclick=()=>{$('modal').hidden=true;re();};
+  $('sum1').onclick=()=>{$('modal').hidden=true;skSummon(1,re);};$('sum10').onclick=()=>{$('modal').hidden=true;skSummon(10,re);};}
 function skBind(H,re){
+  H.querySelectorAll('[data-sumdlg]').forEach(b=>b.onclick=()=>{if($('modal').hidden)skSumDlg(re);});
+  H.querySelectorAll('[data-skoff]').forEach(b=>b.onclick=e=>{e.stopPropagation();const id=b.dataset.skoff;S.skEq=skOn().filter(x=>x!==id);save();renderModBar();re();});
+  H.querySelectorAll('[data-skon2]').forEach(b=>b.onclick=e=>{e.stopPropagation();const id=b.dataset.skon2,on=skOn();
+    if(on.length>=SK_ON){banner={txt:'Alle 6 Plätze belegt – erst eine ablegen (−)',t:1.8};return;}S.skEq=[...on,id];save();renderModBar();re();});
   H.querySelectorAll('[data-sum]').forEach(b=>b.onclick=()=>skSummon(+b.dataset.sum,re));
   H.querySelectorAll('[data-skd]').forEach(b=>b.onclick=()=>skDetail(b.dataset.skd,re));
   H.querySelectorAll('[data-skall]').forEach(b=>b.onclick=()=>{let k=0;for(const m of MODS)k+=skLevelAll(m.id);save();banner={txt:k+' Fähigkeits-Level aufgestiegen!',t:1.6};re();});}
