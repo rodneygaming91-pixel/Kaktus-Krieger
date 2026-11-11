@@ -64,6 +64,12 @@ h1 span{color:var(--bloom)}
 .wsbank b{color:#ffd447}.wsbank span:first-child b{color:#7fe08a}.wsbank i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;background:radial-gradient(circle at 35% 35%,#fff2a8,#e0a800 55%,#8a6200);border:1.5px solid #5a3e00;vertical-align:-1px}
 .wsb{display:flex;flex-direction:column;align-items:center;line-height:1.1;min-width:86px}.wsb small{font-size:.68rem;color:inherit;opacity:.9}
 .chip.kak{color:#7fe08a}.chip.kak b{font-size:.85rem}
+.wsgrid{display:flex;flex-direction:column;gap:5px}
+.wst{display:grid;grid-template-columns:36px 1fr 104px;align-items:center;gap:8px;background:var(--night);border:2px solid #6b5644;border-left:5px solid var(--bc);border-radius:10px;padding:5px 7px;box-shadow:inset 0 0 10px #0008;min-width:0}
+.wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
+.wstt{display:flex;flex-direction:column;min-width:0;gap:1px}.wstt b{font-size:.88rem;color:var(--bc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wstt b em{font-style:normal;font-size:.72rem;color:var(--sand);font-weight:800;margin-left:5px}
+.wstv{font-size:.74rem;color:#7fe08a;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wst .wsb{width:100%;min-width:0;padding:5px 4px}.wstmax{text-align:center;color:var(--sand);font-weight:800;font-size:.85rem}
 .blist{display:flex;flex-direction:column;gap:6px;text-align:left}
 .brow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--night);border-radius:8px;padding:9px 10px;border:2px solid #6b5644;border-left:5px solid var(--bc);box-shadow:inset 0 0 10px #0008}
 .brow div{min-width:0;display:flex;flex-direction:column;gap:1px}
@@ -1209,13 +1215,19 @@ const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===
 // Angriff und Leben haben keine Obergrenze und wachsen je Level um 2,5 % (aufeinander aufbauend) –
 // sie tragen den Großteil des Wachstums, seit Ausrüstung vor allem über die Seltenheit stärker wird.
 const WS=[
-  {id:'atk',  n:'Stachelschliff',ico:'⚔',c:'#ff8a3d',d:'Schärfere Stacheln',       kind:'mul',per:2.5,unit:'% Angriff',          base:1200,g:1.029},
-  {id:'hp',   n:'Saftspeicher',  ico:'♥',c:'#ff6fae',d:'Mehr Wasser im Stamm',     kind:'mul',per:2.5,unit:'% Leben',            base:1200,g:1.029},
-  {id:'armor',n:'Panzerrinde',   ico:'⛨',c:'#c49a6c',d:'Dickere Rinde',            kind:'add',per:1,  unit:'% weniger Schaden',  base:2000,g:1.2, max:40},
-  {id:'spd',  n:'Sonnenkraft',   ico:'☀',c:'#ffd447',d:'Schnellere Schläge',       kind:'add',per:1,  unit:'% Tempo',            base:2000,g:1.18,max:50}
+  {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',d:'Schärfere Stacheln',  kind:'mul',per:2.5, unit:'% Angriff',          base:1200,g:1.029},
+  {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',d:'Mehr Wasser im Stamm',kind:'mul',per:2.5, unit:'% Leben',            base:1200,g:1.029},
+  {id:'armor',n:'Panzerung',   ico:'⛨', c:'#c49a6c',d:'Dickere Rinde',       kind:'add',per:1,   unit:'% weniger Schaden',  base:2000,g:1.2, max:40},
+  {id:'spd',  n:'Tempo',       ico:'☀', c:'#ffd447',d:'Schnellere Schläge',  kind:'add',per:1,   unit:'% Tempo',            base:2000,g:1.18,max:50},
+  {id:'reg',  n:'Regeneration',ico:'✚', c:'#7fe08a',d:'Heilt sich selbst',   kind:'add',per:.05, unit:'% Leben pro s',      base:3000,g:1.15,max:40},
+  {id:'crit', n:'Krit-Chance', ico:'✦', c:'#ffe066',d:'Öfter kritisch',      kind:'add',per:.5,  unit:'% Krit-Chance',      base:3000,g:1.15,max:40},
+  {id:'critd',n:'Krit-Schaden',ico:'💥',c:'#ff7a5a',d:'Härtere Krits',       kind:'add',per:5,   unit:'% Krit-Schaden',     base:3000,g:1.1, max:100},
+  {id:'dodge',n:'Ausweichen',  ico:'💨',c:'#9ad0ff',d:'Treffer verfehlen',   kind:'add',per:.5,  unit:'% Ausweichen',       base:5000,g:1.17,max:40},
+  {id:'stun', n:'Betäuben',    ico:'💫',c:'#d8a8ff',d:'Gegner 1 s betäuben', kind:'add',per:.5,  unit:'% Betäuben',         base:5000,g:1.17,max:40},
+  {id:'steal',n:'Lebensraub',  ico:'🩸',c:'#ff6f8a',d:'Schaden heilt dich',  kind:'add',per:.25, unit:'% Lebensraub',       base:5000,g:1.15,max:40}
 ];
 const wsLv=id=>(S.ws&&S.ws[id])||0;
-const wsDef=id=>WS.find(w=>w.id===id);
+const wsDef=id=>WS.find(w=>w.id===id);const wsV=id=>wsDef(id)?wsVal(id):0;
 const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.per*lv;};   // Bonus in %
 const wsCost=(W,lv=wsLv(W.id))=>Math.round(W.base*Math.pow(W.g,lv));
 const wsKak=(W,lv=wsLv(W.id))=>(lv+1)%10===0?1+Math.floor(lv/100):0;                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
@@ -1239,7 +1251,8 @@ function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it
 function heroStats(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
   return{atk:(25+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((300+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
-    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(50,v('crit')+drBonus('crit')),res:resSum()};
+    armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg+wsV('reg'),block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+drBonus('crit')+wsV('crit')),res:resSum(),
+    critM:2+wsV('critd')/100,dodge:wsV('dodge'),stun:wsV('stun'),steal:wsV('steal')};
 }
 // ---------- Module: aktive Fähigkeiten mit Abklingzeit (wie MODS in Scrap Star) ----------
 // Sie zünden automatisch, sobald ein Gegner in Reichweite ist; antippen zündet sofort, wenn bereit
@@ -1385,7 +1398,7 @@ if(!S.v3){
     it.v=itemValue(sl,it.r,it.lvl,1);if(it.res)it.res.v=Math.round(4*RAR[it.r].pm);};
   for(const k in S.gear)fix(S.gear[k]);for(const it of S.inv||[])fix(it);
   // höchste Stage, deren Boss man in etwa 20 Sekunden schafft
-  const st0=S.stage,hs=heroStats(),dps=hs.atk*(1+hs.crit/100)/hs.spd*1.2;
+  const st0=S.stage,hs=heroStats(),dps=hs.atk*(1+hs.crit/100*(hs.critM-1))/hs.spd*1.2;
   let st=st0;while(st>1&&24*12*pow(st)/dps>20)st--;
   S.stage=st;S.kills=0;S.v3=true;
   if(st0>1)S.v3msg={from:st0,to:st};
@@ -1519,7 +1532,8 @@ function update(dt){
   for(const p of spines){
     const e=p.tx;if(e.dying){p.dead=true;continue;}
     const ex=e.x,ey=e.y-(e.ty.r);const dx=ex-p.x,dy=ey-p.y,d=Math.hypot(dx,dy);
-    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100,dd=p.dmg!=null?p.dmg:hs.atk*atkBuffM*rnd(.9,1.1)*(cr?2:1);hitEnemy(e,dd,cr);
+    if(d<10){p.dead=true;const hs=heroStats(),cr=p.dmg==null&&Math.random()<hs.crit/100,dd=p.dmg!=null?p.dmg:hs.atk*atkBuffM*rnd(.9,1.1)*(cr?hs.critM:1);hitEnemy(e,dd,cr);
+      if(p.dmg==null){if(!e.dying&&hs.stun&&Math.random()<hs.stun/100)e.stun=Math.max(e.stun||0,1);if(hs.steal&&hero.hp<hero.max)hero.hp=Math.min(hero.max,hero.hp+dd*elMul()*hs.steal/100);}
       if(stealT>0&&p.dmg==null)hero.hp=Math.min(hero.max,hero.hp+dd*stealP*.05);if(p.stun&&!e.dying)e.stun=Math.max(e.stun||0,p.stun);}
     else{p.x+=dx/d*p.v*dt;p.y+=dy/d*p.v*dt;p.a=Math.atan2(dy,dx);}
   }
@@ -1612,8 +1626,8 @@ function castMod(m){
 }
 function hurtHero(dmg){
   if(dodgeT>0){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
-  if(shieldT>0)dmg*=1-shieldP;
-  const hs=heroStats();dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
+  const hs=heroStats();if(hs.dodge&&Math.random()<hs.dodge/100){floats.push({x:HX,y:GROUND-70,txt:'Ausgewichen!',col:'#9ad0ff',t:.7});return;}
+  if(shieldT>0)dmg*=1-shieldP;dmg*=(1-hs.block/100)*(1-hs.armor/100)*(1-(hs.res[world().atkEl]||0)/100);
   hero.hp-=dmg;hero.hit=1;shake=Math.max(shake,2);
   floats.push({x:HX,y:GROUND-70,txt:'-'+fmt(dmg),col:'#ff6fae',t:.7});
   // Kein Zurückstufen mehr (08.11.2026): Wer in einer normalen Welle stirbt, bleibt auf der Stage, behält seine besiegten Gegner und kämpft mit vollem Leben weiter.
@@ -2301,11 +2315,10 @@ setInterval(()=>{
 
 // ---------- Werkstatt: den Kaktus leveln (ersetzt das Hauptquartier) ----------
 let hqOpen=false,wsPage=0;
-function wsLists(){const kak=S.kak||0;return{list0:`<div class="blist">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
-      const now=wsVal(W.id),nx=wsVal(W.id,lv+1),f=x=>W.kind==='mul'?fmt(Math.round(x)):x;
-      return`<div class="brow" style="--bc:${W.c}"><div><b style="color:${W.c}">${W.ico} ${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b>
-        <small>+${f(now)}${W.unit}${max?'':` → <span style="color:#7fe08a">+${f(nx)}</span>`}</small></div>
-        ${max?'<small style="color:var(--sand);font-weight:800">Max</small>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
+function wsLists(){const kak=S.kak||0;return{list0:`<div class="wsgrid">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
+      const now=wsVal(W.id),f=x=>W.kind==='mul'?fmt(Math.round(x)):(+x.toFixed(2)).toLocaleString('de-DE');
+      return`<div class="wst" style="--bc:${W.c}"><i>${W.ico}</i><div class="wstt"><b>${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b><span class="wstv">+${f(now)}${W.unit}</span></div>
+        ${max?'<span class="wstmax">Max</span>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
   list1:skSectionHtml()};}
 function wsBind(H,re){
   skBind(H,re);
@@ -2596,7 +2609,7 @@ function wbBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS
 const wbHp=l=>Math.round(200000*Math.pow(3,l-1));
 function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp(l);l++;}return{l,rest,hp:wbHp(l)};}
 function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
-function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100)/st.spd;
+function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100*(st.critM-1))/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
   dps+=st.atk*cm.mod*skDpsMul()/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
 async function loadWb(){wb.err='';try{wb.st=await rpc('kk_wb_status',{p_code:ON.code});}catch(e){wb.st=null;wb.err='Keine Verbindung. Den Weltboss gibt es nur auf kaktus-krieger.pages.dev.';}
@@ -2691,7 +2704,7 @@ function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
       // Kaktus wirft: Schaden pro Wurf aus der Gesamtleistung (Angriff, Krit, Drohnen, Module, Element)
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
-      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?2:1);
+      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?st.critM:1);
         A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       // Boss greift an
@@ -3416,7 +3429,7 @@ function twGive(it){if(S.inv.length<invMax()||keepSafe(it)){S.inv.push(it);retur
   const c=sellValue(it);S.coins+=c;return`<span style="color:${RAR[it.r].c}">${it.name}</span> – Inventar voll, für +${fmt(c)} Münzen zerstört`;}
 // Ohne Animation durchrechnen, ob eine Etage zu schaffen ist (für den Schnellaufstieg)
 function twSim(f){const G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
-  const dps=st.atk*em*(1+st.crit/100)/st.spd,ttk=G.hp/dps;
+  const dps=st.atk*em*(1+st.crit/100*(st.critM-1))/st.spd,ttk=G.hp/dps;
   const hit=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100),net=hit/1.3-st.hp*st.reg/100,ttd=net>0?st.hp/net:1e9;
   return ttk<=30&&ttk<ttd;}
 async function twSubmit(){if(!ON.code||!ON.key)return;try{await rpc('kk_tw_submit',{p_code:ON.code,p_key:ON.key,p_floor:twFloor()-1});}catch(e){}twLoad();}
@@ -3511,7 +3524,7 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
       A.sq=Math.max(0,A.sq-dt*6);
-      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=st.atk*em*rnd(.9,1.1)*(cr?2:1);
+      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=st.atk*em*rnd(.9,1.1)*(cr?st.critM:1);
         A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.3;A.lunge=1;A.orbs.push({x:240,y:140});}
@@ -3701,7 +3714,7 @@ function dgFight(){const T=dgT(),cp=dg.type==='caps',D=dgState();if(dg.anim||dgK
   const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=dg.anim;if(!A)return;
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
       A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}A.sq=Math.max(0,A.sq-dt*6);
-      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=Math.min(A.bhp,dps*.25*rnd(.85,1.15)*(cr?2:1));
+      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=Math.min(A.bhp,dps*.25*rnd(.85,1.15)*(cr?st.critM:1));
         A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.floor(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
       A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}A.lunge=Math.max(0,A.lunge-dt*3);
@@ -4332,7 +4345,8 @@ const PATCHES=[
      ['🐾 Begleiter und 🌱 Gärtnerei:','Ebenfalls unten in der Leiste.'],
      ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
      ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
-     ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.']]}
+     ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
+     ['🌵 Kaktus-Werte:','Unter der Kampfbox als Kacheln – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
