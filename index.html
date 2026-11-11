@@ -848,6 +848,7 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .actions .resbar{grid-column:1/-1;display:flex;justify-content:center;gap:10px;margin:-2px 0 2px}
 .actions .resbar .chip{flex:1 1 0;max-width:200px;justify-content:center;padding:3px 12px;font-size:1rem}
 /* Profil als Symbol oben links, Dungeons und Erkundung in der Knopfreihe */
+#onBtn[hidden],header h1[hidden]{display:none!important}
 .hbtns .onbtn.hon{display:flex;justify-content:center;border-width:2px;border-color:#5a4430;border-radius:999px;padding:3px 9px;font-size:.8rem;background:#2a1d12;color:#e8d4b0;position:relative}
 .hbtns .onbtn.hon::before{content:'';position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;border-radius:50%;background:#8a7560;border:2px solid #1c140e}
 .hbtns .onbtn.hon[data-st="ok"]::before{background:#7be86a}.hbtns .onbtn.hon[data-st="off"]::before,.hbtns .onbtn.hon[data-st="err"]::before{background:#ff6a5a}
@@ -1053,7 +1054,7 @@ html.fixhome .game{height:100dvh;padding-bottom:0!important;gap:6px}
 
 <div class="game">
   <header>
-    <div class="hl"><h1>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
+    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button></div>
@@ -4146,7 +4147,7 @@ const TUT=[
   {el:'tbGart',t:'Baust du unter 🌱 die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
   {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
-  {el:'onBtn',t:'Hier oben (👤) findest du dein Profil, Freunde, Allianzen, Ranglisten und den Weltboss. Im Turm und in der Arena gibt es jeden Tag Preise für die Besten.'},
+  {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
 const tut={on:false,i:0,wait:false,box:null};
@@ -4566,6 +4567,7 @@ const PATCHES=[
      ['🎁 Spielzeit-Truhen:','Jetzt in der Kampfbox oben rechts unter Waffe und Resistenz.'],
      ['👹 Weltboss und 🛡 Allianzboss:','Jetzt unter 🏰 Mehr, zusammen mit Dungeons, Erkundung, Arena und Turm.'],
      ['🎁 Spielzeit-Truhen bis 6 Stunden:','Jetzt 8 Truhen am Tag (15 Min bis 6 Std) – jede gibt zusätzlich Samenkapseln.'],
+     ['🧹 Kopfzeile aufgeräumt:','Der Schriftzug und das 👤-Symbol oben sind weg – alles davon findest du jetzt in deinem Profil (Name oben in der Mitte antippen).'],
      ['🌱 Mehr Samenkapseln überall:','Weil Kapseln jetzt auch für Beschwörungen gebraucht werden: dreimal so viele aus Kämpfen, Bossen, Offline, Anmeldung, Arena, Weltboss, Allianzboss und Allianz-Zielen · doppelt so viele aus Turm und Kapsel-Dungeon.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
