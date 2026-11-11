@@ -84,11 +84,31 @@ h1 span{color:var(--bloom)}
 .ovstats span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ovstats span i{font-style:normal;display:inline-block;width:16px}.ovstats b{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ovhead{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.ovname{display:flex;flex-direction:column;gap:1px}.ovname b{font-size:1.1rem}.ovname small{font-size:.74rem;color:var(--muted)}
 .ovsec{background:#0005;border:2px solid #6b5644;border-radius:10px;padding:5px 7px;display:flex;flex-direction:column;gap:4px}.ovsec>b{font-size:.8rem;color:#ffd447}
+.ovbtns{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ovbtns .btn{font-size:.82rem;padding:8px 4px;white-space:nowrap}
 .ovsec.soon{flex-direction:row;justify-content:space-between;opacity:.55}.ovsec.soon small{color:var(--sand);font-weight:800}
 .ovrow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.ovrow.g5{grid-template-columns:repeat(5,1fr);padding:0 6%}.ovrow.g9{grid-template-columns:repeat(9,1fr);gap:3px}
 .ovico{position:relative;aspect-ratio:1;border:2px solid var(--rc);border-radius:8px;background:#241a14;display:grid;place-items:center}
 .ovico i{font-style:normal;font-size:1.2rem;color:var(--ic)}.ovico canvas{width:90%;height:90%}.ovico span{position:absolute;bottom:-1px;left:0;right:0;text-align:center;font-size:.5rem;font-weight:900;text-shadow:0 1px 0 #000}
 .ovico.empty{--rc:#4a3a2c;opacity:.5}
+.gart2{gap:8px}
+.ghero{position:relative;border:3px solid #6b5644;border-radius:14px;overflow:hidden;box-shadow:0 4px 0 #0006}
+.ghero canvas{display:block;width:100%;height:auto}
+.gtag{position:absolute;left:10px;top:7px;text-align:left;display:flex;flex-direction:column;text-shadow:0 2px 0 #0008}.gtag b{font-family:'Lilita One','Arial Black',sans-serif;font-size:1.2rem;color:#fff}.gtag small{font-size:.64rem;color:#fff;font-weight:800;max-width:9.5em;line-height:1.15}
+.gbest{position:absolute;right:8px;bottom:8px;background:#1c140ecc;border:2px solid var(--rc);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:800}.gbest b{color:var(--rc)}
+.gact{background:linear-gradient(#3a2a1c,#2a1e14);border:2px solid #6b5644;border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;gap:7px}
+.gtop{display:flex;justify-content:space-between;align-items:center;font-size:.86rem}.gtop span{color:var(--sand);font-weight:800;font-variant-numeric:tabular-nums}
+.gbuild{width:100%;display:flex;flex-direction:column;align-items:center;line-height:1.15}.gbuild small{font-size:.74rem}
+.gprog{height:14px;border-radius:8px;background:#1c130d;border:2px solid #6b5644;overflow:hidden}.gprog div{height:100%;background:linear-gradient(90deg,#3fb59a,#7fe08a);transition:width .4s}
+.gmax{text-align:center;color:#ffd447}
+.gsec{background:#0004;border:2px solid #6b5644;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.gsh{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.gsh b{font-size:.84rem;color:#ffd447}.gsh small{font-size:.66rem;color:var(--muted)}
+.gchs{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.gch{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;gap:2px 6px;align-items:center;background:#241a14;border:2px solid color-mix(in srgb,var(--rc) 55%,#241a14);border-radius:9px;padding:5px 7px}
+.gdot{width:10px;height:10px;border-radius:3px;background:var(--rc);box-shadow:0 0 6px var(--rc);transform:rotate(45deg)}
+.gch b{font-size:.74rem;color:var(--rc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gch em{font-style:normal;font-weight:900;font-size:.78rem;font-variant-numeric:tabular-nums}
+.gbar{grid-column:1/3;height:5px;border-radius:3px;background:#1c130d;overflow:hidden}.gbar div{height:100%;background:var(--rc)}
+.gch small{font-size:.62rem;font-weight:900;text-align:right}.gch small.up{color:#7fe08a}.gch small.dn{color:#ff8a7a}
+.glock{display:flex;flex-wrap:wrap;gap:4px}.glock span{font-size:.64rem;color:var(--muted);background:#1c130d;border:1px dashed color-mix(in srgb,var(--rc) 60%,#000);border-radius:12px;padding:2px 7px}.glock b{color:var(--rc)}
 .wsgrid{display:flex;flex-direction:column;gap:5px}
 .wst{display:grid;grid-template-columns:36px 1fr 104px;align-items:center;gap:8px;background:var(--night);border:2px solid #6b5644;border-left:5px solid var(--bc);border-radius:10px;padding:5px 7px;box-shadow:inset 0 0 10px #0008;min-width:0}
 .wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
@@ -2254,33 +2274,65 @@ function gardenTick(){
   }
 }
 const gSkipAll=()=>S.gUp?Math.max(1,Math.ceil((S.gUp-Date.now())/1800000)):0;   // Kakteen für sofort fertig
+// 11.11.2026: neue Optik – Gewächshaus-Bild, Fortschrittskarte und Chancen als Kacheln
+function drawGarden(){const cv2=$('gCv');if(!cv2)return;const g=cv2.getContext('2d'),W2=cv2.width,H2=cv2.height,L=S.glv,tt=Date.now()/1000;
+  g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,W2,H2);g.setTransform(W2/360,0,0,W2/360,0,0);const H=H2*360/W2;
+  const sky=g.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#ffb46a');sky.addColorStop(.55,'#ffd9a0');sky.addColorStop(1,'#e8b878');g.fillStyle=sky;g.fillRect(0,0,360,H);
+  g.fillStyle='#fff3c460';g.beginPath();g.arc(326,30,30,0,7);g.fill();g.fillStyle='#fff3c4';g.beginPath();g.arc(326,30,19,0,7);g.fill();
+  g.fillStyle='#d99a5a';g.beginPath();g.moveTo(0,H*.62);g.quadraticCurveTo(90,H*.45,180,H*.6);g.quadraticCurveTo(270,H*.48,360,H*.6);g.lineTo(360,H);g.lineTo(0,H);g.fill();
+  g.fillStyle='#b9783e';g.fillRect(0,H*.78,360,H*.22);g.fillStyle='#a0652f';for(let x=8;x<360;x+=26)g.fillRect(x,H*.8+((x/26)%2)*6,10,3);
+  // Gewächshaus
+  const gx=112,gy=H*.2,gw=228,gh=H*.58;g.fillStyle='#bfefff40';g.strokeStyle='#5a3a22';g.lineWidth=4;
+  g.beginPath();g.moveTo(gx,gy+gh);g.lineTo(gx,gy+30);g.quadraticCurveTo(gx+gw/2,gy-28,gx+gw,gy+30);g.lineTo(gx+gw,gy+gh);g.closePath();g.fill();g.stroke();
+  g.lineWidth=2;for(let i=1;i<5;i++){const x=gx+gw*i/5;g.beginPath();g.moveTo(x,gy+gh);g.lineTo(x,gy+30-Math.sin(Math.PI*i/5)*44);g.stroke();}
+  g.beginPath();g.moveTo(gx,gy+gh*.45);g.lineTo(gx+gw,gy+gh*.45);g.stroke();
+  g.fillStyle='#ffffff55';g.beginPath();g.moveTo(gx+20,gy+40);g.lineTo(gx+40,gy+18);g.lineTo(gx+48,gy+24);g.lineTo(gx+28,gy+48);g.fill();
+  // Töpfe mit Kakteen – mehr und größer mit dem Level
+  const n=Math.min(7,2+Math.floor(L/8)),gr=S.gUp?1:0;
+  for(let i=0;i<n;i++){const x=gx+22+i*(gw-44)/(n-1),y=gy+gh-4,h=14+Math.min(26,L*.5)+((i*7)%5)*3,sw=Math.sin(tt*2+i)*1.5;
+    g.fillStyle='#c2643a';g.strokeStyle='#5a2e18';g.lineWidth=2;g.beginPath();g.moveTo(x-11,y-16);g.lineTo(x+11,y-16);g.lineTo(x+8,y);g.lineTo(x-8,y);g.closePath();g.fill();g.stroke();
+    g.fillStyle='#d97a4a';g.fillRect(x-12,y-19,24,5);
+    const col=['#63c74d','#3fb59a','#7be86a','#4fb8ff','#8a6aff','#ffd447','#ff6a3a'][i%7];
+    g.save();g.translate(x,y-19);g.rotate(sw*.02);g.fillStyle=col;g.strokeStyle='#1c140e';g.lineWidth=2;
+    g.beginPath();g.moveTo(-6,0);g.lineTo(-6,-h+6);g.arc(0,-h+6,6,Math.PI,0);g.lineTo(6,0);g.closePath();g.fill();g.stroke();
+    if(h>26){g.beginPath();g.moveTo(-6,-h*.45);g.lineTo(-12,-h*.45);g.lineTo(-12,-h*.7);g.stroke();}
+    if(L>=10&&i%2===0){g.fillStyle='#ff6fae';g.beginPath();g.arc(0,-h,3.5,0,7);g.fill();}
+    g.restore();}
+  if(gr){for(let i=0;i<10;i++){const px=gx+20+((i*53+tt*30)%(gw-40)),py=gy+gh-30-((tt*40+i*23)%60);g.fillStyle='#9ad0ff';g.globalAlpha=.8;g.beginPath();g.arc(px,py,2,0,7);g.fill();}g.globalAlpha=1;}
+  // Schild
+  g.fillStyle='#7a4a26';g.fillRect(14,H*.58,6,H*.3);g.fillStyle='#a8743e';g.strokeStyle='#4a2a14';g.lineWidth=3;g.beginPath();g.roundRect(2,H*.46,58,30,6);g.fill();g.stroke();
+  g.fillStyle='#fff2d0';g.font='900 15px "Lilita One","Arial Black",sans-serif';g.textAlign='center';g.fillText('Lv '+L,31,H*.46+21);}
 function renderGarden(){
   const L=S.glv,now=gWeights(L),nx=L<MAX_G?gWeights(L+1):null,cost=gCost(L);
   const growing=!!S.gUp,left=growing?(S.gUp-Date.now())/1000:0,dur=gTime(L);
-  const rows=RAR.map((r,i)=>{const lock=now[i]<=0,un=gUnlock(i);
-    return`<div class="odd${lock?' lock':''}"><span style="color:${r.c}">${r.n}</span>
-      <div class="track"><div style="width:${now[i]}%;background:${r.c}"></div></div>
-      <em>${lock?'–':now[i].toFixed(1)+'%'}</em>
-      <span class="nx">${lock?(un<99?'Lv '+un:''):nx&&nx[i]!==now[i]?(nx[i]>now[i]?'▲ ':'▼ ')+nx[i].toFixed(1):''}</span></div>`;}).join('');
-  let action;
-  if(L>=MAX_G)action='<p style="margin:0;font-weight:800;color:var(--sand)">Höchste Stufe erreicht</p>';
-  else if(growing)action=`<div class="prog"><div id="gProg" style="width:${Math.min(100,(1-left/dur)*100)}%"></div></div>
-      <p style="margin:0;font-weight:800" id="gLeft">Wächst … noch ${fmtT(left)}</p>
+  const open=RAR.map((r,i)=>i).filter(i=>now[i]>0),locked=RAR.map((r,i)=>i).filter(i=>now[i]<=0&&gUnlock(i)<99);
+  const best=open[open.length-1];
+  const tiles=open.map(i=>{const r=RAR[i],d=nx?nx[i]-now[i]:0;
+    return`<div class="gch" style="--rc:${r.c}"><span class="gdot"></span><b>${r.n}</b><em>${now[i].toFixed(1).replace('.',',')} %</em>
+      <div class="gbar"><div style="width:${Math.min(100,now[i]*2.5)}%"></div></div>${Math.abs(d)>=.05?`<small class="${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d).toFixed(1).replace('.',',')}</small>`:'<small></small>'}</div>`;}).join('');
+  const lk=locked.map(i=>`<span style="--rc:${RAR[i].c}">🔒 ${RAR[i].n} <b>Lv ${gUnlock(i)}</b></span>`).join('');
+  let act;
+  if(L>=MAX_G)act='<div class="gact"><b class="gmax">🏆 Höchste Stufe erreicht</b></div>';
+  else if(growing)act=`<div class="gact"><div class="gtop"><b>🌱 Wächst auf Lv ${L+1}</b><span id="gLeft">${fmtT(left)}</span></div>
+      <div class="gprog"><div id="gProg" style="width:${Math.min(100,(1-left/dur)*100)}%"></div></div>
       <div class="row"><button class="btn" id="gSkip" type="button" ${(S.kak||0)<1?'disabled':''}>−30 Min<small>1 🌵</small></button>
-        <button class="btn go" id="gNow" type="button" ${(S.kak||0)<gSkipAll()?'disabled':''}>Sofort fertig<small id="gNowK">${gSkipAll()} 🌵</small></button></div>
-      <p style="margin:0;color:var(--muted);font-size:.8rem">Mit Kakteen wächst es schneller: 1 🌵 = 30 Minuten. Du hast ${fmt(S.kak||0)} 🌵.</p>`;
-  else action=`<p class="intro">Lv ${L+1}: ${fmt(cost)} Münzen · ${fmtT(dur)}</p>`;
-  // 11.11.2026: Gärtnerei steht direkt im Bereich unter der Kampfbox (Leiste 🌱)
-  $('tabGart').innerHTML=`<div class="tsec gart"><div class="thead"><b>🌱 Gärtnerei <em>Lv ${L}</em></b><small>Höhere Stufe = seltenere Teile in den Kapseln</small></div>
-    ${L<MAX_G&&!growing?`<div class="row"><button class="btn go" id="gBuild" type="button" ${S.coins<cost?'disabled':''}>Ausbauen auf Lv ${L+1} · ${fmt(cost)}<small>Wachstum ${fmtT(dur)}</small></button></div>`:action}
-    <div class="odds">${rows}</div></div>`;
+        <button class="btn go" id="gNow" type="button" ${(S.kak||0)<gSkipAll()?'disabled':''}>Sofort fertig<small id="gNowK">${gSkipAll()} 🌵</small></button></div></div>`;
+  else act=`<div class="gact"><div class="gtop"><b>Nächste Stufe: Lv ${L+1}</b><span>⏱ ${fmtT(dur)}</span></div>
+      <button class="btn go gbuild" id="gBuild" type="button" ${S.coins<cost?'disabled':''}>🌱 Ausbauen<small>● ${fmt(cost)} Münzen</small></button></div>`;
+  $('tabGart').innerHTML=`<div class="tsec gart2">
+    <div class="ghero"><canvas id="gCv" width="720" height="300"></canvas><div class="gtag"><b>🌱 Gärtnerei</b><small>Bessere Samen in deinen Kapseln</small></div>
+      ${best!=null?`<div class="gbest" style="--rc:${RAR[best].c}">Bis <b>${RAR[best].n}</b></div>`:''}</div>
+    ${act}
+    <div class="gsec"><div class="gsh"><b>🎁 Chancen pro Samenkapsel</b>${nx&&!growing&&L<MAX_G?'<small>▲▼ = mit Lv '+(L+1)+'</small>':''}</div><div class="gchs">${tiles}</div>
+      ${lk?`<div class="glock">${lk}</div>`:''}</div></div>`;
+  drawGarden();
   const b=$('gBuild');if(b)b.onclick=()=>{if(S.coins<cost||S.gUp)return;S.coins-=cost;S.gUp=Date.now()+dur*1000;save();lastHud='';renderGarden();};
   const sk=$('gSkip');if(sk)sk.onclick=()=>{if(!S.gUp||(S.kak||0)<1)return;S.kak--;S.gUp-=1800*1000;save();lastHud='';renderGarden();};
   const sn=$('gNow');if(sn)sn.onclick=()=>{const k=gSkipAll();if(!S.gUp||(S.kak||0)<k)return;S.kak-=k;S.gUp=Date.now();save();lastHud='';renderGarden();};
 }
 $('gBtn').onclick=()=>{if(eqOpen||pending||(typeof dOpen!=='undefined'&&dOpen)||editing)return;gOpen=true;$('modal').hidden=false;lastHud='';renderGarden();};
 setInterval(()=>{
-  if(curTab==='gart'){if(S.gUp&&$('gProg')){const left=(S.gUp-Date.now())/1000;$('gProg').style.width=Math.min(100,(1-left/gTime(S.glv))*100)+'%';$('gLeft').textContent='Wächst … noch '+fmtT(left);const nk=$('gNowK'),nb=$('gNow');if(nk){nk.textContent=gSkipAll()+' 🌵';nb.disabled=(S.kak||0)<gSkipAll();}}
+  if(curTab==='gart'){drawGarden();if(S.gUp&&$('gProg')){const left=(S.gUp-Date.now())/1000;$('gProg').style.width=Math.min(100,(1-left/gTime(S.glv))*100)+'%';$('gLeft').textContent=fmtT(left);const nk=$('gNowK'),nb=$('gNow');if(nk){nk.textContent=gSkipAll()+' 🌵';nb.disabled=(S.kak||0)<gSkipAll();}}
     const b=$('gBuild');if(b)b.disabled=S.coins<gCost(S.glv);}
   const g=$('gBtn');$('gLv').textContent='Lv '+S.glv;
   const ready=!S.gUp&&S.glv<MAX_G&&S.coins>=gCost(S.glv);g.classList.toggle('ready',ready);
@@ -2452,13 +2504,16 @@ function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=
     <div class="ovsec"><b>🎒 Ausrüstung</b><div class="ovrow g9">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
     <div class="ovsec soon"><b>🏺 Relikte</b><small>bald</small></div>
     <div class="row"><button class="btn go${ktUp?' up':''}" id="ovColl" type="button">🌵 Meine Kakteen <small>${Object.keys(S.kt).length}/${KAKTI.length}</small></button><button class="btn go" id="ovKt" type="button">📋 Kaktus-Werte</button></div>
-    <div class="row"><button class="btn" id="ovEd" type="button">✎ Name &amp; Aussehen</button></div>
+    <div class="ovbtns"><button class="btn" id="ovEd" type="button">✎ Name &amp; Aussehen</button><button class="btn" type="button" data-ovon="profil">👤 Profil &amp; Code</button>
+      <button class="btn" type="button" data-ovon="freunde">👥 Freunde</button><button class="btn" type="button" data-ovon="liste">🏆 Rangliste</button></div>
     <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
   $('modal').hidden=false;ovDraw();
   $('ovX').onclick=()=>{$('modal').hidden=true;};
   $('ovEd').onclick=()=>{$('modal').hidden=true;openEditor();};
   const back=()=>{lastHud='';profileOverview();};
-  $('ovKt').onclick=()=>ktOverview(back);$('ovColl').onclick=()=>ktColl(back);$('ovPic').onclick=()=>ktColl(back);}
+  $('ovKt').onclick=()=>ktOverview(back);
+  $('card').querySelectorAll('[data-ovon]').forEach(b=>b.onclick=()=>{olOpen=true;olTab=b.dataset.ovon;friendBack=null;$('card').classList.add('wide');
+    if(olTab==='liste'&&(!lbData||Date.now()-lbAt>30000))loadLb();lastHud='';renderOnline();});$('ovColl').onclick=()=>ktColl(back);$('ovPic').onclick=()=>ktColl(back);}
 function ktColl(re){const L=ktSumLv(),cur=curKt().id,kak=S.kak||0;
   $('card').innerHTML=`<div class="sumres"><h2>🌵 Kaktus-Sammlung</h2>
     <div class="skgrid ktgrid">${KAKTI.map(K=>{const lv=ktLv(K.id),o=S.kt[K.id],rc=RAR[K.r].c;
@@ -4491,7 +4546,8 @@ const PATCHES=[
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
      ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.'],
      ['🌵 Kaktus-Sammlung:','10 Kakteen in 6 Seltenheiten mit eigenen Stärken – vom Stachelschützen bis zum Urkaktus. Beschwöre sie mit Kakteen (1× 10 🌵, 10× 90 🌵), level sie mit Doppelten und wähle deinen Kaktus. Die alten Klassen sind jetzt Kakteen der Sammlung.'],
-     ['📋 Übersichten:','Tippe oben auf deinen Namen: Dort siehst du Fähigkeiten, Begleiter und Ausrüstung, alle Kaktus-Werte auf einen Blick und wechselst und levelst deine Kakteen.']]}
+     ['📋 Übersichten:','Tippe oben auf deinen Namen: Dort siehst du Fähigkeiten, Begleiter und Ausrüstung, alle Kaktus-Werte auf einen Blick, wechselst und levelst deine Kakteen und kommst zu Freunden und Rangliste.'],
+     ['🌱 Gärtnerei:','Neu gestaltet – mit Gewächshaus, das mit jeder Stufe wächst, und übersichtlichen Kapsel-Chancen.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
