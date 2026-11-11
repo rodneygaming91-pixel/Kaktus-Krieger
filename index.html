@@ -68,8 +68,9 @@ h1 span{color:var(--bloom)}
 .wst{display:grid;grid-template-columns:36px 1fr 104px;align-items:center;gap:8px;background:var(--night);border:2px solid #6b5644;border-left:5px solid var(--bc);border-radius:10px;padding:5px 7px;box-shadow:inset 0 0 10px #0008;min-width:0}
 .wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
 .wstt{display:flex;flex-direction:column;min-width:0;gap:1px}.wstt b{font-size:.88rem;color:var(--bc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wstt b em{font-style:normal;font-size:.72rem;color:var(--sand);font-weight:800;margin-left:5px}
-.wstv{font-size:.74rem;color:#7fe08a;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wst .wsb{width:100%;min-width:0;padding:5px 4px}.wstmax{text-align:center;color:var(--sand);font-weight:800;font-size:.85rem}
+.wstv{font-size:.72rem;line-height:1.25;color:#7fe08a;font-weight:700;font-variant-numeric:tabular-nums}
+.wst .wsb{width:100%;min-width:0;padding:5px 4px}.wst.lockd{grid-template-columns:36px 1fr;opacity:.6;filter:grayscale(.5)}.wst.lockd .wstv{color:var(--muted)}.wstv em{font-style:normal;color:var(--muted);font-weight:600}
+.wstmax{text-align:center;color:var(--sand);font-weight:800;font-size:.85rem}
 .blist{display:flex;flex-direction:column;gap:6px;text-align:left}
 .brow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--night);border-radius:8px;padding:9px 10px;border:2px solid #6b5644;border-left:5px solid var(--bc);box-shadow:inset 0 0 10px #0008}
 .brow div{min-width:0;display:flex;flex-direction:column;gap:1px}
@@ -1214,24 +1215,25 @@ const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===
 // Werkstatt: den Kaktus selbst leveln. Münzen kosten jedes Level, jedes 10. Level braucht zusätzlich Kakteen.
 // Angriff und Leben haben keine Obergrenze und wachsen je Level um 2,5 % (aufeinander aufbauend) –
 // sie tragen den Großteil des Wachstums, seit Ausrüstung vor allem über die Seltenheit stärker wird.
+// 11.11.2026: alles unendlich levelbar. lim = Grenzwert, dem sich der Wert nähert (wird nie ganz erreicht); req = erst ab Stufe X eines anderen Werts
 const WS=[
-  {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',d:'Schärfere Stacheln',  kind:'mul',per:2.5, unit:'% Angriff',          base:1200,g:1.029},
-  {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',d:'Mehr Wasser im Stamm',kind:'mul',per:2.5, unit:'% Leben',            base:1200,g:1.029},
-  {id:'armor',n:'Panzerung',   ico:'⛨', c:'#c49a6c',d:'Dickere Rinde',       kind:'add',per:1,   unit:'% weniger Schaden',  base:2000,g:1.2, max:40},
-  {id:'spd',  n:'Tempo',       ico:'☀', c:'#ffd447',d:'Schnellere Schläge',  kind:'add',per:1,   unit:'% Tempo',            base:2000,g:1.18,max:50},
-  {id:'reg',  n:'Regeneration',ico:'✚', c:'#7fe08a',d:'Heilt sich selbst',   kind:'add',per:.05, unit:'% Leben pro s',      base:3000,g:1.15,max:40},
-  {id:'crit', n:'Krit-Chance', ico:'✦', c:'#ffe066',d:'Öfter kritisch',      kind:'add',per:.5,  unit:'% Krit-Chance',      base:3000,g:1.15,max:40},
-  {id:'critd',n:'Krit-Schaden',ico:'💥',c:'#ff7a5a',d:'Härtere Krits',       kind:'add',per:5,   unit:'% Krit-Schaden',     base:3000,g:1.1, max:100},
-  {id:'dodge',n:'Ausweichen',  ico:'💨',c:'#9ad0ff',d:'Treffer verfehlen',   kind:'add',per:.5,  unit:'% Ausweichen',       base:5000,g:1.17,max:40},
-  {id:'stun', n:'Betäuben',    ico:'💫',c:'#d8a8ff',d:'Gegner 1 s betäuben', kind:'add',per:.5,  unit:'% Betäuben',         base:5000,g:1.17,max:40},
-  {id:'steal',n:'Lebensraub',  ico:'🩸',c:'#ff6f8a',d:'Schaden heilt dich',  kind:'add',per:.25, unit:'% Lebensraub',       base:5000,g:1.15,max:40}
+  {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',kind:'mul',per:2.5, unit:'% Angriff',        base:1200,g:1.029},
+  {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',kind:'mul',per:2.5, unit:'% Leben',          base:1200,g:1.029},
+  {id:'spd',  n:'Tempo',       ico:'☀', c:'#ffd447',kind:'add',per:1,   lim:100,unit:'% Tempo',  base:2000,g:1.06,req:['atk',20]},
+  {id:'armor',n:'Panzerung',   ico:'⛨', c:'#c49a6c',kind:'add',per:1,   lim:75, unit:'% weniger Schaden',base:2000,g:1.06,req:['hp',20]},
+  {id:'crit', n:'Krit-Chance', ico:'✦', c:'#ffe066',kind:'add',per:.5,  lim:50, unit:'% Krit-Chance',base:3000,g:1.06,req:['atk',50]},
+  {id:'reg',  n:'Regeneration',ico:'✚', c:'#7fe08a',kind:'add',per:.05, lim:5,  unit:'% Leben pro s',base:3000,g:1.06,req:['hp',50]},
+  {id:'critd',n:'Krit-Schaden',ico:'💥',c:'#ff7a5a',kind:'add',per:5,   unit:'% Krit-Schaden',   base:3000,g:1.05,req:['crit',20]},
+  {id:'dodge',n:'Ausweichen',  ico:'💨',c:'#9ad0ff',kind:'add',per:.5,  lim:50, unit:'% Ausweichen', base:5000,g:1.06,req:['spd',30]},
+  {id:'stun', n:'Betäuben',    ico:'💫',c:'#d8a8ff',kind:'add',per:.5,  lim:50, unit:'% Betäuben',   base:5000,g:1.06,req:['armor',30]},
+  {id:'steal',n:'Lebensraub',  ico:'🩸',c:'#ff6f8a',kind:'add',per:.25, lim:30, unit:'% Lebensraub', base:5000,g:1.06,req:['reg',30]}
 ];
 const wsLv=id=>(S.ws&&S.ws[id])||0;
 const wsDef=id=>WS.find(w=>w.id===id);const wsV=id=>wsDef(id)?wsVal(id):0;
-const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.per*lv;};   // Bonus in %
+const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.lim?W.lim*(1-Math.exp(-W.per*lv/W.lim)):W.per*lv;};   // Bonus in %
 const wsCost=(W,lv=wsLv(W.id))=>Math.round(W.base*Math.pow(W.g,lv));
-const wsKak=(W,lv=wsLv(W.id))=>(lv+1)%10===0?1+Math.floor(lv/100):0;                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
-const wsMax=W=>W.max&&wsLv(W.id)>=W.max;
+const wsKak=()=>0; // 11.11.2026: Werkstatt kostet nur noch Münzen                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
+const wsLock=W=>!!(W.req&&wsLv(W.req[0])<W.req[1]);const wsMax=wsLock; // gesperrt = (noch) nicht kaufbar
 const wsTotal=()=>WS.reduce((a,W)=>a+wsLv(W.id),0);
 // Kakteen: für jeden gewonnenen Bosskampf, mehr auf höheren Stages
 const kakFor=st=>1+diffIdx(st);
@@ -2315,10 +2317,11 @@ setInterval(()=>{
 
 // ---------- Werkstatt: den Kaktus leveln (ersetzt das Hauptquartier) ----------
 let hqOpen=false,wsPage=0;
-function wsLists(){const kak=S.kak||0;return{list0:`<div class="wsgrid">${WS.map(W=>{const lv=wsLv(W.id),max=wsMax(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
+function wsLists(){const kak=S.kak||0;return{list0:`<div class="wsgrid">${WS.map(W=>{const lv=wsLv(W.id),lock=wsLock(W),c=wsCost(W),k=wsKak(W),ok=S.coins>=c&&kak>=k;
+      if(lock){const R=wsDef(W.req[0]);return`<div class="wst lockd" style="--bc:${W.c}"><i>🔒</i><div class="wstt"><b>${W.n}</b><span class="wstv">Frei ab ${R.n} Lv ${W.req[1]} <em>(${wsLv(R.id)}/${W.req[1]})</em></span></div></div>`;}
       const now=wsVal(W.id),f=x=>W.kind==='mul'?fmt(Math.round(x)):(+x.toFixed(2)).toLocaleString('de-DE');
-      return`<div class="wst" style="--bc:${W.c}"><i>${W.ico}</i><div class="wstt"><b>${W.n}<em>Lv ${lv}${W.max?' / '+W.max:''}</em></b><span class="wstv">+${f(now)}${W.unit}</span></div>
-        ${max?'<span class="wstmax">Max</span>':`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
+      return`<div class="wst" style="--bc:${W.c}"><i>${W.ico}</i><div class="wstt"><b>${W.n}<em>Lv ${lv}</em></b><span class="wstv">+${f(now)}${W.unit}${W.lim?` <em>·&nbsp;max&nbsp;${W.lim}&nbsp;%</em>`:''}</span></div>
+        ${`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
   list1:skSectionHtml()};}
 function wsBind(H,re){
   skBind(H,re);
@@ -2328,7 +2331,6 @@ function wsBind(H,re){
 function renderWS(){
   const kak=S.kak||0,L=wsLists();
   const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
-    <p class="intro">Jedes 10. Level kostet zusätzlich <b style="color:#7fe08a">Kakteen 🌵</b>.</p>
     <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
     ${L.list0}`;
   const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
@@ -2351,7 +2353,7 @@ function renderWS(){
 let kSub='kaktus';
 const KSUBS=[['kaktus','🌵','Kaktus'],['skill','✶','Fähigkeiten'],['relic','🏺','Relikte'],['mast','🎖','Meister'],['trait','🧬','Merkmale']];
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
-  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Jedes 10. Level kostet zusätzlich 🌵</small></div>${L.list0}</div>`;
+  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
   else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
@@ -4346,7 +4348,7 @@ const PATCHES=[
      ['Aufgeräumt:','BOSS AUTO, SKILLS AUTO und ×2 Video sind weg. Fähigkeiten und Boss-Kampf laufen jetzt immer automatisch.'],
      ['🔮 Fähigkeiten beschwören:','25 Fähigkeiten in 6 Seltenheiten. Beschwöre sie mit Samenkapseln (1× 5 🌱, 10× 45 🌱), level sie mit Doppelten und rüste bis zu 6 aus.'],
      ['🐾 Begleiter beschwören:','30 Tiere in 6 Seltenheiten – vom Dackel bis zum Drachen. Beschwöre sie mit Samenkapseln, level sie mit Doppelten bis Lv 50 und setze bis zu 5 im Kampf ein.'],
-     ['🌵 Kaktus-Werte:','Unter der Kampfbox als Kacheln – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.']]}
+     ['🌵 Kaktus-Werte:','Unter der Kampfbox als Liste, nur noch mit Münzen – dazu neu: Regeneration, Krit-Chance, Krit-Schaden, Ausweichen, Betäuben und Lebensraub.']]}
 ];
 {const today=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');})();
  const isNewPlayer=!oldSave;let done=false;
