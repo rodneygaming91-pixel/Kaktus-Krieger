@@ -2594,7 +2594,7 @@ const fbCost=n=>[0,0,10,20,35,60,100,160,250,400,600,900][n]||900;   // Kakteen 
 const fLv=()=>{const h=(S.farm&&S.farm.h)||0;return Math.floor(Math.sqrt(h/3))+1;};   // Gärtnerei-Stufe aus der Zahl der Ernten
 const fAt=L=>3*(L-1)*(L-1);                                                          // Ernten bis Stufe L
 const fYield=sd=>Math.max(1,Math.round(sd.kak*(1+.05*(fLv()-1))));                   // +5 % Kakteen je Stufe
-function farmInit(){if(!S.farm||!Array.isArray(S.farm.beds))S.farm={beds:Array(FB_START).fill(null),h:0,last:'feige'};}
+function farmInit(){if(!S.farm||!Array.isArray(S.farm.beds))S.farm={beds:[null,null],h:0,last:'feige'};} // wird schon beim Start aufgerufen → keine später definierten Konstanten benutzen
 function renderGarden(){farmInit();const F=S.farm,L=fLv(),now=Date.now(),a0=fAt(L),b0=fAt(L+1),nb=F.beds.length,nxt=SEEDS.find(x=>x.lv>L);
   const cell=(b,i)=>{if(!b)return`<button type="button" class="fbed empty" data-fp="${i}"><canvas width="120" height="110" data-fb="${i}"></canvas><span class="fbt">🌱 Pflanzen</span></button>`;
     const sd=SEEDS.find(x=>x.id===b.s),dur=sd.min*60000,p=Math.min(1,(now-b.t)/dur),ripe=p>=1;
