@@ -101,6 +101,7 @@ h1 span{color:var(--bloom)}
 .gbuild{width:100%;display:flex;flex-direction:column;align-items:center;line-height:1.15}.gbuild small{font-size:.74rem}
 .gprog{height:14px;border-radius:8px;background:#1c130d;border:2px solid #6b5644;overflow:hidden}.gprog div{height:100%;background:linear-gradient(90deg,#3fb59a,#7fe08a);transition:width .4s}
 .gmax{text-align:center;color:#ffd447}
+.gsoon{text-align:center}.gsoon>b{color:#ffd447;font-size:.95rem}.gsoon p{margin:0;font-size:.82rem;color:var(--sand)}.gsoon p b{color:#fff}
 .gsec{background:#0004;border:2px solid #6b5644;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .gsh{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.gsh b{font-size:.84rem;color:#ffd447}.gsh small{font-size:.66rem;color:var(--muted)}
 .gchs{display:grid;grid-template-columns:1fr 1fr;gap:5px}
@@ -1105,6 +1106,12 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .drpage .skfoot{bottom:-8px;padding-bottom:10px;margin-bottom:-8px} /* Begleiter: keine Unterleiste darunter → ganz unten fixieren */
 .skfoot{display:grid;grid-template-columns:1fr 1fr;gap:6px;position:sticky;bottom:52px;z-index:2;background:#2a1d14;padding:6px 0 4px;margin-bottom:-4px}.skfoot .btn{padding:8px 6px;font-size:.9rem;display:flex;flex-direction:column;align-items:center;line-height:1.1}.skfoot .btn small{font-size:.62rem}
 .sksumb{background:linear-gradient(#ffb03a,#e07a10)!important;border-color:#7a3a08!important;color:#fff!important}
+.gsrow .btn{display:flex;flex-direction:column;align-items:center;line-height:1.1}.gsrow .btn small{font-size:.66rem}
+.gsgrid{grid-template-columns:repeat(6,1fr)!important;max-height:46vh;overflow-y:auto;padding:6px 2px}
+.gsc{cursor:default;padding:3px 2px;background:linear-gradient(165deg,color-mix(in srgb,var(--rc) 45%,#241a14),#160f0a)}.gsc canvas{width:100%;aspect-ratio:1}.gsc small{font-size:.5rem!important;font-weight:800;white-space:nowrap;overflow:hidden;max-width:100%}
+.gsc.sold{opacity:.55}.gsc.eq{box-shadow:0 0 0 2px #7fe08a,0 0 8px #7fe08a}.gsc u{background:#2f7d2b}.gsc u.nw{background:#d84a8a}
+.gsx{position:absolute;bottom:12px;right:2px;font-size:.62rem}
+.gssum{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:center;font-size:.78rem;font-weight:800;color:var(--sand)}.gssum .up{color:#7fe08a}
 .sumodds{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:.78rem}.sumodds span{display:flex;justify-content:space-between}
 </style>
 
@@ -1131,7 +1138,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
     <span class="fst" title="Leben"><em style="color:#ff6fae">♥</em><b id="sHp">0</b></span>
     <span class="fst" title="Tempo (Sekunden pro Schlag)"><em style="color:#ffd447">⏱</em><b id="sSpd">0</b><small>s</small></span>
   </div>
-  <div class="caprow"><button class="capsule" id="capBtn" type="button">Samenkapsel öffnen <span class="n" id="capN">0</span></button>
+  <div class="caprow"><button class="capsule" id="capBtn" type="button">🔮 Ausrüstung beschwören <span class="n" id="capN">0</span></button>
     <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
   <div class="autorow" id="autoRow" hidden>
     <label for="stopSel">Anhalten bei</label>
@@ -1182,7 +1189,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1496,8 +1503,14 @@ function gWeights(L){L=Math.max(1,Math.min(MAX_G,L));let j=0;while(j<GL.length-2
 const gUnlock=i=>{for(let L=1;L<=MAX_G;L++)if(gWeights(L)[i]>0)return L;return 99;};
 const gCost=L=>Math.round(2000*Math.pow(1.7,L-1));   // Münzen
 const gTime=L=>Math.round(Math.min(L>=20?4*3600+(L-20)*1800:4*3600,10*Math.pow(1.75,L-1)));    // Wachstumszeit in s, ab Lv 20 länger
+// 12.11.2026: Seltenheits-Chancen der Ausrüstung hängen an der Beschwörungsstufe (Anzahl beschworener Teile), nicht mehr an der Gärtnerei
+const gsAt=L=>4*(L-1)*(L-1);                                  // Beschwörungen bis Stufe L (Stufe 85 = 28.224)
+const gsLv=()=>{const n=(S.gsSum&&S.gsSum.n)||0;let L=1;while(L<MAX_G&&n>=gsAt(L+1))L++;return L;};
+function gsCount(k){const L0=gsLv();S.gsSum.n=(S.gsSum.n||0)+k;const L1=gsLv();
+  if(L1>L0){const nu=RAR.findIndex((r,i)=>gUnlock(i)>L0&&gUnlock(i)<=L1);banner={txt:'Beschwörungsstufe '+L1+(nu>=0?' · '+RAR[nu].n+' frei!':''),t:2.4};}}
+if(!S.gsSum)S.gsSum={n:gsAt(Math.max(1,S.glv||1))}; // Übernahme: Gärtnerei-Stufe → Beschwörungsstufe
 function rollItem(){
-  const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
+  const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
   for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
   if(r<RAR.length-1&&Math.random()<gUp('luck')*.01)r++; // Glücksklee der Allianz
   const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)];
@@ -2404,11 +2417,11 @@ function hud(){
   $('barFill').style.width=(boss?100:S.kills/KILL_GOAL*100)+'%';
   $('sAtk').textContent=fmt(s.atk);$('sHp').textContent=fmt(s.hp);$('sSpd').textContent=s.spd.toFixed(1);
 }
-// ---------- Samenkapsel öffnen ----------
+// ---------- Ausrüstung beschwören (1×: Teil mit Vergleich) ----------
 let pending=null,revealT=null;
 function openCapsule(){
   if(S.caps<1||pending)return;
-  S.caps--;pending=rollItem();save();lastHud='';
+  S.caps--;gsCount(1);pending=rollItem();save();lastHud='';
   $('card').innerHTML='<h2>Kapsel platzt auf …</h2><div class="pod"></div><p style="margin:0;color:var(--muted)">Tippen zum Überspringen</p>';
   $('modal').hidden=false;revealT=setTimeout(reveal,900);
 }
@@ -2455,7 +2468,42 @@ function close(){const back=pending&&pending.tw,exb=pending&&pending.ex;if(back)
   // Teil aus dem Turm: zurück ins Turm-Fenster, Auto-Kampf läuft weiter
   if(back&&tw.open){save();lastHud='';renderTower();if(tw.auto)setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim&&!pending)twFight();},S.twX2?400:800);return;}
   $('modal').hidden=true;save();lastHud='';}
-$('capBtn').onclick=openCapsule;
+// 12.11.2026: Ausrüstung wird beschworen wie Fähigkeiten und Begleiter (1× / 10× / 30× mit Samenkapseln, Chancen aus der Gärtnerei)
+const GS_N=[1,10,30];
+function gearSumDlg(){if(pending||!$('modal').hidden)return;
+  /* im Tutorial direkt ein Teil */ if(tut.on&&TUT[tut.i]&&TUT[tut.i].act==='cap'){openCapsule();return;}
+  const L=gsLv(),w=gWeights(L),tot=w.reduce((a,b)=>a+b,0),caps=S.caps||0,n0=S.gsSum.n||0,a0=gsAt(L),b0=L<MAX_G?gsAt(L+1):a0;
+  const odds=RAR.map((r,i)=>w[i]>0?`<span style="color:${r.c}">${r.n} <b>${(Math.round(w[i]/tot*1000)/10).toString().replace('.',',')} %</b></span>`:'').join('');
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Ausrüstung beschwören</h2>
+    <div class="sksl"><b>Stufe ${L}</b><small>${L<MAX_G?`${fmt(n0-a0)}/${fmt(b0-a0)} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<MAX_G?Math.min(100,(n0-a0)/(b0-a0)*100):100}%"></div></div></div>
+    <div class="sumodds">${odds}</div>
+    <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(caps)} 🌱</b> Samenkapseln</p>
+    <div class="row gsrow">${GS_N.map(n=>`<button class="btn go" type="button" data-gs="${n}" ${caps<n?'disabled':''}>${n}×<small>${n} 🌱</small></button>`).join('')}</div>
+    <p class="hint" style="margin:0;text-align:center">Bei 10× und 30× wird Besseres sofort angelegt, gleich seltene Teile kommen ins Inventar, der Rest wird zu Münzen.</p>
+    <div class="row"><button class="btn" type="button" id="gsX">Schließen</button></div></div>`;
+  $('modal').hidden=false;$('gsX').onclick=()=>{$('modal').hidden=true;lastHud='';};
+  $('card').querySelectorAll('[data-gs]').forEach(b=>b.onclick=()=>{const n=+b.dataset.gs;if((S.caps||0)<n)return;
+    if(n===1){$('modal').hidden=true;openCapsule();return;}gearSummon(n);});}
+function gearSummon(n){if((S.caps||0)<n)return;S.caps-=n;gsCount(n);const got=[];let coins=0,eq=0,inv=0,sold=0;
+  for(let i=0;i<n;i++){const it=rollItem(),cur=S.gear[it.slot],isNew=!S.seen.includes(it.r);if(isNew)S.seen.push(it.r);let st;
+    if(!cur||itemScore(it)>itemScore(cur)){if(cur){if(S.inv.length<invMax()&&keepSafe(cur))S.inv.push(cur);else coins+=sellValue(cur);}S.gear[it.slot]=it;st='eq';eq++;feed(it,true);}
+    else if(keepSafe(it)&&S.inv.length<invMax()){S.inv.push(it);st='inv';inv++;}
+    else{coins+=sellValue(it);st='sold';sold++;}
+    got.push({it,st,isNew});}
+  S.coins+=coins;save();lastHud='';
+  // Teile, die zwischendurch angelegt und später wieder ersetzt wurden, nicht als „angelegt“ zeigen
+  for(const g of got)if(g.st==='eq'&&S.gear[g.it.slot]!==g.it)g.st='old';
+  eq=got.filter(g=>g.st==='eq').length;
+  got.sort((a,b)=>b.it.r-a.it.r);
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 ${n}× Ausrüstung</h2>
+    <div class="skgrid res gsgrid">${got.map(({it,st,isNew},i)=>`<div class="skc gsc ${st}" style="--rc:${RAR[it.r].c}"><canvas width="96" height="96" data-gsi="${i}"></canvas>
+      <small style="color:${RAR[it.r].c}">${RAR[it.r].n}</small>${st==='eq'?'<u>▲</u>':isNew?'<u class="nw">NEU</u>':''}${st==='sold'?'<span class="gsx">♻</span>':st==='inv'||st==='old'?'<span class="gsx">🎒</span>':''}</div>`).join('')}</div>
+    <div class="gssum"><span class="up">▲ ${eq} angelegt</span><span>🎒 ${inv} ins Inventar</span><span>♻ ${sold} zu Münzen · +${fmt(coins)}</span></div>
+    <div class="row"><button class="btn" id="gsOk" type="button">OK</button><button class="btn go" id="gsAgain" type="button" ${(S.caps||0)<n?'disabled':''}>Nochmal ${n}× · ${n} 🌱</button></div></div>`;
+  $('modal').hidden=false;
+  $('card').querySelectorAll('canvas[data-gsi]').forEach(cv2=>drawItemIcon(cv2.getContext('2d'),got.map(g=>g.it)[+cv2.dataset.gsi],96));
+  $('gsOk').onclick=()=>{$('modal').hidden=true;lastHud='';};$('gsAgain').onclick=()=>gearSummon(n);}
+$('capBtn').onclick=gearSumDlg;
 $('modal').addEventListener('click',e=>{if(pending&&!$('bEquip'))reveal();});
 
 // ---------- Gärtnerei-Fenster ----------
@@ -2498,40 +2546,20 @@ function drawGarden(){const cv2=$('gCv');if(!cv2)return;const g=cv2.getContext('
   // Schild
   g.fillStyle='#7a4a26';g.fillRect(14,H*.58,6,H*.3);g.fillStyle='#a8743e';g.strokeStyle='#4a2a14';g.lineWidth=3;g.beginPath();g.roundRect(2,H*.46,58,30,6);g.fill();g.stroke();
   g.fillStyle='#fff2d0';g.font='900 15px "Lilita One","Arial Black",sans-serif';g.textAlign='center';g.fillText('Lv '+L,31,H*.46+21);}
-function renderGarden(){
-  const L=S.glv,now=gWeights(L),nx=L<MAX_G?gWeights(L+1):null,cost=gCost(L);
-  const growing=!!S.gUp,left=growing?(S.gUp-Date.now())/1000:0,dur=gTime(L);
-  const open=RAR.map((r,i)=>i).filter(i=>now[i]>0),locked=RAR.map((r,i)=>i).filter(i=>now[i]<=0&&gUnlock(i)<99);
-  const best=open[open.length-1];
-  const tiles=open.map(i=>{const r=RAR[i],d=nx?nx[i]-now[i]:0;
-    return`<div class="gch" style="--rc:${r.c}"><span class="gdot"></span><b>${r.n}</b><em>${now[i].toFixed(1).replace('.',',')} %</em>
-      <div class="gbar"><div style="width:${Math.min(100,now[i]*2.5)}%"></div></div>${Math.abs(d)>=.05?`<small class="${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${Math.abs(d).toFixed(1).replace('.',',')}</small>`:'<small></small>'}</div>`;}).join('');
-  const lk=locked.map(i=>`<span style="--rc:${RAR[i].c}">🔒 ${RAR[i].n} <b>Lv ${gUnlock(i)}</b></span>`).join('');
-  let act;
-  if(L>=MAX_G)act='<div class="gact"><b class="gmax">🏆 Höchste Stufe erreicht</b></div>';
-  else if(growing)act=`<div class="gact"><div class="gtop"><b>🌱 Wächst auf Lv ${L+1}</b><span id="gLeft">${fmtT(left)}</span></div>
-      <div class="gprog"><div id="gProg" style="width:${Math.min(100,(1-left/dur)*100)}%"></div></div>
-      <div class="row"><button class="btn" id="gSkip" type="button" ${(S.kak||0)<1?'disabled':''}>−30 Min<small>1 🌵</small></button>
-        <button class="btn go" id="gNow" type="button" ${(S.kak||0)<gSkipAll()?'disabled':''}>Sofort fertig<small id="gNowK">${gSkipAll()} 🌵</small></button></div></div>`;
-  else act=`<div class="gact"><div class="gtop"><b>Nächste Stufe: Lv ${L+1}</b><span>⏱ ${fmtT(dur)}</span></div>
-      <button class="btn go gbuild" id="gBuild" type="button" ${S.coins<cost?'disabled':''}>🌱 Ausbauen<small>● ${fmt(cost)} Münzen</small></button></div>`;
+function renderGarden(){ // 12.11.2026: Chancen gibt es jetzt beim Beschwören – die Gärtnerei wird umgebaut (bald: Kakteen und Samenkapseln)
   $('tabGart').innerHTML=`<div class="tsec gart2">
-    <div class="ghero"><canvas id="gCv" width="720" height="300"></canvas><div class="gtag"><b>🌱 Gärtnerei</b><small>Bessere Samen in deinen Kapseln</small></div>
-      ${best!=null?`<div class="gbest" style="--rc:${RAR[best].c}">Bis <b>${RAR[best].n}</b></div>`:''}</div>
-    ${act}
-    <div class="gsec"><div class="gsh"><b>🎁 Chancen pro Samenkapsel</b>${nx&&!growing&&L<MAX_G?'<small>▲▼ = mit Lv '+(L+1)+'</small>':''}</div><div class="gchs">${tiles}</div>
-      ${lk?`<div class="glock">${lk}</div>`:''}</div></div>`;
+    <div class="ghero"><canvas id="gCv" width="720" height="300"></canvas><div class="gtag"><b>🌱 Gärtnerei</b><small>Wird gerade umgebaut</small></div></div>
+    <div class="gact gsoon"><b>🚧 Bald: Kakteen und Samenkapseln</b>
+      <p>Die Gärtnerei wird umgebaut: Bald wachsen hier <b>Kakteen 🌵</b> und <b>Samenkapseln 🌱</b> für dich.</p>
+      <p>Die Chancen auf seltene Ausrüstung steigen jetzt beim <b>🔮 Beschwören</b> – je mehr du beschwörst, desto höher deine Beschwörungsstufe.</p></div></div>`;
   drawGarden();
-  const b=$('gBuild');if(b)b.onclick=()=>{if(S.coins<cost||S.gUp)return;S.coins-=cost;S.gUp=Date.now()+dur*1000;save();lastHud='';renderGarden();};
-  const sk=$('gSkip');if(sk)sk.onclick=()=>{if(!S.gUp||(S.kak||0)<1)return;S.kak--;S.gUp-=1800*1000;save();lastHud='';renderGarden();};
-  const sn=$('gNow');if(sn)sn.onclick=()=>{const k=gSkipAll();if(!S.gUp||(S.kak||0)<k)return;S.kak-=k;S.gUp=Date.now();save();lastHud='';renderGarden();};
 }
 $('gBtn').onclick=()=>{if(eqOpen||pending||(typeof dOpen!=='undefined'&&dOpen)||editing)return;gOpen=true;$('modal').hidden=false;lastHud='';renderGarden();};
 setInterval(()=>{
   if(curTab==='gart'){drawGarden();if(S.gUp&&$('gProg')){const left=(S.gUp-Date.now())/1000;$('gProg').style.width=Math.min(100,(1-left/gTime(S.glv))*100)+'%';$('gLeft').textContent=fmtT(left);const nk=$('gNowK'),nb=$('gNow');if(nk){nk.textContent=gSkipAll()+' 🌵';nb.disabled=(S.kak||0)<gSkipAll();}}
     const b=$('gBuild');if(b)b.disabled=S.coins<gCost(S.glv);}
   const g=$('gBtn');$('gLv').textContent='Lv '+S.glv;
-  const ready=!S.gUp&&S.glv<MAX_G&&S.coins>=gCost(S.glv);g.classList.toggle('ready',ready);
+  const ready=false; // Gärtnerei im Umbaug.classList.toggle('ready',ready);
   $('gSub').textContent=S.glv>=MAX_G?'Max':S.gUp?fmtT((S.gUp-Date.now())/1000):(ready?'Ausbauen!':fmt(gCost(S.glv))+' Münzen');
 },500);
 
@@ -3702,9 +3730,9 @@ setInterval(()=>{for(const m of MODS){const b=$('m_'+m.id),lock=S.best<m.unlock,
   b.querySelector('small').textContent=lock?'S'+m.unlock:cd<=0?'':Math.ceil(cd);b.title=m.n+': '+m.d+(lock?' (frei ab Stage '+m.unlock+')':'');}},100);
 
 // ---------- Auto-Öffnen (wie der Auto-Schalter am Kern in Scrap Star) ----------
-// Mit höherer Gärtnerei öffnet Auto mehrere Kapseln pro Runde
+// Mit höherer Beschwörungsstufe öffnet Auto mehrere Kapseln pro Runde
 const MULTI=[[1,1],[5,2],[10,3],[15,4],[20,5],[25,6],[30,7],[35,8],[40,10]];
-const multiOpen=()=>MULTI.filter(([l])=>S.glv>=l).pop()[1];
+const multiOpen=()=>MULTI.filter(([l])=>gsLv()>=l).pop()[1];
 for(const k in S.gear)if(S.gear[k]&&!S.seen.includes(S.gear[k].r))S.seen.push(S.gear[k].r);
 let autoT=1.5;
 function feed(it,equipped){
@@ -3716,7 +3744,7 @@ function autoTick(dt){
   if(!S.auto.on||pending||!$('modal').hidden||S.caps<1)return;
   autoT-=dt;if(autoT>0)return;autoT=1.5;
   for(let n=multiOpen();n>0&&S.caps>=1;n--){
-    S.caps--;const it=rollItem(),cur=S.gear[it.slot];
+    S.caps--;gsCount(1);const it=rollItem(),cur=S.gear[it.slot];
     const isNew=!S.seen.includes(it.r);
     if(isNew||it.r>=S.auto.stopAt){ // Auto hält an und zeigt das Teil
       setAuto(false);pending=it;$('modal').hidden=false;reveal();
@@ -3733,7 +3761,7 @@ function autoTick(dt){
 }
 function setAuto(on){S.auto.on=on;const b=$('autoBtn');b.setAttribute('aria-pressed',on);$('autoState').textContent=on?'bis '+RAR[S.auto.stopAt].n:'aus';$('autoRow').hidden=true;save();}
 // 09.11.2026: Vor dem Start wählen, bei welcher Seltenheit Auto anhält
-function autoDlg(){const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);
+function autoDlg(){const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);
   let top=0;w.forEach((x,i)=>{if(x>0)top=i;});top=Math.min(RAR.length-1,top+(gUp('luck')>0?1:0));
   if(S.auto.stopAt>top)S.auto.stopAt=top;if(S.auto.stopAt<1)S.auto.stopAt=1;
   const pct=r=>{let p=0;for(let i=r;i<w.length;i++)p+=w[i];return p/tot*100;};
@@ -4312,7 +4340,7 @@ function ptNext(){const P=ptState();for(let i=0;i<PT.length;i++)if(!P.got.includ
 const mmss=sec=>{sec=Math.max(0,Math.ceil(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s2=sec%60;return h?h+':'+String(m).padStart(2,'0')+':'+String(s2).padStart(2,'0'):m+':'+String(s2).padStart(2,'0');};
 // Ausrüstung, die dich weiterbringt: besser als das, was du an diesem Platz trägst, und mit der passenden Resistenz für deine Welt
 function ptItem(){const Wd=world(),R=SLOTS.map(sl=>({sl,cur:S.gear[sl.id]})).sort((a,b)=>(a.cur?a.cur.r:-1)-(b.cur?b.cur.r:-1)||Math.random()-.5);
-  for(const {sl,cur} of R.slice(0,4)){const w=gWeights(S.glv),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
+  for(const {sl,cur} of R.slice(0,4)){const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
     if(cur)r=Math.max(r,cur.r);let v=itemValue(sl,r,S.stage,ROLL_HI);
     if(cur&&v<=cur.v&&r<RAR.length-1){r++;v=itemValue(sl,r,S.stage,ROLL_HI);}
     if(cur&&v<=cur.v)continue;
@@ -4416,13 +4444,13 @@ const TUT=[
   {t:'Willkommen, {name}! Ich bin Opa Stachel. Ich zeige dir kurz, wie das Kaktus-Leben so läuft.'},
   {el:'cv',t:'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.'},
   {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
-  {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Samenkapsel öffnen“!'},
+  {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Ausrüstung beschwören“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
   {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Er setzt sie ganz von selbst ein.'},
   {el:'tbKampf',t:'Unter ⚔ Kampf steckst du in der Werkstatt Münzen in Angriff, Leben, Panzer und Tempo – und levelst deine Fähigkeiten.'},
-  {el:'tbGart',t:'Baust du unter 🌱 die Gärtnerei aus, stecken in den Kapseln öfter seltene, stärkere Teile. Mit Kakteen geht der Ausbau schneller.'},
+  {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
   {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
-  {el:'autoBtn',t:'Hast du viele Kapseln, öffnet Auto sie für dich und hält bei seltenen Teilen an.'},
+  {el:'autoBtn',t:'Hast du viele Kapseln, beschwört Auto für dich weiter und hält bei seltenen Teilen an.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
@@ -4827,6 +4855,11 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn84',date:'2026-11-12',title:'Ausrüstung beschwören',
+   hero:['🔮 Ausrüstung beschwören','Ausrüstung bekommst du jetzt wie Fähigkeiten und Begleiter: 1×, 10× oder 30× auf einmal mit Samenkapseln.'],
+   items:()=>[['🎒 Mehrfach-Beschwörung:','Bei 10× und 30× wird Besseres sofort angelegt, gleich seltene Teile kommen ins Inventar, der Rest wird zu Münzen.'],
+     ['📈 Beschwörungsstufe:','Je mehr Ausrüstung du beschwörst, desto höher deine Stufe und desto besser die Chancen auf seltene Teile – genau wie bei Fähigkeiten und Begleitern. Deine bisherige Gärtnerei-Stufe wird übernommen.'],
+     ['🚧 Gärtnerei:','Wird umgebaut – bald wachsen dort Kakteen und Samenkapseln für dich.']]},
   {id:'pn83',date:'2026-11-11',title:'Begleiter neu gezeichnet',
    hero:['🐾 Alle 30 Begleiter','Jetzt im gleichen Stil wie die Hunde – vom Igel mit Stacheln über den Löwen mit Mähne bis zum feuerspuckenden Drachen.'],
    items:()=>[['🎨 Gleicher Stil:','Dicke Umrisse, böse Augen und Halsband wie bei den Hunden. Eule, Papagei, Adler und Drache flattern, der Drache spuckt sogar Feuer.']]},
