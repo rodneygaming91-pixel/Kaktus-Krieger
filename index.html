@@ -150,6 +150,7 @@ h1 span{color:var(--bloom)}
 .wst>i{font-style:normal;font-size:1.3rem;width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:#0006;color:var(--bc)}
 .wstt{display:flex;flex-direction:column;min-width:0;gap:1px}.wstt b{font-size:.88rem;color:var(--bc);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wstt b em{font-style:normal;font-size:.72rem;color:var(--sand);font-weight:800;margin-left:5px}
 .wstv{font-size:.72rem;line-height:1.25;color:#7fe08a;font-weight:700;font-variant-numeric:tabular-nums}
+.wst .wsb{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}.wst .wsb.pop{animation:wspop .15s}@keyframes wspop{50%{transform:scale(.94)}}
 .wst .wsb{width:100%;min-width:0;padding:5px 4px}.wst.lockd{grid-template-columns:36px 1fr;opacity:.6;filter:grayscale(.5)}.wst.lockd .wstv{color:var(--muted)}.wstv em{font-style:normal;color:var(--muted);font-weight:600}
 .wstmax{text-align:center;color:var(--sand);font-weight:800;font-size:.85rem}
 .blist{display:flex;flex-direction:column;gap:6px;text-align:left}
@@ -1223,7 +1224,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2754,11 +2755,21 @@ function wsLists(){const kak=S.kak||0;return{list0:`<div class="wsgrid">${WS.map
       return`<div class="wst" style="--bc:${W.c}"><i>${W.ico}</i><div class="wstt"><b>${W.n}<em>Lv ${lv}</em></b><span class="wstv">+${f(now)}${W.unit}${W.lim?` <em>·&nbsp;max&nbsp;${W.lim}&nbsp;%</em>`:''}</span></div>
         ${`<button class="btn go wsb" type="button" data-ws="${W.id}" ${ok?'':'disabled'}>Lv ${lv+1}<small>${fmt(c)}${k?' · '+k+' 🌵':''}</small></button>`}</div>`;}).join('')}</div>`,
   list1:skSectionHtml()};}
+let wsHold=false; // während Gedrückthalten den Kaktus-Reiter nicht neu aufbauen
 function wsBind(H,re){
   skBind(H,re);
-  H.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{const W=wsDef(b.dataset.ws),c=wsCost(W),k=wsKak(W);
-    if(S.coins<c||(S.kak||0)<k||wsMax(W))return;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;save();lastHud='';
-    if(k)banner={txt:W.n+' Lv '+S.ws[W.id]+'!',t:1.6};re();});}
+  // 12.11.2026: Antippen = 1 Level, Gedrückthalten = immer schneller weiterkaufen (bis das Geld nicht mehr reicht)
+  const buy=W=>{const c=wsCost(W),k=wsKak(W);if(S.coins<c||(S.kak||0)<k||wsMax(W))return false;S.coins-=c;S.kak=(S.kak||0)-k;S.ws=S.ws||{};S.ws[W.id]=wsLv(W.id)+1;return true;};
+  const patch=(b,W)=>{const row=b.closest('.wst');if(!row)return;const lv=wsLv(W.id),c=wsCost(W),f=x=>W.kind==='mul'?fmt(Math.round(x)):(+x.toFixed(2)).toLocaleString('de-DE');
+    const em=row.querySelector('.wstt b em');if(em)em.textContent='Lv '+lv;const v=row.querySelector('.wstv');if(v&&v.firstChild)v.firstChild.textContent='+'+f(wsVal(W.id))+W.unit+(W.lim?' ':'');
+    b.innerHTML='Lv '+(lv+1)+'<small>'+fmt(c)+'</small>';b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');};
+  H.querySelectorAll('[data-ws]').forEach(b=>{let tm=0,n=0,held=false;const W=wsDef(b.dataset.ws);
+    const stop=()=>{window.removeEventListener('pointerup',stop);window.removeEventListener('pointercancel',stop);if(!tm&&!held)return;clearTimeout(tm);tm=0;wsHold=false;if(held){held=false;save();lastHud='';if(n>1)banner={txt:W.n+' +'+n+' Level → Lv '+wsLv(W.id),t:1.4};re();}};
+    const tick=()=>{if(!held||!b.isConnected||!buy(W)){stop();return;}n++;patch(b,W);tm=setTimeout(tick,Math.max(35,260*Math.pow(.86,n)));};
+    b.onpointerdown=e=>{if(b.disabled)return;e.preventDefault();held=true;wsHold=true;n=0;window.addEventListener('pointerup',stop);window.addEventListener('pointercancel',stop);tick();};
+    b.onpointerup=b.onpointerleave=b.onpointercancel=stop;
+    b.oncontextmenu=e=>e.preventDefault();
+    b.onclick=e=>{if(e.detail===0&&buy(W)){save();lastHud='';re();}};});} // Tastatur/Barrierefreiheit
 function renderWS(){
   const kak=S.kak||0,L=wsLists();
   const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
@@ -2887,7 +2898,7 @@ function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();l
   wsBind(H,()=>{renderTabKampf();if(hqOpen)renderWS();});ktBind(H,renderTabKampf);tkSig=tkSigNow();}
 let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):0,S.kak,wsTotal(),JSON.stringify(S.sk||{}),skOn().join(),
   WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,S.caps,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n,JSON.stringify(S.kt||{}),S.char&&S.char.cls].join('|');
-setInterval(()=>{if(curTab==='kampf'&&S.char&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
+setInterval(()=>{if(curTab==='kampf'&&S.char&&!wsHold&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
 function tabGo(t){
   curTab=t;document.querySelectorAll('#tPanel>.tab').forEach(x=>x.hidden=x.dataset.t!==t);
@@ -4960,6 +4971,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn86',date:'2026-11-12',title:'Schneller leveln',
+   hero:['👆 Gedrückt halten','In der Kaktus-Werkstatt kannst du den Kaufknopf jetzt gedrückt halten – dann kauft er Level für Level immer schneller hintereinander.'],
+   items:()=>[['🌵 Einmal tippen:','Kauft wie bisher genau ein Level.']]},
   {id:'pn85',date:'2026-11-12',title:'Neue Gärtnerei',
    hero:['🌱 Kakteen selbst anbauen','Pflanze Samenkapseln in deine Beete und ernte die reifen Kakteen per Hand – so bekommst du Kakteen 🌵.'],
    items:()=>[['🌸 Blüten:','Blühende Pflanzen geben dir bei der Ernte mehr Samenkapseln zurück, als du gepflanzt hast.'],
