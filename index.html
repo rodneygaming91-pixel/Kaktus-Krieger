@@ -101,6 +101,40 @@ h1 span{color:var(--bloom)}
 .gbuild{width:100%;display:flex;flex-direction:column;align-items:center;line-height:1.15}.gbuild small{font-size:.74rem}
 .gprog{height:14px;border-radius:8px;background:#1c130d;border:2px solid #6b5644;overflow:hidden}.gprog div{height:100%;background:linear-gradient(90deg,#3fb59a,#7fe08a);transition:width .4s}
 .gmax{text-align:center;color:#ffd447}
+.fhead{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;background:linear-gradient(#3a2a1c,#2a1e14);border:2px solid #6b5644;border-radius:12px;padding:8px 10px}
+.fhead>div:first-child{display:flex;flex-direction:column;gap:3px;min-width:0}.fhead b{font-size:.95rem;color:#ffd447}.fhead small{font-size:.66rem;color:var(--muted)}
+.fres{display:flex;flex-direction:column;gap:3px;font-weight:900;font-size:.8rem;text-align:right}
+.fgreen{position:relative;border:5px solid #7a4a26;border-radius:14px;padding:10px 10px 4px;overflow:hidden;box-shadow:inset 0 0 0 2px #4a2a14,0 3px 0 #0008;
+  background:
+    linear-gradient(115deg,#ffffff00 20%,#fff6d018 24%,#ffffff00 30%,#ffffff00 52%,#fff6d014 56%,#ffffff00 62%),
+    repeating-linear-gradient(90deg,#5a3a2266 0 3px,#0000 3px 25%),
+    repeating-linear-gradient(0deg,#5a3a2244 0 3px,#0000 3px 90px),
+    linear-gradient(#bfe6ee,#8ec3cc 45%,#6aa0a8)}
+.fgreen::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 0%,#fff6d0aa,#0000 45%);pointer-events:none}
+.fgrid{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:16px 6px}
+.fbed{position:relative;border:0;background:none;padding:0 0 9px;cursor:pointer;font:inherit;color:#fff;display:flex;flex-direction:column;align-items:center;aspect-ratio:1/1.08;overflow:visible}
+.fbed::after{content:'';position:absolute;left:-8px;right:-8px;bottom:0;height:11px;border-radius:3px;background:linear-gradient(#c88a52,#8a5a2e 70%,#5a3418);box-shadow:0 4px 0 #0005}
+.fbed canvas{width:100%;flex:1;min-height:0;position:relative;z-index:1}
+.fbt{position:absolute;z-index:2;top:2px;left:50%;transform:translateX(-50%);font-size:.62rem;font-weight:900;background:#1c140ee0;border-radius:9px;padding:2px 8px;white-space:nowrap;box-shadow:0 2px 0 #0006}
+.fbed.empty .fbt{color:#7fe08a;opacity:.9}
+.fbed.ripe .fbt{background:linear-gradient(#ffe066,#ffae00);color:#1c140e;animation:fbob .8s ease-in-out infinite alternate}
+.fbed.bloom .fbt{background:linear-gradient(#ffb0e4,#ff6ac0)}
+.fbed.ripe canvas{filter:drop-shadow(0 0 6px #ffe066aa)}
+@keyframes fbob{to{transform:translate(-50%,-3px)}}
+.fbbar{position:absolute;z-index:2;top:3px;left:12%;right:12%;height:13px;border-radius:7px;background:#1c140ee0;overflow:hidden;box-shadow:0 2px 0 #0006}.fbbar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#3fb59a,#7fe08a)}
+.fbbar em{position:relative;display:block;font-style:normal;font-size:.56rem;font-weight:900;line-height:13px;text-align:center;text-shadow:0 1px 0 #000}
+.fbed.lock{justify-content:center;gap:1px}.fbed.lock b{font-size:1.2rem;position:relative;z-index:1;margin-top:10px}.fbed.lock .fbt{position:relative;top:auto;left:auto;transform:none;background:#1c140ec0}
+.fbed.lock small{position:relative;z-index:1;font-size:.7rem;font-weight:900;color:#7fe08a;background:#1c140ec0;border-radius:8px;padding:0 6px;margin-top:2px}
+.fbed.lock::before{content:'';position:absolute;left:22%;right:22%;bottom:11px;height:40%;border:2px dashed #3a1e10aa;border-radius:4px 4px 10px 10px}
+.fbed.fill{cursor:default}
+.fbed.lock:disabled{opacity:.6}.fbed.lock:disabled small{color:var(--sand)}
+#fAll{width:100%;display:flex;flex-direction:column;align-items:center;line-height:1.15}#fAll small{font-size:.66rem}
+.fseeds{display:flex;flex-direction:column;gap:6px}
+.fseed{display:grid;grid-template-columns:56px 1fr auto;gap:8px;align-items:center;border:2px solid var(--sc);border-radius:10px;background:#241a14;color:#fff;font:inherit;padding:4px 8px;cursor:pointer;text-align:left}
+.fseed canvas{width:56px;height:56px}.fseed span{display:flex;flex-direction:column}.fseed b{color:var(--sc);font-size:.88rem}.fseed small{font-size:.64rem;color:var(--sand)}.fseed em{font-style:normal;font-weight:900;color:#7fe08a}
+.fseed:disabled{opacity:.45;cursor:default}.fseed.lockd{filter:grayscale(.8)}
+.fpop{position:fixed;transform:translateX(-50%);z-index:9999;font-weight:900;font-size:1rem;color:#fff;text-shadow:0 2px 0 #000;pointer-events:none;animation:fpop 1.1s ease-out forwards}
+@keyframes fpop{to{transform:translate(-50%,-40px);opacity:0}}
 .gsoon{text-align:center}.gsoon>b{color:#ffd447;font-size:.95rem}.gsoon p{margin:0;font-size:.82rem;color:var(--sand)}.gsoon p b{color:#fff}
 .gsec{background:#0004;border:2px solid #6b5644;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .gsh{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.gsh b{font-size:.84rem;color:#ffd447}.gsh small{font-size:.66rem;color:var(--muted)}
@@ -1189,7 +1223,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1476,7 +1510,7 @@ const modCd={};for(const m of MODS)modCd[m.id]=2+Math.random();
 function ktInit(){if(!S.kt||typeof S.kt!=='object')S.kt={};if(!S.ktSum)S.ktSum={n:0};
   if(S.char){if(!CLASSES[S.char.cls])S.char.cls='schuetze';if(!S.kt[S.char.cls])S.kt[S.char.cls]={lv:1,n:0};ktLook(S.char);}}
 function ktLook(ch){const K=ktDef(ch.cls);ch.shape=K.shape;ch.color=K.color;}
-let haste=0,dodgeT=0;skInit();drInit();ktInit();
+let haste=0,dodgeT=0;skInit();drInit();ktInit();if(typeof farmInit==='function')farmInit();
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
 const GT=[
@@ -2546,17 +2580,88 @@ function drawGarden(){const cv2=$('gCv');if(!cv2)return;const g=cv2.getContext('
   // Schild
   g.fillStyle='#7a4a26';g.fillRect(14,H*.58,6,H*.3);g.fillStyle='#a8743e';g.strokeStyle='#4a2a14';g.lineWidth=3;g.beginPath();g.roundRect(2,H*.46,58,30,6);g.fill();g.stroke();
   g.fillStyle='#fff2d0';g.font='900 15px "Lilita One","Arial Black",sans-serif';g.textAlign='center';g.fillText('Lv '+L,31,H*.46+21);}
-function renderGarden(){ // 12.11.2026: Chancen gibt es jetzt beim Beschwören – die Gärtnerei wird umgebaut (bald: Kakteen und Samenkapseln)
+// ---------- Gärtnerei (12.11.2026): Samenkapseln pflanzen, per Hand ernten → Kakteen 🌵; blühende Pflanzen geben Samen zurück ----------
+// Kreislauf: mehr Beete → mehr Ernte → mehr Kakteen (neue Beete) und mehr Samen (mehr Pflanzen). Sorten werden über die Gärtnerei-Stufe frei.
+const SEEDS=[
+  {id:'feige', n:'Feigenkaktus', c:'#63c74d',cost:1,min:5, kak:1, bl:.6, seed:2, lv:1,shape:'feige'},
+  {id:'saeule',n:'Säulenkaktus', c:'#3fb59a',cost:2,min:7, kak:2, bl:.55,seed:4, lv:3,shape:'saeule'},
+  {id:'kugel', n:'Kugelkaktus',  c:'#4fb8ff',cost:3,min:9, kak:3, bl:.55,seed:6, lv:5,shape:'kugel'},
+  {id:'gold',  n:'Goldkaktus',   c:'#ffd447',cost:5,min:12,kak:6, bl:.6, seed:10,lv:8,shape:'saeule'},
+  {id:'mond',  n:'Mondkaktus',   c:'#b48cff',cost:8,min:15,kak:10,bl:.6, seed:16,lv:12,shape:'kugel'}
+];
+const FB_MAX=12,FB_START=2;
+const fbCost=n=>[0,0,10,20,35,60,100,160,250,400,600,900][n]||900;   // Kakteen für das n-te Beet (Index = Anzahl vorhandener Beete)
+const fLv=()=>{const h=(S.farm&&S.farm.h)||0;return Math.floor(Math.sqrt(h/3))+1;};   // Gärtnerei-Stufe aus der Zahl der Ernten
+const fAt=L=>3*(L-1)*(L-1);                                                          // Ernten bis Stufe L
+const fYield=sd=>Math.max(1,Math.round(sd.kak*(1+.05*(fLv()-1))));                   // +5 % Kakteen je Stufe
+function farmInit(){if(!S.farm||!Array.isArray(S.farm.beds))S.farm={beds:Array(FB_START).fill(null),h:0,last:'feige'};}
+function renderGarden(){farmInit();const F=S.farm,L=fLv(),now=Date.now(),a0=fAt(L),b0=fAt(L+1),nb=F.beds.length,nxt=SEEDS.find(x=>x.lv>L);
+  const cell=(b,i)=>{if(!b)return`<button type="button" class="fbed empty" data-fp="${i}"><canvas width="120" height="110" data-fb="${i}"></canvas><span class="fbt">🌱 Pflanzen</span></button>`;
+    const sd=SEEDS.find(x=>x.id===b.s),dur=sd.min*60000,p=Math.min(1,(now-b.t)/dur),ripe=p>=1;
+    return`<button type="button" class="fbed${ripe?' ripe':''}${ripe&&b.b?' bloom':''}" data-fh="${i}" style="--sc:${sd.c}"><canvas width="120" height="110" data-fb="${i}"></canvas>
+      ${ripe?`<span class="fbt">${b.b?'🌸 ':''}Ernten!</span>`:`<span class="fbbar"><i style="width:${p*100}%"></i><em data-fl="${i}">${fmtT((dur-(now-b.t))/1000)}</em></span>`}</button>`;};
+  const lock=nb<FB_MAX?`<button type="button" class="fbed lock" id="fBuy" ${(S.kak||0)<fbCost(nb)?'disabled':''}><b>🔒</b><span class="fbt">Neues Beet</span><small>${fbCost(nb)} 🌵</small></button>`:'';
   $('tabGart').innerHTML=`<div class="tsec gart2">
-    <div class="ghero"><canvas id="gCv" width="720" height="300"></canvas><div class="gtag"><b>🌱 Gärtnerei</b><small>Wird gerade umgebaut</small></div></div>
-    <div class="gact gsoon"><b>🚧 Bald: Kakteen und Samenkapseln</b>
-      <p>Die Gärtnerei wird umgebaut: Bald wachsen hier <b>Kakteen 🌵</b> und <b>Samenkapseln 🌱</b> für dich.</p>
-      <p>Die Chancen auf seltene Ausrüstung steigen jetzt beim <b>🔮 Beschwören</b> – je mehr du beschwörst, desto höher deine Beschwörungsstufe.</p></div></div>`;
-  drawGarden();
-}
+    <div class="fhead"><div><b>🌱 Gärtnerei Lv ${L}</b><small>${fmt(F.h)} Ernten · noch ${b0-F.h} bis Lv ${L+1}${nxt?' · '+nxt.n+' ab Lv '+nxt.lv:''}</small>
+      <div class="gprog"><div style="width:${Math.min(100,(F.h-a0)/(b0-a0)*100)}%"></div></div></div>
+      <div class="fres"><span>🌱 ${fmt(S.caps||0)}</span><span>🌵 ${fmt(S.kak||0)}</span></div></div>
+    <div class="fgreen"><div class="fgrid">${F.beds.map(cell).join('')}${lock}${'<div class="fbed fill"></div>'.repeat((3-((nb+(lock?1:0))%3))%3)}</div></div>
+    <div class="row"><button class="btn go" type="button" id="fAll" ${F.beds.some(b=>!b)?'':'disabled'}>🌱 Alle leeren Beete bepflanzen<small>${(SEEDS.find(x=>x.id===F.last)||SEEDS[0]).n}</small></button></div>
+    <p class="hint" style="margin:0;text-align:center">Pflanze Samenkapseln, ernte die reifen Kakteen per Hand. Blühende Pflanzen 🌸 geben dir mehr Samen zurück, als du gepflanzt hast. Mit Kakteen kaufst du neue Beete.</p></div>`;
+  drawFarm();
+  $('tabGart').querySelectorAll('[data-fp]').forEach(b=>b.onclick=()=>farmPick(+b.dataset.fp));
+  $('tabGart').querySelectorAll('[data-fh]').forEach(b=>b.onclick=()=>farmHarvest(+b.dataset.fh,b));
+  {const bb=$('fBuy');if(bb)bb.onclick=()=>{const c=fbCost(F.beds.length);if((S.kak||0)<c||F.beds.length>=FB_MAX)return;S.kak-=c;F.beds.push(null);save();lastHud='';banner={txt:'Neues Beet! ('+F.beds.length+'/'+FB_MAX+')',t:1.6};renderGarden();};}
+  $('fAll').onclick=()=>{const sd=SEEDS.find(x=>x.id===F.last&&x.lv<=fLv())||SEEDS[0];let k=0;
+    F.beds.forEach((b,i)=>{if(!b&&(S.caps||0)>=sd.cost){farmPlant(i,sd,true);k++;}});if(!k)banner={txt:'Nicht genug Samenkapseln',t:1.4};save();lastHud='';renderGarden();};}
+function farmPlant(i,sd,quiet){const F=S.farm;if(F.beds[i]||(S.caps||0)<sd.cost)return false;S.caps-=sd.cost;F.beds[i]={s:sd.id,t:Date.now(),b:Math.random()<sd.bl?1:0};F.last=sd.id;
+  if(!quiet){save();lastHud='';renderGarden();}return true;}
+function farmPick(i){if(!$('modal').hidden)return;const L=fLv();
+  $('card').innerHTML=`<div class="sumres"><h2>🌱 Was pflanzen?</h2><div class="fseeds">${SEEDS.map(sd=>{const ok=sd.lv<=L;
+    return`<button type="button" class="fseed${ok?'':' lockd'}" data-sd="${sd.id}" style="--sc:${sd.c}" ${ok&&(S.caps||0)>=sd.cost?'':'disabled'}>
+      <canvas width="90" height="90" data-sdc="${sd.id}"></canvas><span><b>${sd.n}</b>${ok?`<small>⏱ ${sd.min} Min · 🌵 ${fYield(sd)} · 🌸 ${Math.round(sd.bl*100)} % → ${sd.seed} 🌱</small>`:`<small>🔒 ab Gärtnerei Lv ${sd.lv}</small>`}</span>
+      <em>${sd.cost} 🌱</em></button>`;}).join('')}</div>
+    <p class="intro" style="text-align:center;margin:0">Du hast <b style="color:#7fe08a">${fmt(S.caps||0)} 🌱</b></p>
+    <div class="row"><button class="btn" id="fpX" type="button">Abbrechen</button></div></div>`;
+  $('modal').hidden=false;
+  $('card').querySelectorAll('canvas[data-sdc]').forEach(cv2=>drawPlant(cv2.getContext('2d'),SEEDS.find(x=>x.id===cv2.dataset.sdc),1,0,90,90));
+  $('fpX').onclick=()=>{$('modal').hidden=true;};
+  $('card').querySelectorAll('[data-sd]').forEach(b=>b.onclick=()=>{const sd=SEEDS.find(x=>x.id===b.dataset.sd);$('modal').hidden=true;farmPlant(i,sd);});}
+function farmHarvest(i,el){const F=S.farm,b=F.beds[i];if(!b)return;const sd=SEEDS.find(x=>x.id===b.s);if(Date.now()-b.t<sd.min*60000)return;
+  const L0=fLv(),k=fYield(sd),sdn=b.b?sd.seed:0;S.kak=(S.kak||0)+k;S.caps+=sdn;F.beds[i]=null;F.h=(F.h||0)+1;save();lastHud='';
+  const L1=fLv(),nu=SEEDS.find(x=>x.lv>L0&&x.lv<=L1);
+  banner={txt:L1>L0?'Gärtnerei Lv '+L1+(nu?' · '+nu.n+' frei!':''):'+'+k+' 🌵'+(sdn?' · +'+sdn+' Samenkapseln':''),t:L1>L0?2.2:1.2};
+  if(el){const r=el.getBoundingClientRect(),f=document.createElement('div');f.className='fpop';f.textContent='+'+k+' 🌵'+(sdn?'  +'+sdn+' 🌱':'');
+    f.style.left=(r.left+r.width/2)+'px';f.style.top=(r.top+10)+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),1100);}
+  renderGarden();}
+// Pflanze zeichnen: p = Wachstum 0..1, bloom = Blüte
+function drawPlant(g,sd,p,bloom,W2,H2){g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,W2,H2);const sc=W2/120;g.setTransform(sc,0,0,sc,0,0);const tt=Date.now()/1000;
+  // Erde und Topf
+  g.fillStyle='#0003';g.beginPath();g.ellipse(60,104,30,4,0,0,7);g.fill();
+  g.fillStyle='#c2643a';g.strokeStyle='#3a1e10';g.lineWidth=3;g.beginPath();g.moveTo(34,80);g.lineTo(86,80);g.lineTo(80,104);g.lineTo(40,104);g.closePath();g.fill();g.stroke();
+  g.fillStyle='#d97a4a';g.beginPath();g.roundRect(30,74,60,10,3);g.fill();g.stroke();
+  if(!sd)return;
+  if(p<.12){g.fillStyle='#7a5a3a';g.beginPath();g.ellipse(60,76,8,3,0,0,7);g.fill();g.fillStyle='#7be86a';g.beginPath();g.ellipse(60,73,3,2,0,0,7);g.fill();return;}
+  const h=10+Math.min(1,p)*48,w=sd.shape==='kugel'?12+p*12:sd.shape==='feige'?10+p*10:7+p*5,sw=Math.sin(tt*2)*.03;
+  g.save();g.translate(60,76);g.rotate(sw);g.fillStyle=sd.c;g.strokeStyle='#1c140e';g.lineWidth=3;
+  if(sd.shape==='kugel'){g.beginPath();g.ellipse(0,-h*.42,w,h*.45,0,0,7);g.fill();g.stroke();g.strokeStyle='#0003';g.lineWidth=2;for(const dx of[-w*.5,0,w*.5]){g.beginPath();g.ellipse(dx*.6,-h*.42,1,h*.4,0,0,7);g.stroke();}}
+  else if(sd.shape==='feige'){g.beginPath();g.ellipse(0,-h*.35,w,h*.38,0,0,7);g.fill();g.stroke();if(p>.5){g.beginPath();g.ellipse(w*.7,-h*.8,w*.55,h*.22,.5,0,7);g.fill();g.stroke();g.beginPath();g.ellipse(-w*.7,-h*.72,w*.5,h*.2,-.5,0,7);g.fill();g.stroke();}}
+  else{g.beginPath();g.roundRect(-w,-h,w*2,h,w);g.fill();g.stroke();if(p>.6){g.beginPath();g.roundRect(w-1,-h*.6,10,6,3);g.fill();g.stroke();g.beginPath();g.roundRect(w+4,-h*.85,6,14,3);g.fill();g.stroke();}}
+  // Stacheln
+  g.fillStyle='#fff8';for(let k=0;k<6;k++){const yy=-h*.2-k*h*.12,xx=(k%2?-1:1)*w*.55;g.fillRect(xx,yy,2,2);}
+  // Blüte / Reife
+  if(p>=1&&bloom){const by=sd.shape==='kugel'?-h*.85:sd.shape==='feige'?-h*.72:-h-2;for(let k=0;k<5;k++){const a=k/5*Math.PI*2+tt;g.fillStyle='#ff7ad0';g.beginPath();g.ellipse(Math.cos(a)*5,by+Math.sin(a)*5,4,2.6,a,0,7);g.fill();}
+    g.fillStyle='#ffe066';g.beginPath();g.arc(0,by,3,0,7);g.fill();}
+  if(sd.id==='gold'||sd.id==='mond'){g.globalAlpha=.4+.3*Math.sin(tt*3);g.fillStyle='#fff';g.beginPath();g.arc(-w*.4,-h*.6,2,0,7);g.fill();g.globalAlpha=1;}
+  g.restore();}
+function drawFarm(){const F=S.farm;if(!F)return;$('tabGart').querySelectorAll('canvas[data-fb]').forEach(cv2=>{const b=F.beds[+cv2.dataset.fb],g=cv2.getContext('2d');
+  if(!b){drawPlant(g,null,0,0,cv2.width,cv2.height);return;}const sd=SEEDS.find(x=>x.id===b.s);drawPlant(g,sd,(Date.now()-b.t)/(sd.min*60000),b.b,cv2.width,cv2.height);});}
 $('gBtn').onclick=()=>{if(eqOpen||pending||(typeof dOpen!=='undefined'&&dOpen)||editing)return;gOpen=true;$('modal').hidden=false;lastHud='';renderGarden();};
 setInterval(()=>{
-  if(curTab==='gart'){drawGarden();if(S.gUp&&$('gProg')){const left=(S.gUp-Date.now())/1000;$('gProg').style.width=Math.min(100,(1-left/gTime(S.glv))*100)+'%';$('gLeft').textContent=fmtT(left);const nk=$('gNowK'),nb=$('gNow');if(nk){nk.textContent=gSkipAll()+' 🌵';nb.disabled=(S.kak||0)<gSkipAll();}}
+  if(curTab==='gart'&&S.farm){const now=Date.now();let flip=false;S.farm.beds.forEach((b,i)=>{if(!b)return;const sd=SEEDS.find(x=>x.id===b.s),dur=sd.min*60000,el=$('tabGart').querySelector(`[data-fl="${i}"]`);
+    if(now-b.t>=dur){if(el)flip=true;}else if(el){el.textContent=fmtT((dur-(now-b.t))/1000);el.previousElementSibling.style.width=((now-b.t)/dur*100)+'%';}});
+    if(flip&&$('modal').hidden)renderGarden();else drawFarm();}
+  if(false){drawGarden();if(S.gUp&&$('gProg')){const left=(S.gUp-Date.now())/1000;$('gProg').style.width=Math.min(100,(1-left/gTime(S.glv))*100)+'%';$('gLeft').textContent=fmtT(left);const nk=$('gNowK'),nb=$('gNow');if(nk){nk.textContent=gSkipAll()+' 🌵';nb.disabled=(S.kak||0)<gSkipAll();}}
     const b=$('gBuild');if(b)b.disabled=S.coins<gCost(S.glv);}
   const g=$('gBtn');$('gLv').textContent='Lv '+S.glv;
   const ready=false; // Gärtnerei im Umbaug.classList.toggle('ready',ready);
@@ -4855,6 +4960,11 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn85',date:'2026-11-12',title:'Neue Gärtnerei',
+   hero:['🌱 Kakteen selbst anbauen','Pflanze Samenkapseln in deine Beete und ernte die reifen Kakteen per Hand – so bekommst du Kakteen 🌵.'],
+   items:()=>[['🌸 Blüten:','Blühende Pflanzen geben dir bei der Ernte mehr Samenkapseln zurück, als du gepflanzt hast.'],
+     ['🪴 Mehr Beete:','Mit geernteten Kakteen kaufst du neue Beete (bis zu 12) – mehr Beete, mehr Ernte, mehr Samen.'],
+     ['🌵 5 Sorten:','Vom Feigenkaktus bis zum Mondkaktus – je höher deine Gärtnerei-Stufe (durch Ernten), desto bessere Sorten mit mehr Ertrag.']]},
   {id:'pn84',date:'2026-11-12',title:'Ausrüstung beschwören',
    hero:['🔮 Ausrüstung beschwören','Ausrüstung bekommst du jetzt wie Fähigkeiten und Begleiter: 1×, 10× oder 30× auf einmal mit Samenkapseln.'],
    items:()=>[['🎒 Mehrfach-Beschwörung:','Bei 10× und 30× wird Besseres sofort angelegt, gleich seltene Teile kommen ins Inventar, der Rest wird zu Münzen.'],
