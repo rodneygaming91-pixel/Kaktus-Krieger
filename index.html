@@ -1159,6 +1159,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .gsnt{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center}.gsnt div{display:flex;flex-direction:column}.gsnt small{font-size:.6rem;font-weight:800;color:var(--sand);text-transform:uppercase;letter-spacing:.04em}
 .gsnt b{font-size:1.05rem;color:var(--rc);text-shadow:0 2px 0 #000}.gsnt em{font-style:normal;font-size:.72rem;font-weight:900;background:#000a;border-radius:9px;padding:2px 8px}
 .gsgem{width:22px;height:22px;transform:rotate(45deg);border-radius:4px;background:linear-gradient(135deg,#fff8,var(--rc) 40%,color-mix(in srgb,var(--rc) 50%,#000));border:2px solid #1c140e;box-shadow:0 0 10px var(--rc);margin-left:3px}
+.gsgeb{font-size:.68rem;font-weight:800;color:#ff9a8a;text-align:left}.gsgeb.ok{color:#7fe08a}.gsgeb b{color:inherit}
 .gsmini{border:2px solid var(--rc);border-radius:10px;padding:5px 8px;display:flex;flex-direction:column;gap:4px;background:linear-gradient(135deg,color-mix(in srgb,var(--rc) 25%,#241a14),#1c130d 70%)}.gsmini.max{border-color:#ffd447;text-align:center}.gsmini.max b{color:#ffd447;font-size:.8rem}
 .gsmt{display:flex;justify-content:space-between;align-items:center;font-size:.74rem;font-weight:800;color:var(--sand)}.gsmt b{color:var(--rc);text-shadow:0 1px 0 #000}.gsmt em{font-style:normal;font-size:.68rem;font-weight:900;background:#000a;border-radius:9px;padding:1px 7px}.gsmini .gsbar{height:13px}
 .gsbar{position:relative;height:16px;border-radius:9px;background:#0009;border:1px solid #000;overflow:hidden}.gsbar div{height:100%;background:linear-gradient(90deg,color-mix(in srgb,var(--rc) 60%,#fff),var(--rc));box-shadow:0 0 8px var(--rc)}
@@ -1255,7 +1256,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1564,21 +1565,35 @@ const GT=[
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.5,2.5],  // Sonnenkern
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2]  // Allmacht
 ];
-function gWeights(L){L=Math.max(1,Math.min(MAX_G,L));let j=0;while(j<GL.length-2&&L>GL[j+1])j++;
+function gWRaw(L){L=Math.max(1,Math.min(MAX_G,L));let j=0;while(j<GL.length-2&&L>GL[j+1])j++;
   const f=(L-GL[j])/(GL[j+1]-GL[j]);return GT.map(r=>{const v=r[j]+(r[j+1]-r[j])*f;return v<0.05?0:v;});}
-const gUnlock=i=>{for(let L=1;L<=MAX_G;L++)if(gWeights(L)[i]>0)return L;return 99;};
+const GUL=RAR.map((_,i)=>{for(let L=1;L<=MAX_G;L++)if(gWRaw(L)[i]>0)return L;return 99;});
+const gUnlock=i=>GUL[i];
+// 13.11.2026: eine neu freigeschaltete Seltenheit startet sehr selten und wird über 6 Stufen normal häufig
+const gRamp=d=>d>=6?1:0.15+0.85*(d/6)*(d/6);
+function gWeights(L){L=Math.max(1,Math.min(MAX_G,L));return gWRaw(L).map((v,i)=>v>0?v*gRamp(L-GUL[i]):0);}
 const gCost=L=>Math.round(2000*Math.pow(1.7,L-1));   // Münzen
 const gTime=L=>Math.round(Math.min(L>=20?4*3600+(L-20)*1800:4*3600,10*Math.pow(1.75,L-1)));    // Wachstumszeit in s, ab Lv 20 länger
 // 12.11.2026: Seltenheits-Chancen der Ausrüstung hängen an der Beschwörungsstufe (Anzahl beschworener Teile), nicht mehr an der Gärtnerei
 const gsAt=L=>4*(L-1)*(L-1);                                  // Beschwörungen bis Stufe L (Stufe 85 = 28.224)
 const gsLv=()=>{const n=(S.gsSum&&S.gsSum.n)||0;let L=1;while(L<MAX_G&&n>=gsAt(L+1))L++;return L;};
+// 13.11.2026: höhere Seltenheiten brauchen zusätzlich ein erreichtes Gebiet (1–48: 4 Schwierigkeiten × 12 Welten)
+const GGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
+const gebNow=()=>Math.floor((Math.max(1,S.best||S.stage||1)-1)/20)+1;
+const gebName=g=>{const d=Math.min(DIFFS.length-1,Math.floor((g-1)/12)),w=(g-1)%12;return'Gebiet '+g+' · '+DIFFS[d].n+' '+(w+1)+' '+WORLDS[w].n;};
+const gMaxR=()=>{const g=gebNow();let k=0;for(let i=0;i<GGATE.length;i++)if(GGATE[i]<=g)k=i;return k;};
+const gCapLv=()=>{const k=gMaxR();if(k>=RAR.length-1)return MAX_G;const u=gUnlock(k+1);return u>=99?MAX_G:u-1;};
+const gsLvE=()=>Math.min(gsLv(),gCapLv());                  // wirksame Stufe für die Chancen
+const gTopR=()=>{const w=gWeights(gsLvE());let k=0;w.forEach((v,i)=>{if(v>0)k=i;});return k;};
 function gsCount(k){const L0=gsLv();S.gsSum.n=(S.gsSum.n||0)+k;const L1=gsLv();
-  if(L1>L0){const nu=RAR.findIndex((r,i)=>gUnlock(i)>L0&&gUnlock(i)<=L1);banner={txt:'Beschwörungsstufe '+L1+(nu>=0?' · '+RAR[nu].n+' frei!':''),t:2.4};}}
+  if(L1>L0){const nu=RAR.findIndex((r,i)=>gUnlock(i)>L0&&gUnlock(i)<=L1&&GGATE[i]<=gebNow());banner={txt:'Beschwörungsstufe '+L1+(nu>=0?' · '+RAR[nu].n+' frei!':''),t:2.4};}}
 if(!S.gsSum)S.gsSum={n:gsAt(Math.max(1,S.glv||1))}; // Übernahme: Gärtnerei-Stufe → Beschwörungsstufe
+let gsLastTop=gTopR();
+setInterval(()=>{const k=gTopR();if(k>gsLastTop){banner={txt:'✨ '+RAR[k].n+' kann jetzt beschworen werden!',t:2.6};}gsLastTop=k;},2000);
 function rollItem(){
-  const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
+  const w=gWeights(gsLvE()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;
   for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
-  if(r<RAR.length-1&&Math.random()<gUp('luck')*.01)r++; // Glücksklee der Allianz
+  if(r<gTopR()&&Math.random()<gUp('luck')*.01)r++; // Glücksklee der Allianz
   const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)];
   const lvl=S.stage;
   const v=itemValue(sl,r,lvl,rnd(ROLL_LO,ROLL_HI));
@@ -1649,6 +1664,12 @@ if(!S.v8){
     it.v=itemValue(sl,it.r,it.lvl||1,1);if(it.res)it.res.v=Math.round(4*RAR[it.r].pm);}
   S.v8=true;save();
 }
+// 13.11.2026 (Anpassung gr1): Ausrüstung über der erreichten Seltenheit wird auf die höchste erlaubte Seltenheit abgestuft
+if(!S.gr1){const mx=gTopR();let n=0;
+  for(const it of [...Object.values(S.gear||{}),...(S.inv||[])]){if(!it||!(it.r>mx))continue;const sl=SLOTS.find(x=>x.id===it.slot);if(!sl)continue;
+    const o=it.r;it.v=sl.pct?Math.round(it.v*RAR[mx].pm/RAR[o].pm*10)/10:Math.max(1,Math.round(it.v*RAR[mx].m/RAR[o].m));
+    if(it.res)it.res.v=Math.max(1,Math.round(it.res.v*RAR[mx].pm/RAR[o].pm));it.r=mx;it.name=sl.names[mx]||it.name;n++;}
+  S.gr1=true;if(n)S.gr1n=n;save();}
 // Anpassung v9: Hauptquartier wird zur Werkstatt – ausgebaute Gebäude werden voll in Münzen erstattet
 if(!S.v9){
   const B={schmiede:100,turm:120,segel:150,markt:130};let back=0;
@@ -2537,21 +2558,26 @@ function close(){const back=pending&&pending.tw,exb=pending&&pending.ex;if(back)
 // 12.11.2026: Ausrüstung wird beschworen wie Fähigkeiten und Begleiter (1× / 10× / 30× mit Samenkapseln, Chancen aus der Gärtnerei)
 const GS_N=[1,10,30];
 /* 13.11.2026: kompakter Fortschritt zur nächsten Seltenheit (Ergebnis-Fenster) */
-function gsNextMini(){const L=gsLv(),w=gWeights(L),open=RAR.map((r,i)=>i).filter(i=>w[i]>0),top=open[open.length-1],nr=RAR.findIndex((r,i)=>i>top&&gUnlock(i)<99),n0=S.gsSum.n||0;
+function gsNI(top,nr){const n0=S.gsSum.n||0,from=gsAt(gUnlock(top)),to=gsAt(gUnlock(nr)),g=gebNow(),sOk=n0>=to,gOk=g>=GGATE[nr];
+  if(!sOk)return{sOk,gOk,pr:Math.max(0,Math.min(1,(n0-from)/(to-from))),lab:fmt(Math.max(0,n0-from))+' / '+fmt(to-from),em:'noch '+fmt(to-n0),left:`noch <b>${fmt(to-n0)}</b> Beschwörungen`};
+  const g0=Math.min(GGATE[top],g);return{sOk,gOk,pr:Math.max(0,Math.min(1,(g-g0)/Math.max(1,GGATE[nr]-g0))),lab:'Gebiet '+g+' / '+GGATE[nr],em:'🔒 Gebiet '+GGATE[nr],left:'✓ Beschwörungen erreicht'};}
+function gsNextMini(){const L=gsLvE(),w=gWeights(L),open=RAR.map((r,i)=>i).filter(i=>w[i]>0),top=open[open.length-1],nr=RAR.findIndex((r,i)=>i>top&&gUnlock(i)<99),n0=S.gsSum.n||0;
   if(nr<0)return'<div class="gsmini max"><b>🏆 Alle Seltenheiten freigeschaltet</b></div>';
-  const from=gsAt(gUnlock(top)),to=gsAt(gUnlock(nr)),pr=Math.max(0,Math.min(1,(n0-from)/(to-from)));
-  return`<div class="gsmini" style="--rc:${RAR[nr].c}"><div class="gsmt"><span>Nächste Seltenheit: <b>${RAR[nr].n}</b></span><em>noch ${fmt(Math.max(0,to-n0))}</em></div><div class="gsbar"><div style="width:${pr*100}%"></div><span>${fmt(Math.max(0,n0-from))} / ${fmt(to-from)}</span></div></div>`;}
+  const X=gsNI(top,nr);
+  return`<div class="gsmini" style="--rc:${RAR[nr].c}"><div class="gsmt"><span>Nächste Seltenheit: <b>${RAR[nr].n}</b></span><em>${X.em}</em></div><div class="gsbar"><div style="width:${X.pr*100}%"></div><span>${X.lab}</span></div>
+    <small class="gsgeb${X.gOk?' ok':''}">${X.sOk?'✓ Beschwörungen · ':''}${X.gOk?'✓':'🔒'} ${gebName(GGATE[nr])}</small></div>`;}
 function gearSumDlg(){if(pending||!$('modal').hidden)return;
   /* im Tutorial direkt ein Teil */ if(tut.on&&TUT[tut.i]&&TUT[tut.i].act==='cap'){openCapsule();return;}
-  const L=gsLv(),w=gWeights(L),tot=w.reduce((a,b)=>a+b,0),caps=S.caps||0,n0=S.gsSum.n||0,a0=gsAt(L),b0=L<MAX_G?gsAt(L+1):a0,nx=L<MAX_G?gWeights(L+1):null;
+  const L=gsLv(),LE=gsLvE(),w=gWeights(LE),tot=w.reduce((a,b)=>a+b,0),caps=S.caps||0,n0=S.gsSum.n||0,a0=gsAt(L),b0=L<MAX_G?gsAt(L+1):a0,nx=L<MAX_G&&L+1<=gCapLv()?gWeights(L+1):null;
   // 13.11.2026: Fortschritt bis zur nächsten Seltenheit
   const open=RAR.map((r,i)=>i).filter(i=>w[i]>0),top=open[open.length-1],nr=RAR.findIndex((r,i)=>i>top&&gUnlock(i)<99);
   const pct=x=>(Math.round(x*10)/10).toString().replace('.',',');
   let nextHtml='<div class="gsnext max"><b>🏆 Alle Seltenheiten freigeschaltet</b></div>';
-  if(nr>=0){const uL=gUnlock(nr),from=gsAt(gUnlock(top)),to=gsAt(uL),pr=Math.max(0,Math.min(1,(n0-from)/(to-from)));
-    nextHtml=`<div class="gsnext" style="--rc:${RAR[nr].c}"><div class="gsnt"><span class="gsgem"></span><div><small>Nächste Seltenheit</small><b>${RAR[nr].n}</b></div><em>ab Stufe ${uL}</em></div>
-      <div class="gsbar"><div style="width:${pr*100}%"></div><span>${fmt(Math.max(0,n0-from))} / ${fmt(to-from)}</span></div>
-      <small class="gsleft">noch <b>${fmt(Math.max(0,to-n0))}</b> Beschwörungen</small></div>`;}
+  if(nr>=0){const uL=gUnlock(nr),X=gsNI(top,nr);
+    nextHtml=`<div class="gsnext" style="--rc:${RAR[nr].c}"><div class="gsnt"><span class="gsgem"></span><div><small>Nächste Seltenheit</small><b>${RAR[nr].n}</b></div><em>${X.sOk?X.em:'ab Stufe '+uL}</em></div>
+      <div class="gsbar"><div style="width:${X.pr*100}%"></div><span>${X.lab}</span></div>
+      <small class="gsleft">${X.left}</small>
+      <small class="gsgeb${gebNow()>=GGATE[nr]?' ok':''}">${gebNow()>=GGATE[nr]?'✓':'🔒'} Gebiet nötig: <b>${gebName(GGATE[nr])}</b></small></div>`;}
   const road=RAR.map((r,i)=>gUnlock(i)>=99?'':`<span class="gsr${w[i]>0?' on':''}${i===nr?' nx':''}" style="--rc:${r.c}" title="${r.n}"></span>`).join('');
   const tiles=open.map(i=>{const r=RAR[i],p=w[i]/tot*100,d=nx?nx[i]/nx.reduce((a,b)=>a+b,0)*100-p:0;
     return`<div class="gch" style="--rc:${r.c}"><span class="gdot"></span><b>${r.n}</b><em>${pct(p)} %</em><div class="gbar"><div style="width:${Math.min(100,p*2.5)}%"></div></div>${Math.abs(d)>=.05?`<small class="${d>0?'up':'dn'}">${d>0?'▲':'▼'} ${pct(Math.abs(d))}</small>`:'<small></small>'}</div>`;}).join('');
@@ -3941,7 +3967,7 @@ function autoTick(dt){
 }
 function setAuto(on){S.auto.on=on;const b=$('autoBtn');b.setAttribute('aria-pressed',on);$('autoState').textContent=on?'bis '+RAR[S.auto.stopAt].n:'aus';$('autoRow').hidden=true;save();}
 // 09.11.2026: Vor dem Start wählen, bei welcher Seltenheit Auto anhält
-function autoDlg(){const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);
+function autoDlg(){const w=gWeights(gsLvE()),tot=w.reduce((a,b)=>a+b,0);
   let top=0;w.forEach((x,i)=>{if(x>0)top=i;});top=Math.min(RAR.length-1,top+(gUp('luck')>0?1:0));
   if(S.auto.stopAt>top)S.auto.stopAt=top;if(S.auto.stopAt<1)S.auto.stopAt=1;
   const pct=r=>{let p=0;for(let i=r;i<w.length;i++)p+=w[i];return p/tot*100;};
@@ -4479,7 +4505,7 @@ function exClaim(M){const R=exState().runs,run=R[M.id];if(!run||Date.now()<run.e
   delete R[M.id];S.coins+=W.coins;out.push(`<em class="up">+${fmt(W.coins)} Münzen</em>`);
   if(Math.random()<W.kakChance){S.kak=(S.kak||0)+W.kak;out.push(`<em class="up">+${W.kak} 🌵</em>`);}
   const D=DRONES.find(d=>d.id===run.dog);exMsg=`${M.ico} <b>${D?D.n:'Begleiter'} ist zurück aus ${M.n}:</b> `+out.join(' · ');
-  if(Math.random()<W.itemChance){const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)],r=Math.min(M.r,RAR.length-1);
+  if(Math.random()<W.itemChance){const sl=SLOTS[Math.floor(Math.random()*SLOTS.length)],r=Math.min(M.r,gTopR());
     const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),slot:sl.id,r,v:itemValue(sl,r,S.best,rnd(ROLL_LO,ROLL_HI)),lvl:S.best,name:sl.names[r]};
     const els=Object.keys(ELEM);if(sl.id==='waffe')it.el=els[Math.floor(Math.random()*els.length)];else it.res={el:ATK_ELS[Math.floor(Math.random()*ATK_ELS.length)],v:Math.round(4*RAR[r].pm)};
     exMsg+=` · <span style="color:${RAR[r].c}">${it.name}</span>`;save();lastHud='';it.ex=true;pending=it;reveal();return;}
@@ -4520,9 +4546,9 @@ function ptNext(){const P=ptState();for(let i=0;i<PT.length;i++)if(!P.got.includ
 const mmss=sec=>{sec=Math.max(0,Math.ceil(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s2=sec%60;return h?h+':'+String(m).padStart(2,'0')+':'+String(s2).padStart(2,'0'):m+':'+String(s2).padStart(2,'0');};
 // Ausrüstung, die dich weiterbringt: besser als das, was du an diesem Platz trägst, und mit der passenden Resistenz für deine Welt
 function ptItem(){const Wd=world(),R=SLOTS.map(sl=>({sl,cur:S.gear[sl.id]})).sort((a,b)=>(a.cur?a.cur.r:-1)-(b.cur?b.cur.r:-1)||Math.random()-.5);
-  for(const {sl,cur} of R.slice(0,4)){const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
-    if(cur)r=Math.max(r,cur.r);let v=itemValue(sl,r,S.stage,ROLL_HI);
-    if(cur&&v<=cur.v&&r<RAR.length-1){r++;v=itemValue(sl,r,S.stage,ROLL_HI);}
+  for(const {sl,cur} of R.slice(0,4)){const w=gWeights(gsLvE()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<RAR.length-1;r++){x-=w[r];if(x<=0)break;}
+    if(cur)r=Math.min(Math.max(r,cur.r),Math.max(gTopR(),cur.r));let v=itemValue(sl,r,S.stage,ROLL_HI);
+    if(cur&&v<=cur.v&&r<gTopR()){r++;v=itemValue(sl,r,S.stage,ROLL_HI);}
     if(cur&&v<=cur.v)continue;
     const it={id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),slot:sl.id,r,v,lvl:S.stage,name:sl.names[r]};
     if(sl.id==='waffe')it.el=Wd.weak;else it.res={el:Wd.atkEl,v:Math.round(4*RAR[Math.max(1,r)].pm)};
@@ -5034,7 +5060,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn92',date:'2026-11-13',title:'Allianzen pausiert',hero:['🛡 Allianzen deaktiviert','Allianzen sind vorübergehend abgeschaltet. Allianz und Allianzboss sind gesperrt, bis sie zurückkommen.'],items:()=>[['Allianz:','Der Knopf oben rechts ist gesperrt (🔒).'],['Allianzboss:','Unter „Mehr“ vorübergehend nicht verfügbar.']]},
+  {id:'pn93',date:'2026-11-13',title:'Seltenheiten: langsamer & mit Gebieten',hero:['🗺 Seltenheit braucht Fortschritt','Höhere Seltenheiten brauchen jetzt zusätzlich zu den Beschwörungen ein erreichtes Gebiet. Neu freigeschaltete Seltenheiten sind anfangs sehr selten.'],items:()=>[['Gebiets-Sperre:','Z. B. Legendär ab Gebiet 7, Kosmisch ab Gebiet 18, Allmacht erst im letzten Gebiet (48).'],['Sehr selten zu Beginn:','Eine neue Seltenheit startet mit winziger Chance und wird über 6 Beschwörungsstufen normal häufig.'],['Anzeige:','Im Beschwörungsfenster siehst du, welches Gebiet du für die nächste Seltenheit brauchst.'],['Anpassung:','Vorhandene Ausrüstung über deiner erreichten Seltenheit wurde auf deine aktuelle Höchst-Seltenheit abgestuft.']]},
+{id:'pn92',date:'2026-11-13',title:'Allianzen pausiert',hero:['🛡 Allianzen deaktiviert','Allianzen sind vorübergehend abgeschaltet. Allianz und Allianzboss sind gesperrt, bis sie zurückkommen.'],items:()=>[['Allianz:','Der Knopf oben rechts ist gesperrt (🔒).'],['Allianzboss:','Unter „Mehr“ vorübergehend nicht verfügbar.']]},
 {id:'pn91',date:'2026-11-13',title:'Namensfeld auf dem Handy',hero:['⌨️ Tastatur verdeckt nichts mehr','Beim Umbenennen rutscht das Fenster jetzt nach oben, sodass das Namensfeld über der Tastatur sichtbar bleibt.'],items:()=>[['Name & Aussehen:','Das Namensfeld steht jetzt ganz oben, direkt unter der Überschrift.'],['Alle Eingabefelder:','Fenster mit Eingabefeldern passen sich der Handy-Tastatur an.']]},
 {id:'pn90',date:'2026-11-13',title:'Fortschritt im Beschwörungs-Ergebnis',hero:['📈 Nächste Seltenheit','Nach dem Beschwören von Ausrüstung siehst du jetzt direkt, wie viele Beschwörungen dir noch bis zur nächsten Seltenheit fehlen.'],items:()=>[['Ausrüstung:','Fortschrittsbalken mit „noch X“ im Ergebnis-Fenster.']]},
 {id:'pn89',date:'2026-11-13',title:'Kapsel-Anzeige beim Beschwören',hero:['🌱 Immer im Blick','Nach jeder Beschwörung siehst du sofort, wie viele Samenkapseln (bzw. Kakteen) du noch hast.'],items:()=>[['Ausrüstung, Begleiter, Fähigkeiten:','Anzeige „Noch X Samenkapseln“ im Ergebnis.'],['Kaktus-Sammlung:','Anzeige „Noch X Kakteen“ im Ergebnis.']]},
