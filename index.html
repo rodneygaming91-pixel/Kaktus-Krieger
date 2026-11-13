@@ -857,7 +857,8 @@ button.wmchest.rd{font:inherit;font-size:.74rem;font-weight:900;padding:3px 10px
 .wbtiers span b{font-size:.68rem;color:var(--tc);white-space:nowrap}.wbtiers span small{font-size:.56rem;color:#bfae94;line-height:1.2}
 .wbtiers span.on{border-color:var(--tc);box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 40%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
 .hr{justify-self:end;display:flex;gap:5px}
-.allybtn{position:relative}.allybtn[data-chat]::after{content:attr(data-chat);position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;background:#e0283a;color:#fff;font-size:.68rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #1c140e}
+.allybtn{position:relative}.allybtn.off,.abbtn2.off{filter:grayscale(1) brightness(.75);opacity:.75}.allybtn.off::before{content:'🔒';position:absolute;top:-6px;right:-6px;font-size:.8rem;filter:none}
+.allybtn[data-chat]::after{content:attr(data-chat);position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;background:#e0283a;color:#fff;font-size:.68rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #1c140e}
 @media (max-width:400px){.chestbtn{min-width:48px;padding:3px 5px 4px}.chestbtn span{font-size:.6rem}}
 @media (max-width:400px){header{gap:4px}.hbtns{gap:3px}.hbtns .setbtn{padding:3px 6px;font-size:.74rem}.hr{gap:3px}.chestbtn{min-width:44px}.chestbtn b{font-size:1.1rem}}
 @media (max-width:370px){.who.plate{min-width:0;padding:4px 7px 5px}.who.plate b{font-size:.88rem}.who.plate small{font-size:.58rem}}
@@ -1254,7 +1255,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3347,12 +3348,15 @@ async function abClaim(){if(ab.claimBusy)return;ab.claimBusy=true;renderOnline()
 
 // ---------- Allianzen ----------
 const GUILD_COST=1000;
+// 13.11.2026: Allianzen vorübergehend deaktiviert (Knopf gesperrt, Allianzboss gesperrt, kein Chat-Abruf)
+const ALLY_OFF=true;
+if(ALLY_OFF){$('allyBtn').classList.add('off');$('abBtn2').classList.add('off');const sp=$('abBtn2').querySelector('span');if(sp)sp.textContent='🔒 Deaktiviert';}
 // Allianz-Chat: Nachrichten werden alle 4 s nachgeladen, solange der Chat offen ist, sonst jede Minute (für die Ungelesen-Anzeige)
 let chat={msgs:[],last:0,unread:0,seen:+(localStorage.getItem('kk-chat-seen')||0)||0,busy:false};
 function chatHtml(){if(!chat.msgs.length)return'<p class="hint">Noch keine Nachrichten. Sag Hallo!</p>';
   return chat.msgs.map(m=>{const me=m.code===ON.code,tm=new Date(m.created_at);
     return`<div class="cm${me?' me':''}"><small>${me?'Du':esc2(m.name)} · ${String(tm.getHours()).padStart(2,'0')}:${String(tm.getMinutes()).padStart(2,'0')}</small><span>${esc2(m.text)}</span></div>`;}).join('');}
-async function pollChat(){if(chat.busy||!ON.code||!S.gUpg&&!gd.my)return;chat.busy=true;
+async function pollChat(){if(ALLY_OFF)return;if(chat.busy||!ON.code||!S.gUpg&&!gd.my)return;chat.busy=true;
   try{const r=await rpc('kk_guild_msgs',{p_code:ON.code,p_key:ON.key,p_after:chat.last});
     if(Array.isArray(r)&&r.length){chat.msgs=chat.msgs.concat(r).slice(-120);chat.last=r[r.length-1].id;}
     const open=olOpen&&olTab==='gilde'&&gd.sub==='chat';
@@ -3570,8 +3574,8 @@ function renderOnline(){
       drawCactus(g,(friend.card&&friend.card.char)||DEFAULT_CH,{x:0,y:0,gear});g.restore();}
   }
 }
-$('allyBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='ally';olTab='gilde';friendBack=null;loadGuild();$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();}; // 11.11.2026: nur die Allianz, ohne Reiter
-$('abBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='abs';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';
+$('allyBtn').onclick=()=>{if(ALLY_OFF){banner={txt:'🔒 Allianzen pausiert',t:2.4};return;}if(!$('modal').hidden||editing)return;olOpen=true;olSolo='ally';olTab='gilde';friendBack=null;loadGuild();$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();}; // 11.11.2026: nur die Allianz, ohne Reiter
+$('abBtn2').onclick=()=>{if(ALLY_OFF){banner={txt:'🔒 Allianzen pausiert',t:2.4};return;}if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='abs';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';
   if(gd.my===undefined||!gd.info)loadGuild().then(()=>{if(olOpen&&olTab==='abs')renderOnline();if(gd.info&&!ab.busy)loadAb();});else if(!ab.busy)loadAb();renderOnline();};
 $('wbBtn2').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo='mehr';olTab='boss';friendBack=null;$('card').classList.add('wide');$('modal').hidden=false;lastHud='';if(!wb.busy)loadWb();renderOnline();};
 $('onBtn').onclick=()=>{if(!$('modal').hidden||editing)return;olOpen=true;olSolo=false;if(olTab==='boss'||olTab==='abs')olTab='profil';$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();};
@@ -5030,7 +5034,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn91',date:'2026-11-13',title:'Namensfeld auf dem Handy',hero:['⌨️ Tastatur verdeckt nichts mehr','Beim Umbenennen rutscht das Fenster jetzt nach oben, sodass das Namensfeld über der Tastatur sichtbar bleibt.'],items:()=>[['Name & Aussehen:','Das Namensfeld steht jetzt ganz oben, direkt unter der Überschrift.'],['Alle Eingabefelder:','Fenster mit Eingabefeldern passen sich der Handy-Tastatur an.']]},
+  {id:'pn92',date:'2026-11-13',title:'Allianzen pausiert',hero:['🛡 Allianzen deaktiviert','Allianzen sind vorübergehend abgeschaltet. Allianz und Allianzboss sind gesperrt, bis sie zurückkommen.'],items:()=>[['Allianz:','Der Knopf oben rechts ist gesperrt (🔒).'],['Allianzboss:','Unter „Mehr“ vorübergehend nicht verfügbar.']]},
+{id:'pn91',date:'2026-11-13',title:'Namensfeld auf dem Handy',hero:['⌨️ Tastatur verdeckt nichts mehr','Beim Umbenennen rutscht das Fenster jetzt nach oben, sodass das Namensfeld über der Tastatur sichtbar bleibt.'],items:()=>[['Name & Aussehen:','Das Namensfeld steht jetzt ganz oben, direkt unter der Überschrift.'],['Alle Eingabefelder:','Fenster mit Eingabefeldern passen sich der Handy-Tastatur an.']]},
 {id:'pn90',date:'2026-11-13',title:'Fortschritt im Beschwörungs-Ergebnis',hero:['📈 Nächste Seltenheit','Nach dem Beschwören von Ausrüstung siehst du jetzt direkt, wie viele Beschwörungen dir noch bis zur nächsten Seltenheit fehlen.'],items:()=>[['Ausrüstung:','Fortschrittsbalken mit „noch X“ im Ergebnis-Fenster.']]},
 {id:'pn89',date:'2026-11-13',title:'Kapsel-Anzeige beim Beschwören',hero:['🌱 Immer im Blick','Nach jeder Beschwörung siehst du sofort, wie viele Samenkapseln (bzw. Kakteen) du noch hast.'],items:()=>[['Ausrüstung, Begleiter, Fähigkeiten:','Anzeige „Noch X Samenkapseln“ im Ergebnis.'],['Kaktus-Sammlung:','Anzeige „Noch X Kakteen“ im Ergebnis.']]},
 {id:'pn88',date:'2026-11-13',title:'Ausrüstung beschwören',
