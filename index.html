@@ -467,6 +467,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .hpin{display:flex;flex-direction:column;gap:10px;transform-origin:top center}
 .hpg{margin-top:-8px}
 .caprow .capsule{flex:1;min-width:0}
+.capauto[hidden]{display:none!important} /* 13.11.2026: automatisches Öffnen entfernt */
 .capauto{flex:none;width:68px;border:2px solid #1c140e;border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
   background:linear-gradient(#4a3a2e,#2a1f18);color:#b8a488;box-shadow:inset 0 0 0 1px var(--frame),inset 0 2px 0 #ffffff1a,0 3px 0 #0b0806;font-family:var(--display)}
 .capauto small{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
@@ -1199,7 +1200,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
     <span class="fst" title="Tempo (Sekunden pro Schlag)"><em style="color:#ffd447">⏱</em><b id="sSpd">0</b><small>s</small></span>
   </div>
   <div class="caprow"><button class="capsule" id="capBtn" type="button">🔮 Ausrüstung beschwören <span class="n" id="capN">0</span></button>
-    <button class="capauto" id="autoBtn" type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
+    <button class="capauto" id="autoBtn" hidden type="button" aria-pressed="false" title="Samenkapseln automatisch öffnen"><small>Auto</small><b id="autoState">aus</b></button></div>
   <div class="autorow" id="autoRow" hidden>
     <label for="stopSel">Anhalten bei</label>
     <select id="stopSel">
@@ -1249,7 +1250,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3899,7 +3900,7 @@ function feed(it,equipped){
   while(f.children.length>6)f.lastElementChild.remove();
 }
 function autoTick(dt){
-  if(!S.auto.on||pending||!$('modal').hidden||S.caps<1)return;
+  if(true||!S.auto.on||pending||!$('modal').hidden||S.caps<1)return; // Auto gibt es nicht mehr
   autoT-=dt;if(autoT>0)return;autoT=1.5;
   for(let n=multiOpen();n>0&&S.caps>=1;n--){
     S.caps--;gsCount(1);const it=rollItem(),cur=S.gear[it.slot];
@@ -3934,7 +3935,7 @@ function autoDlg(){const w=gWeights(gsLv()),tot=w.reduce((a,b)=>a+b,0);
   $('adX').onclick=()=>{$('modal').hidden=true;};
   $('adGo').onclick=()=>{$('modal').hidden=true;setAuto(true);autoT=0.3;};}
 $('autoBtn').onclick=()=>{if(S.auto.on){setAuto(false);return;}if(!$('modal').hidden||pending)return;autoDlg();};
-setAuto(S.auto.on);
+setAuto(false); // 13.11.2026: automatisches Öffnen entfernt – immer aus
 setInterval(()=>{const m=multiOpen();$('multiTxt').textContent=m>1?m+' Kapseln pro Runde':'';},500);
 
 // ---------- Offline-Fortschritt (wie offlineGain in Scrap Star) ----------
@@ -4608,7 +4609,6 @@ const TUT=[
   {el:'tbKampf',t:'Unter ⚔ Kampf steckst du in der Werkstatt Münzen in Angriff, Leben, Panzer und Tempo – und levelst deine Fähigkeiten.'},
   {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
   {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
-  {el:'autoBtn',t:'Hast du viele Kapseln, beschwört Auto für dich weiter und hält bei seltenen Teilen an.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
@@ -5013,6 +5013,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn88',date:'2026-11-13',title:'Ausrüstung beschwören',
+   hero:['🔮 Neues Beschwörungsfenster','Beim Beschwören von Ausrüstung siehst du jetzt deine Stufe als Ring und wie weit es noch bis zur nächsten Seltenheit ist.'],
+   items:()=>[['🚫 Auto entfernt:','Das automatische Öffnen gibt es nicht mehr – nutze stattdessen 10× oder 30×.']]},
   {id:'pn87',date:'2026-11-13',title:'Zuletzt online',
    hero:['🟢 Wer ist online?','In der Rangliste siehst du jetzt bei jedem Spieler, wann er zuletzt online war – oder ob er gerade spielt.'],
    items:()=>[['🏆 So findest du es:','Oben auf deinen Namen tippen → 🏆 Rangliste.']]},
