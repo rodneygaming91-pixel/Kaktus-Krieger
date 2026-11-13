@@ -3122,6 +3122,8 @@ async function onSave(){
   try{await onEnsure();
     // Einzel-Neustart: hat der Server für dieses Konto einen Neustart angeordnet, fängt der Spieler wie neu an
     {const rn=await rpc('kk_reset_check',{p_code:ON.code,p_key:ON.key});if(rn&&rn>(S.rsN||0)){playerReset(rn);return;}}
+    // 13.11.2026: vom Admin geänderter Name wird übernommen
+    try{const nf=await rpc('kk_name_check',{p_code:ON.code,p_key:ON.key});if(nf&&S.char&&S.char.name!==nf){S.char.name=String(nf).slice(0,14);save();lastHud='';banner={txt:'Dein Name ist jetzt „'+S.char.name+'“',t:2.6};}}catch(e){}
     const ok=await rpc('kk_save',{p_code:ON.code,p_key:ON.key,p_name:S.char.name,p_cls:CLASSES[S.char.cls].n,
       p_stage:S.stage,p_best:S.best,p_power:powerNow(),p_card:cardNow(),p_save:S});
     if(ok===false){onState='err';onMsg='Dein Konto wurde auf einem anderen Gerät geladen. Melde dich unten mit Freundescode und PIN wieder an.';}else{onState='ok';onLast=Date.now();onMsg='';}
