@@ -1172,6 +1172,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .gsc{cursor:default;padding:3px 2px;background:linear-gradient(165deg,color-mix(in srgb,var(--rc) 45%,#241a14),#160f0a)}.gsc canvas{width:100%;aspect-ratio:1}.gsc small{font-size:.5rem!important;font-weight:800;white-space:nowrap;overflow:hidden;max-width:100%}
 .gsc.sold{opacity:.55}.gsc.eq{box-shadow:0 0 0 2px #7fe08a,0 0 8px #7fe08a}.gsc u{background:#2f7d2b}.gsc u.nw{background:#d84a8a}
 .gsx{position:absolute;bottom:12px;right:2px;font-size:.62rem}
+.capleft{align-self:center;margin:-4px auto 2px;font-size:.8rem;font-weight:800;color:var(--sand);background:#0006;border:2px solid #3a6a2a;border-radius:14px;padding:3px 12px}.capleft b{color:#7fe08a}
 .gssum{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:center;font-size:.78rem;font-weight:800;color:var(--sand)}.gssum .up{color:#7fe08a}
 .sumodds{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;font-size:.78rem}.sumodds span{display:flex;justify-content:space-between}
 </style>
@@ -1250,7 +1251,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2567,7 +2568,7 @@ function gearSummon(n){if((S.caps||0)<n)return;S.caps-=n;gsCount(n);const got=[]
   for(const g of got)if(g.st==='eq'&&S.gear[g.it.slot]!==g.it)g.st='old';
   eq=got.filter(g=>g.st==='eq').length;
   got.sort((a,b)=>b.it.r-a.it.r);
-  $('card').innerHTML=`<div class="sumres"><h2>🔮 ${n}× Ausrüstung</h2>
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 ${n}× Ausrüstung</h2><div class="capleft">🌱 Noch <b>${fmt(S.caps||0)}</b> Samenkapseln</div>
     <div class="skgrid res gsgrid">${got.map(({it,st,isNew},i)=>`<div class="skc gsc ${st}" style="--rc:${RAR[it.r].c}"><canvas width="96" height="96" data-gsi="${i}"></canvas>
       <small style="color:${RAR[it.r].c}">${RAR[it.r].n}</small>${st==='eq'?'<u>▲</u>':isNew?'<u class="nw">NEU</u>':''}${st==='sold'?'<span class="gsx">♻</span>':st==='inv'||st==='old'?'<span class="gsx">🎒</span>':''}</div>`).join('')}</div>
     <div class="gssum"><span class="up">▲ ${eq} angelegt</span><span>🎒 ${inv} ins Inventar</span><span>♻ ${sold} zu Münzen · +${fmt(coins)}</span></div>
@@ -2757,7 +2758,7 @@ function drSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.caps||0)<cost||!$('mo
     got.push({D,neu});}
   S.drSum.n=(S.drSum.n||0)+n;save();lastHud='';
   got.sort((a,b)=>b.D.r-a.D.r);
-  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({D,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[D.r].c};--ic:${D.c}">${drIco(D)}<b>${D.n}</b><small style="color:${RAR[D.r].c}">${RAR[D.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="capleft">🌱 Noch <b>${fmt(S.caps||0)}</b> Samenkapseln</div><div class="skgrid res">${got.map(({D,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[D.r].c};--ic:${D.c}">${drIco(D)}<b>${D.n}</b><small style="color:${RAR[D.r].c}">${RAR[D.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
     <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.caps||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌱</button></div></div>`;
   $('modal').hidden=false;drawDroneIcons($('card'));
   $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
@@ -2910,7 +2911,7 @@ function ktSummon(n,re){const cost=n===10?KT_SUM10:KT_SUM1;if((S.kak||0)<cost)re
   S.kak-=cost;const got=[];
   for(let i=0;i<n;i++){const K=ktRoll(),o=S.kt[K.id];let neu=false;if(!o){S.kt[K.id]={lv:1,n:0};neu=true;}else o.n++;got.push({K,neu});}
   S.ktSum.n=(S.ktSum.n||0)+n;save();lastHud='';got.sort((a,b)=>b.K.r-a.K.r);
-  $('card').innerHTML=`<div class="sumres"><h2>🌵 Beschwörung</h2><div class="skgrid res">${got.map(({K,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[K.r].c}"><canvas width="96" height="96" data-kt="${K.id}" class="drico"></canvas><b>${K.n}</b><small style="color:${RAR[K.r].c}">${RAR[K.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+  $('card').innerHTML=`<div class="sumres"><h2>🌵 Beschwörung</h2><div class="capleft">🌵 Noch <b>${fmt(S.kak||0)}</b> Kakteen</div><div class="skgrid res">${got.map(({K,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[K.r].c}"><canvas width="96" height="96" data-kt="${K.id}" class="drico"></canvas><b>${K.n}</b><small style="color:${RAR[K.r].c}">${RAR[K.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
     <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.kak||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌵</button></div></div>`;
   ktDraw($('card'));
   $('sumOk').onclick=()=>ktColl(re);$('sumAgain').onclick=()=>ktSummon(n,re);}
@@ -3814,7 +3815,7 @@ function skSummon(n,re){const cost=n===10?SUM10:SUM1;if((S.caps||0)<cost||!$('mo
     got.push({m,neu});}
   S.skSum.n=(S.skSum.n||0)+n;save();lastHud='';renderModBar();
   got.sort((a,b)=>b.m.r-a.m.r);
-  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="skgrid res">${got.map(({m,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small style="color:${RAR[m.r].c}">${RAR[m.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
+  $('card').innerHTML=`<div class="sumres"><h2>🔮 Beschwörung</h2><div class="capleft">🌱 Noch <b>${fmt(S.caps||0)}</b> Samenkapseln</div><div class="skgrid res">${got.map(({m,neu})=>`<div class="skc${neu?' neu':''}" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><b>${m.n}</b><small style="color:${RAR[m.r].c}">${RAR[m.r].n}</small>${neu?'<u>NEU</u>':''}</div>`).join('')}</div>
     <div class="row"><button class="btn" id="sumOk" type="button">OK</button><button class="btn go" id="sumAgain" type="button" ${(S.caps||0)<cost?'disabled':''}>Nochmal ${n}× · ${cost} 🌱</button></div></div>`;
   $('modal').hidden=false;
   $('sumOk').onclick=()=>{$('modal').hidden=true;re();};
@@ -5013,7 +5014,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn88',date:'2026-11-13',title:'Ausrüstung beschwören',
+  {id:'pn89',date:'2026-11-13',title:'Kapsel-Anzeige beim Beschwören',hero:['🌱 Immer im Blick','Nach jeder Beschwörung siehst du sofort, wie viele Samenkapseln (bzw. Kakteen) du noch hast.'],items:()=>[['Ausrüstung, Begleiter, Fähigkeiten:','Anzeige „Noch X Samenkapseln“ im Ergebnis.'],['Kaktus-Sammlung:','Anzeige „Noch X Kakteen“ im Ergebnis.']]},
+{id:'pn88',date:'2026-11-13',title:'Ausrüstung beschwören',
    hero:['🔮 Neues Beschwörungsfenster','Beim Beschwören von Ausrüstung siehst du jetzt deine Stufe als Ring und wie weit es noch bis zur nächsten Seltenheit ist.'],
    items:()=>[['🚫 Auto entfernt:','Das automatische Öffnen gibt es nicht mehr – nutze stattdessen 10× oder 30×.']]},
   {id:'pn87',date:'2026-11-13',title:'Zuletzt online',
