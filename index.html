@@ -1256,7 +1256,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1415,8 +1415,8 @@ function drInit(){if(!S.dr||typeof S.dr!=='object')S.dr={};if(!Array.isArray(S.d
   for(const id in S.dr){if(!DRONES.find(d=>d.id===id)){delete S.dr[id];continue;}if(S.dr[id].n==null)S.dr[id].n=0;}
   if(!Object.keys(S.dr).length)for(const id of DR_START){S.dr[id]={lv:1,n:0};if(!S.drEq.includes(id))S.drEq.push(id);}
   S.drEq=S.drEq.filter(id=>S.dr[id]).slice(0,DR_SLOTS);if(!S.drSum)S.drSum={n:0};}
-const drSumLv=()=>{const n=(S.drSum&&S.drSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
-function drRoll(){const w=SUMW[drSumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
+const drSumLv=()=>{const n=(S.drSum&&S.drSum.n)||0;let l=1;while(l<10&&n>=SUM_AT(l+1))l++;return l;};
+function drRoll(){const w=sumW(drSumLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
   r=Math.min(r,5);const pool=DRONES.filter(d=>d.r===r);return pool[Math.floor(Math.random()*pool.length)];}
 const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.stat===k)s+=D.per*Math.min(o.lv,DR_MAX);}return s;};
 // Werkstatt: den Kaktus selbst leveln. Münzen kosten jedes Level, jedes 10. Level braucht zusätzlich Kakteen.
@@ -1525,9 +1525,15 @@ function skTxt(m,lv){const L=skLvM(Math.max(1,lv));
 const SUMW=[[70,22,7,1,0,0],[62,25,10,2.6,.4,0],[55,27,13,4,1,0],[48,28,16,6,1.8,.2],[42,28,18,8.5,3,.5],
   [36,28,20,11,4.2,.8],[30,28,22,13.5,5.3,1.2],[25,27,24,16,6.3,1.7],[20,26,26,18,7.7,2.3],[15,25,27,20,10,3]];
 const sumAt=l=>12.5*l*(l-1); // Beschwörungen, ab denen Level l erreicht ist (L2 25, L3 75, … L10 1125)
-const sumLv=()=>{const n=(S.skSum&&S.skSum.n)||0;let l=1;while(l<10&&n>=sumAt(l+1))l++;return l;};
+// 13.11.2026: Fähigkeiten und Begleiter steigen langsamer (Stufe 10 nach 3.600 statt 1.125 Beschwörungen)
+// und höhere Seltenheiten brauchen ein erreichtes Gebiet; frisch freigeschaltet sind sie zuerst sehr selten
+const SUM_AT=l=>40*l*(l-1);   // L2 80, L3 240, L5 800, L10 3.600
+const SGATE=[1,1,3,8,16,28];   // Gebiet je Seltenheit: Gewöhnlich … Mythisch
+function sumW(L){const g=gebNow();return SUMW[Math.max(0,Math.min(9,L-1))].map((v,i)=>{if(!v||g<SGATE[i])return 0;const d=g-SGATE[i];return SGATE[i]<=1?v:v*(d>=4?1:0.15+0.85*(d/4)*(d/4));});}
+function sumOdds(w){const tot=w.reduce((x,y)=>x+y,0);return w.map((x,i)=>SUMW[9][i]?`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):gebNow()<SGATE[i]?'🔒 Gebiet '+SGATE[i]:'0 %'}${x?' %':''}</b></span>`:'').join('');}
+const sumLv=()=>{const n=(S.skSum&&S.skSum.n)||0;let l=1;while(l<10&&n>=SUM_AT(l+1))l++;return l;};
 const SUM1=5,SUM10=45;
-function skRoll(){const w=SUMW[sumLv()-1],tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
+function skRoll(){const w=sumW(sumLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
   r=Math.min(r,5);const pool=MODS.filter(m=>m.r===r);return pool[Math.floor(Math.random()*pool.length)];}
 let atkBuffT=0,atkBuffM=1,shieldT=0,shieldP=0,stealT=0,stealP=0;
 // In Turm, Dungeon und Bosskämpfen gibt es keine Knöpfe: Ausweichen und Betäuben lösen dort nach der Abklingzeit von selbst aus
@@ -2776,10 +2782,10 @@ function drEquip(id){if(S.drEq.includes(id)||exBusy(id))return false;if(S.drEq.l
   S.drEq.push(id);save();lastHud='';return true;}
 function drLevelAll(id){const o=S.dr[id];let k=0;while(o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv)){o.n-=drNeed(o.lv);o.lv++;k++;}return k;}
 const drCanUp=()=>DRONES.some(D=>{const o=S.dr[D.id];return o&&o.lv<DR_MAX&&o.n>=drNeed(o.lv);});
-function drSumDlg(re){const L=drSumLv(),n=(S.drSum&&S.drSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+function drSumDlg(re){const L=drSumLv(),n=(S.drSum&&S.drSum.n)||0,a=SUM_AT(L),b=L<10?SUM_AT(L+1):a,kak=S.caps||0,w=sumW(L),tot=w.reduce((x,y)=>x+y,0);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Begleiter beschwören</h2>
     <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
-    <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
+    <div class="sumodds">${sumOdds(w)}</div>
     <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌱</b></p>
     <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌱</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌱</button></div>
     <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
@@ -3813,7 +3819,7 @@ function renderModBar(){const on=skOn();
   for(const m of MODS)if($('m_'+m.id))$('m_'+m.id).onclick=()=>castMod(m);
   $('mods').querySelectorAll('[data-skgo]').forEach(b=>b.onclick=()=>{kSub='skill';tabGo('kampf');});}
 // ---------- Fähigkeiten: Beschwören, Sammlung, Leveln mit Doppelten (11.11.2026) ----------
-function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,on=skOn();
+function skSectionHtml(){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=SUM_AT(L),b=L<10?SUM_AT(L+1):a,kak=S.caps||0,on=skOn();
   const pct=L<10?Math.min(100,(n-a)/(b-a)*100):100;
   return`<div class="sksum"><div class="sksl"><b>🔮 Beschwören <em>Stufe ${L}</em></b><small>${L<10?`${n-a}/${b-a} bis Stufe ${L+1} · höhere Stufe = seltenere Fähigkeiten`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${pct}%"></div></div></div>
       <div class="sksb">${skCanUp()?'<button class="btn go skall" type="button" data-skall="1">Alle<small>leveln</small></button>':''}<button class="btn go" type="button" data-sum="1" ${kak<SUM1?'disabled':''}>1×<small>${SUM1} 🌱</small></button><button class="btn go" type="button" data-sum="10" ${kak<SUM10?'disabled':''}>10×<small>${SUM10} 🌱</small></button></div></div>
@@ -3836,10 +3842,10 @@ function skPageHtml(){const on=skOn();let eqRow='';
         <span class="skbar"><span style="width:${lv>=SKL_MAX?100:Math.min(100,o.n/need*100)}%"></span><em>${lv>=SKL_MAX?'Max':o.n+'/'+need}</em></span></button>`;}).join('')}</div>
     <div class="skfoot"><button class="btn sksumb" type="button" data-sumdlg="1">🔮 Beschwören<small>Stufe ${L} · 🌱 ${fmt(S.caps||0)}</small></button>
       <button class="btn go" type="button" data-skall="1" ${skCanUp()?'':'disabled'}>Alle leveln</button></div>`;}
-function skSumDlg(re){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=sumAt(L),b=L<10?sumAt(L+1):a,kak=S.caps||0,w=SUMW[L-1],tot=w.reduce((x,y)=>x+y,0);
+function skSumDlg(re){const L=sumLv(),n=(S.skSum&&S.skSum.n)||0,a=SUM_AT(L),b=L<10?SUM_AT(L+1):a,kak=S.caps||0,w=sumW(L),tot=w.reduce((x,y)=>x+y,0);
   $('card').innerHTML=`<div class="sumres"><h2>🔮 Fähigkeiten beschwören</h2>
     <div class="sksl"><b>Stufe ${L}</b><small>${L<10?`${n-a}/${b-a} Beschwörungen bis Stufe ${L+1}`:'Höchste Stufe erreicht'}</small><div class="track"><div style="width:${L<10?Math.min(100,(n-a)/(b-a)*100):100}%"></div></div></div>
-    <div class="sumodds">${w.map((x,i)=>`<span style="color:${RAR[i].c}">${RAR[i].n} <b>${x?(Math.round(x/tot*1000)/10).toString().replace('.',','):0} %</b></span>`).join('')}</div>
+    <div class="sumodds">${sumOdds(w)}</div>
     <p class="intro" style="text-align:center">Du hast <b style="color:#7fe08a">${fmt(kak)} 🌱</b></p>
     <div class="row"><button class="btn go" type="button" id="sum1" ${kak<SUM1?'disabled':''}>1× · ${SUM1} 🌱</button><button class="btn go" type="button" id="sum10" ${kak<SUM10?'disabled':''}>10× · ${SUM10} 🌱</button></div>
     <div class="row"><button class="btn" type="button" id="sumX">Schließen</button></div></div>`;
@@ -5060,7 +5066,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn93',date:'2026-11-13',title:'Seltenheiten: langsamer & mit Gebieten',hero:['🗺 Seltenheit braucht Fortschritt','Höhere Seltenheiten brauchen jetzt zusätzlich zu den Beschwörungen ein erreichtes Gebiet. Neu freigeschaltete Seltenheiten sind anfangs sehr selten.'],items:()=>[['Gebiets-Sperre:','Z. B. Legendär ab Gebiet 7, Kosmisch ab Gebiet 18, Allmacht erst im letzten Gebiet (48).'],['Sehr selten zu Beginn:','Eine neue Seltenheit startet mit winziger Chance und wird über 6 Beschwörungsstufen normal häufig.'],['Anzeige:','Im Beschwörungsfenster siehst du, welches Gebiet du für die nächste Seltenheit brauchst.'],['Anpassung:','Vorhandene Ausrüstung über deiner erreichten Seltenheit wurde auf deine aktuelle Höchst-Seltenheit abgestuft.']]},
+  {id:'pn94',date:'2026-11-13',title:'Fähigkeiten & Begleiter: neues Balancing',hero:['🔮 Länger etwas zu entdecken','Fähigkeiten und Begleiter steigen langsamer im Beschwörungslevel, und seltene Stufen brauchen ein erreichtes Gebiet.'],items:()=>[['Beschwörungsstufe:','Stufe 10 jetzt nach 3.600 statt 1.125 Beschwörungen.'],['Gebiets-Sperre:','Selten ab Gebiet 3, Episch ab Gebiet 8, Legendär ab Gebiet 16, Mythisch ab Gebiet 28.'],['Sehr selten zu Beginn:','Eine neu freigeschaltete Seltenheit startet mit kleiner Chance und wird über 4 Gebiete normal häufig.'],['Anzeige:','Gesperrte Seltenheiten zeigen im Beschwörungsfenster, welches Gebiet du brauchst.']]},
+{id:'pn93',date:'2026-11-13',title:'Seltenheiten: langsamer & mit Gebieten',hero:['🗺 Seltenheit braucht Fortschritt','Höhere Seltenheiten brauchen jetzt zusätzlich zu den Beschwörungen ein erreichtes Gebiet. Neu freigeschaltete Seltenheiten sind anfangs sehr selten.'],items:()=>[['Gebiets-Sperre:','Z. B. Legendär ab Gebiet 7, Kosmisch ab Gebiet 18, Allmacht erst im letzten Gebiet (48).'],['Sehr selten zu Beginn:','Eine neue Seltenheit startet mit winziger Chance und wird über 6 Beschwörungsstufen normal häufig.'],['Anzeige:','Im Beschwörungsfenster siehst du, welches Gebiet du für die nächste Seltenheit brauchst.'],['Anpassung:','Vorhandene Ausrüstung über deiner erreichten Seltenheit wurde auf deine aktuelle Höchst-Seltenheit abgestuft.']]},
 {id:'pn92',date:'2026-11-13',title:'Allianzen pausiert',hero:['🛡 Allianzen deaktiviert','Allianzen sind vorübergehend abgeschaltet. Allianz und Allianzboss sind gesperrt, bis sie zurückkommen.'],items:()=>[['Allianz:','Der Knopf oben rechts ist gesperrt (🔒).'],['Allianzboss:','Unter „Mehr“ vorübergehend nicht verfügbar.']]},
 {id:'pn91',date:'2026-11-13',title:'Namensfeld auf dem Handy',hero:['⌨️ Tastatur verdeckt nichts mehr','Beim Umbenennen rutscht das Fenster jetzt nach oben, sodass das Namensfeld über der Tastatur sichtbar bleibt.'],items:()=>[['Name & Aussehen:','Das Namensfeld steht jetzt ganz oben, direkt unter der Überschrift.'],['Alle Eingabefelder:','Fenster mit Eingabefeldern passen sich der Handy-Tastatur an.']]},
 {id:'pn90',date:'2026-11-13',title:'Fortschritt im Beschwörungs-Ergebnis',hero:['📈 Nächste Seltenheit','Nach dem Beschwören von Ausrüstung siehst du jetzt direkt, wie viele Beschwörungen dir noch bis zur nächsten Seltenheit fehlen.'],items:()=>[['Ausrüstung:','Fortschrittsbalken mit „noch X“ im Ergebnis-Fenster.']]},
