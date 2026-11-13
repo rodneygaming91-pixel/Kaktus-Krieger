@@ -374,6 +374,7 @@ select{background:var(--dusk);color:var(--text);border:0;border-radius:8px;paddi
 .slot span{font-size:.7rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .modal{position:fixed;inset:0;background:#0b0612e0;display:flex;align-items:center;justify-content:center;z-index:20;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.modal.kb{align-items:flex-start;padding-top:max(10px,env(safe-area-inset-top,0px));overflow-y:auto}
 .card{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;text-align:center;padding:18px;
   /* Stein- und Holzrahmen wie im Ausrüstungs-Fenster; innere Flächen erben die dunklen Steintöne */
   --night:#221812;--dusk:#3a2c22;--muted:#b8a488;--text:#f4e6cc;color:var(--text);
@@ -1253,7 +1254,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3725,8 +3726,8 @@ function renderEditor(){
   const card=$('card');
   if(step===1){
     card.innerHTML=`<h2>Dein Kaktus</h2><small class="hint" style="text-align:center;display:block">Weitere Kakteen bekommst du später in der 🌵 Sammlung</small>
-      <canvas id="pv" class="pv" width="320" height="220"></canvas>
       <label class="fld" for="nm"><small>Name</small><input id="nm" maxlength="14" value="${draft.name.replace(/"/g,'&quot;')}" autocomplete="off"></label>
+      <canvas id="pv" class="pv" width="320" height="220"></canvas>
       <div class="opt"><small>Augen</small><div>${chips('eyes',EYES)}</div></div>
       <div class="opt"><small>Aufsatz</small><div>${chips('hat',HATS)}</div></div>
       <div class="row"><button class="btn" id="eRnd" type="button">Zufall</button><button class="btn go" id="eNext" type="button">${S.char?'Fertig':'Los geht\'s'}</button></div>
@@ -3759,6 +3760,14 @@ function drawPreview(){
   g.clearRect(0,0,160,110);g.fillStyle='#c98f52';g.beginPath();g.ellipse(80,96,46,8,0,0,7);g.fill();
   g.save();g.translate(80,98);drawCactus(g,draft,{x:0,y:0,bob:Math.sin(t*3)});g.restore();
 }
+// 13.11.2026: iPhone-Tastatur – Fenster beim Tippen nach oben in den sichtbaren Bereich schieben
+(function(){const M=$('modal'),vv=window.visualViewport;
+  const fit=()=>{if(!M.classList.contains('kb'))return;if(vv){M.style.top=vv.offsetTop+'px';M.style.height=vv.height+'px';M.style.bottom='auto';}};
+  M.addEventListener('focusin',e=>{if(!/^(INPUT|TEXTAREA)$/.test(e.target.tagName))return;M.classList.add('kb');fit();
+    setTimeout(()=>{fit();try{e.target.scrollIntoView({block:'center'});}catch(x){}},300);});
+  M.addEventListener('focusout',()=>{setTimeout(()=>{const a=document.activeElement;if(a&&M.contains(a)&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;
+    M.classList.remove('kb');M.style.top=M.style.height=M.style.bottom='';window.scrollTo(0,0);},120);});
+  if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);}})();
 $('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden){if(S.char)profileOverview();else openEditor();}};
 if(!S.char)openEditor();
 
@@ -5021,7 +5030,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn90',date:'2026-11-13',title:'Fortschritt im Beschwörungs-Ergebnis',hero:['📈 Nächste Seltenheit','Nach dem Beschwören von Ausrüstung siehst du jetzt direkt, wie viele Beschwörungen dir noch bis zur nächsten Seltenheit fehlen.'],items:()=>[['Ausrüstung:','Fortschrittsbalken mit „noch X“ im Ergebnis-Fenster.']]},
+  {id:'pn91',date:'2026-11-13',title:'Namensfeld auf dem Handy',hero:['⌨️ Tastatur verdeckt nichts mehr','Beim Umbenennen rutscht das Fenster jetzt nach oben, sodass das Namensfeld über der Tastatur sichtbar bleibt.'],items:()=>[['Name & Aussehen:','Das Namensfeld steht jetzt ganz oben, direkt unter der Überschrift.'],['Alle Eingabefelder:','Fenster mit Eingabefeldern passen sich der Handy-Tastatur an.']]},
+{id:'pn90',date:'2026-11-13',title:'Fortschritt im Beschwörungs-Ergebnis',hero:['📈 Nächste Seltenheit','Nach dem Beschwören von Ausrüstung siehst du jetzt direkt, wie viele Beschwörungen dir noch bis zur nächsten Seltenheit fehlen.'],items:()=>[['Ausrüstung:','Fortschrittsbalken mit „noch X“ im Ergebnis-Fenster.']]},
 {id:'pn89',date:'2026-11-13',title:'Kapsel-Anzeige beim Beschwören',hero:['🌱 Immer im Blick','Nach jeder Beschwörung siehst du sofort, wie viele Samenkapseln (bzw. Kakteen) du noch hast.'],items:()=>[['Ausrüstung, Begleiter, Fähigkeiten:','Anzeige „Noch X Samenkapseln“ im Ergebnis.'],['Kaktus-Sammlung:','Anzeige „Noch X Kakteen“ im Ergebnis.']]},
 {id:'pn88',date:'2026-11-13',title:'Ausrüstung beschwören',
    hero:['🔮 Neues Beschwörungsfenster','Beim Beschwören von Ausrüstung siehst du jetzt deine Stufe als Ring und wie weit es noch bis zur nächsten Seltenheit ist.'],
