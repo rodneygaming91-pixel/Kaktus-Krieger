@@ -627,6 +627,7 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .lb .rk{font-family:var(--display);font-size:1.05rem;text-align:center;color:#ffe08a}
 .lb .nm{display:flex;flex-direction:column;min-width:0}.lb .nm b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lb .nm em{font-style:normal;color:#7be86a;font-size:.8em}
 .lb .nm small{color:#b8a488;font-size:.7rem;font-weight:800}
+.lb .nm small.seen{font-weight:700;color:#8a7a68;font-size:.64rem;white-space:nowrap}.lb .seen i.on{font-style:normal;color:#7be86a}
 .lb .vl{font-weight:800;color:#ffe7a8;font-variant-numeric:tabular-nums;white-space:nowrap;font-size:.85rem}
 .lb button:focus-visible{outline:3px solid var(--gd);outline-offset:1px}
 .lnk{border:0;background:none;color:#ffe7a8;text-decoration:underline;cursor:pointer;font:inherit;padding:0}
@@ -1224,7 +1225,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3417,6 +3418,10 @@ function wireGuild(){
 }
 
 let lbBy='best',lbData=null,lbErr='',lbAt=0;
+// 13.11.2026: „zuletzt online“ – das Spiel speichert jede Minute online, darum zählt wer in den letzten 3 Minuten gespeichert hat als online
+function seenTxt(ts){if(!ts)return'';const m=(Date.now()-new Date(ts).getTime())/60000;
+  if(m<3)return'<i class="on">● online</i>';if(m<60)return'vor '+Math.max(1,Math.round(m))+' Min';const h=m/60;if(h<24)return'vor '+Math.round(h)+' Std';
+  const d=Math.floor(h/24);return d===1?'gestern':d<30?'vor '+d+' Tagen':'vor über einem Monat';}
 async function loadLb(){lbErr='';try{lbData=await rpc('kk_leaderboard',{p_by:lbBy,p_limit:50});lbAt=Date.now();}catch(e){lbData=null;lbErr='Keine Verbindung. Die Bestenliste gibt es nur auf kaktus-krieger.pages.dev.';}if(olOpen&&olTab==='liste')renderOnline();}
 let pinMsg='',loginMsg='';
 const loginForm=p=>`<div class="pinrow"><input id="${p}LCode" class="oin" placeholder="Freundescode" maxlength="7" autocomplete="off" spellcheck="false" style="text-transform:uppercase">
@@ -3464,7 +3469,7 @@ function renderOnline(){
     body=`<div class="lbsw"><button type="button" class="${lbBy==='best'?'on':''}" data-lb="best">Höchste Stage</button><button type="button" class="${lbBy==='power'?'on':''}" data-lb="power">Kampfkraft</button></div>
       ${lbErr?`<p class="hint warn">${lbErr}</p>`:!lbData?'<p class="hint">Lade Bestenliste …</p>':!lbData.length?'<p class="hint">Noch niemand eingetragen. Sei der Erste!</p>':
       `<ol class="lb">${lbData.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
-        <span class="rk">${medal(i)}</span><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}${r.code===ON.code?' <em>(du)</em>':''}</b><small>${r.cls||''}</small></span>
+        <span class="rk">${medal(i)}</span><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}${r.code===ON.code?' <em>(du)</em>':''}</b><small>${r.cls||''}</small><small class="seen">${seenTxt(r.updated_at)}</small></span>
         <span class="vl">${lbBy==='best'?stageName(r.best):fmt(r.power)}</span></button></li>`).join('')}</ol>`}
       ${lbData?`<p class="hint">Stand ${agoTxt(lbAt)} · <button type="button" class="lnk" id="lbRe">aktualisieren</button> · Antippen zeigt das Profil</p>`:''}`;
   }else{
@@ -4971,6 +4976,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn87',date:'2026-11-13',title:'Zuletzt online',
+   hero:['🟢 Wer ist online?','In der Rangliste siehst du jetzt bei jedem Spieler, wann er zuletzt online war – oder ob er gerade spielt.'],
+   items:()=>[['🏆 So findest du es:','Oben auf deinen Namen tippen → 🏆 Rangliste.']]},
   {id:'pn86',date:'2026-11-12',title:'Schneller leveln',
    hero:['👆 Gedrückt halten','In der Kaktus-Werkstatt kannst du den Kaufknopf jetzt gedrückt halten – dann kauft er Level für Level immer schneller hintereinander.'],
    items:()=>[['🌵 Einmal tippen:','Kauft wie bisher genau ein Level.']]},
