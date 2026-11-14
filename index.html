@@ -1278,9 +1278,9 @@ const EN={
 'Krit-Schaden':'Crit damage','Ausweichen':'Dodge','Betäuben':'Stun','Lebensraub':'Lifesteal',
 'weniger Schaden':'less damage','Leben pro s':'health per s','Tempo (Sekunden pro Schlag)':'Speed (seconds per hit)',
 // Ausrüstungsplätze
-'Helm':'Helmet','Ring':'Ring','Rüstung':'Chestplate','Schild':'Shield','Schuhe':'Boots','Umhang':'Cloak','Halskette':'Necklace','Handschuhe':'Gloves',
+'Helm':'Helmet','Ring':'Ring','Rüstung':'Chest','Schild':'Shield','Schuhe':'Boots','Umhang':'Cloak','Halskette':'Necklace','Handschuhe':'Gloves',
 // Elemente
-'Gift':'Poison','Eis':'Ice','Feuer':'Fire','Blitz':'Lightning','Schatten':'Shadow','Licht':'Light',
+'ϟ Blitz':'ϟ Lightning','Gift':'Poison','Eis':'Ice','Feuer':'Fire','Blitz':'Lightning','Schatten':'Shadow','Licht':'Light',
 // Kakteen (Klassen)
 'Stachelschütze':'Spike Shooter','Fasskaktus':'Barrel Cactus','Flinkdorn':'Swiftthorn','Blütenmagier':'Blossom Mage','Igelkaktus':'Hedgehog Cactus',
 'Wüstenwächter':'Desert Warden','Mondkaktus':'Moon Cactus','Goldkaktus':'Golden Cactus','Feuerdorn':'Firethorn','Urkaktus':'Primal Cactus',
@@ -1299,9 +1299,95 @@ const EN={
 'Muschelkäfer':'Shell Beetle','Sturmmöwe':'Storm Gull','Kraken der Tiefe':'Kraken of the Deep','Dornenritter':'Thorn Knight',
 'Schattenkäfer':'Shadow Beetle','Nachtadler':'Night Eagle','Kaktuskaiser':'Cactus Emperor'
 };
+// Schritt 2: Seltenheiten, Ausrüstung, Begleiter, Fähigkeiten
+Object.assign(EN,{
+'Gewöhnlich':'Common','Ungewöhnlich':'Uncommon','Selten':'Rare','Episch':'Epic','Legendär':'Legendary','Mythisch':'Mythic',
+'Uralt':'Ancient','Kosmisch':'Cosmic','Göttlich':'Divine','Ätherisch':'Ethereal','Ewig':'Eternal','Urknall':'Big Bang',
+'Astral':'Astral','Prisma':'Prism','Polarlicht':'Aurora','Sonnenkern':'Suncore','Allmacht':'Omnipotent','Holzkeule':'Wooden Club',
+'Stachelkeule':'Spiked Club','Eisenschwert':'Iron Sword','Kristallklinge':'Crystal Blade','Sonnenschwert':'Sun Sword','Blutmondklinge':'Blood Moon Blade','Urzeitklinge':'Primeval Blade',
+'Sternenschneide':'Star Cutter','Götterschwert':'Godsword','Ätherklinge':'Aether Blade','Ewigkeitsklinge':'Eternity Blade','Urknallschwert':'Big Bang Sword','Astralklinge':'Astral Blade',
+'Prismaklinge':'Prism Blade','Polarlichtklinge':'Aurora Blade','Sonnenkernklinge':'Suncore Blade','Allmachtsklinge':'Omnipotence Blade','Lederkappe':'Leather Cap','Stachelkappe':'Spiked Cap',
+'Eisenhelm':'Iron Helmet','Hörnerhelm':'Horned Helmet','Sonnenkrone':'Sun Crown','Drachenhelm':'Dragon Helmet','Urzeithelm':'Primeval Helmet','Nebelkrone':'Mist Crown',
+'Götterkrone':'God Crown','Ätherkrone':'Aether Crown','Ewige Krone':'Eternal Crown','Urknallhelm':'Big Bang Helmet','Astralkrone':'Astral Crown','Prismakrone':'Prism Crown',
+'Polarlichtkrone':'Aurora Crown','Sonnenkernkrone':'Suncore Crown','Allmachtskrone':'Omnipotence Crown','Stoffweste':'Cloth Vest','Lederharnisch':'Leather Harness','Eisenpanzer':'Iron Plate',
+'Runenpanzer':'Rune Plate','Goldrüstung':'Golden Armor','Glutpanzer':'Ember Plate','Jadepanzer':'Jade Plate','Sternenrüstung':'Star Armor','Götterharnisch':'God Harness',
+'Ätherpanzer':'Aether Plate','Ewiger Panzer':'Eternal Plate','Urknallrüstung':'Big Bang Armor','Astralpanzer':'Astral Plate','Prismapanzer':'Prism Plate','Polarlichtpanzer':'Aurora Plate',
+'Sonnenkernpanzer':'Suncore Plate','Allmachtspanzer':'Omnipotence Plate','Holzbrett':'Wooden Plank','Rundschild':'Round Shield','Eisenschild':'Iron Shield','Kaktuswappen':'Cactus Crest',
+'Sonnenschild':'Sun Shield','Mythenschild':'Myth Shield','Urzeitschild':'Primeval Shield','Galaxieschild':'Galaxy Shield','Götterschild':'God Shield','Ätherschild':'Aether Shield',
+'Ewiger Schild':'Eternal Shield','Urknallschild':'Big Bang Shield','Astralschild':'Astral Shield','Prismaschild':'Prism Shield','Polarlichtschild':'Aurora Shield','Sonnenkernschild':'Suncore Shield',
+'Allmachtsschild':'Omnipotence Shield','Stoffbinden':'Cloth Wraps','Lederhandschuhe':'Leather Gloves','Eisenfäuste':'Iron Fists','Runenhandschuhe':'Rune Gloves','Goldklauen':'Golden Claws',
+'Feuerfäuste':'Fire Fists','Jadefäuste':'Jade Fists','Sternenhände':'Star Hands','Götterfäuste':'God Fists','Ätherhände':'Aether Hands','Ewige Fäuste':'Eternal Fists',
+'Urknallfäuste':'Big Bang Fists','Astralfäuste':'Astral Fists','Prismafäuste':'Prism Fists','Polarlichtfäuste':'Aurora Fists','Sonnenkernfäuste':'Suncore Fists','Allmachtsfäuste':'Omnipotence Fists',
+'Sandalen':'Sandals','Lederstiefel':'Leather Boots','Eisenstiefel':'Iron Boots','Windläufer':'Windrunners','Goldsporen':'Golden Spurs','Glutstiefel':'Ember Boots',
+'Jadestiefel':'Jade Boots','Kometenstiefel':'Comet Boots','Götterschritte':'God Steps','Ätherschritte':'Aether Steps','Ewige Stiefel':'Eternal Boots','Urknallstiefel':'Big Bang Boots',
+'Astralstiefel':'Astral Boots','Prismastiefel':'Prism Boots','Polarlichtstiefel':'Aurora Boots','Sonnenkernstiefel':'Suncore Boots','Allmachtsstiefel':'Omnipotence Boots','Lumpenumhang':'Rag Cloak',
+'Wanderumhang':'Travel Cloak','Ritterumhang':'Knight Cloak','Sternenumhang':'Star Cloak','Königsumhang':'Royal Cloak','Phönixumhang':'Phoenix Cloak','Urzeitmantel':'Primeval Mantle',
+'Nebelumhang':'Mist Cloak','Göttermantel':'God Mantle','Äthermantel':'Aether Mantle','Ewiger Mantel':'Eternal Mantle','Urknallmantel':'Big Bang Mantle','Astralmantel':'Astral Mantle',
+'Prismamantel':'Prism Mantle','Polarlichtmantel':'Aurora Mantle','Sonnenkernmantel':'Suncore Mantle','Allmachtsmantel':'Omnipotence Mantle','Holzperlen':'Wooden Beads','Knochenkette':'Bone Chain',
+'Silberamulett':'Silver Amulet','Kristallamulett':'Crystal Amulet','Sonnenamulett':'Sun Amulet','Herz des Vulkans':'Heart of the Volcano','Herz der Urzeit':'Heart of the Ages','Sternenherz':'Star Heart',
+'Götterherz':'God Heart','Ätherherz':'Aether Heart','Ewiges Herz':'Eternal Heart','Herz des Urknalls':'Heart of the Big Bang','Astralamulett':'Astral Amulet','Prismaamulett':'Prism Amulet',
+'Polarlichtamulett':'Aurora Amulet','Sonnenkernamulett':'Suncore Amulet','Allmachtsamulett':'Omnipotence Amulet','Kupferring':'Copper Ring','Jadering':'Jade Ring','Saphirring':'Sapphire Ring',
+'Amethystring':'Amethyst Ring','Goldring':'Gold Ring','Rubinring':'Ruby Ring','Urzeitring':'Primeval Ring','Kometenring':'Comet Ring','Götterring':'God Ring',
+'Ätherring':'Aether Ring','Ewiger Ring':'Eternal Ring','Urknallring':'Big Bang Ring','Astralring':'Astral Ring','Prismaring':'Prism Ring','Polarlichtring':'Aurora Ring',
+'Sonnenkernring':'Suncore Ring','Allmachtsring':'Omnipotence Ring','Dackel':'Dachshund','Chihuahua':'Chihuahua','Igel':'Hedgehog','Maus':'Mouse',
+'Hase':'Bunny','Schnecke':'Snail','Windhund':'Greyhound','Bernhardiner':'St. Bernard','Fuchs':'Fox','Eule':'Owl',
+'Frosch':'Frog','Waschbär':'Raccoon','Schäferhund':'Shepherd Dog','Fledermaus':'Bat','Wolf':'Wolf','Papagei':'Parrot',
+'Löwe':'Lion','Adler':'Eagle','Bär':'Bear','Schildkröte':'Turtle','Kobra':'Cobra','Tiger':'Tiger',
+'Einhorn':'Unicorn','Gorilla':'Gorilla','Elefant':'Elephant','Drache':'Dragon','Kraken':'Kraken','Mammut':'Mammoth',
+'Dino':'Dino','Stachelregen':'Spike Rain','Sonnenheilung':'Sun Heal','Wurzelfalle':'Root Trap','Dornenstich':'Thorn Sting','Sandwirbel':'Sand Swirl',
+'Giftstachel':'Poison Spike','Kaktuswut':'Cactus Rage','Rückenwind':'Tailwind','Blitzschlag':'Lightning Strike','Eisenrinde':'Iron Bark','Lebenssaft':'Life Sap',
+'Feuerball':'Fireball','Eisregen':'Ice Rain','Blütenheilung':'Blossom Heal','Dornenwall':'Thorn Wall','Meteor':'Meteor','Sandsturm':'Sandstorm',
+'Sonnenstrahl':'Sunbeam','Wüstenzorn':'Desert Wrath','Phönixblüte':'Phoenix Bloom','Zeitstillstand':'Time Stop','Kaktusgott':'Cactus God','Schutz':'Protection',
+'Heilung/s':'Healing/s','Krit':'Crit','% Schutz':'% Protection'
+});
+// Schritt 2: Texte rund um Ausrüstung, Beschwören, Begleiter und Fähigkeiten
+Object.assign(EN,{
+'Ablegen':'Unequip','Abziehen':'Unequip','Einsetzen':'Equip','Ausrüsten':'Equip','Ausgerüstet':'Equipped','Behalten':'Keep','Tauschen':'Swap',
+'Zerstören':'Destroy','Verkaufen':'Sell','Entfernen':'Remove','Alles ausrüsten':'Equip all','Level-Up':'Level up','Level-Up!':'Level up!',
+'Inventar':'Inventory','Inventar:':'Inventory:','Plätze':'slots','Platz':'Slot','Teil':'Item','markiert':'marked','Keine':'None','leer':'empty','frei':'free',
+'Kein Teil':'No item','Platz ist leer':'Slot is empty','Schlechtere markieren':'Mark worse','Builds':'Builds','Build':'Build',
+'Tippe ein Teil an, um es anzusehen.':'Tap an item to view it.',
+'Keine Teile für diesen Platz.':'No items for this slot.',
+'Noch leer. Behalte Teile aus Samenkapseln, dann landen sie hier.':'Still empty. Keep items from seed capsules and they will land here.',
+'Tippe Teile an, um sie zu markieren. „Schlechtere markieren“ wählt alle Teile, die nicht besser sind als deine jetzige Ausrüstung (ohne ★ Build-Teile).':'Tap items to mark them. “Mark worse” selects every item that is not better than your current gear (except ★ build items).',
+'Kapsel platzt auf …':'Capsule bursts open …','Tippen zum Überspringen':'Tap to skip','ohne':'none',
+'Du hast':'You have','Noch':'Left:','NEU':'NEW','Neu':'New','Stufe':'Level','OK':'OK','Nochmal':'Again',
+'Nächste Seltenheit':'Next rarity','Nächste Seltenheit:':'Next rarity:','Nächstes Level:':'Next level:','Gebiet nötig:':'Area needed:',
+'Beschwörungen':'summons','✓ Beschwörungen':'✓ Summons','Beschwörungen erreicht':'Summons reached','Beschwörung':'Summon','Höchste Stufe erreicht':'Max level reached','Höchstes Level erreicht':'Max level reached',
+'Alle Seltenheiten freigeschaltet':'All rarities unlocked','Chancen pro Teil':'Odds per item','Seltenheit:':'Rarity:','Seltenheit':'Rarity',
+'Ausrüstung beschwören':'Summon gear','Begleiter beschwören':'Summon companions','Fähigkeiten beschwören':'Summon skills',
+'· Bei 10× und 30× wird Besseres sofort angelegt':'· With 10× and 30×, better items are equipped right away',
+'Bei 10× und 30× wird Besseres sofort angelegt':'With 10× and 30×, better items are equipped right away',
+'angelegt':'equipped','ins Inventar':'to inventory','zu Münzen':'to coins','Doppelte bringen Level':'Duplicates give levels',
+'solange eingesetzt':'while equipped','Noch nicht gefunden':'Not found yet','Auf Mission':'On a mission',
+'Diesen Begleiter bekommst du beim 🔮 Beschwören.':'You get this companion from 🔮 Summon.',
+'Diese Fähigkeit bekommst du beim 🔮 Beschwören.':'You get this skill from 🔮 Summon.',
+'Alle 5 Plätze belegt – ziehe erst einen Begleiter ab.':'All 5 slots are taken – unequip a companion first.',
+'Alle 5 Plätze belegt – erst einen abziehen (−)':'All 5 slots are taken – unequip one first (−)',
+'Alle 6 Plätze belegt – erst eine ablegen (−)':'All 6 slots are taken – unequip one first (−)',
+'Fähigkeits-Level aufgestiegen!':'Skill level up!','Du farmst hier weiter – Boss per Tipp auf die Stage-Anzeige starten':'You keep farming here – tap the stage display to start the boss',
+'höhere Stufe = seltenere Fähigkeiten':'higher level = rarer skills','Element':'Element','Res.':'Res.','Ausbauen!':'Upgrade!',
+'trifft Schwäche +50 %':'hits weakness +50 %','Gegner resistent −40 %':'enemy resistant −40 %','Regeneration/s':'Regeneration/s'
+});
 // Muster für Texte mit Zahlen oder Zusammensetzungen; f bekommt die Treffer und die Übersetzungsfunktion
 const RX=[
   [/^(\d+) \/ (\d+) besiegt$/,(m)=>m[1]+' / '+m[2]+' defeated'],
+  [/^Stage geschafft! (.+)$/,(m,t)=>'Stage cleared! '+t(m[1])],
+  [/^(\S+) Beschwörungen bis Stufe (\d+)$/,(m)=>m[1]+' summons to level '+m[2]],
+  [/^(.+) bis Stufe (\d+)(.*)$/,(m,t)=>m[1]+' to level '+m[2]+t(m[3])],
+  [/^Beschwörungsstufe (\d+)$/,(m)=>'Summon level '+m[1]],
+  [/^Abklingzeit (.+)$/,(m)=>'Cooldown '+m[1]],
+  [/^Bis zu (\d+) kämpfen mit$/,(m)=>'Up to '+m[1]+' fight alongside'],
+  [/^Kopien (.+)$/,(m)=>'Copies '+m[1]],
+  [/^Inventar (.+)$/,(m)=>'Inventory '+m[1]],
+  [/^Nochmal (.+)$/,(m)=>'Again '+m[1]],
+  [/^Nächstes Level: (.+)$/,(m,t)=>'Next level: '+t(m[1])],
+  [/^noch (.+)$/,(m)=>m[1]+' to go'],
+  [/^ab Stufe (\d+)$/,(m)=>'from level '+m[1]],
+  [/^mit Stufe (\d+)$/,(m)=>'at level '+m[1]],
+  [/^(.+) Lv (\d+)(!?)$/,(m,t)=>t(m[1])+' Lv '+m[2]+m[3]],
+  [/^(.+): (\d+)$/,(m,t)=>t(m[1])+': '+m[2]],
+  [/^(\p{L}[\p{L}\- ]*) ([+−\-]?[\d.,]+[KMBT]? ?[%s×]?)$/u,(m,t)=>t(m[1])+' '+m[2]],
   [/^Gebiet (\d+(?:–\d+)?)$/,(m)=>'Area '+m[1]],
   [/^Gebiet (\d+(?:–\d+)?) (.+)$/,(m,t)=>'Area '+m[1]+' '+t(m[2])],
   [/^(.+) (\d+)-(\d+)$/,(m,t)=>t(m[1])+' '+m[2]+'-'+m[3]],
@@ -1313,7 +1399,8 @@ const RX=[
   [/^(.+)-Resistenz$/,(m,t)=>t(m[1])+' resistance'],
   [/^(.+) ✎$/,(m,t)=>t(m[1])+' ✎'],
   [/^(.+): undefined$/,(m,t)=>t(m[1])],
-  [/^([+−\-]?[\d.,]+[KMBTkmbt]?\s?%?\s?)(.+)$/,(m,t)=>m[1]+t(m[2])],
+  [/^([+−\-]?[\d.,]+[KMBTkmbt]?\s?[%×]?\s?)(.+)$/,(m,t)=>m[1]+t(m[2])],
+  [/^([^\p{L}\p{N}\s]+\s+)(.+)$/u,(m,t)=>m[1]+t(m[2])],
   [/^([\p{Extended_Pictographic}☀-➿]️?\s*)(.+)$/u,(m,t)=>m[1]+t(m[2])]
 ];
 const cache=new Map();
@@ -1359,7 +1446,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1614,6 +1701,18 @@ const skActive=id=>skOn().includes(id);
 const skCost=lv=>Math.round(5000*Math.pow(1.14,lv)); // alt, nur noch für die Erstattung vom 08.11.
 const pctS=x=>(Math.round(x*10)/10).toString().replace('.',',');
 function skTxt(m,lv){const L=skLvM(Math.max(1,lv));
+  if(window.KKL&&KKL.cur==='en')switch(m.k){
+    case'aoe':return`<b>${Math.round(m.v*L*100)} %</b> attack to all${m.s?` · stun ${pctS(m.s)} s`:''}`;
+    case'single':return`<b>${Math.round(m.v*L*100)} %</b> attack to one${m.burn?' · keeps burning':''}`;
+    case'chain':return`<b>${Math.round(m.v*L*100)} %</b> attack to ${m.n2} enemies`;
+    case'heal':return`Heals <b>${pctS(Math.min(100,m.v*L*100))} %</b> health${m.h?` · speed +30 % (${m.h} s)`:''}`;
+    case'stun':return`Stuns all for <b>${pctS(m.d*(1+.02*(lv-1)))} s</b>${m.v?` · ${Math.round(m.v*L*100)} % attack`:''}`;
+    case'dodge':return`Dodges all hits for <b>${pctS(m.d*(1+.02*(lv-1)))} s</b>`;
+    case'dot':return`<b>${Math.round(m.v*L*100)} %</b> poison damage over 4 s to all${m.s?` · stun ${pctS(m.s)} s`:''}`;
+    case'buff':return m.v?`Attack <b>+${Math.round(m.v*L*100)} %</b> for ${m.d} s${m.h?' · speed +30 %':''}`:`Speed <b>+30 %</b> for ${pctS(m.d*(1+.02*(lv-1)))} s`;
+    case'shield':return`<b>${Math.round(Math.min(.9,m.v*(1+.01*(lv-1)))*100)} %</b> less damage for ${m.d} s`;
+    case'meteor':return`Meteor with <b>${Math.round(m.v*L*100)} %</b> attack to all`;
+    case'steal':return`Lifesteal <b>${Math.round(m.v*L*100)} %</b> for ${m.d} s`;}
   switch(m.k){
     case'aoe':return`<b>${Math.round(m.v*L*100)} %</b> Angriff an alle${m.s?` · Betäubung ${pctS(m.s)} s`:''}`;
     case'single':return`<b>${Math.round(m.v*L*100)} %</b> Angriff auf einen${m.burn?' · brennt nach':''}`;
@@ -2864,6 +2963,10 @@ const drBon=(D,lv)=>(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2)).toLoca
 function drTxt(D,lv){const k=drScale(Math.max(1,lv)),p=x=>Math.round(x*k*100)+' %',sec=String(D.every).replace('.',',')+' s';
   const a={shot:`Beißt alle ${sec} für ${p(D.dmg)} Angriff`,stun:`Beißt alle ${sec} für ${p(D.dmg)} Angriff und betäubt 1 s`,
     steal:`Lebensraub alle ${sec}: ${p(D.dmg)} Angriff`,heal:`Heilt alle ${sec} ${Math.round(D.heal*k*10)/10} % Leben`}[D.act];
+  if(window.KKL&&KKL.cur==='en'){const se=String(D.every)+' s',b=String(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2));
+    const e={shot:`Bites every ${se} for ${p(D.dmg)} attack`,stun:`Bites every ${se} for ${p(D.dmg)} attack and stuns 1 s`,
+      steal:`Lifesteal every ${se}: ${p(D.dmg)} attack`,heal:`Heals ${Math.round(D.heal*k*10)/10} % health every ${se}`}[D.act];
+    return e+`<br><span style="color:#7fe08a">+${b} ${tr(DR_UNIT[D.stat])}</span> while equipped`;}
   return a+`<br><span style="color:#7fe08a">+${drBon(D,lv)} ${DR_UNIT[D.stat]}</span> solange eingesetzt`;}
 const drIco=D=>`<canvas width="96" height="96" data-dr="${D.id}" class="drico"></canvas>`;
 function renderDrones(){const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqRow='';
@@ -5186,7 +5289,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn97',date:'2026-11-14',title:'Englisch & Sprachwahl',hero:['🇬🇧 Kaktus-Krieger auf Englisch','Oben neben dem Briefumschlag findest du jetzt eine Flagge. Damit wechselst du zwischen Deutsch und Englisch. Beim ersten Start fragt das Spiel nach deiner Sprache.'],items:()=>[['Sprachwahl:','Flagge oben links antippen und Sprache wählen.'],['Englisch:','Hauptbildschirm, Kampfbox, Werkstatt, Leiste unten, Gebiete und Gegner sind schon übersetzt – der Rest folgt in den nächsten Updates.']],
+  {id:'pn98',date:'2026-11-14',title:'Englisch: Ausrüstung, Begleiter & Fähigkeiten',hero:['🇬🇧 Weiter geht’s mit Englisch','Auf Englisch sind jetzt auch Ausrüstung, Beschwören, Begleiter und Fähigkeiten übersetzt – mit allen Namen.'],items:()=>[['Übersetzt:','Alle Seltenheiten, 153 Ausrüstungsteile, 30 Begleiter, 25 Fähigkeiten, Beschwörungsfenster, Ergebnisse und Detailansichten.'],['Noch deutsch:','Gärtnerei, Kaktus-Sammlung, Profil, Weltkarte, Turm, Dungeons & Co. folgen als Nächstes.']],
+  en:{title:'English: gear, companions & skills',hero:['🇬🇧 More English','Gear, summoning, companions and skills are now translated too – including all names.'],items:()=>[['Translated:','All rarities, 153 gear items, 30 companions, 25 skills, summon windows, results and detail views.'],['Still German:','Garden, cactus collection, profile, world map, tower, dungeons & more come next.']]}},
+{id:'pn97',date:'2026-11-14',title:'Englisch & Sprachwahl',hero:['🇬🇧 Kaktus-Krieger auf Englisch','Oben neben dem Briefumschlag findest du jetzt eine Flagge. Damit wechselst du zwischen Deutsch und Englisch. Beim ersten Start fragt das Spiel nach deiner Sprache.'],items:()=>[['Sprachwahl:','Flagge oben links antippen und Sprache wählen.'],['Englisch:','Hauptbildschirm, Kampfbox, Werkstatt, Leiste unten, Gebiete und Gegner sind schon übersetzt – der Rest folgt in den nächsten Updates.']],
   en:{title:'English & language choice',hero:['🇬🇧 Kaktus-Krieger in English','Tap the flag at the top next to the envelope to switch between German and English. On first start the game asks for your language.'],items:()=>[['Language:','Tap the flag at the top left and pick your language.'],['English:','Main screen, battle box, workshop, bottom bar, areas and enemies are translated already – the rest follows in the next updates.']]}},
 {id:'pn96',date:'2026-11-14',title:'Gebiete mit Nummern',hero:['🗺 Gebiet 1, 2, 3 …','Statt Leicht, Normal, Schwer und Ultra schwer haben alle Gebiete jetzt eine fortlaufende Nummer. So siehst du sofort, wie weit du bist – und welches Gebiet du für die nächste Seltenheit brauchst.'],items:()=>[['Kampfbox:','Oben steht dein Gebiet und die Stage, z. B. „Gebiet 16 · Stage 12“, darunter der Name des Gebiets.'],['Leiste unter der Kampfbox:','Gebiet 1–12, 13–24, 25–36 und 37–48.'],['Weltkarte & Rangliste:','Ebenfalls mit Gebietsnummern.']]},
 {id:'pn95',date:'2026-11-13',title:'Feinschliff Ausrüstungs-Seltenheiten',hero:['✨ Neue Seltenheit = erst selten','Wird eine Seltenheit durch ein neues Gebiet freigeschaltet, startet sie jetzt ebenfalls mit sehr kleiner Chance.'],items:()=>[['Ausrüstung:','Die Chance einer neu freigeschalteten Seltenheit steigt über die nächsten 4 Gebiete auf den normalen Wert – auch wenn deine Beschwörungsstufe schon weiter ist.']]},
