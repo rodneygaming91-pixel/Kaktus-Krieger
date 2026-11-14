@@ -1340,7 +1340,7 @@ const EN={
 'Schneeeule':'Snowy Owl','Gletscherwurm':'Glacier Worm','Funkenkäfer':'Spark Beetle','Donnerskorpion':'Thunder Scorpion','Sturmfalke':'Storm Falcon',
 'Donnervogel':'Thunderbird','Knochenkäfer':'Bone Beetle','Schattenskorpion':'Shadow Scorpion','Aasgeier':'Carrion Vulture','Knochenwurm':'Bone Worm',
 'Flammenkrebs':'Flame Crab','Glutskorpion':'Ember Scorpion','Feuerphönix':'Fire Phoenix','Lavakönig':'Lava King','Nebelkrebs':'Fog Crab',
-'Muschelkäfer':'Shell Beetle','Sturmmöwe':'Storm Gull','Kraken der Tiefe':'Kraken of the Deep','Dornenritter':'Thorn Knight',
+'Muschelkäfer':'Shell Beetle','Sturmmöwe':'Storm Gull','Kraken der Tiefe':'Kraken of the Deep','Lavagolem':'Lava Golem','Dornenkoloss':'Thorn Colossus','Salzkrebs-König':'Salt Crab King','Kristallspinne':'Crystal Spider','Sternenrochen':'Star Ray','Donnergreif':'Thunder Griffin','Knochendrache':'Bone Dragon','Flammenphönix':'Flame Phoenix','Pilzkönigin':'Mushroom Queen','Frostyeti':'Frost Yeti','Dornenritter':'Thorn Knight',
 'Schattenkäfer':'Shadow Beetle','Nachtadler':'Night Eagle','Kaktuskaiser':'Cactus Emperor'
 };
 // Schritt 2: Seltenheiten, Ausrüstung, Begleiter, Fähigkeiten
@@ -1755,7 +1755,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2250,40 +2250,40 @@ const v3Note=S.v3msg||null;delete S.v3msg;if(v2Note)banner={txt:'Neue Ausrüstun
 const WORLDS=[
   {n:'Dornental',atkEl:'gift',weak:'feuer',sky:['#1d1238','#5a2f6b'],mesa:'#3b2257',flora:'#2b4a3a',ground:['#c98f52','#a8703c','#e0a866'],moon:'#ffe7b8',
    e:[{n:'Sandkäfer',col:'#c98a3e',hp:1,atk:1,sp:60,r:13,kind:'bug'},{n:'Skorpion',col:'#d9553c',hp:1.4,atk:1.3,sp:48,r:15,kind:'scorp'},{n:'Geier',col:'#8a7aa8',hp:.8,atk:1.1,sp:80,r:13,kind:'bird'}],
-   boss:{n:'Steppenwurm',col:'#ff6fae',hp:12,atk:2.5,sp:30,r:30,kind:'worm'}},
+   boss:{n:'Dornenkoloss',col:'#8a6a4a',hp:12,atk:2.5,sp:30,r:30,kind:'thorn'}},
   {n:'Salzsee',deco:'salt',atkEl:'eis',weak:'blitz',sky:['#10223d','#3d6f8f'],mesa:'#2c4a66',flora:'#5f8a8f',ground:['#dfe6ea','#b8c6cf','#ffffff'],moon:'#e8f6ff',
    e:[{n:'Salzkrebs',col:'#ff9a7a',hp:1.3,atk:1,sp:50,r:14,kind:'crab'},{n:'Eiskäfer',col:'#7fd0ff',hp:1,atk:1.1,sp:62,r:13,kind:'bug'},{n:'Möwe',col:'#d8e2f0',hp:.8,atk:1.2,sp:85,r:13,kind:'bird'}],
-   boss:{n:'Krebskönig',col:'#ff6a4a',hp:13,atk:2.6,sp:28,r:30,kind:'crab'}},
+   boss:{n:'Salzkrebs-König',col:'#ff7a5a',hp:13,atk:2.6,sp:28,r:30,kind:'saltcrab'}},
   {n:'Vulkanwüste',deco:'volcano',atkEl:'feuer',weak:'eis',sky:['#1a0a0f','#6b1f1a'],mesa:'#3a1214',flora:'#2a1a16',ground:['#4a2a24','#2e1714','#ff6a2a'],moon:'#ff9a5a',
    e:[{n:'Glutkäfer',col:'#ff6a2a',hp:1.1,atk:1.3,sp:62,r:13,kind:'bug'},{n:'Lavaskorpion',col:'#ffb020',hp:1.5,atk:1.4,sp:48,r:15,kind:'scorp'},{n:'Aschefalke',col:'#6a5a5a',hp:.9,atk:1.3,sp:88,r:13,kind:'bird'}],
-   boss:{n:'Magmawurm',col:'#ff4020',hp:14,atk:2.8,sp:30,r:32,kind:'worm'}},
+   boss:{n:'Lavagolem',col:'#4a3a3a',hp:14,atk:2.8,sp:30,r:32,kind:'golem'}},
   {n:'Kristallschlucht',deco:'crystal',atkEl:'blitz',weak:'gift',sky:['#0e0a2a','#3a2a7a'],mesa:'#251a55',flora:'#3a7a8a',ground:['#6a5aa8','#4a3a88','#b8a8ff'],moon:'#d8ccff',
    e:[{n:'Splitterkrebs',col:'#9ae8ff',hp:1.4,atk:1.2,sp:52,r:14,kind:'crab'},{n:'Kristallskorpion',col:'#d68aff',hp:1.5,atk:1.4,sp:50,r:15,kind:'scorp'},{n:'Prismafalter',col:'#ff9ae8',hp:.8,atk:1.4,sp:90,r:12,kind:'bird'}],
-   boss:{n:'Kristallskorpion-Fürst',col:'#b46bff',hp:15,atk:3,sp:28,r:30,kind:'scorp'}},
+   boss:{n:'Kristallspinne',col:'#5a3a8a',hp:15,atk:3,sp:28,r:30,kind:'spider'}},
   {n:'Sternendüne',deco:'stars',atkEl:'schatten',weak:'licht',sky:['#05030f','#1a1440'],mesa:'#120d30',flora:'#2a2a5a',ground:['#2a2250','#1a1438','#ffd447'],moon:'#fff6d8',
    e:[{n:'Sternkäfer',col:'#ffd447',hp:1.3,atk:1.4,sp:66,r:13,kind:'bug'},{n:'Nachtkrebs',col:'#7a8aff',hp:1.5,atk:1.3,sp:54,r:14,kind:'crab'},{n:'Kometenvogel',col:'#ff6fae',hp:1,atk:1.5,sp:95,r:13,kind:'bird'}],
-   boss:{n:'Sternenwächter',col:'#ffd447',hp:16,atk:3.2,sp:30,r:32,kind:'bird'}},
+   boss:{n:'Sternenrochen',col:'#3a4aa8',hp:16,atk:3.2,sp:30,r:32,kind:'ray'}},
   {n:'Pilzsumpf',atkEl:'gift',weak:'blitz',sky:['#0c1a12','#2f5a3a'],mesa:'#1a3a26',flora:'#6a3a8a',ground:['#3a5a2a','#26401c','#b8ff6a'],moon:'#d8ffb0',
    e:[{n:'Sporenkäfer',col:'#b86aff',hp:1.2,atk:1.3,sp:58,r:13,kind:'bug'},{n:'Sumpfkrebs',col:'#6a9a4a',hp:1.6,atk:1.2,sp:46,r:15,kind:'crab'},{n:'Moorkrähe',col:'#4a5a3a',hp:.9,atk:1.4,sp:86,r:13,kind:'bird'}],
-   boss:{n:'Riesenpilzwurm',col:'#d86aff',hp:16,atk:3.2,sp:28,r:32,kind:'worm'}},
+   boss:{n:'Pilzkönigin',col:'#e0453a',hp:16,atk:3.2,sp:28,r:32,kind:'shroom'}},
   {n:'Frostgipfel',deco:'salt',atkEl:'eis',weak:'feuer',sky:['#0a1830','#4a7ab0'],mesa:'#2a4a7a',flora:'#a8d8ff',ground:['#e8f4ff','#b8d4ee','#ffffff'],moon:'#ffffff',
    e:[{n:'Frostskorpion',col:'#8fdcff',hp:1.5,atk:1.4,sp:48,r:15,kind:'scorp'},{n:'Eiskrebs',col:'#bfe8ff',hp:1.6,atk:1.2,sp:50,r:14,kind:'crab'},{n:'Schneeeule',col:'#f0f6ff',hp:1,atk:1.5,sp:84,r:13,kind:'bird'}],
-   boss:{n:'Gletscherwurm',col:'#7fd0ff',hp:17,atk:3.3,sp:28,r:33,kind:'worm'}},
+   boss:{n:'Frostyeti',col:'#eef6ff',hp:17,atk:3.3,sp:28,r:33,kind:'yeti'}},
   {n:'Gewittersteppe',atkEl:'blitz',weak:'eis',sky:['#141420','#4a4a6a'],mesa:'#2a2a3a',flora:'#8a8a3a',ground:['#8a7a4a','#6a5a34','#ffe14d'],moon:'#fff6a0',
    e:[{n:'Funkenkäfer',col:'#ffe14d',hp:1.3,atk:1.5,sp:66,r:13,kind:'bug'},{n:'Donnerskorpion',col:'#c8b84a',hp:1.6,atk:1.5,sp:50,r:15,kind:'scorp'},{n:'Sturmfalke',col:'#8a8aa8',hp:1,atk:1.6,sp:96,r:13,kind:'bird'}],
-   boss:{n:'Donnervogel',col:'#ffd447',hp:17,atk:3.4,sp:30,r:33,kind:'bird'}},
+   boss:{n:'Donnergreif',col:'#d8a040',hp:17,atk:3.4,sp:30,r:33,kind:'griffin'}},
   {n:'Knochenwüste',deco:'crystal',atkEl:'schatten',weak:'licht',sky:['#120a0a','#3a2a2a'],mesa:'#2a1a1a',flora:'#d8d0c0',ground:['#c8b89a','#a8987a','#f0e6d0'],moon:'#ffe8d0',
    e:[{n:'Knochenkäfer',col:'#e8dcc8',hp:1.4,atk:1.5,sp:60,r:13,kind:'bug'},{n:'Schattenskorpion',col:'#5a3a6a',hp:1.7,atk:1.5,sp:48,r:15,kind:'scorp'},{n:'Aasgeier',col:'#6a4a3a',hp:1.1,atk:1.6,sp:84,r:14,kind:'bird'}],
-   boss:{n:'Knochenwurm',col:'#f0e6d0',hp:18,atk:3.5,sp:28,r:34,kind:'worm'}},
+   boss:{n:'Knochendrache',col:'#efe6cf',hp:18,atk:3.5,sp:28,r:34,kind:'bdragon'}},
   {n:'Glutcanyon',deco:'volcano',atkEl:'feuer',weak:'gift',sky:['#200a05','#8a3a10'],mesa:'#4a1a0a',flora:'#3a1a0a',ground:['#6a2a14','#4a1a0a','#ffb020'],moon:'#ffd08a',
    e:[{n:'Flammenkrebs',col:'#ff6a2a',hp:1.7,atk:1.5,sp:50,r:15,kind:'crab'},{n:'Glutskorpion',col:'#ffb020',hp:1.6,atk:1.6,sp:50,r:15,kind:'scorp'},{n:'Feuerphönix',col:'#ff8a3d',hp:1.1,atk:1.7,sp:92,r:14,kind:'bird'}],
-   boss:{n:'Lavakönig',col:'#ff4020',hp:19,atk:3.6,sp:28,r:34,kind:'crab'}},
+   boss:{n:'Flammenphönix',col:'#ff6a20',hp:19,atk:3.6,sp:28,r:34,kind:'phoenix'}},
   {n:'Nebelküste',deco:'salt',atkEl:'eis',weak:'blitz',sky:['#1a2430','#6a7a8a'],mesa:'#3a4a5a',flora:'#7a9aa8',ground:['#a8b4bc','#8a96a0','#e8f0f4'],moon:'#e8f0ff',
    e:[{n:'Nebelkrebs',col:'#c8d4dc',hp:1.7,atk:1.5,sp:50,r:15,kind:'crab'},{n:'Muschelkäfer',col:'#ffb8c8',hp:1.5,atk:1.6,sp:62,r:14,kind:'bug'},{n:'Sturmmöwe',col:'#e8eef4',hp:1.1,atk:1.7,sp:94,r:13,kind:'bird'}],
-   boss:{n:'Kraken der Tiefe',col:'#8a7aff',hp:19,atk:3.7,sp:26,r:35,kind:'worm'}},
+   boss:{n:'Kraken der Tiefe',col:'#7a5ad8',hp:19,atk:3.7,sp:26,r:35,kind:'kraken'}},
   {n:'Kaktusthron',deco:'stars',atkEl:'schatten',weak:'licht',sky:['#0a0614','#3a1a4a'],mesa:'#1a0a2a',flora:'#2b8a3a',ground:['#3a2a1a','#2a1a10','#ffd447'],moon:'#ffd447',
    e:[{n:'Dornenritter',col:'#63c74d',hp:1.8,atk:1.7,sp:54,r:15,kind:'scorp'},{n:'Schattenkäfer',col:'#7a4aa8',hp:1.6,atk:1.7,sp:64,r:14,kind:'bug'},{n:'Nachtadler',col:'#3a2a5a',hp:1.2,atk:1.8,sp:96,r:14,kind:'bird'}],
-   boss:{n:'Kaktuskaiser',col:'#ffd447',hp:20,atk:3.8,sp:28,r:36,kind:'worm'}}
+   boss:{n:'Kaktuskaiser',col:'#4f9a3a',hp:20,atk:3.8,sp:28,r:36,kind:'kaiser'}}
 ];
 const STAGES_PER_WORLD=20;
 // ---------- Schadenstypen ----------
@@ -2934,6 +2934,7 @@ function drawEnemy(e,g){
   // Schatten
   if(k!=='bird'){g.fillStyle='rgba(0,0,0,.25)';g.beginPath();g.ellipse(0,1,r*1.2,r*.25,0,0,7);g.fill();}
   if(e.stun>0){g.fillStyle='#ffd447';for(let i=0;i<3;i++){const an=t*5+i*2.1;g.beginPath();g.arc(Math.cos(an)*r*.8,-r*2.3+Math.sin(an)*3,2.2,0,7);g.fill();}}
+  if(e.boss)bossDeco(g,e,r,k,'back');
   if(k==='bug'){ // Käfer
     for(const [x,s] of[[-r*.55,1],[0,-1],[r*.55,1]])legLine(g,x,-r*.5,x-4+s*step*2,0,dk);
     for(const s of[-1,1])legLine(g,-r*.9,-r*1.35,-r*1.3+s*2,-r*2-Math.abs(s)*2,dk);
@@ -2973,6 +2974,121 @@ function drawEnemy(e,g){
     g.beginPath();g.moveTo(-r*1.25,-r*1.55);g.lineTo(-r*1.85,-r*1.35);g.lineTo(-r*1.25,-r*1.2);g.closePath();olFill(g,'#f0b866',1.8);
     angryEye(g,-r*.85,-r*1.55,r*.17);
     g.beginPath();g.moveTo(-r*.2,-r*1.1);g.quadraticCurveTo(r*.5,-r*(1.9+flap*.7),r*1.2,-r*(1.5+flap*.8));g.quadraticCurveTo(r*.6,-r*.9,-r*.2,-r*.9);g.closePath();olFill(g,dk,2.2);
+  }else if(k==='thorn'){ // Dornenkoloss: wandelnder Felsbrocken voller Kaktusstacheln
+    const rk=e.hit>0?'#fff':col;for(const s of[-1,1]){g.beginPath();g.roundRect(s*r*.45-r*.2,-r*.55+(s*step*2.5),r*.4,r*.55,6);olFill(g,shade(col,-.3),2.2);}
+    g.beginPath();g.moveTo(-r*1.2,-r*.6);g.lineTo(-r*1.1,-r*1.6);g.lineTo(-r*.4,-r*2.2);g.lineTo(r*.6,-r*2.1);g.lineTo(r*1.25,-r*1.4);g.lineTo(r*1.1,-r*.55);g.closePath();olFill(g,rk,2.6);
+    for(const [x,y,c] of[[-r*.7,-r*1.9,1],[r*.1,-r*2.15,1],[r*.85,-r*1.75,1],[-r*1.05,-r*1.3,0],[r*1.1,-r*1.05,0],[r*.35,-r*1.5,0]]){g.save();g.translate(x,y);g.beginPath();g.roundRect(-r*.14,-r*.5,r*.28,r*.55,r*.14);olFill(g,'#4f9a3a',1.8);g.fillStyle='#fff6d8';g.fillRect(-1,-r*.4,2,2);g.fillRect(-1,-r*.2,2,2);g.restore();}
+    angryEye(g,-r*.6,-r*1.15,r*.18);angryEye(g,-r*.15,-r*1.2,r*.16);g.beginPath();g.moveTo(-r*.75,-r*.8);g.lineTo(-r*.05,-r*.85);g.lineWidth=3;g.strokeStyle=OL;g.stroke();
+    g.fillStyle='#fff6d8';for(let i=0;i<10;i++){const a=i*.62;g.beginPath();g.moveTo(Math.cos(a)*r*1.1,-r*1.35+Math.sin(a)*r*.75);g.lineTo(Math.cos(a)*r*1.35,-r*1.35+Math.sin(a)*r*.9);g.lineTo(Math.cos(a+.08)*r*1.1,-r*1.35+Math.sin(a+.08)*r*.75);g.fill();}
+  }else if(k==='saltcrab'){ // Salzkrebs-König: Krebs mit Salzkristall-Panzer und einer Riesenschere
+    const sh=e.hit>0?'#fff':col;for(const s of[-1,1])for(const j of[0,1,2])legLine(g,s*r*.7,-r*.4,s*(r*1.25+j*4)+step*s,0,shade(col,-.3));
+    shadeBlob(g,()=>{g.beginPath();g.ellipse(0,-r*.75,r*1.2,r*.7,0,0,7);},sh,-r*.75,r*.7);
+    for(const [x,h] of[[-r*.6,.7],[-r*.15,1.05],[r*.35,.85],[r*.8,.6]]){g.beginPath();g.moveTo(x-r*.18,-r*1.25);g.lineTo(x,-r*(1.25+h));g.lineTo(x+r*.18,-r*1.25);g.closePath();olFill(g,'#f2f6ff',1.8);}
+    legLine(g,-r*.8,-r*1,-r*1.35,-r*1.5+wob,shade(col,-.3));g.save();g.translate(-r*1.55,-r*1.75+wob);g.rotate(-.3+Math.sin(t*4)*.15);
+    g.beginPath();g.arc(0,0,r*.7,.5,Math.PI*2-.5);g.lineTo(0,0);g.closePath();olFill(g,sh,2.6);g.fillStyle='rgba(255,255,255,.3)';g.beginPath();g.arc(-r*.2,-r*.25,r*.2,0,7);g.fill();g.restore();
+    legLine(g,r*.5,-r*1,r*1.15,-r*1.45,shade(col,-.3));g.beginPath();g.arc(r*1.25,-r*1.55,r*.28,.5,Math.PI*2-.5);g.lineTo(r*1.25,-r*1.55);g.closePath();olFill(g,sh,2);
+    for(const x of[-r*.35,r*.05]){g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.moveTo(x,-r*1.2);g.lineTo(x,-r*1.6);g.stroke();angryEye(g,x,-r*1.75,r*.17);}
+  }else if(k==='spider'){ // Kristallspinne: Kristallbeine und Edelstein-Augen
+    const bd=e.hit>0?'#fff':col;for(const s of[-1,1])for(let j=0;j<4;j++){const kx=s*r*(.9+j*.18),ky=-r*1.6+j*r*.12+Math.sin(t*10+j+s)*3,fx=s*r*(1.35+j*.25);
+      g.strokeStyle=OL;g.lineWidth=6;g.lineCap='round';g.beginPath();g.moveTo(s*r*.3,-r*.9);g.lineTo(kx,ky);g.lineTo(fx,0);g.stroke();g.strokeStyle='#c8a8ff';g.lineWidth=3;g.stroke();}
+    shadeBlob(g,()=>{g.beginPath();g.ellipse(r*.45,-r*1.05,r*.8,r*.65,0,0,7);},bd,-r*1.05,r*.65);
+    for(const [x,y] of[[r*.3,-r*1.6],[r*.7,-r*1.45],[r*.55,-r*1.75]]){g.beginPath();g.moveTo(x-r*.12,y+r*.1);g.lineTo(x,y-r*.3);g.lineTo(x+r*.12,y+r*.1);g.closePath();olFill(g,'#e0c4ff',1.6);}
+    shadeBlob(g,()=>{g.beginPath();g.arc(-r*.45,-r*.85,r*.5,0,7);},bd,-r*.85,r*.5);
+    g.fillStyle='#ff4dff';for(const [x,y,rr] of[[-r*.65,-r*.95,.1],[-r*.4,-r*1.02,.12],[-r*.55,-r*.75,.07],[-r*.28,-r*.82,.07]]){g.beginPath();g.arc(x,y,r*rr,0,7);g.fill();g.strokeStyle=OL;g.lineWidth=1.5;g.stroke();}
+    g.fillStyle='#fff';g.beginPath();g.moveTo(-r*.75,-r*.5);g.lineTo(-r*.7,-r*.3);g.lineTo(-r*.62,-r*.5);g.moveTo(-r*.5,-r*.5);g.lineTo(-r*.45,-r*.3);g.lineTo(-r*.37,-r*.5);g.fill();
+  }else if(k==='ray'){ // Sternenrochen: schwebt, Sternenmuster und Leuchtschweif
+    g.save();g.scale(1.35,1.35);const fy=-r*1.4+Math.sin(t*2.5)*6,fl=Math.sin(t*3)*r*.25,bd=e.hit>0?'#fff':col;g.fillStyle='rgba(0,0,0,.18)';g.beginPath();g.ellipse(0,0,r*1.2,r*.22,0,0,7);g.fill();
+    g.strokeStyle='rgba(180,220,255,.7)';g.lineWidth=4;g.lineCap='round';g.beginPath();g.moveTo(r*.9,fy);g.quadraticCurveTo(r*1.7,fy+r*.5,r*2.3,fy+Math.sin(t*4)*r*.3);g.stroke();
+    g.beginPath();g.moveTo(-r*1.1,fy);g.quadraticCurveTo(-r*.3,fy-r*.6-fl,r*.2,fy-r*1.2-fl);g.quadraticCurveTo(r*.5,fy-r*.3,r*1,fy);g.quadraticCurveTo(r*.5,fy+r*.3,r*.2,fy+r*.8+fl);g.quadraticCurveTo(-r*.3,fy+r*.5+fl,-r*1.1,fy);g.closePath();olFill(g,bd,2.6);
+    g.fillStyle='#ffe066';for(const [x,y] of[[-r*.1,fy-r*.5],[r*.35,fy-r*.15],[-r*.35,fy+r*.2],[r*.15,fy+r*.45],[r*.5,fy-r*.6]]){g.beginPath();for(let j=0;j<10;j++){const rr=j%2?r*.04:r*.1,aa=j*Math.PI/5;g.lineTo(x+Math.cos(aa)*rr,y+Math.sin(aa)*rr);}g.closePath();g.fill();}
+    angryEye(g,-r*.75,fy-r*.12,r*.13);angryEye(g,-r*.5,fy-r*.18,r*.12);
+    g.restore();
+  }else if(k==='griffin'){ // Donnergreif: Adlerkopf, Löwenkörper, Flügel mit Blitzfedern
+    const bd=e.hit>0?'#fff':col,fl=Math.sin(t*8)*.5;for(const x of[-r*.5,-r*.1,r*.4,r*.8])legLine(g,x,-r*.6,x+step*2,0,shade(col,-.3));
+    shadeBlob(g,()=>{g.beginPath();g.ellipse(r*.2,-r*.85,r*.95,r*.55,0,0,7);},bd,-r*.85,r*.55);
+    g.strokeStyle=OL;g.lineWidth=5;g.beginPath();g.moveTo(r*1.1,-r*.9);g.quadraticCurveTo(r*1.6,-r*1.4,r*1.5,-r*.4);g.stroke();g.strokeStyle=bd;g.lineWidth=3;g.stroke();
+    g.beginPath();g.moveTo(r*.1,-r*1.2);g.quadraticCurveTo(r*.8,-r*(2.6+fl),r*1.6,-r*(2.2+fl));g.lineTo(r*1.2,-r*(1.85+fl*.6));g.lineTo(r*1.45,-r*(1.6+fl*.5));g.lineTo(r*.9,-r*1.35);g.closePath();olFill(g,'#5a6ab8',2.2);
+    g.strokeStyle='#fff36a';g.lineWidth=2;g.beginPath();g.moveTo(r*.6,-r*(1.9+fl*.6));g.lineTo(r*.8,-r*(1.6+fl*.4));g.lineTo(r*.7,-r*1.55);g.lineTo(r*.95,-r*1.3);g.stroke();
+    g.beginPath();g.arc(-r*.6,-r*1.35,r*.45,0,7);olFill(g,'#f6f2e8',2.2);g.beginPath();g.moveTo(-r*.95,-r*1.4);g.lineTo(-r*1.45,-r*1.2);g.lineTo(-r*.95,-r*1.05);g.closePath();olFill(g,'#ffc53d',2);
+    angryEye(g,-r*.7,-r*1.45,r*.15);for(let i=0;i<3;i++){g.beginPath();g.moveTo(-r*.35+i*r*.15,-r*1.7);g.lineTo(-r*.2+i*r*.18,-r*2.05);g.lineTo(-r*.15+i*r*.15,-r*1.7);g.closePath();olFill(g,'#f6f2e8',1.6);}
+  }else if(k==='bdragon'){ // Knochendrache: Skelett mit leuchtenden Augen
+    const bn=e.hit>0?'#fff':col,eye=`rgba(120,255,200,${.6+.4*Math.sin(t*5)})`;g.lineCap='round';
+    for(const x of[-r*.3,r*.8]){legLine(g,x,-r*.8,x-r*.1,0,bn);}
+    g.strokeStyle=OL;g.lineWidth=7;g.beginPath();g.moveTo(-r*.6,-r*1.3);g.quadraticCurveTo(r*.4,-r*1.1,r*1.2,-r*1);g.quadraticCurveTo(r*1.8,-r*.9,r*2.2,-r*.4);g.stroke();g.strokeStyle=bn;g.lineWidth=4;g.stroke();   // Wirbelsäule
+    for(let i=0;i<5;i++){const x=-r*.2+i*r*.3;g.strokeStyle=OL;g.lineWidth=5;g.beginPath();g.moveTo(x,-r*1.2);g.quadraticCurveTo(x+r*.2,-r*.7,x,-r*.5);g.stroke();g.strokeStyle=bn;g.lineWidth=2.5;g.stroke();}
+    const wf=Math.sin(t*3)*r*.2,wx=r*.5,wy=-r*2.3-wf;g.fillStyle='rgba(140,90,150,.4)';g.beginPath();g.moveTo(r*.2,-r*1.2);g.lineTo(wx,wy);g.quadraticCurveTo(r*.9,-r*1.9,r*1.4,-r*2-wf*.6);g.quadraticCurveTo(r*1.3,-r*1.5,r*1.6,-r*1.45-wf*.3);g.quadraticCurveTo(r*1.1,-r*1.2,r*.9,-r*1.1);g.closePath();g.fill();
+    for(const [x2,y2] of[[wx,wy],[r*1.4,-r*2-wf*.6],[r*1.6,-r*1.45-wf*.3]]){g.strokeStyle=OL;g.lineWidth=5;g.beginPath();g.moveTo(r*.2,-r*1.2);g.lineTo(wx,wy);if(x2!==wx)g.lineTo(x2,y2);g.stroke();g.strokeStyle=bn;g.lineWidth=2.5;g.stroke();}
+    g.beginPath();g.moveTo(-r*.5,-r*1.75);g.lineTo(-r*1.5,-r*1.45);g.lineTo(-r*1.45,-r*1.15);g.lineTo(-r*.4,-r*1.1);g.closePath();olFill(g,bn,2.4);   // Schädel
+    g.beginPath();g.moveTo(-r*.45,-r*1.15);g.lineTo(-r*1.35,-r*1.05);g.lineTo(-r*1.2,-r*.85);g.lineTo(-r*.5,-r*.95);g.closePath();olFill(g,bn,2);
+    g.fillStyle=eye;g.beginPath();g.arc(-r*.75,-r*1.45,r*.1,0,7);g.fill();g.strokeStyle=OL;g.lineWidth=2;for(const [x1,y1,x2,y2] of[[-r*.6,-r*1.75,-r*.3,-r*2.2],[-r*.8,-r*1.7,-r*.65,-r*2.15]]){g.beginPath();g.moveTo(x1,y1);g.lineTo(x2,y2);g.stroke();}
+  }else if(k==='phoenix'){ // Flammenphönix: lodernder Feuervogel
+    const fy=-r*1.1+Math.sin(t*3)*4,fl=Math.sin(t*9)*.4;
+    for(let i=0;i<5;i++){const h=r*(1+.3*Math.sin(t*8+i));g.beginPath();g.moveTo(r*.4,fy);g.quadraticCurveTo(r*(.8+i*.1),fy+r*.2+i*4,r*(1+i*.15),fy+r*.1-h*.3+i*6);g.quadraticCurveTo(r*.9,fy,r*.4,fy-r*.1);g.closePath();olFill(g,i%2?'#ffcf3a':'#ff6a20',1.6);}
+    for(const s of[1,-1]){g.beginPath();g.moveTo(0,fy-r*.2);g.quadraticCurveTo(s*r*.4,fy-r*(1.8+fl),s*r*1.4,fy-r*(1.6+fl));g.quadraticCurveTo(s*r*.9,fy-r*.9,s*r*1.1,fy-r*.4);g.quadraticCurveTo(s*r*.5,fy-r*.3,0,fy);g.closePath();olFill(g,s>0?'#ff8a3a':'#ffb347',2.2);}
+    shadeBlob(g,()=>{g.beginPath();g.ellipse(0,fy,r*.6,r*.48,0,0,7);},e.hit>0?'#fff':col,fy,r*.48);
+    g.beginPath();g.arc(-r*.55,fy-r*.45,r*.32,0,7);olFill(g,'#ff8a3a',2.2);g.beginPath();g.moveTo(-r*.8,fy-r*.5);g.lineTo(-r*1.2,fy-r*.35);g.lineTo(-r*.8,fy-r*.25);g.closePath();olFill(g,'#ffd447',1.8);
+    angryEye(g,-r*.6,fy-r*.52,r*.11);for(let i=0;i<3;i++){const h=r*(.35+.12*Math.sin(t*10+i));g.beginPath();g.moveTo(-r*.6+i*r*.12,fy-r*.7);g.quadraticCurveTo(-r*.55+i*r*.12,fy-r*.7-h,-r*.45+i*r*.12,fy-r*.7);g.closePath();olFill(g,i%2?'#ffd447':'#ff6a20',1.4);}
+    g.fillStyle='#ffd447';for(let i=0;i<6;i++){g.globalAlpha=.8;g.beginPath();g.arc(Math.sin(t*2+i*1.9)*r*1.2,fy-r*1.6-((t*40+i*20)%(r*1.2)),2.2,0,7);g.fill();}g.globalAlpha=1;
+  }else if(k==='kraken'){ // Kraken der Tiefe: großer Kopf, 8 Tentakel rundherum
+    const bd=e.hit>0?'#fff':col,tc=e.hit>0?'#fff':shade(col,-.12);for(let i=0;i<8;i++){const bx=-r*.78+i*r*.22,sw=Math.sin(t*3+i*.9)*r*.28,ex=bx*1.5+sw,ey=r*.05;
+      g.beginPath();g.moveTo(bx-r*.13,-r*.75);g.bezierCurveTo(bx-r*.12+sw*.3,-r*.3,ex-r*.12,ey-r*.25,ex,ey);g.bezierCurveTo(ex+r*.08,ey-r*.25,bx+r*.12+sw*.3,-r*.3,bx+r*.13,-r*.75);g.closePath();olFill(g,tc,2);
+      g.fillStyle='#e8dcff';for(const f of[.35,.6])g.beginPath(),g.arc(bx+(ex-bx)*f,-r*.75+(ey+r*.75)*f,r*.045,0,7),g.fill();}
+    shadeBlob(g,()=>{g.beginPath();g.ellipse(0,-r*1.4,r*.9,r*1.05,0,0,7);},bd,-r*1.4,r*1);
+    for(const [x,y,rr] of[[-r*.4,-r*2,.1],[r*.3,-r*2.2,.08],[r*.5,-r*1.6,.07]]){g.fillStyle=shade(col,.3);g.beginPath();g.arc(x,y,r*rr,0,7);g.fill();}
+    for(const x of[-r*.35,r*.3]){g.beginPath();g.ellipse(x,-r*1.2,r*.26,r*.3,0,0,7);olFill(g,'#fff',2);g.fillStyle=OL;g.beginPath();g.ellipse(x-r*.06,-r*1.16,r*.07,r*.18,0,0,7);g.fill();}
+    g.strokeStyle=OL;g.lineWidth=3;g.beginPath();g.moveTo(-r*.65,-r*1.55);g.lineTo(-r*.15,-r*1.42);g.moveTo(r*.6,-r*1.55);g.lineTo(r*.1,-r*1.42);g.stroke();
+  }else if(k==='golem'){ // Lavagolem: Steinriese mit glühenden Rissen
+    const gl=.6+.4*Math.sin(t*4+e.x),lava=`rgba(255,${130+70*gl|0},40,1)`,st=e.hit>0?'#fff':'#5a4848',st2=e.hit>0?'#fff':'#3e3030';
+    for(const s of[-1,1]){g.beginPath();g.roundRect(s*r*.42-r*.24,-r*.75+(s*step*2),r*.48,r*.75,6);olFill(g,st2,2.2);}               // Beine
+    g.beginPath();g.moveTo(-r*1.05,-r*.7);g.lineTo(-r*1.15,-r*1.7);g.lineTo(-r*.6,-r*2.25);g.lineTo(r*.55,-r*2.3);g.lineTo(r*1.15,-r*1.75);g.lineTo(r*1.05,-r*.75);g.lineTo(r*.3,-r*.55);g.lineTo(-r*.4,-r*.55);g.closePath();olFill(g,st,2.6);   // Körper
+    g.fillStyle='rgba(255,255,255,.12)';g.beginPath();g.moveTo(-r*.9,-r*1.7);g.lineTo(-r*.55,-r*2.1);g.lineTo(r*.3,-r*2.1);g.lineTo(-r*.1,-r*1.75);g.closePath();g.fill();
+    g.strokeStyle=lava;g.lineWidth=3;g.lineCap='round';g.lineJoin='round';for(const P of[[[-r*.7,-r*1.1],[-r*.3,-r*1.4],[-r*.45,-r*1.8]],[[r*.2,-r*.8],[r*.5,-r*1.3],[r*.35,-r*1.7],[r*.7,-r*2]],[[-r*.1,-r*1.2],[r*.1,-r*1.55]]]){g.beginPath();g.moveTo(...P[0]);for(const q of P.slice(1))g.lineTo(...q);g.stroke();}
+    g.beginPath();g.moveTo(-r*.55,-r*2.2);g.lineTo(-r*.45,-r*2.75);g.lineTo(r*.3,-r*2.8);g.lineTo(r*.45,-r*2.25);g.closePath();olFill(g,st,2.4);   // Kopf
+    for(const x of[-r*.25,r*.12]){g.fillStyle=lava;g.beginPath();g.ellipse(x,-r*2.5,r*.11,r*.07,0,0,7);g.fill();}
+    g.strokeStyle=OL;g.lineWidth=2.5;g.beginPath();g.moveTo(-r*.4,-r*2.66);g.lineTo(-r*.12,-r*2.58);g.moveTo(r*.25,-r*2.66);g.lineTo(0,-r*2.58);g.stroke();
+    for(const s of[-1,1]){const fx=s*r*1.3,fy=-r*1.15+(s<0?wob*1.5:-wob*1.5);g.beginPath();g.moveTo(s*r*.95,-r*1.9);g.lineTo(fx,fy-r*.25);g.lineWidth=r*.38;g.strokeStyle=OL;g.stroke();g.lineWidth=r*.28;g.strokeStyle=st;g.stroke();
+      g.beginPath();g.roundRect(fx-r*.32,fy-r*.3,r*.64,r*.55,8);olFill(g,st,2.4);g.fillStyle=lava;g.fillRect(fx-r*.2,fy-r*.06,r*.4,r*.08);}
+    g.fillStyle=lava;for(let i=0;i<3;i++){const yy=-r*.6+((t*30+i*20)%(r*.6));g.globalAlpha=.8;g.beginPath();g.arc(-r*.2+i*r*.3,yy,2.4,0,7);g.fill();}g.globalAlpha=1;
+  }else if(k==='shroom'){ // Pilzkönigin: riesiger Fliegenpilz mit Gesicht und Armen
+    const cap=e.hit>0?'#fff':col,stem=e.hit>0?'#fff':'#f3e6c8';
+    for(const s of[-1,1]){g.beginPath();g.ellipse(s*r*.35,-r*.12,r*.3,r*.15,0,0,7);olFill(g,shade('#f3e6c8',-.15),2);}   // Füße
+    shadeBlob(g,()=>{g.beginPath();g.moveTo(-r*.6,0);g.quadraticCurveTo(-r*.75,-r*1.1,-r*.5,-r*1.75);g.lineTo(r*.5,-r*1.75);g.quadraticCurveTo(r*.75,-r*1.1,r*.6,0);g.closePath();},stem,-r*.9,r*.7);
+    for(const s of[-1,1]){const hx=s*r*1.05,hy=-r*1+(s<0?wob:-wob);g.strokeStyle=OL;g.lineWidth=7;g.beginPath();g.moveTo(s*r*.55,-r*1.2);g.quadraticCurveTo(s*r*.95,-r*1.25,hx,hy);g.stroke();g.strokeStyle=stem;g.lineWidth=4;g.stroke();
+      g.beginPath();g.arc(hx,hy,r*.13,0,7);olFill(g,stem,2);}
+    angryEye(g,-r*.22,-r*1.25,r*.15);angryEye(g,r*.18,-r*1.3,r*.13);
+    g.beginPath();g.ellipse(-r*.02,-r*.85,r*.2,r*.1,0,0,7);olFill(g,'#3a0a16',2);
+    g.fillStyle='rgba(200,170,130,.6)';g.beginPath();g.ellipse(0,-r*1.72,r*1.2,r*.22,0,0,7);g.fill();   // Lamellen
+    g.beginPath();g.moveTo(-r*1.45,-r*1.65);g.bezierCurveTo(-r*1.4,-r*3.2,r*1.4,-r*3.2,r*1.45,-r*1.65);g.quadraticCurveTo(0,-r*1.95,-r*1.45,-r*1.65);g.closePath();olFill(g,cap,2.6);   // Hut
+    g.fillStyle='rgba(255,255,255,.25)';g.beginPath();g.ellipse(-r*.5,-r*2.55,r*.35,r*.14,-.4,0,7);g.fill();
+    g.fillStyle='#fff';for(const [x,y,rr] of[[-r*.85,-r*2.05,.17],[-r*.25,-r*2.45,.2],[r*.4,-r*2.2,.16],[r*.95,-r*1.95,.13],[r*.1,-r*1.95,.12]]){g.beginPath();g.arc(x,y,r*rr,0,7);g.fill();}
+    g.fillStyle='rgba(230,200,255,.75)';for(let i=0;i<6;i++){g.beginPath();g.arc(Math.sin(t*1.3+i*1.7)*r*1.6,-r*2.7-((t*18+i*15)%(r*1.2)),2.4,0,7);g.fill();}
+  }else if(k==='yeti'){ // Frostyeti: zotteliger Riese mit Eiskeule
+    const fur=e.hit>0?'#fff':col,skin=e.hit>0?'#fff':'#7fb8e8';
+    for(const s of[-1,1]){g.beginPath();g.ellipse(s*r*.45,-r*.15+(s*step*1.5),r*.32,r*.2,0,0,7);olFill(g,skin,2);}
+    const furPath=(cx,cy,rx,ry,n)=>{g.beginPath();for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,bump=1+(i%2?.08:-.02);g.lineTo(cx+Math.cos(a)*rx*bump,cy+Math.sin(a)*ry*bump);}g.closePath();};
+    shadeBlob(g,()=>furPath(0,-r*1.15,r*1.05,r*1.05,28),fur,-r*1.15,r*1);
+    // Keule (Eis) in der rechten Hand
+    g.save();g.translate(r*1.05,-r*1.2+wob);g.rotate(-.5+Math.sin(t*3)*.15);g.beginPath();g.moveTo(-r*.12,0);g.lineTo(-r*.22,-r*1.4);g.lineTo(0,-r*1.75);g.lineTo(r*.22,-r*1.4);g.lineTo(r*.12,0);g.closePath();olFill(g,'#bfe8ff',2.2);
+    g.fillStyle='rgba(255,255,255,.6)';g.beginPath();g.moveTo(-r*.08,-r*.2);g.lineTo(-r*.14,-r*1.3);g.lineTo(-r*.02,-r*1.5);g.closePath();g.fill();g.restore();
+    for(const s of[-1,1]){const ax=s*r*1.0,ay=-r*1.05+(s<0?wob:-wob);g.beginPath();g.ellipse(ax,ay,r*.3,r*.5,s*.3,0,7);olFill(g,fur,2.2);g.beginPath();g.arc(ax+s*r*.05,ay+r*.42,r*.16,0,7);olFill(g,skin,2);}
+    g.beginPath();g.ellipse(-r*.12,-r*1.35,r*.55,r*.48,0,0,7);olFill(g,skin,2.2);   // Gesicht
+    angryEye(g,-r*.32,-r*1.45,r*.13);angryEye(g,r*.08,-r*1.48,r*.12);
+    g.beginPath();g.ellipse(-r*.12,-r*1.12,r*.25,r*.12,0,0,7);olFill(g,'#2a1a3a',2);
+    g.fillStyle='#fff';for(const x of[-r*.28,r*.04]){g.beginPath();g.moveTo(x,-r*1.2);g.lineTo(x+r*.05,-r*1.02);g.lineTo(x+r*.1,-r*1.2);g.fill();}
+    for(const s of[-1,1]){g.beginPath();g.moveTo(s*r*.45,-r*2.05);g.quadraticCurveTo(s*r*.75,-r*2.5,s*r*.6,-r*2.6);g.quadraticCurveTo(s*r*.55,-r*2.3,s*r*.3,-r*2.1);g.closePath();olFill(g,'#d8d0c0',1.8);}   // Hörner
+    g.fillStyle='#bfe8ff';for(let i=0;i<5;i++){const x=-r*.6+i*r*.3;g.beginPath();g.moveTo(x-4,-r*.2);g.lineTo(x,-r*.2+8+i%2*5);g.lineTo(x+4,-r*.2);g.fill();}   // Eiszapfen im Fell
+  }else if(k==='kaiser'){ // Kaktuskaiser: riesiger Säulenkaktus mit Armen, Umhang und Krone
+    const sw=Math.sin(t*2)*2;
+    g.beginPath();g.moveTo(-r*.55,-r*1.9);g.quadraticCurveTo(r*1.1,-r*1.6,r*1.3,0);g.lineTo(-r*.2,0);g.closePath();olFill(g,'#b0203a',2.2);
+    for(const s of[-1,1]){g.beginPath();g.roundRect(s<0?-r*1.04:r*.62,-r*1.55+sw*s,r*.42,r*.5,r*.2);olFill(g,col,2);g.beginPath();g.roundRect(s<0?-r*1.04:r*.62,-r*2.15+sw*s,r*.42,r*.85,r*.21);olFill(g,col,2);}
+    shadeBlob(g,()=>{g.beginPath();g.roundRect(-r*.62,-r*2.6,r*1.24,r*2.6,[r*.62,r*.62,r*.2,r*.2]);},col,-r*1.3,r*1.1);
+    g.strokeStyle=dk;g.lineWidth=2;for(const x of[-r*.3,0,r*.3]){g.beginPath();g.moveTo(x,-r*2.3);g.lineTo(x,-r*.2);g.stroke();}
+    g.fillStyle='#fff6d8';for(let i=0;i<14;i++){const x=((i*37)%10/10-.5)*r*1.1,y=-r*.3-((i*53)%10)/10*r*2.1;g.fillRect(x-1,y-1,3,3);}
+    g.beginPath();g.rect(-r*.64,-r*.85,r*1.28,r*.2);olFill(g,'#ffc53d',2);g.beginPath();g.arc(0,-r*.75,r*.14,0,7);olFill(g,'#ff3d4e',1.8);
+    g.save();g.translate(-r*1.0,-r*1.6+sw*-1);g.rotate(-.25);g.beginPath();g.rect(-r*.05,-r*.2,r*.1,r*1.3);olFill(g,'#c8962a',1.8);g.beginPath();g.arc(0,-r*.3,r*.17,0,7);olFill(g,'#ffd447',2);g.beginPath();g.arc(0,-r*.3,r*.08,0,7);olFill(g,'#4dd6ff',1.4);g.restore();
+    angryEye(g,-r*.25,-r*1.85,r*.17);angryEye(g,r*.2,-r*1.9,r*.15);
+    g.beginPath();g.ellipse(-r*.02,-r*1.45,r*.28,r*.16,0,0,7);olFill(g,'#3a0a16',2);
+    g.fillStyle='#fff';for(let i=0;i<3;i++){g.beginPath();g.moveTo(-r*.22+i*r*.15,-r*1.55);g.lineTo(-r*.15+i*r*.15,-r*1.43);g.lineTo(-r*.08+i*r*.15,-r*1.55);g.fill();}
   }else{ // Wurm-Boss
     for(let i=4;i>=1;i--){const x=i*r*.55,y=-r-Math.sin(t*4+i)*6,rr=r*(1-i*.12);
       g.beginPath();g.moveTo(x-rr*.3,y-rr*.85);g.lineTo(x,y-rr*1.25);g.lineTo(x+rr*.3,y-rr*.85);olFill(g,'#f2e2a8',1.6);
@@ -2982,9 +3098,42 @@ function drawEnemy(e,g){
     g.fillStyle='#fff';for(let i=0;i<4;i++){g.beginPath();g.moveTo(-r*.8+i*r*.2,hy+r*.02);g.lineTo(-r*.7+i*r*.2,hy+r*.2);g.lineTo(-r*.6+i*r*.2,hy+r*.02);g.fill();}
     angryEye(g,-r*.25,hy-r*.35,r*.17);angryEye(g,r*.2,hy-r*.45,r*.15);
   }
-  if(e.boss){const top={bug:-r*1.9,scorp:-r*1.5,crab:-r*1.9,bird:-r*2.05,worm:-r*2.15}[k]||-r*2;crown(g,-r*.2,top,r*.32);}
+  if(e.boss){bossDeco(g,e,r,k,'front');const top={bug:-r*1.9,scorp:-r*1.5,crab:-r*1.9,bird:-r*2.05,worm:-r*2.15,kaiser:-r*2.6,golem:-r*2.82,shroom:-r*2.85,yeti:-r*2.5,thorn:-r*2.25,saltcrab:-r*2.35,spider:-r*1.9,ray:-r*2.6,griffin:-r*2.15,bdragon:-r*1.85,phoenix:-r*2.4,kraken:-r*2.5}[k]||-r*2;const bn=e.ty.n;
+    if(bn==='Kaktuskaiser')crown(g,0,top,r*.5);else if(bn!=='Lavakönig'&&bn!=='Knochenwurm'&&bn!=='Knochendrache'&&bn!=='Sternenrochen')crown(g,-r*.2,top,r*.32);}
   g.restore();
   if(onMain&&!e.dying&&!e.boss)bar(e.x-16,e.y-r*2-14,32,4,e.hp/e.max,'#ff6fae');
+}
+// 14.11.2026: Jeder Boss bekommt ein eigenes Aussehen (wird hinter und vor dem Körper gezeichnet)
+function bossDeco(g,e,r,k,ph){const n=e.ty.n,T=t+e.x*.01,hy=-r-Math.sin(t*4)*6;
+  const glow=(col,rad,a)=>{const gr=g.createRadialGradient(r*.6,-r,r*.2,r*.6,-r,rad);gr.addColorStop(0,col);gr.addColorStop(1,'rgba(0,0,0,0)');g.globalAlpha=a;g.fillStyle=gr;g.beginPath();g.arc(r*.6,-r,rad,0,7);g.fill();g.globalAlpha=1;};
+  const spikesOnWorm=(col,h)=>{for(let i=0;i<=4;i++){const x=i*r*.55,y=-r-Math.sin(t*4+i)*6,rr=r*(1-i*.12);g.beginPath();g.moveTo(x-rr*.35,y-rr*.8);g.lineTo(x,y-rr*(1+h));g.lineTo(x+rr*.35,y-rr*.8);g.closePath();olFill(g,col,1.8);}};
+  if(ph==='back'){
+    if(n==='Magmawurm'||n==='Lavakönig')glow('rgba(255,110,30,.9)',r*2.6,.55+.15*Math.sin(T*5));
+    else if(n==='Gletscherwurm')glow('rgba(150,220,255,.9)',r*2.6,.45);
+    else if(n==='Riesenpilzwurm')glow('rgba(216,106,255,.8)',r*2.4,.35);
+    else if(n==='Kaktuskaiser')glow('rgba(255,212,71,.9)',r*2.8,.45+.15*Math.sin(T*3));
+    else if(n==='Kristallskorpion-Fürst')glow('rgba(180,107,255,.9)',r*2.4,.4);
+    if(n==='Sternenwächter'){g.save();g.translate(0,-r*1.1);g.rotate(T*1.2);for(let i=0;i<6;i++){const a=i*Math.PI/3;g.save();g.translate(Math.cos(a)*r*1.7,Math.sin(a)*r*1.7);g.rotate(-T*2);
+      g.beginPath();for(let j=0;j<10;j++){const rr=j%2?r*.12:r*.3,aa=j*Math.PI/5-Math.PI/2;g.lineTo(Math.cos(aa)*rr,Math.sin(aa)*rr);}g.closePath();olFill(g,'#ffe066',1.4);g.restore();}g.restore();}
+    if(n==='Donnervogel'){g.strokeStyle='#fff36a';g.lineWidth=2.5;g.lineCap='round';for(let i=0;i<3;i++){if(((T*6+i*1.7)|0)%3)continue;const a=i*2.1+((T*2)|0);let x=Math.cos(a)*r*1.4,y=-r+Math.sin(a)*r*1.2;g.beginPath();g.moveTo(x,y);for(let j=0;j<4;j++){x+=Math.cos(a)*r*.25+(j%2?6:-6);y+=Math.sin(a)*r*.25;g.lineTo(x,y);}g.stroke();}}
+    if(n==='Krebskönig'){g.fillStyle='rgba(180,230,255,.7)';for(let i=0;i<5;i++){const yy=-((T*40+i*30)%(r*3)),xx=Math.sin(T*2+i)*r*.8+r*.2;g.beginPath();g.arc(xx,yy,3+i%3,0,7);g.fill();}}
+    if(n==='Steppenwurm'){g.strokeStyle='rgba(240,220,170,.6)';g.lineWidth=3;for(let i=0;i<3;i++){g.beginPath();g.arc(r*.9,-r*.2,r*(1.2+i*.35)+Math.sin(T*4+i)*4,Math.PI*.95,Math.PI*1.35);g.stroke();}}
+    return;}
+  // vorne
+  if(n==='Steppenwurm')spikesOnWorm('#f6efd8',.55);
+  if(n==='Magmawurm'){g.strokeStyle='#ffb347';g.lineWidth=2.4;g.lineCap='round';for(let i=0;i<=4;i++){const x=i*r*.55,y=-r-Math.sin(t*4+i)*6,rr=r*(1-i*.12);g.beginPath();g.moveTo(x-rr*.5,y-rr*.1);g.lineTo(x-rr*.1,y+rr*.2);g.lineTo(x+rr*.3,y-rr*.15);g.stroke();}
+    g.fillStyle='#ffcf5a';for(let i=0;i<6;i++){const yy=-r*1.6-((T*50+i*23)%(r*1.6)),xx=Math.sin(T*3+i*2)*r*1.2+r;g.globalAlpha=.8;g.beginPath();g.arc(xx,yy,2,0,7);g.fill();}g.globalAlpha=1;}
+  if(n==='Riesenpilzwurm'){for(let i=1;i<=4;i+=1){const x=i*r*.55,y=-r-Math.sin(t*4+i)*6,rr=r*(1-i*.12);g.beginPath();g.ellipse(x,y-rr*.75,rr*.6,rr*.38,0,Math.PI,0);g.closePath();olFill(g,i%2?'#d9553c':'#ff8ad8',1.8);
+      g.fillStyle='#fff';g.beginPath();g.arc(x-rr*.2,y-rr*.95,rr*.09,0,7);g.arc(x+rr*.2,y-rr*.9,rr*.08,0,7);g.fill();}
+    g.fillStyle='rgba(230,180,255,.7)';for(let i=0;i<5;i++){g.beginPath();g.arc(Math.sin(T+i*1.3)*r*1.5+r,-r*2-((T*20+i*17)%(r*1.2)),2.2,0,7);g.fill();}}
+  if(n==='Gletscherwurm'){spikesOnWorm('#c8eeff',.75);g.fillStyle='rgba(220,245,255,.8)';for(let i=0;i<5;i++){const p=(T*1.5+i*.2)%1;g.globalAlpha=1-p;g.beginPath();g.arc(-r*.9-p*r*1.2,hy+r*.3+Math.sin(i)*6,3+p*5,0,7);g.fill();}g.globalAlpha=1;}
+  if(n==='Knochenwurm'){g.strokeStyle='#fffbe8';g.lineWidth=2.2;for(let i=1;i<=4;i++){const x=i*r*.55,y=-r-Math.sin(t*4+i)*6,rr=r*(1-i*.12);for(const d of[-.35,0,.35]){g.beginPath();g.moveTo(x+d*rr,y-rr*.7);g.lineTo(x+d*rr,y+rr*.7);g.stroke();}}
+    g.beginPath();g.moveTo(-r*.9,hy-r*.75);g.lineTo(-r*.6,hy-r*1.35);g.lineTo(-r*.35,hy-r*.85);g.closePath();olFill(g,'#fffbe8',1.6);g.beginPath();g.moveTo(r*.15,hy-r*.85);g.lineTo(r*.45,hy-r*1.45);g.lineTo(r*.6,hy-r*.75);g.closePath();olFill(g,'#fffbe8',1.6);}
+  if(n==='Kristallskorpion-Fürst'){for(const [x,y,h] of[[r*.1,-r*1.15,.8],[r*.55,-r*1.05,.6],[-r*.35,-r*1.05,.55]]){g.beginPath();g.moveTo(x-r*.18,y);g.lineTo(x,y-r*h);g.lineTo(x+r*.18,y);g.closePath();olFill(g,'#e0c4ff',1.8);
+      g.fillStyle='rgba(255,255,255,.6)';g.beginPath();g.moveTo(x-r*.08,y-r*.05);g.lineTo(x-r*.02,y-r*h*.8);g.lineTo(x+r*.04,y-r*.05);g.fill();}}
+  if(n==='Donnervogel'){g.fillStyle='#fff36a';g.beginPath();g.arc(-r*.85,-r*1.55,r*.1,0,7);g.fill();}
+  if(n==='Lavakönig'){const fx=-r*.2,fy=-r*1.95;for(let i=-2;i<=2;i++){const h=r*(.45+.18*Math.sin(T*9+i*1.7));g.beginPath();g.moveTo(fx+i*r*.16-r*.09,fy);g.quadraticCurveTo(fx+i*r*.16,fy-h*1.2,fx+i*r*.16+r*.09,fy);g.closePath();olFill(g,i%2?'#ffcf3a':'#ff6a2a',1.4);}
+    crown(g,fx,fy+r*.1,r*.36);}
 }
 function shade(hex,k){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=v=>Math.round(k<0?v*(1+k):v+(255-v)*k);return'rgb('+f(r)+','+f(g)+','+f(b)+')';}
 function bar(x,y,w,h,p,col){c.fillStyle='#00000080';c.fillRect(x,y,w,h);c.fillStyle=col;c.fillRect(x,y,w*Math.max(0,p),h);}
@@ -5641,7 +5790,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn108',date:'2026-11-14',title:'Schmiede wieder entfernt',hero:['🛡 Nur deine Teile zählen','Die Schmiede ist wieder weg. Stärker wirst du ausschließlich durch bessere Ausrüstung aus den Samenkapseln.'],items:()=>[['Schmiede:','Entfernt – Schmiede-Level zählen nicht mehr.'],['Gegner:','Wurden passend angepasst, an deiner Stage ändert sich nichts.']],
+  {id:'pn109',date:'2026-11-14',title:'12 neue Bosse',hero:['👑 Jedes Gebiet hat seinen eigenen Boss','Alle Gebiets-Bosse wurden neu gezeichnet – jeder mit eigener Körperform statt immer wieder Würmer.'],items:()=>[['Die Neuen:','Dornenkoloss, Salzkrebs-König, Lavagolem, Kristallspinne, Sternenrochen, Pilzkönigin, Frostyeti, Donnergreif, Knochendrache, Flammenphönix, Kraken der Tiefe und der Kaktuskaiser mit Zepter und Umhang.'],['Lebendig:','Lava glüht, Sporen schweben, Flügel schlagen, Tentakel wiegen sich.']],
+  en:{title:'12 new bosses',hero:['👑 Every area has its own boss','All area bosses were redrawn – each with its own body shape instead of worms over and over.'],items:()=>[['The new ones:','Thorn Colossus, Salt Crab King, Lava Golem, Crystal Spider, Star Ray, Mushroom Queen, Frost Yeti, Thunder Griffin, Bone Dragon, Flame Phoenix, Kraken of the Deep and the Cactus Emperor with scepter and cape.'],['Alive:','Lava glows, spores float, wings flap, tentacles sway.']]}},
+{id:'pn108',date:'2026-11-14',title:'Schmiede wieder entfernt',hero:['🛡 Nur deine Teile zählen','Die Schmiede ist wieder weg. Stärker wirst du ausschließlich durch bessere Ausrüstung aus den Samenkapseln.'],items:()=>[['Schmiede:','Entfernt – Schmiede-Level zählen nicht mehr.'],['Gegner:','Wurden passend angepasst, an deiner Stage ändert sich nichts.']],
   en:{title:'Forge removed again',hero:['🛡 Only your items count','The forge is gone again. You only get stronger through better gear from seed capsules.'],items:()=>[['Forge:','Removed – forge levels no longer count.'],['Enemies:','Adjusted to match, your stage stays the same.']]}},
 {id:'pn107',date:'2026-11-14',title:'Begleiter & Fähigkeiten werden neu gebaut',hero:['🔧 Großer Umbau','Begleiter und Fähigkeiten sind vorerst aus dem Spiel genommen. Beide Systeme werden komplett neu aufgebaut und kommen in einem späteren Update zurück.'],items:()=>[['Begleiter:','Der Reiter zeigt „Bald“. Auch die Erkundung ruht, bis die neuen Begleiter da sind.'],['Fähigkeiten:','Im Kampf gibt es vorerst keine Fähigkeiten. Unter ⚔ Kampf steht „Bald“.'],['Hinweis:','Alle bisherigen Begleiter und Fähigkeiten wurden entfernt.'],['Gegner:','Etwas schwächer, damit Bosse ohne Begleiter und Fähigkeiten schaffbar bleiben.']],
   en:{title:'Companions & skills are being rebuilt',hero:['🔧 Big rebuild','Companions and skills are taken out of the game for now. Both systems are being rebuilt from scratch and return in a later update.'],items:()=>[['Companions:','The tab shows “Soon”. The expedition also rests until the new companions arrive.'],['Skills:','There are no skills in battle for now. Under ⚔ Battle it says “Soon”.'],['Note:','All previous companions and skills were removed.'],['Enemies:','A bit weaker so bosses stay beatable without companions and skills.']]}},
@@ -5896,7 +6047,7 @@ function axEnd(won){const A=AX;if(won)axGain(true);const R=A.rew||{caps:0,kak:0,
   $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen();};}
 function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
 function axWave(){const A=AX;A.wave++;const W0=world(),p=pow(S.stage),n=3+A.wave,boss=A.wave>A.waves;
-  if(boss){const ty=W0.boss;A.en.push({ty,boss:true,fire:2,x:A.W/2,y:A.H*.2,hp:24*ty.hp*p*6,max:24*ty.hp*p*6,atk:6*ty.atk*p*.5,sp:30,r:ty.r*1.6,hit:0,cd:1});axSay('BOSS: '+W0.boss.n,2);return;}
+  if(boss){const ty=W0.boss;A.shake=1.2;A.en.push({ty,boss:true,fire:2.5,x:A.W/2,y:A.H*.36,hp:24*ty.hp*p*6,max:24*ty.hp*p*6,atk:6*ty.atk*p*.5,sp:30,r:ty.r*1.6,hit:0,cd:1});axSay('BOSS: '+W0.boss.n,2);return;}
   for(let i=0;i<n;i++){const ty=W0.e[Math.floor(Math.random()*W0.e.length)],side=Math.random();
     const x=side<.5?rnd(30,A.W-30):(side<.75?20:A.W-20),y=side<.5?rnd(60,A.H*.35):rnd(60,A.H*.5);
     const rng=ty.kind==='scorp'||ty.kind==='bird';A.en.push({ty,x,y,hp:24*ty.hp*p,max:24*ty.hp*p,atk:6*ty.atk*p*.4,sp:ty.sp*.9,r:ty.r,hit:0,cd:rnd(.3,1),rng,fire:rnd(1,2.2)});}
@@ -5904,6 +6055,7 @@ function axWave(){const A=AX;A.wave++;const W0=world(),p=pow(S.stage),n=3+A.wave
 function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;axUpdate(dt);axDraw();requestAnimationFrame(axStep);}
 function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&$('axMsg'))$('axMsg').hidden=true;}
   if(A.state!=='go')return;
+  if(A.shake>0)A.shake-=dt;
   // Bewegen
   h.moving=false;if(A.joy){const l=Math.hypot(A.joy.dx,A.joy.dy);if(l>8){const s=Math.min(1,l/50)*170;h.x+=A.joy.dx/l*s*dt;h.y+=A.joy.dy/l*s*dt;h.moving=true;if(Math.abs(A.joy.dx)>3)h.face=A.joy.dx>0?1:-1;}}
   axPush(h,14);h.x=Math.max(24,Math.min(A.W-24,h.x));h.y=Math.max(100,Math.min(A.H-40,h.y));h.hit=Math.max(0,h.hit-dt*4);
@@ -5945,13 +6097,17 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // nach y sortiert zeichnen (weiter unten = vorne)
   const items=A.en.filter(e=>e.hp>0).map(e=>['e',e]);items.push(['h',h]);for(const o of A.obs||[])items.push(['o',o]);items.sort((a,b)=>a[1].y-b[1].y);
   for(const [k,o] of items){if(k==='o'){axDrawOb(g,o);continue;}if(k==='h'){g.save();g.translate(o.x,o.y);g.scale(o.face*.8,.8);drawCactus(g,S.char||DEFAULT_CH,{x:0,y:0,walk:o.moving,bob:o.moving?Math.abs(Math.sin(t*12))*-2:Math.sin(t*3),squash:0,hit:o.hit>0,gear:S.gear});g.restore();}
-    else{g.save();g.translate(o.x,o.y);g.scale(o.x<h.x?-1:1,1);if(o.boss)g.scale(1.6,1.6);drawEnemy({ty:o.ty,boss:o.boss,x:0,y:0,hit:o.hit,dying:0,lunge:0},g);g.restore();
-      g.fillStyle='#0008';g.fillRect(o.x-18,o.y-o.r*(o.boss?3.6:2.4)-8,36,5);g.fillStyle='#ff5a5a';g.fillRect(o.x-18,o.y-o.r*(o.boss?3.6:2.4)-8,36*Math.max(0,o.hp/o.max),5);}}
+    else{g.save();g.translate(o.x+(o.boss&&A.shake>0?(Math.random()-.5)*8:0),o.y);g.scale(o.x<h.x?-1:1,1);if(o.boss)g.scale(1.9,1.9);drawEnemy({ty:o.ty,boss:o.boss,x:0,y:0,hit:o.hit,dying:0,lunge:0},g);g.restore();
+      if(!o.boss){g.fillStyle='#0008';g.fillRect(o.x-18,o.y-o.r*2.4-8,36,5);g.fillStyle='#ff5a5a';g.fillRect(o.x-18,o.y-o.r*2.4-8,36*Math.max(0,o.hp/o.max),5);}}}
   for(const b of A.es){g.fillStyle='#ff5a2a';g.beginPath();g.arc(b.x,b.y,b.r+3,0,7);g.globalAlpha=.35;g.fill();g.globalAlpha=1;g.fillStyle='#ff8a3a';g.beginPath();g.arc(b.x,b.y,b.r,0,7);g.fill();g.lineWidth=2;g.strokeStyle='#7a1d14';g.stroke();g.fillStyle='#ffe0a0';g.beginPath();g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.35,0,7);g.fill();}
   for(const e of A.en)if(e.hp>0&&e.warn&&e.fire>0){g.fillStyle='#ff3d3d';g.font='900 18px system-ui';g.textAlign='center';g.fillText('!',e.x,e.y-e.r*(e.boss?3.9:2.7)-10);}
   g.fillStyle='#fff6d8';g.strokeStyle='#2a1a12';g.lineWidth=1.5;for(const s of A.sh){g.save();g.translate(s.x,s.y);g.rotate(Math.atan2(s.vy,s.vx));g.beginPath();g.moveTo(9,0);g.lineTo(-7,-3);g.lineTo(-7,3);g.closePath();g.fill();g.stroke();g.restore();}
   g.textAlign='center';g.font='900 14px system-ui';for(const f of A.fx){if(f.boom){g.globalAlpha=f.t/.35;g.fillStyle='#fff';g.beginPath();g.arc(f.x,f.y,22*(1-f.t/.35)+6,0,7);g.fill();g.globalAlpha=1;continue;}
     g.globalAlpha=Math.min(1,f.t/.3);g.lineWidth=3;g.strokeStyle='#000';g.strokeText(f.txt,f.x,f.y);g.fillStyle=f.col;g.fillText(f.txt,f.x,f.y);g.globalAlpha=1;}
+  // große Boss-Leiste oben
+  const B=A.en.find(e=>e.boss&&e.hp>0);if(B){const bw=Math.min(A.W-40,340),bx=(A.W-bw)/2,by=96;g.fillStyle='#000a';g.beginPath();g.roundRect(bx-4,by-4,bw+8,30,10);g.fill();
+    g.fillStyle='#3a1010';g.fillRect(bx,by+12,bw,10);g.fillStyle='#ff3d4e';g.fillRect(bx,by+12,bw*Math.max(0,B.hp/B.max),10);g.strokeStyle='#ffd447';g.lineWidth=2;g.strokeRect(bx,by+12,bw,10);
+    g.font='900 12px system-ui';g.textAlign='center';g.fillStyle='#ffe7b8';g.fillText('👑 '+tr(B.ty.n),A.W/2,by+8);}
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
 if(maint.dev){const row=document.querySelector('#tabMehr .onrow');if(row){const b=document.createElement('button');b.type='button';b.className='onbtn sm';b.id='axBtn';
