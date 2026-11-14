@@ -1710,7 +1710,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1881,8 +1881,8 @@ const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===
 // sie tragen den Großteil des Wachstums, seit Ausrüstung vor allem über die Seltenheit stärker wird.
 // 11.11.2026: alles unendlich levelbar. lim = Grenzwert, dem sich der Wert nähert (wird nie ganz erreicht); req = erst ab Stufe X eines anderen Werts
 const WS=[
-  {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',kind:'mul',per:2.5, unit:'% Angriff',        base:1200,g:1.029},
-  {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',kind:'mul',per:2.5, unit:'% Leben',          base:1200,g:1.029},
+  {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',kind:'mul',per:2.5, unit:'% Angriff',        base:1200,g:1.042},
+  {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',kind:'mul',per:2.5, unit:'% Leben',          base:1200,g:1.042},
   {id:'spd',  n:'Tempo',       ico:'☀', c:'#ffd447',kind:'add',per:1,   lim:100,unit:'% Tempo',  base:2000,g:1.06,req:['atk',20]},
   {id:'armor',n:'Panzerung',   ico:'⛨', c:'#c49a6c',kind:'add',per:1,   lim:75, unit:'% weniger Schaden',base:2000,g:1.06,req:['hp',20]},
   {id:'crit', n:'Krit-Chance', ico:'✦', c:'#ffe066',kind:'add',per:.5,  lim:50, unit:'% Krit-Chance',base:3000,g:1.06,req:['atk',50]},
@@ -2307,7 +2307,7 @@ function hitEnemy(e,dmg,crit){
     for(let i=0;i<(eco?3:10);i++)parts.push({x:e.x,y:e.y-e.ty.r,vx:rnd(-120,120),vy:rnd(-220,-60),t:rnd(.3,.6),col:e.ty.col});
     if(e.boss){boss=false;const kk=kakFor(S.stage);S.kak=(S.kak||0)+kk;floats.push({x:e.x,y:e.y-60,txt:'+'+kk+' 🌵',col:'#7fe08a',t:1.4});const firstTime=S.stage+1>S.best;S.stage++;S.kills=0;S.best=Math.max(S.best,S.stage);S.caps+=9;const nd=diffIdx(S.stage)>diffIdx(S.stage-1),nw=!nd&&(S.stage-1)%STAGES_PER_WORLD===0&&worldIdx(S.stage)>worldIdx(S.stage-1);banner={txt:nd?diffOf(S.stage).n+(firstTime?' freigeschaltet!':'!'):nw?'Neue Welt: '+world().n+' ('+ELEM[world().atkEl].n+')':'Stage geschafft! +9 Kapseln · +'+kk+' Kakteen',t:nd?3.5:nw?3:2.2};shake=nd?10:6;}
     else if(!boss){S.kills=Math.min(KILL_GOAL,S.kills+1);if(S.kills>=KILL_GOAL&&S.bossAuto!==false)startBoss();}
-    if(!e.boss&&Math.random()<0.18){S.caps+=2;floats.push({x:e.x,y:e.y-e.ty.r*2-34,txt:'+2 Kapseln',col:'#63c74d',t:1.1});}
+    if(!e.boss&&Math.random()<0.09){S.caps+=2;   /* 14.11.2026: halbiert (vorher 18 %) */floats.push({x:e.x,y:e.y-e.ty.r*2-34,txt:'+2 Kapseln',col:'#63c74d',t:1.1});}
     save();
   }
 }
@@ -4485,7 +4485,7 @@ let offPending=null;
 function offlineGain(sec){
   sec=Math.min(OFFLINE_CAP,sec);if(sec<60||!S.char)return;
   const kills=Math.floor(sec/3),coinPer=Math.ceil(6*cPow(S.stage));
-  const coins=Math.round(kills*coinPer*OFF_EFF*coinMul()),caps=Math.floor(kills*0.15);
+  const coins=Math.round(kills*coinPer*OFF_EFF*coinMul()),caps=Math.floor(kills*0.075);   /* 14.11.2026: halbiert */
   const prog=Math.min(KILL_GOAL-S.kills,kills);
   offPending={sec,kills,coins,caps,prog};
   if($('modal').hidden)showOffline();
@@ -5553,7 +5553,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn101',date:'2026-11-14',title:'Englisch komplett',hero:['🇬🇧 Kaktus-Krieger ist zweisprachig','Der letzte Durchgang ist fertig: Auch Banner, Popups, Meldungen, Briefe, Builds und das Auto-Öffnen sind jetzt auf Englisch übersetzt.'],items:()=>[['Sprache wechseln:','Flagge oben neben dem Briefumschlag.'],['Hinweis:','Ältere Patch Notes bleiben auf Deutsch.']],
+  {id:'pn102',date:'2026-11-14',title:'Balance: langsamerer Fortschritt',hero:['⚖ Mehr Langzeit-Motivation','Kaktus-Krieger soll mehrere Wochen spannend bleiben. Darum werden Angriff und Leben in der Werkstatt teurer, und Gegner lassen weniger Samenkapseln fallen.'],items:()=>[['Werkstatt:','Angriff und Leben kosten pro Level +4,2 % statt +2,9 %. Bereits gekaufte Level bleiben erhalten.'],['Samenkapseln:','Gegner lassen nur noch halb so oft Kapseln fallen, auch offline. Truhen, Tägliche Belohnung, Weltkarte, Turm und Weltboss bleiben gleich.'],['Warum:','Mehr Münzen sollen nicht automatisch fast genauso viel mehr Kraft bringen – Ausrüstung, Begleiter und Fähigkeiten zählen jetzt mehr.']],
+  en:{title:'Balance: slower progress',hero:['⚖ More long-term motivation','Kaktus-Krieger should stay exciting for several weeks. That’s why attack and health in the workshop get more expensive and enemies drop fewer seed capsules.'],items:()=>[['Workshop:','Attack and health cost +4.2 % per level instead of +2.9 %. Levels you already bought stay.'],['Seed capsules:','Enemies drop capsules only half as often, offline too. Chests, daily reward, world map, tower and world boss stay the same.'],['Why:','More coins should no longer turn into almost the same amount of extra power – gear, companions and skills matter more now.']]}},
+{id:'pn101',date:'2026-11-14',title:'Englisch komplett',hero:['🇬🇧 Kaktus-Krieger ist zweisprachig','Der letzte Durchgang ist fertig: Auch Banner, Popups, Meldungen, Briefe, Builds und das Auto-Öffnen sind jetzt auf Englisch übersetzt.'],items:()=>[['Sprache wechseln:','Flagge oben neben dem Briefumschlag.'],['Hinweis:','Ältere Patch Notes bleiben auf Deutsch.']],
   en:{title:'English complete',hero:['🇬🇧 Kaktus-Krieger is bilingual','The final pass is done: banners, popups, messages, letters, builds and auto open are now translated to English too.'],items:()=>[['Switch language:','Flag at the top next to the envelope.'],['Note:','Older patch notes stay in German.']]}},
 {id:'pn100',date:'2026-11-14',title:'Englisch: Mehr-Bereich, Post & Tutorial',hero:['🇬🇧 Schritt 4 übersetzt','Auf Englisch sind jetzt auch Dungeons, Erkundung, Arena, Turm, Weltboss, Post, Optionen, Spielzeit-Truhen, Tägliche Belohnung und das Tutorial übersetzt.'],items:()=>[['Übersetzt:','Alle Missionen, Dungeon-Bosse, Turm-Etagen, Arena-Ligen, Weltboss-Stufen, Briefe und die Tipps von Opa Stachel.'],['Als Nächstes:','Ein letzter Durchgang durch das ganze Spiel auf Englisch.']],
   en:{title:'English: More section, mail & tutorial',hero:['🇬🇧 Step 4 translated','Dungeons, expedition, arena, tower, world boss, mail, options, playtime chests, daily reward and the tutorial are now in English too.'],items:()=>[['Translated:','All missions, dungeon bosses, tower floors, arena leagues, world boss tiers, letters and Grandpa Spike’s tips.'],['Coming next:','A final pass through the whole game in English.']]}},
