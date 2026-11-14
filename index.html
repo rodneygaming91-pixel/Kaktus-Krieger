@@ -1253,7 +1253,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   </nav>
   <div class="actions" hidden>
     
-    <button class="garden" id="hqBtn" type="button"><small>Werkstatt</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
+    <button class="garden" id="hqBtn" type="button"><small>Schmiede</small><b id="hqLv">Lv 0</b><span id="hqSub">Kaktus leveln</span></button>
     <button class="garden" id="dBtn" type="button"><small>Begleiter</small><b id="dCnt">0/2</b><span id="dSub">Begleiter</span></button>
     <button class="garden" id="gBtn" type="button"><small>Gärtnerei</small><b id="gLv">Lv 1</b><span id="gSub">Ausbauen</span></button>
   </div>
@@ -1285,7 +1285,7 @@ const EN={
 'Sprache':'Language','Sprache wählen':'Choose language',
 'heute':'today','neu':'new','Alles klar':'Got it','Schließen':'Close','Patch Notes':'Patch Notes',
 // Werkstatt
-'🔨 Werkstatt':'🔨 Workshop','Werkstatt':'Workshop','Nur mit Münzen':'Coins only','Alle leveln':'Level all','Beschwören':'Summon',
+'🔨 Werkstatt':'🔨 Workshop','Werkstatt':'Workshop','🔨 Schmiede':'🔨 Forge','Schmiede':'Forge','Verbessert deine Ausrüstung':'Upgrades your gear','Waffe':'Weapon','Nur mit Münzen':'Coins only','Alle leveln':'Level all','Beschwören':'Summon',
 'Angriff':'Attack','Leben':'Health','Tempo':'Speed','Panzerung':'Armor','Krit-Chance':'Crit chance','Regeneration':'Regeneration',
 'Krit-Schaden':'Crit damage','Ausweichen':'Dodge','Betäuben':'Stun','Lebensraub':'Lifesteal',
 'weniger Schaden':'less damage','Leben pro s':'health per s','Tempo (Sekunden pro Schlag)':'Speed (seconds per hit)',
@@ -1489,7 +1489,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike',
+'Opa Stachel':'Grandpa Spike','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1554,7 +1554,7 @@ const RX=[
   [/^Jedes Level: \+3 % Angriff & Leben \(jetzt \+(\d+) %\)$/,(m)=>'Each level: +3 % attack & health (now +'+m[1]+' %)'],
   [/^Level: \+(\d+) % Angriff & Leben$/,(m)=>'Level: +'+m[1]+' % attack & health'],
   [/^Resistenz (.+)$/,(m,t)=>t(m[1])+' resistance'],
-  [/^Werkstatt Lv (\d+)$/,(m)=>'Workshop Lv '+m[1]],
+  [/^Werkstatt Lv (\d+)$/,(m)=>'Workshop Lv '+m[1]],[/^Schmiede Lv (\d+)$/,(m)=>'Forge Lv '+m[1]],
   [/^Turm (\d+)$/,(m)=>'Tower '+m[1]],
   [/^Beste Stage (\d+)$/,(m)=>'Best stage '+m[1]],
   [/^(\d+)\/(\d+) Gebiete geschafft$/,(m)=>m[1]+'/'+m[2]+' areas cleared'],
@@ -1620,6 +1620,7 @@ const RX=[
   [/^Etage (\d+) ist im Moment zu schwer für den Schnellaufstieg\. Versuche es selbst!$/,(m)=>'Floor '+m[1]+' is too hard for the fast climb right now. Try it yourself!'],
   [/^Schnellaufstieg bis Etage (\d+)$/,(m)=>'Fast climb to floor '+m[1]],
   [/^pro Etage (.+) Münzen und (.+) Kapseln$/,(m)=>'per floor '+m[1]+' coins and '+m[2]+' capsules'],
+  [/^Tipp: Ausrüstung in der Schmiede verbessern, bessere Teile oder eine (.+)-Waffe helfen\.$/,(m,t)=>'Tip: upgrade gear in the forge, find better items or a '+t(m[1])+' weapon.'],
   [/^Tipp: Werkstatt leveln, bessere Ausrüstung oder eine (.+)-Waffe helfen\.$/,(m,t)=>'Tip: level the workshop, better gear or a '+t(m[1])+' weapon help.'],
   [/^Jeden Tag (\d+) Schlüssel gratis, weitere gegen Kakteen \(heute gekauft: (\d+)\)\. Du hast (.+)\.$/,(m)=>m[1]+' free keys every day, more for cacti (bought today: '+m[2]+'). You have '+m[3]+'.'],
   [/^Besiegst du den (.+), gibt es die volle Belohnung und die nächste Stufe wird frei\. Sonst gibt es (.+) für deinen Schaden\.$/,(m,t)=>'Defeat the '+t(m[1])+' for the full reward and the next level unlocks. Otherwise you get '+t(m[2])+' for your damage.'],
@@ -1722,7 +1723,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1754,8 +1755,18 @@ const diffIdx=st=>Math.floor((Math.max(1,st)-1)/STAGES_PER_DIFF);
 const diffOf=st=>{const d=diffIdx(st);return d<DIFFS.length?DIFFS[d]:{n:'Ultra schwer '+['II','III','IV','V','VI','VII','VIII','IX','X'][Math.min(8,d-DIFFS.length)],c:'#ff3dff'};};
 const inDiff=st=>((Math.max(1,st)-1)%STAGES_PER_DIFF)+1;
 // Gegnerstärke: +5 % pro Stage, mit jeder neuen Schwierigkeit zusätzlich ×3.
-const pow=st=>Math.pow(1.05,st-1)*Math.pow(3,diffIdx(st));
-const cPow=st=>Math.pow(1.05,st-1)*Math.pow(0.8,diffIdx(st));   // Münzen: wachsen wie die Gegner, auf höheren Schwierigkeiten etwas knapper
+// 14.11.2026 (Neue Balance „nur Ausrüstung“): Die Gegner wachsen genau so, wie eine passende Ausrüstung wächst.
+// Erwartet wird die Seltenheit, die im Gebiet schon länger freigeschaltet ist (Gebiets-Sperre minus 1),
+// dazu verbesserte Teile in der Schmiede (alle 8 Stages ein Level). Münzen wachsen genauso mit.
+const RGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
+const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=16+(gx-48)/4;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
+const UPS=0.05;                                  // jedes Schmiede-Level: +5 % auf den Wert des Teils
+const upTarget=st=>(Math.max(1,st)-1)/8;        // erwartetes Schmiede-Level auf dieser Stage
+const atkTarget=st=>25+6*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
+const hpTarget=st=>300+70*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
+const POWK=8;   // Schwierigkeit: wie stark die Gegner im Verhältnis zur erwarteten Ausrüstung sind
+const pow=st=>atkTarget(st)/31*(1+(POWK-1)*Math.min(1,(Math.max(1,st)-1)/100));
+const cPow=st=>atkTarget(st)/31;
 // Stufenbonus ist nach oben begrenzt: ein Teil wird durch die Stufe höchstens ×1,75 (Prozentwerte ×1,14) stärker.
 // Die nächste Seltenheit ist immer mindestens ×1,9 (Prozent ×1,27) stärker – damit schlägt grün nie blau, blau nie lila usw.
 const lvlCurve=l=>1-Math.pow(0.985,Math.max(1,l)-1);
@@ -1836,7 +1847,7 @@ const CLASSES=Object.fromEntries(KAKTI.map(K=>[K.id,Object.assign({c:K.color},K)
 const KT_MAX=50,KT_SUM1=10,KT_SUM10=90;
 const ktDef=id=>CLASSES[id]||CLASSES.schuetze;
 const ktLv=id=>(S.kt&&S.kt[id]&&S.kt[id].lv)||0;
-const ktLvM=lv=>1+.03*(Math.max(1,lv)-1);
+const ktLvM=lv=>1;   // 14.11.2026: Kaktus-Level gibt keine Werte mehr (nur Ausrüstung zählt)
 const curKt=()=>ktDef(S.char&&S.char.cls);
 const clsM=()=>{const K=curKt(),f=ktLvM(ktLv(K.id));return Object.assign({},K.m,{atk:K.m.atk*f,hp:K.m.hp*f});};
 const ktX=k=>{const x=curKt().x;return(x&&x[k])||0;};
@@ -1887,12 +1898,21 @@ function drInit(){if(!S.dr||typeof S.dr!=='object')S.dr={};if(!Array.isArray(S.d
 const drSumLv=()=>{const n=(S.drSum&&S.drSum.n)||0;let l=1;while(l<10&&n>=SUM_AT(l+1))l++;return l;};
 function drRoll(){const w=sumW(drSumLv()),tot=w.reduce((a,b)=>a+b,0);let x=Math.random()*tot,r=0;for(;r<w.length;r++){x-=w[r];if(x<0)break;}
   r=Math.min(r,5);const pool=DRONES.filter(d=>d.r===r);return pool[Math.floor(Math.random()*pool.length)];}
-const drBonus=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.stat===k)s+=D.per*Math.min(o.lv,DR_MAX);}return s;};
+const drBonus=k=>0;const drBonusOld=k=>{let s=0;for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.stat===k)s+=D.per*Math.min(o.lv,DR_MAX);}return s;};
 // Werkstatt: den Kaktus selbst leveln. Münzen kosten jedes Level, jedes 10. Level braucht zusätzlich Kakteen.
 // Angriff und Leben haben keine Obergrenze und wachsen je Level um 2,5 % (aufeinander aufbauend) –
 // sie tragen den Großteil des Wachstums, seit Ausrüstung vor allem über die Seltenheit stärker wird.
 // 11.11.2026: alles unendlich levelbar. lim = Grenzwert, dem sich der Wert nähert (wird nie ganz erreicht); req = erst ab Stufe X eines anderen Werts
+// 14.11.2026: Die Werkstatt ist weg – stattdessen die Schmiede: Münzen verbessern die Ausrüstungsplätze für Angriff und Leben.
+// Das Level gehört zum Platz (nicht zum Teil), bleibt also beim Tauschen erhalten. Jedes Level: +5 % auf den Wert des Teils.
 const WS=[
+  {id:'u_waffe',     slot:'waffe',     n:'Waffe',      ico:'⚔', c:'#ff8a3d',kind:'up',unit:'% Waffe',     base:530,g:1.1},
+  {id:'u_handschuhe',slot:'handschuhe',n:'Handschuhe', ico:'✊', c:'#ffb35a',kind:'up',unit:'% Handschuhe',base:530,g:1.1},
+  {id:'u_helm',      slot:'helm',      n:'Helm',       ico:'⛑', c:'#ff6fae',kind:'up',unit:'% Helm',      base:530,g:1.1},
+  {id:'u_ruestung',  slot:'ruestung',  n:'Rüstung',    ico:'🛡', c:'#c49a6c',kind:'up',unit:'% Rüstung',   base:530,g:1.1},
+  {id:'u_halskette', slot:'halskette', n:'Halskette',  ico:'📿', c:'#d8a8ff',kind:'up',unit:'% Halskette', base:530,g:1.1}
+];
+const WS_OLD=[
   {id:'atk',  n:'Angriff',     ico:'⚔', c:'#ff8a3d',kind:'mul',per:2.5, unit:'% Angriff',        base:1200,g:1.042},
   {id:'hp',   n:'Leben',       ico:'♥', c:'#ff6fae',kind:'mul',per:2.5, unit:'% Leben',          base:1200,g:1.042},
   {id:'spd',  n:'Tempo',       ico:'☀', c:'#ffd447',kind:'add',per:1,   lim:100,unit:'% Tempo',  base:2000,g:1.06,req:['atk',20]},
@@ -1906,7 +1926,8 @@ const WS=[
 ];
 const wsLv=id=>(S.ws&&S.ws[id])||0;
 const wsDef=id=>WS.find(w=>w.id===id);const wsV=id=>wsDef(id)?wsVal(id):0;
-const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.lim?W.lim*(1-Math.exp(-W.per*lv/W.lim)):W.per*lv;};   // Bonus in %
+const upMul=slot=>1+UPS*wsLv('u_'+slot);
+const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);if(!W)return 0;if(W.kind==='up')return UPS*100*lv;return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.lim?W.lim*(1-Math.exp(-W.per*lv/W.lim)):W.per*lv;};   // Bonus in %
 const wsCost=(W,lv=wsLv(W.id))=>Math.round(W.base*Math.pow(W.g,lv));
 const wsKak=()=>0; // 11.11.2026: Werkstatt kostet nur noch Münzen                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
 const wsLock=W=>!!(W.req&&wsLv(W.req[0])<W.req[1]);const wsMax=wsLock; // gesperrt = (noch) nicht kaufbar
@@ -1927,6 +1948,13 @@ const gUpCost=(U,lv)=>Math.round(U.base*Math.pow(2.5,lv));
 const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1);
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
+  // 14.11.2026: nur noch die Ausrüstung (plus Schmiede-Level des Platzes) bestimmt die Werte; die Kaktus-Klasse gibt ihre festen Eigenschaften
+  const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v*(sl.pct?1:upMul(sl.id));return s;};
+  return{atk:(25+v('atk'))*m.atk,hp:Math.round((300+v('hp'))*m.hp),
+    armor:0,spd:0.9/(1+Math.min(150,v('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+ktX('crit')),res:resSum(),
+    critM:2+ktX('critd')/100,dodge:Math.min(60,ktX('dodge')),stun:0,steal:ktX('steal')};
+}
+function heroStatsOld(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
   return{atk:(25+v('atk'))*m.atk*(1+wsVal('atk')/100)*(1+(drBonus('atk')+gUp('atk')*3)/100),hp:Math.round((300+v('hp'))*m.hp*(1+wsVal('hp')/100)*(1+(drBonus('hp')+gUp('hp')*3)/100)),
     armor:wsVal('armor'),spd:0.9/(1+Math.min(150,v('spd')+drBonus('spd')+wsVal('spd'))/100)/m.spd,reg:(1+v('reg')+drBonus('reg'))*m.reg+wsV('reg'),block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+drBonus('crit')+wsV('crit')+ktX('crit')),res:resSum(),
@@ -2159,6 +2187,16 @@ if(!S.gr1){const mx=gTopR();let n=0;
     const o=it.r;it.v=sl.pct?Math.round(it.v*RAR[mx].pm/RAR[o].pm*10)/10:Math.max(1,Math.round(it.v*RAR[mx].m/RAR[o].m));
     if(it.res)it.res.v=Math.max(1,Math.round(it.res.v*RAR[mx].pm/RAR[o].pm));it.r=mx;it.name=sl.names[mx]||it.name;n++;}
   S.gr1=true;if(n)S.gr1n=n;save();}
+// 14.11.2026 (Anpassung nb1, „nur Ausrüstung zählt“): Werkstatt-Boni fallen weg. Jeder landet auf der Stage, die seine Ausrüstung schafft,
+// bekommt die dazu passenden Schmiede-Level und ein Münz-Startguthaben (alte Münzbeträge passen nicht mehr zur neuen Wirtschaft).
+if(!S.nb1){const sum=k=>{let x=0;for(const sl of SLOTS)if(!sl.pct&&sl.stat===k&&S.gear&&S.gear[sl.id])x+=S.gear[sl.id].v;return x;};
+  const A=sum('atk'),Hp=sum('hp');let st=Math.max(1,S.best||S.stage||1);
+  const ok=x=>{const U=1+UPS*Math.floor(upTarget(x));return 25+A*U>=atkTarget(x)*.95&&300+Hp*U>=hpTarget(x)*.95;};
+  while(st>1&&!ok(st))st--;
+  const L=Math.floor(upTarget(st));S.ws=S.ws||{};for(const W of WS)S.ws[W.id]=Math.max(S.ws[W.id]||0,L);
+  S.nb1Old={stage:S.stage,best:S.best,coins:S.coins};
+  S.stage=Math.min(S.stage||1,st);S.best=st;S.kills=0;S.coins=Math.round(6*cPow(st)*1500);S.twRec=0;S.tower=1;
+  S.nb1=true;save();}
 // Anpassung v9: Hauptquartier wird zur Werkstatt – ausgebaute Gebäude werden voll in Münzen erstattet
 if(!S.v9){
   const B={schmiede:100,turm:120,segel:150,markt:130};let back=0;
@@ -3243,8 +3281,8 @@ function drTxt(D,lv){const k=drScale(Math.max(1,lv)),p=x=>Math.round(x*k*100)+' 
   if(window.KKL&&KKL.cur==='en'){const se=String(D.every)+' s',b=String(+(D.per*Math.max(1,Math.min(lv,DR_MAX))).toFixed(2));
     const e={shot:`Bites every ${se} for ${p(D.dmg)} attack`,stun:`Bites every ${se} for ${p(D.dmg)} attack and stuns 1 s`,
       steal:`Lifesteal every ${se}: ${p(D.dmg)} attack`,heal:`Heals ${Math.round(D.heal*k*10)/10} % health every ${se}`}[D.act];
-    return e+`<br><span style="color:#7fe08a">+${b} ${tr(DR_UNIT[D.stat])}</span> while equipped`;}
-  return a+`<br><span style="color:#7fe08a">+${drBon(D,lv)} ${DR_UNIT[D.stat]}</span> solange eingesetzt`;}
+    return e;}
+  return a;}
 const drIco=D=>`<canvas width="96" height="96" data-dr="${D.id}" class="drico"></canvas>`;
 function renderDrones(){const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqRow='';
   for(let i=0;i<DR_SLOTS;i++){const D=S.drEq[i]&&DRONES.find(d=>d.id===S.drEq[i]);
@@ -3339,10 +3377,10 @@ function wsBind(H,re){
     b.onclick=e=>{if(e.detail===0&&buy(W)){save();lastHud='';re();}};});} // Tastatur/Barrierefreiheit
 function renderWS(){
   const kak=S.kak||0,L=wsLists();
-  const page0=`<div class="wshead"><h2>Werkstatt <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
+  const page0=`<div class="wshead"><h2>Schmiede <span style="color:var(--sand)">Lv ${wsTotal()}</span></h2><button class="wsarr r" type="button" data-pg="1">Fähigkeiten <i>›</i></button></div>
     <div class="wsbank"><span>🌵 <b>${fmt(kak)}</b> Kakteen</span><span><i></i><b>${fmt(S.coins)}</b></span></div>
     ${L.list0}`;
-  const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Werkstatt</button><h2>Fähigkeiten</h2></div>
+  const page1=`<div class="wshead"><button class="wsarr l" type="button" data-pg="0"><i>‹</i> Schmiede</button><h2>Fähigkeiten</h2></div>
     <p class="intro">Ausgerüstet <b style="color:var(--sand)">${skOn().length}/${SK_ON}</b></p>
     ${L.list1}`;
   $('card').innerHTML=`<div class="fixwin"><div class="wspg" id="wsPg"><div class="wstrack" id="wsTrack" style="transform:translateX(-${wsPage*50}%)"><section>${page0}</section><section>${page1}</section></div></div>
@@ -3405,7 +3443,7 @@ function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=
   $('card').innerHTML=`<div class="ovw"><h2>Mein Profil</h2>
     <div class="ovhead"><button class="ovpic sm${ktUp?' up':''}" type="button" id="ovPic" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas><em>🌵 wechseln</em></button>
       <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · Lv ${ktLv(K.id)}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
-        <small>Beste Stage ${S.best||0} · Turm ${S.twRec||0} · Werkstatt Lv ${wsTotal()}</small></div></div>
+        <small>Beste Stage ${S.best||0} · Turm ${S.twRec||0} · Schmiede Lv ${wsTotal()}</small></div></div>
     <div class="ovsec"><b>✶ Fähigkeiten</b><div class="ovrow">${sk}</div></div>
     <div class="ovsec"><b>🐾 Begleiter</b><div class="ovrow g5">${dr}</div></div>
     <div class="ovsec"><b>🎒 Ausrüstung</b><div class="ovrow g9">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
@@ -3448,7 +3486,7 @@ function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,
   $('card').innerHTML=`<div class="skdet" style="--rc:${rc}"><div class="skbig"><canvas width="192" height="192" data-kt="${id}" class="ktbig"></canvas></div>
     <h2>${lv?K.n:'Noch nicht gefunden'}</h2><span class="skrar" style="color:${rc}">${RAR[K.r].n} · ${K.role}${lv?` · Lv ${lv}/${KT_MAX}`:''}</span>
     <p>${K.d}</p><span class="ktpro">${ktRun(K)}</span>
-    ${lv?(lv<KT_MAX?`<p class="sknext">Jedes Level: +3 % Angriff &amp; Leben (jetzt +${Math.round((ktLvM(lv)-1)*100)} %)</p><div class="skbar big"><span style="width:${Math.min(100,o.n/need*100)}%"></span><em>Kopien ${o.n}/${need}</em></div>`:'<p class="sknext">Höchstes Level erreicht</p>')
+    ${lv?(lv<KT_MAX?`<div class="skbar big"><span style="width:${Math.min(100,o.n/need*100)}%"></span><em>Kopien ${o.n}/${need}</em></div>`:'<p class="sknext">Höchstes Level erreicht</p>')
       :`<p><small>Diesen Kaktus bekommst du beim 🌵 Beschwören in der Sammlung.</small></p>`}
     <div class="row">${lv?`<button class="btn go" id="ktEq" type="button" ${eq?'disabled':''}>${eq?'Aktiv':'Auswählen'}</button>`:''}
       ${up?`<button class="btn go" id="ktUp" type="button">Level-Up</button>`:''}<button class="btn" id="ktB" type="button">Zurück</button></div></div>`;
@@ -3457,7 +3495,7 @@ function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,
   const e=$('ktEq');if(e&&!eq)e.onclick=()=>{S.char.cls=id;ktLook(S.char);save();lastHud='';banner={txt:K.n+' ist jetzt dein Kaktus!',t:1.6};ktDetail(id,re);};
   const u=$('ktUp');if(u)u.onclick=()=>{ktLevelAll(id);save();lastHud='';ktDetail(id,re);};}
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
-  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Werkstatt <em>Lv ${wsTotal()}</em></b><small>Nur mit Münzen</small></div>${L.list0}</div>`;
+  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Schmiede <em>Lv ${wsTotal()}</em></b><small>Verbessert deine Ausrüstung</small></div>${L.list0}</div>`;
   else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
@@ -4049,7 +4087,7 @@ function renderOnline(){
       ${friend?`<div class="fcard"><canvas id="fcv" width="240" height="260"></canvas><div>
         <b class="fname">${String(friend.name).replace(/</g,'&lt;')}</b><small>${friend.cls||''} · ${fmtCode(friend.code)}${friend.guild?' · ['+esc2(friend.guild.tag)+'] '+esc2(friend.guild.name):''}</small>
         <span>Höchste Stage: <b>${stageName(friend.best)}</b></span><span>Kampfkraft: <b>${fmt(friend.power)}</b></span>
-        <span>Werkstatt Lv ${(friend.card&&(friend.card.ws||0))||0} · Gärtnerei Lv ${(friend.card&&friend.card.glv)||1}</span>
+        <span>Schmiede Lv ${(friend.card&&(friend.card.ws||0))||0} · Gärtnerei Lv ${(friend.card&&friend.card.glv)||1}</span>
         <span class="fgear">${SLOTS.map(sl=>{const it=friend.card&&friend.card.gear&&friend.card.gear[sl.id];return`<i style="--rc:${it?RAR[it.r].c:'#4a3a2e'}" title="${sl.n}${it?': '+it.name:''}"></i>`;}).join('')}</span>
         <small>zuletzt online ${agoTxt(new Date(friend.updated_at).getTime())}</small></div></div>`:''}`;
   }
@@ -4782,7 +4820,7 @@ function twFinish(A,f){tw.anim=null;
     if(tw.give){const it=tw.give;tw.give=null;it.tw=true;pending=it;reveal();return;}
     // Auto-Kampf: nach kurzer Pause die nächste Etage starten
     if(tw.auto){if(tw.open)renderTower();setTimeout(()=>{if(tw.auto&&tw.open&&!tw.anim)twFight();},S.twX2?600:1200);return;}}
-  else{tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span>${tw.auto?' <b>Auto-Kampf beendet.</b>':''}<br><small>Tipp: Werkstatt leveln, bessere Ausrüstung oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;tw.auto=false;}
+  else{tw.res=`<b>${A.end==='dead'?'Du bist gefallen.':'Zeit abgelaufen.'}</b> <span class="down">Etage ${f} nicht geschafft.</span>${tw.auto?' <b>Auto-Kampf beendet.</b>':''}<br><small>Tipp: Ausrüstung in der Schmiede verbessern, bessere Teile oder eine ${ELEM[twGuard(f).Wd.weak].n}-Waffe helfen.</small>`;tw.auto=false;}
   if(tw.open)renderTower();}
 $('twBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;twDayCheck();tw.open=true;tw.res=null;twb.msg='';twLoad();$('card').classList.add('twc');$('modal').hidden=false;lastHud='';renderTower();};
 setInterval(()=>{twDayCheck();const f=twFloor();$('twSub').textContent='Etage '+f;
@@ -5161,7 +5199,7 @@ const TUT=[
   {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Ausrüstung beschwören“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
   {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Er setzt sie ganz von selbst ein.'},
-  {el:'tbKampf',t:'Unter ⚔ Kampf steckst du in der Werkstatt Münzen in Angriff, Leben, Panzer und Tempo – und levelst deine Fähigkeiten.'},
+  {el:'tbKampf',t:'Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.'},
   {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
   {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
@@ -5568,7 +5606,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn105',date:'2026-11-14',title:'Begleiter greifen Bosse sofort an',hero:['🐾 Kein Warten mehr','Sobald ein Boss im Bild ist und die Zeit läuft, springen deine Begleiter ihn sofort an – nicht erst, wenn er bei deinem Kaktus angekommen ist.'],items:()=>[['Bosse:','Begleiter machen ab der ersten Sekunde des Boss-Kampfs Schaden.']],
+  {id:'pn106',date:'2026-11-14',title:'Neue Balance: Nur Ausrüstung zählt',hero:['🛡 Ausrüstung ist alles','Die Werkstatt ist weg. Deine Stärke kommt jetzt nur noch aus deiner Ausrüstung – und aus der neuen Schmiede, in der du mit Münzen deine Ausrüstungsplätze verbesserst.'],items:()=>[['Schmiede:','Unter ⚔ Kampf → Kaktus. Jedes Level gibt +5 % auf Waffe, Handschuhe, Helm, Rüstung oder Halskette. Das Level bleibt beim Tauschen der Teile erhalten.'],['Gegner:','Wachsen jetzt passend zu der Ausrüstung, die man im jeweiligen Gebiet haben kann. Neue Seltenheiten und die Schmiede sind der Weg nach vorn.'],['Weggefallen:','Werkstatt-Werte (Panzerung, Ausweichen, Betäuben, Lebensraub …), Kaktus-Level-Bonus und Begleiter-Dauerboni. Begleiter und Fähigkeiten kämpfen aber weiter mit.'],['Umstellung:','Du bekommst Schmiede-Level passend zu deiner Stage und ein Münz-Startguthaben. Alte Münzbeträge wurden ersetzt, der Turm-Rekord startet neu.']],
+  en:{title:'New balance: only gear matters',hero:['🛡 Gear is everything','The workshop is gone. Your power now comes only from your gear – and from the new forge, where you upgrade your gear slots with coins.'],items:()=>[['Forge:','Under ⚔ Battle → Cactus. Each level gives +5 % to weapon, gloves, helmet, chest or necklace. The level stays when you swap items.'],['Enemies:','Now grow with the gear you can have in each area. New rarities and the forge are the way forward.'],['Removed:','Workshop stats (armor, dodge, stun, lifesteal …), cactus level bonus and permanent companion bonuses. Companions and skills still fight with you.'],['Switch-over:','You get forge levels matching your stage and starting coins. Old coin amounts were replaced, the tower record starts fresh.']]}},
+{id:'pn105',date:'2026-11-14',title:'Begleiter greifen Bosse sofort an',hero:['🐾 Kein Warten mehr','Sobald ein Boss im Bild ist und die Zeit läuft, springen deine Begleiter ihn sofort an – nicht erst, wenn er bei deinem Kaktus angekommen ist.'],items:()=>[['Bosse:','Begleiter machen ab der ersten Sekunde des Boss-Kampfs Schaden.']],
   en:{title:'Companions attack bosses right away',hero:['🐾 No more waiting','As soon as a boss is on screen and the timer runs, your companions jump at it right away – not only once it reaches your cactus.'],items:()=>[['Bosses:','Companions deal damage from the first second of the boss fight.']]}},
 {id:'pn104',date:'2026-11-14',title:'Kleine Handys: Leisten fest unten',hero:['📱 Fähigkeiten wieder erreichbar','Auf manchen iPhones war die Leiste mit Kaktus, Fähigkeiten, Relikte … nach dem Hochwischen verschwunden. Jetzt steht sie fest über der unteren Navigation.'],items:()=>[['Leisten:','Unterleiste, „Beschwören“ und „Alle leveln“ bleiben immer sichtbar.'],['Wackeln:','Der Bildschirm lässt sich nicht mehr seitlich verschieben.']],
   en:{title:'Small phones: bars fixed at the bottom',hero:['📱 Skills reachable again','On some iPhones the bar with cactus, skills, relics … disappeared after swiping up. Now it stays fixed above the bottom navigation.'],items:()=>[['Bars:','Sub bar, “Summon” and “Level all” always stay visible.'],['Wobble:','The screen can no longer be pushed sideways.']]}},
