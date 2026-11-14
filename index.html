@@ -1256,7 +1256,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1296,8 +1296,11 @@ const lvlCurve=l=>1-Math.pow(0.985,Math.max(1,l)-1);
 const itemScale=l=>1+0.3*lvlCurve(l);
 const pctScale=l=>1+0.1*lvlCurve(l);
 const ROLL_LO=.97,ROLL_HI=1.03;   // Zufallsschwankung beim Fund
-const stageShort=st=>{const wi=worldIdx(st);return WORLDS[wi].n+' '+(wi+1)+'-'+(inDiff(st)-wi*STAGES_PER_WORLD);};
-const stageName=st=>diffOf(st).n+' · '+stageShort(st);
+// 14.11.2026: Gebiete sind fortlaufend nummeriert (Gebiet 1, 2, 3 …) statt Leicht/Normal/Schwer/Ultra schwer
+const gebOf=st=>Math.floor((Math.max(1,st)-1)/20)+1;
+const gebRange=d=>(d*12+1)+'–'+(d*12+12);
+const stageShort=st=>{const wi=worldIdx(st);return WORLDS[wi].n+' '+gebOf(st)+'-'+(inDiff(st)-wi*STAGES_PER_WORLD);};
+const stageName=st=>'Gebiet '+stageShort(st);
 
 // ---------- Ausrüstung ----------
 // Seltenheiten: Chance (Gewicht) und Stärke-Multiplikator
@@ -1588,7 +1591,7 @@ const gsLv=()=>{const n=(S.gsSum&&S.gsSum.n)||0;let L=1;while(L<MAX_G&&n>=gsAt(L
 // 13.11.2026: höhere Seltenheiten brauchen zusätzlich ein erreichtes Gebiet (1–48: 4 Schwierigkeiten × 12 Welten)
 const GGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
 const gebNow=()=>Math.floor((Math.max(1,S.best||S.stage||1)-1)/20)+1;
-const gebName=g=>{const d=Math.min(DIFFS.length-1,Math.floor((g-1)/12)),w=(g-1)%12;return'Gebiet '+g+' · '+DIFFS[d].n+' '+(w+1)+' '+WORLDS[w].n;};
+const gebName=g=>'Gebiet '+g+' · '+WORLDS[(g-1)%12].n;
 const gMaxR=()=>{const g=gebNow();let k=0;for(let i=0;i<GGATE.length;i++)if(GGATE[i]<=g)k=i;return k;};
 const gCapLv=()=>{const k=gMaxR();if(k>=RAR.length-1)return MAX_G;const u=gUnlock(k+1);return u>=99?MAX_G:u-1;};
 const gsLvE=()=>Math.min(gsLv(),gCapLv());                  // wirksame Stufe für die Chancen
@@ -2498,7 +2501,7 @@ function hud(){
   // neue, leere Figur sofort zeichnen (sonst blitzt sie im Energiesparmodus kurz leer auf)
   drawDoll();
   $('coins').textContent=fmt(S.coins);$('kak').textContent=fmt(S.kak||0);
-  $('stageName').textContent=stageShort(S.stage);{const D=diffOf(S.stage),t2=$('diffTag');t2.textContent=D.n;t2.style.setProperty('--dc',D.c);}
+  $('stageName').textContent=WORLDS[worldIdx(S.stage)].n;{const D=diffOf(S.stage),t2=$('diffTag');t2.textContent='Gebiet '+gebOf(S.stage)+' · Stage '+(((S.stage-1)%20)+1);t2.style.setProperty('--dc',D.c);}
   {const Wd=world(),w=S.gear.waffe,rs=heroStats().res[Wd.atkEl]||0;
    const eb=el=>el?`<i class="eb" style="--ec:${ELEM[el].c}">${ELEM[el].ico}</i>`:'<i class="eb off">–</i>';
    const row=(el,lab,val)=>`<div class="er">${eb(el)}<span><small>${lab}</small><b>${val}</b></span></div>`;
@@ -3915,20 +3918,20 @@ function wmOpen(){wmDiff=Math.min(diffIdx(S.stage),DIFFS.length-1);$('modal').hi
   setTimeout(()=>{const c=$('card').querySelector('.wmnode.here');if(c)c.scrollIntoView({block:'center'});},30);}
 function renderWm(){const d=wmDiff,curD=diffIdx(S.stage),curW=worldIdx(S.stage),D=DIFFS[d];
   const tabs=DIFFS.map((x,i)=>{const open=S.best>i*STAGES_PER_DIFF,n=WORLDS.reduce((a,_,w)=>a+(wmDone(i,w)&&!wmGot(wmGi(i,w))?1:0),0);
-    return`<button type="button" class="wmtab${i===d?' on':''}" data-wmd="${i}" style="--dc:${x.c}" ${open?'':'disabled'}>${open?'':'🔒 '}${x.n}${n?`<i>${n}</i>`:''}</button>`;}).join('');
+    return`<button type="button" class="wmtab${i===d?' on':''}" data-wmd="${i}" style="--dc:${x.c}" ${open?'':'disabled'}>${open?'':'🔒 '}${gebRange(i)}${n?`<i>${n}</i>`:''}</button>`;}).join('');
   const nodes=WORLDS.map((Wd,w)=>{const done=wmDone(d,w),here=d===curD&&w===curW,lock=!done&&!here,gi=wmGi(d,w),R=wmRew(d,w),got=wmGot(gi);
     const st0=d*STAGES_PER_DIFF+w*STAGES_PER_WORLD,prog=here?Math.max(0,Math.min(STAGES_PER_WORLD,S.best-1-st0)):done?STAGES_PER_WORLD:0;
     const chest=done?(got?'<span class="wmchest got">✓ abgeholt</span>':`<button type="button" class="wmchest rd" data-wmc="${gi}">🎁 Abholen</button>`)
       :`<span class="wmchest">🎁 ${R.kak} 🌵 · ${R.caps} 🌱</span>`;
     return`<div class="wmnode${done?' done':''}${here?' here':''}${lock?' lock':''}${w%2?' r':''}" style="--s1:${Wd.sky[0]};--s2:${Wd.sky[1]};--g:${Wd.ground[0]};--m:${Wd.mesa}">
-      <div class="wmorb"><span class="wmnum">${w+1}</span>${here?'<span class="wmme">🌵</span>':done?'<span class="wmok">✓</span>':lock?'<span class="wmlk">🔒</span>':''}</div>
-      <div class="wminfo"><b>${Wd.n}</b><small>${ELEM[Wd.atkEl].ico} ${ELEM[Wd.atkEl].n} · schwach gegen ${ELEM[Wd.weak].ico} · Boss ${Wd.boss.n}</small>
+      <div class="wmorb"><span class="wmnum">${d*12+w+1}</span>${here?'<span class="wmme">🌵</span>':done?'<span class="wmok">✓</span>':lock?'<span class="wmlk">🔒</span>':''}</div>
+      <div class="wminfo"><b>Gebiet ${d*12+w+1} · ${Wd.n}</b><small>${ELEM[Wd.atkEl].ico} ${ELEM[Wd.atkEl].n} · schwach gegen ${ELEM[Wd.weak].ico} · Boss ${Wd.boss.n}</small>
         <div class="wmbar"><div style="width:${prog/STAGES_PER_WORLD*100}%"></div><em>${here?'Du bist hier · ':''}${prog}/${STAGES_PER_WORLD}</em></div>${chest}</div></div>`;}).reverse().join('<div class="wmpath"></div>');
   const nd=WORLDS.reduce((a,_,w)=>a+(wmDone(d,w)?1:0),0);
   $('card').innerHTML=`<div class="wm"><h2>🗺 Weltkarte</h2><div class="wmtabs">${tabs}</div>
-    <div class="wmsum" style="--dc:${D.c}"><b>${D.n}</b><span>${nd}/${WORLDS.length} Gebiete geschafft</span></div>
-    <div class="wmlist">${d<DIFFS.length-1?`<div class="wmgoal">⛰ Danach: <b style="color:${DIFFS[d+1].c}">${DIFFS[d+1].n}</b></div><div class="wmpath"></div>`:''}${nodes}<div class="wmstart">🏁 Start</div></div>
-    <p class="hint" style="margin:0;text-align:center">Für jedes geschaffte Gebiet gibt es einmal eine Truhe – auf jeder Schwierigkeit neu und immer größer.</p>
+    <div class="wmsum" style="--dc:${D.c}"><b>Gebiet ${gebRange(d)}</b><span>${nd}/${WORLDS.length} Gebiete geschafft</span></div>
+    <div class="wmlist">${d<DIFFS.length-1?`<div class="wmgoal">⛰ Danach: <b style="color:${DIFFS[d+1].c}">Gebiet ${gebRange(d+1)}</b></div><div class="wmpath"></div>`:''}${nodes}<div class="wmstart">🏁 Start</div></div>
+    <p class="hint" style="margin:0;text-align:center">Für jedes geschaffte Gebiet gibt es einmal eine Truhe – je weiter, desto größer.</p>
     <div class="row"><button class="btn" id="wmX" type="button">Schließen</button></div></div>`;
   $('wmX').onclick=()=>{$('modal').hidden=true;lastHud='';};
   $('card').querySelectorAll('[data-wmd]').forEach(b=>b.onclick=()=>{wmDiff=+b.dataset.wmd;renderWm();const c=$('card').querySelector('.wmnode.here')||$('card').querySelector('.wmchest.rd');if(c)c.scrollIntoView({block:'center'});});
@@ -4070,12 +4073,12 @@ document.addEventListener('visibilitychange',()=>{
 let diffSig='',diffHintT=0;
 function renderDiffRow(){const cur=diffIdx(S.stage),sig=cur+'|'+S.best;if(sig===diffSig)return;diffSig=sig;
   $('diffRow').innerHTML=DIFFS.map((D,d)=>{const open=S.best>d*STAGES_PER_DIFF;
-    return`<button type="button" class="dchip${open?'':' locked'}${d===Math.min(cur,DIFFS.length-1)?' on':''}" data-diff="${d}" style="--dc:${D.c}" aria-disabled="${!open}">${open?'':'🔒 '}${D.n}</button>`;}).join('');
+    return`<button type="button" class="dchip${open?'':' locked'}${d===Math.min(cur,DIFFS.length-1)?' on':''}" data-diff="${d}" style="--dc:${D.c}" aria-disabled="${!open}">${open?'':'🔒 '}${gebRange(d)}</button>`;}).join('');
   $('diffRow').querySelectorAll('[data-diff]').forEach(b=>b.onclick=()=>{const d=+b.dataset.diff,open=S.best>d*STAGES_PER_DIFF,h=$('diffHint');
-    if(!open){h.textContent='🔒 '+DIFFS[d].n+': Schaffe zuerst '+DIFFS[d-1].n+' · '+WORLDS[WORLDS.length-1].n+'\u00a0'+WORLDS.length+'\u201120, um diese Stufe freizuschalten.';h.hidden=false;diffHintT=3.5;return;}
+    if(!open){h.textContent='🔒 Gebiet '+gebRange(d)+': Schaffe zuerst Gebiet '+(d*12)+' ('+WORLDS[WORLDS.length-1].n+'), um sie freizuschalten.';h.hidden=false;diffHintT=3.5;return;}
     if(d===diffIdx(S.stage)||boss)return;
     const target=Math.min(S.best,(d+1)*STAGES_PER_DIFF);S.stage=Math.max(d*STAGES_PER_DIFF+1,target);S.kills=0;enemies=[];resetHero();save();lastHud='';diffSig='';
-    banner={txt:DIFFS[d].n+' · '+stageShort(S.stage),t:2};h.hidden=true;renderDiffRow();});}
+    banner={txt:'Gebiet '+stageShort(S.stage),t:2};h.hidden=true;renderDiffRow();});}
 setInterval(()=>{renderDiffRow();if(diffHintT>0){diffHintT-=.25;if(diffHintT<=0)$('diffHint').hidden=true;}},250);
 
 // ---------- Turm: Etagenkampf, jede Etage ein stärkerer Wächter ----------
@@ -4503,7 +4506,7 @@ const exUnlocked=M=>S.best>=M.at;
 const exState=()=>{if(!S.ex)S.ex={runs:{}};return S.ex;};
 const exBusy=id=>Object.values(exState().runs).some(r=>r.dog===id);
 const exFree=()=>Object.keys(S.dr||{}).filter(id=>S.dr[id]&&!S.drEq.includes(id)&&!exBusy(id));
-const exAtTxt=M=>{const d=diffIdx(M.at),loc=M.at-d*STAGES_PER_DIFF,w=Math.floor((loc-1)/20);return DIFFS[d].n+' '+(w+1)+'-'+(((loc-1)%20)+1);};
+const exAtTxt=M=>'Gebiet '+gebOf(M.at)+'-'+(((M.at-1)%20)+1);
 const exHM=h=>h<1?Math.round(h*60)+' Min':h+(h===1?' Stunde':' Stunden');
 function exReward(M,lv){const k=1+.04*lv;return{coins:Math.round(6*cPow(S.best)*300*M.h*k),kakChance:Math.min(.95,M.kc*k),kak:1+diffIdx(M.at),itemChance:Math.min(1,.5+.02*lv)};}
 let exOpen=false,exMsg='',exPick=null;
@@ -5068,7 +5071,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn95',date:'2026-11-13',title:'Feinschliff Ausrüstungs-Seltenheiten',hero:['✨ Neue Seltenheit = erst selten','Wird eine Seltenheit durch ein neues Gebiet freigeschaltet, startet sie jetzt ebenfalls mit sehr kleiner Chance.'],items:()=>[['Ausrüstung:','Die Chance einer neu freigeschalteten Seltenheit steigt über die nächsten 4 Gebiete auf den normalen Wert – auch wenn deine Beschwörungsstufe schon weiter ist.']]},
+  {id:'pn96',date:'2026-11-14',title:'Gebiete mit Nummern',hero:['🗺 Gebiet 1, 2, 3 …','Statt Leicht, Normal, Schwer und Ultra schwer haben alle Gebiete jetzt eine fortlaufende Nummer. So siehst du sofort, wie weit du bist – und welches Gebiet du für die nächste Seltenheit brauchst.'],items:()=>[['Kampfbox:','Oben steht dein Gebiet und die Stage, z. B. „Gebiet 16 · Stage 12“, darunter der Name des Gebiets.'],['Leiste unter der Kampfbox:','Gebiet 1–12, 13–24, 25–36 und 37–48.'],['Weltkarte & Rangliste:','Ebenfalls mit Gebietsnummern.']]},
+{id:'pn95',date:'2026-11-13',title:'Feinschliff Ausrüstungs-Seltenheiten',hero:['✨ Neue Seltenheit = erst selten','Wird eine Seltenheit durch ein neues Gebiet freigeschaltet, startet sie jetzt ebenfalls mit sehr kleiner Chance.'],items:()=>[['Ausrüstung:','Die Chance einer neu freigeschalteten Seltenheit steigt über die nächsten 4 Gebiete auf den normalen Wert – auch wenn deine Beschwörungsstufe schon weiter ist.']]},
 {id:'pn94',date:'2026-11-13',title:'Fähigkeiten & Begleiter: neues Balancing',hero:['🔮 Länger etwas zu entdecken','Fähigkeiten und Begleiter steigen langsamer im Beschwörungslevel, und seltene Stufen brauchen ein erreichtes Gebiet.'],items:()=>[['Beschwörungsstufe:','Stufe 10 jetzt nach 3.600 statt 1.125 Beschwörungen.'],['Gebiets-Sperre:','Selten ab Gebiet 3, Episch ab Gebiet 8, Legendär ab Gebiet 16, Mythisch ab Gebiet 28.'],['Sehr selten zu Beginn:','Eine neu freigeschaltete Seltenheit startet mit kleiner Chance und wird über 4 Gebiete normal häufig.'],['Anzeige:','Gesperrte Seltenheiten zeigen im Beschwörungsfenster, welches Gebiet du brauchst.']]},
 {id:'pn93',date:'2026-11-13',title:'Seltenheiten: langsamer & mit Gebieten',hero:['🗺 Seltenheit braucht Fortschritt','Höhere Seltenheiten brauchen jetzt zusätzlich zu den Beschwörungen ein erreichtes Gebiet. Neu freigeschaltete Seltenheiten sind anfangs sehr selten.'],items:()=>[['Gebiets-Sperre:','Z. B. Legendär ab Gebiet 7, Kosmisch ab Gebiet 18, Allmacht erst im letzten Gebiet (48).'],['Sehr selten zu Beginn:','Eine neue Seltenheit startet mit winziger Chance und wird über 6 Beschwörungsstufen normal häufig.'],['Anzeige:','Im Beschwörungsfenster siehst du, welches Gebiet du für die nächste Seltenheit brauchst.'],['Anpassung:','Vorhandene Ausrüstung über deiner erreichten Seltenheit wurde auf deine aktuelle Höchst-Seltenheit abgestuft.']]},
 {id:'pn92',date:'2026-11-13',title:'Allianzen pausiert',hero:['🛡 Allianzen deaktiviert','Allianzen sind vorübergehend abgeschaltet. Allianz und Allianzboss sind gesperrt, bis sie zurückkommen.'],items:()=>[['Allianz:','Der Knopf oben rechts ist gesperrt (🔒).'],['Allianzboss:','Unter „Mehr“ vorübergehend nicht verfügbar.']]},
