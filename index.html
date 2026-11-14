@@ -1200,6 +1200,14 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   .drpage .skfoot{position:fixed;left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),490px);bottom:var(--tbh,66px);margin:0;padding:6px;border-radius:10px 10px 0 0;z-index:14;box-shadow:0 -6px 12px #0008}
   #tabKampf .kbody{padding-bottom:64px}#tabKampf #skSec{padding-bottom:60px}.drpage{padding-bottom:64px}
 }
+#axWrap{position:fixed;inset:0;z-index:60;background:#2a1a12;touch-action:none;user-select:none;-webkit-user-select:none}
+#axCv{display:block;touch-action:none}
+.axhud{position:absolute;left:0;right:0;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:8px;padding:0 10px;pointer-events:none}
+.axhud button{pointer-events:auto;width:34px;height:34px;border-radius:10px;border:2px solid #000a;background:#3a2c22;color:#fff;font-weight:900}
+.axhud b{flex:1;color:#ffe7b8;font-size:.85rem;text-shadow:0 1px 0 #000}
+.axhud span{width:110px;height:12px;border-radius:6px;background:#0008;border:2px solid #000;overflow:hidden}.axhud span i{display:block;height:100%;width:100%;background:#63c74d}
+.axmsg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);background:#000b;color:#fff;border-radius:14px;padding:12px 18px;text-align:center;font-weight:900;font-size:1.1rem;pointer-events:auto}
+.axmsg .btn{margin-top:10px}
 </style>
 
 <div class="game">
@@ -1725,7 +1733,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1765,7 +1773,7 @@ const RGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
 const NO_DR=true,NO_SK=true;
 const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=16+(gx-48)/4;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
 const UPS=0.05;                                  // jedes Schmiede-Level: +5 % auf den Wert des Teils
-const upTarget=st=>(Math.max(1,st)-1)/8;        // erwartetes Schmiede-Level auf dieser Stage
+const upTarget=st=>0;   // 14.11.2026: Schmiede wieder entfernt – nur die Teile selbst zählen
 const atkTarget=st=>25+6*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
 const hpTarget=st=>300+70*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
 const POWK=2.7;   // Schwierigkeit: wie stark die Gegner im Verhältnis zur erwarteten Ausrüstung sind
@@ -1930,7 +1938,7 @@ const WS_OLD=[
 ];
 const wsLv=id=>(S.ws&&S.ws[id])||0;
 const wsDef=id=>WS.find(w=>w.id===id);const wsV=id=>wsDef(id)?wsVal(id):0;
-const upMul=slot=>1+UPS*wsLv('u_'+slot);
+const upMul=slot=>1;   // 14.11.2026: Schmiede entfernt
 const wsVal=(id,lv=wsLv(id))=>{const W=wsDef(id);if(!W)return 0;if(W.kind==='up')return UPS*100*lv;return W.kind==='mul'?(Math.pow(1+W.per/100,lv)-1)*100:W.lim?W.lim*(1-Math.exp(-W.per*lv/W.lim)):W.per*lv;};   // Bonus in %
 const wsCost=(W,lv=wsLv(W.id))=>Math.round(W.base*Math.pow(W.g,lv));
 const wsKak=()=>0; // 11.11.2026: Werkstatt kostet nur noch Münzen                                          // jedes 10. Level: 1 🌵, ab Lv 100: 2 🌵 …
@@ -3501,7 +3509,7 @@ function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,
   const e=$('ktEq');if(e&&!eq)e.onclick=()=>{S.char.cls=id;ktLook(S.char);save();lastHud='';banner={txt:K.n+' ist jetzt dein Kaktus!',t:1.6};ktDetail(id,re);};
   const u=$('ktUp');if(u)u.onclick=()=>{ktLevelAll(id);save();lastHud='';ktDetail(id,re);};}
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
-  if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Schmiede <em>Lv ${wsTotal()}</em></b><small>Verbessert deine Ausrüstung</small></div>${L.list0}</div>`;
+  if(false)body='';
   else if(kSub==='skill'&&!NO_SK)body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
@@ -5206,7 +5214,6 @@ const TUT=[
   {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
   {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Ausrüstung beschwören“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
-  {el:'tbKampf',t:'Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.'},
   {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
@@ -5612,7 +5619,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn107',date:'2026-11-14',title:'Begleiter & Fähigkeiten werden neu gebaut',hero:['🔧 Großer Umbau','Begleiter und Fähigkeiten sind vorerst aus dem Spiel genommen. Beide Systeme werden komplett neu aufgebaut und kommen in einem späteren Update zurück.'],items:()=>[['Begleiter:','Der Reiter zeigt „Bald“. Auch die Erkundung ruht, bis die neuen Begleiter da sind.'],['Fähigkeiten:','Im Kampf gibt es vorerst keine Fähigkeiten. Unter ⚔ Kampf steht „Bald“.'],['Hinweis:','Alle bisherigen Begleiter und Fähigkeiten wurden entfernt.'],['Gegner:','Etwas schwächer, damit Bosse ohne Begleiter und Fähigkeiten schaffbar bleiben.']],
+  {id:'pn108',date:'2026-11-14',title:'Schmiede wieder entfernt',hero:['🛡 Nur deine Teile zählen','Die Schmiede ist wieder weg. Stärker wirst du ausschließlich durch bessere Ausrüstung aus den Samenkapseln.'],items:()=>[['Schmiede:','Entfernt – Schmiede-Level zählen nicht mehr.'],['Gegner:','Wurden passend angepasst, an deiner Stage ändert sich nichts.']],
+  en:{title:'Forge removed again',hero:['🛡 Only your items count','The forge is gone again. You only get stronger through better gear from seed capsules.'],items:()=>[['Forge:','Removed – forge levels no longer count.'],['Enemies:','Adjusted to match, your stage stays the same.']]}},
+{id:'pn107',date:'2026-11-14',title:'Begleiter & Fähigkeiten werden neu gebaut',hero:['🔧 Großer Umbau','Begleiter und Fähigkeiten sind vorerst aus dem Spiel genommen. Beide Systeme werden komplett neu aufgebaut und kommen in einem späteren Update zurück.'],items:()=>[['Begleiter:','Der Reiter zeigt „Bald“. Auch die Erkundung ruht, bis die neuen Begleiter da sind.'],['Fähigkeiten:','Im Kampf gibt es vorerst keine Fähigkeiten. Unter ⚔ Kampf steht „Bald“.'],['Hinweis:','Alle bisherigen Begleiter und Fähigkeiten wurden entfernt.'],['Gegner:','Etwas schwächer, damit Bosse ohne Begleiter und Fähigkeiten schaffbar bleiben.']],
   en:{title:'Companions & skills are being rebuilt',hero:['🔧 Big rebuild','Companions and skills are taken out of the game for now. Both systems are being rebuilt from scratch and return in a later update.'],items:()=>[['Companions:','The tab shows “Soon”. The expedition also rests until the new companions arrive.'],['Skills:','There are no skills in battle for now. Under ⚔ Battle it says “Soon”.'],['Note:','All previous companions and skills were removed.'],['Enemies:','A bit weaker so bosses stay beatable without companions and skills.']]}},
 {id:'pn106',date:'2026-11-14',title:'Neue Balance: Nur Ausrüstung zählt',hero:['🛡 Ausrüstung ist alles','Die Werkstatt ist weg. Deine Stärke kommt jetzt nur noch aus deiner Ausrüstung – und aus der neuen Schmiede, in der du mit Münzen deine Ausrüstungsplätze verbesserst.'],items:()=>[['Schmiede:','Unter ⚔ Kampf → Kaktus. Jedes Level gibt +5 % auf Waffe, Handschuhe, Helm, Rüstung oder Halskette. Das Level bleibt beim Tauschen der Teile erhalten.'],['Gegner:','Wachsen jetzt passend zu der Ausrüstung, die man im jeweiligen Gebiet haben kann. Neue Seltenheiten und die Schmiede sind der Weg nach vorn.'],['Weggefallen:','Werkstatt-Werte (Panzerung, Ausweichen, Betäuben, Lebensraub …), Kaktus-Level-Bonus und Begleiter-Dauerboni. Begleiter und Fähigkeiten kämpfen aber weiter mit.'],['Umstellung:','Du bekommst Schmiede-Level passend zu deiner Stage und ein Münz-Startguthaben. Alte Münzbeträge wurden ersetzt, der Turm-Rekord startet neu.']],
   en:{title:'New balance: only gear matters',hero:['🛡 Gear is everything','The workshop is gone. Your power now comes only from your gear – and from the new forge, where you upgrade your gear slots with coins.'],items:()=>[['Forge:','Under ⚔ Battle → Cactus. Each level gives +5 % to weapon, gloves, helmet, chest or necklace. The level stays when you swap items.'],['Enemies:','Now grow with the gear you can have in each area. New rarities and the forge are the way forward.'],['Removed:','Workshop stats (armor, dodge, stun, lifesteal …), cactus level bonus and permanent companion bonuses. Companions and skills still fight with you.'],['Switch-over:','You get forge levels matching your stage and starting coins. Old coin amounts were replaced, the tower record starts fresh.']]}},
@@ -5760,6 +5769,70 @@ function loop(now){
 }
 requestAnimationFrame(loop);
 setInterval(save,5000);
+// ===== 14.11.2026: Prototyp „Kapitel“ im Stil von Archero 2 (nur DEV) =====
+// Dein Kaktus läuft per Joystick durch eine Arena. Steht er still, schießt er automatisch Stacheln auf den nächsten Gegner.
+// Gegner kommen in Wellen aus dem aktuellen Gebiet. Werte kommen aus deiner Ausrüstung (heroStats).
+const AX={open:false};
+function axOpen(){if(AX.open)return;const d=document.createElement('div');d.id='axWrap';
+  d.innerHTML=`<canvas id="axCv"></canvas><div class="axhud"><button type="button" id="axX">✕</button><b id="axInfo"></b><span id="axHp"><i></i></span></div>
+    <div class="axmsg" id="axMsg" hidden></div>`;
+  document.body.appendChild(d);
+  const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+  const A=Object.assign(AX,{open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],fx:[],wave:0,waves:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0});
+  const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
+  const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
+  // Joystick: irgendwo auf dem Bildschirm drücken und ziehen
+  cv2.addEventListener('pointerdown',e=>{e.preventDefault();cv2.setPointerCapture(e.pointerId);A.joy={id:e.pointerId,x0:e.clientX,y0:e.clientY,dx:0,dy:0};});
+  cv2.addEventListener('pointermove',e=>{if(!A.joy||A.joy.id!==e.pointerId)return;A.joy.dx=e.clientX-A.joy.x0;A.joy.dy=e.clientY-A.joy.y0;});
+  const up=e=>{if(A.joy&&A.joy.id===e.pointerId)A.joy=null;};cv2.addEventListener('pointerup',up);cv2.addEventListener('pointercancel',up);
+  $('axX').onclick=axClose;
+  axWave();requestAnimationFrame(axStep);}
+function axClose(){AX.open=false;const d=$('axWrap');if(d)d.remove();}
+function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
+function axWave(){const A=AX;A.wave++;const W0=world(),p=pow(S.stage),n=3+A.wave,boss=A.wave>A.waves;
+  if(boss){const ty=W0.boss;A.en.push({ty,boss:true,x:A.W/2,y:A.H*.2,hp:24*ty.hp*p*6,max:24*ty.hp*p*6,atk:6*ty.atk*p*.5,sp:30,r:ty.r*1.6,hit:0,cd:1});axSay('BOSS: '+W0.boss.n,2);return;}
+  for(let i=0;i<n;i++){const ty=W0.e[Math.floor(Math.random()*W0.e.length)],side=Math.random();
+    const x=side<.5?rnd(30,A.W-30):(side<.75?20:A.W-20),y=side<.5?rnd(60,A.H*.35):rnd(60,A.H*.5);
+    A.en.push({ty,x,y,hp:24*ty.hp*p,max:24*ty.hp*p,atk:6*ty.atk*p*.4,sp:ty.sp*.9,r:ty.r,hit:0,cd:rnd(.3,1)});}
+  axSay('Welle '+A.wave+' / '+A.waves,1.2);}
+function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;axUpdate(dt);axDraw();requestAnimationFrame(axStep);}
+function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&$('axMsg'))$('axMsg').hidden=true;}
+  if(A.state!=='go')return;
+  // Bewegen
+  h.moving=false;if(A.joy){const l=Math.hypot(A.joy.dx,A.joy.dy);if(l>8){const s=Math.min(1,l/50)*170;h.x+=A.joy.dx/l*s*dt;h.y+=A.joy.dy/l*s*dt;h.moving=true;if(Math.abs(A.joy.dx)>3)h.face=A.joy.dx>0?1:-1;}}
+  h.x=Math.max(24,Math.min(A.W-24,h.x));h.y=Math.max(90,Math.min(A.H-40,h.y));h.hit=Math.max(0,h.hit-dt*4);
+  // Schießen, wenn er steht
+  A.cd-=dt;const alive=A.en.filter(e=>e.hp>0);
+  if(!h.moving&&alive.length&&A.cd<=0){const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,a.y-h.y)?e:a,null);
+    const an=Math.atan2(tg.y-(h.y-30),tg.x-h.x);A.sh.push({x:h.x,y:h.y-30,vx:Math.cos(an)*420,vy:Math.sin(an)*420,t:1.6});A.cd=h.spd;h.face=tg.x>h.x?1:-1;}
+  // Stacheln
+  for(const s of A.sh){s.x+=s.vx*dt;s.y+=s.vy*dt;s.t-=dt;
+    for(const e of A.en){if(e.hp<=0||s.t<=0)continue;if(Math.hypot(e.x-s.x,(e.y-e.r)-s.y)<e.r+6){const cr=Math.random()*100<h.crit,d=h.atk*(cr?h.critM:1);e.hp-=d;e.hit=.12;s.t=0;
+      A.fx.push({x:e.x,y:e.y-e.r*2,txt:(cr?'💥':'')+fmt(d),col:cr?'#ffd447':'#fff',t:.7});if(e.hp<=0)A.fx.push({x:e.x,y:e.y-e.r,txt:'',boom:1,t:.35});}}}
+  A.sh=A.sh.filter(s=>s.t>0&&s.x>-20&&s.x<A.W+20&&s.y>-20&&s.y<A.H+20);
+  // Gegner laufen auf den Kaktus zu
+  for(const e of A.en){if(e.hp<=0)continue;e.hit=Math.max(0,e.hit-dt);const dx=h.x-e.x,dy=h.y-e.y,l=Math.hypot(dx,dy)||1;
+    if(l>e.r+16){e.x+=dx/l*e.sp*dt;e.y+=dy/l*e.sp*dt;}else{e.cd-=dt;if(e.cd<=0){e.cd=1.2;h.hp-=e.atk;h.hit=1;A.fx.push({x:h.x,y:h.y-70,txt:'-'+fmt(e.atk),col:'#ff6f8a',t:.7});}}}
+  for(const f of A.fx){f.t-=dt;f.y-=30*dt;}A.fx=A.fx.filter(f=>f.t>0);
+  if(h.hp<=0){A.state='lost';axSay('<b>Besiegt!</b><br><button type="button" class="btn" id="axAgain">Nochmal</button>',999);setTimeout(()=>{const b=$('axAgain');if(b)b.onclick=()=>{axClose();axOpen();};},0);return;}
+  if(!A.en.some(e=>e.hp>0)){A.en=[];if(A.wave>A.waves){A.state='won';axSay('<b>Gebiet geschafft! 🎉</b><br><button type="button" class="btn go" id="axAgain">Nochmal</button>',999);setTimeout(()=>{const b=$('axAgain');if(b)b.onclick=()=>{axClose();axOpen();};},0);}else axWave();}
+  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=stageShort(S.stage)+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
+function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
+  // Boden: Wüstenarena mit Kacheln
+  g.fillStyle='#d9b77a';g.fillRect(0,0,A.W,A.H);g.fillStyle='#cfa96a';for(let y=0;y<A.H;y+=40)for(let x=(y/40)%2?0:40;x<A.W;x+=80)g.fillRect(x,y,40,40);
+  g.fillStyle='#5a3d22';g.fillRect(0,0,A.W,70);g.fillStyle='#6b4a2a';g.fillRect(0,64,A.W,6);
+  // nach y sortiert zeichnen (weiter unten = vorne)
+  const items=A.en.filter(e=>e.hp>0).map(e=>['e',e]);items.push(['h',h]);items.sort((a,b)=>a[1].y-b[1].y);
+  for(const [k,o] of items){if(k==='h'){g.save();g.translate(o.x,o.y);g.scale(o.face*.8,.8);drawCactus(g,S.char||DEFAULT_CH,{x:0,y:0,walk:o.moving,bob:o.moving?Math.abs(Math.sin(t*12))*-2:Math.sin(t*3),squash:0,hit:o.hit>0,gear:S.gear});g.restore();}
+    else{g.save();g.translate(o.x,o.y);g.scale(o.x<h.x?-1:1,1);if(o.boss)g.scale(1.6,1.6);drawEnemy({ty:o.ty,boss:o.boss,x:0,y:0,hit:o.hit,dying:0,lunge:0},g);g.restore();
+      g.fillStyle='#0008';g.fillRect(o.x-18,o.y-o.r*(o.boss?3.6:2.4)-8,36,5);g.fillStyle='#ff5a5a';g.fillRect(o.x-18,o.y-o.r*(o.boss?3.6:2.4)-8,36*Math.max(0,o.hp/o.max),5);}}
+  g.fillStyle='#fff6d8';g.strokeStyle='#2a1a12';g.lineWidth=1.5;for(const s of A.sh){g.save();g.translate(s.x,s.y);g.rotate(Math.atan2(s.vy,s.vx));g.beginPath();g.moveTo(9,0);g.lineTo(-7,-3);g.lineTo(-7,3);g.closePath();g.fill();g.stroke();g.restore();}
+  g.textAlign='center';g.font='900 14px system-ui';for(const f of A.fx){if(f.boom){g.globalAlpha=f.t/.35;g.fillStyle='#fff';g.beginPath();g.arc(f.x,f.y,22*(1-f.t/.35)+6,0,7);g.fill();g.globalAlpha=1;continue;}
+    g.globalAlpha=Math.min(1,f.t/.3);g.lineWidth=3;g.strokeStyle='#000';g.strokeText(f.txt,f.x,f.y);g.fillStyle=f.col;g.fillText(f.txt,f.x,f.y);g.globalAlpha=1;}
+  // Joystick zeichnen
+  if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
+if(maint.dev){const row=document.querySelector('#tabMehr .onrow');if(row){const b=document.createElement('button');b.type='button';b.className='onbtn sm';b.id='axBtn';
+  b.innerHTML='<b>🎮 Kapitel (Test)</b><span>Archero-Prototyp</span>';row.prepend(b);b.onclick=axOpen;}}
 })();
 </script>
 </body></html>
