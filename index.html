@@ -1223,6 +1223,11 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .axreel:not([disabled]).stop{cursor:pointer}
 @keyframes axpop{0%{transform:scale(.9)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
 .axhint{text-align:center;color:#fff;font-weight:800;font-size:.8rem}
+.axend{width:min(100%,330px);background:linear-gradient(#4a3826,#2c2016);border:3px solid #6b4f36;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;text-align:center;box-shadow:0 10px 26px #000c}
+.axend.won{border-color:#ffd447}.axend h3{margin:0}.axend>small{color:var(--sand);font-weight:700}
+.axrew{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}.axrew span{min-width:84px;background:#0006;border:2px solid #6b4f36;border-radius:12px;padding:6px 8px;display:flex;flex-direction:column;align-items:center}
+.axrew i{font-style:normal;font-size:1.6rem}.axrew b{color:#7fe08a;font-size:1rem}.axrew small{color:var(--sand);font-size:.66rem;font-weight:800}.axrew em{color:var(--muted)}
+.axbtns{display:flex;gap:8px}.axbtns .btn{flex:1;text-align:center;justify-content:center}
 .axmsg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);background:#000b;color:#fff;border-radius:14px;padding:12px 18px;text-align:center;font-weight:900;font-size:1.1rem;pointer-events:auto}
 .axmsg .btn{margin-top:10px}
 </style>
@@ -1516,7 +1521,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -5818,7 +5823,7 @@ function axOpen(){if(AX.open)return;const d=document.createElement('div');d.id='
   const up=e=>{if(A.joy&&A.joy.id===e.pointerId)A.joy=null;};cv2.addEventListener('pointerup',up);cv2.addEventListener('pointercancel',up);
   $('axX').onclick=axClose;
   axWave();requestAnimationFrame(axStep);}
-function axClose(){AX.open=false;const d=$('axWrap');if(d)d.remove();}
+function axClose(){AX.open=false;AX.rew=null;const d=$('axWrap');if(d)d.remove();}
 function axPick(){const A=AX;A.state='pick';A.sh=[];
   const pool=AXS.slice().sort(()=>Math.random()-.5).slice(0,3),P=$('axPick');
   // Drei Karten mischen kurz durch und bleiben nacheinander stehen (ohne Glücksspiel-Optik)
@@ -5836,6 +5841,16 @@ function axPick(){const A=AX;A.state='pick';A.sh=[];
     if(id==='heal')h.hp=Math.min(h.max,h.hp+h.max*.4);if(id==='maxhp'){const add=h.max*.25;h.max+=add;h.hp+=add;}
     P.hidden=true;$('axSk').innerHTML=Object.entries(A.sk).filter(([k])=>k!=='heal').map(([k,n])=>`<span>${AXS.find(x=>x.id===k).ico}${n>1?'<em>'+n+'</em>':''}</span>`).join('');
     A.state='go';axWave();});}
+// Belohnungen: jede geschaffte Welle bringt etwas, der Boss deutlich mehr. Bei einer Niederlage bleibt das bisher Verdiente.
+function axGain(boss){const A=AX,gb=gebNow(),c=Math.round(6*cPow(S.stage)*(boss?300:30));A.rew=A.rew||{caps:0,kak:0,coins:0};
+  A.rew.caps+=boss?20+2*gb:3+Math.floor(gb/2);A.rew.coins+=c;if(boss)A.rew.kak+=3+Math.floor(gb/4);}
+function axEnd(won){const A=AX;if(won)axGain(true);const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
+  const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Gebiet geschafft! 🎉':'Besiegt!'}</h3>
+    <small>${won?'Alle '+A.waves+' Wellen und der Boss sind besiegt.':'Geschafft: '+(A.wave-1)+' von '+A.waves+' Wellen.'}</small>
+    <div class="axrew">${any?`${R.coins?`<span><i>🪙</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
+    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">Nochmal</button></div></div>`;P.hidden=false;
+  const take=()=>{S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
+  $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen();};}
 function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
 function axWave(){const A=AX;A.wave++;const W0=world(),p=pow(S.stage),n=3+A.wave,boss=A.wave>A.waves;
   if(boss){const ty=W0.boss;A.en.push({ty,boss:true,x:A.W/2,y:A.H*.2,hp:24*ty.hp*p*6,max:24*ty.hp*p*6,atk:6*ty.atk*p*.5,sp:30,r:ty.r*1.6,hit:0,cd:1});axSay('BOSS: '+W0.boss.n,2);return;}
@@ -5867,8 +5882,8 @@ function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&
   for(const e of A.en){if(e.hp<=0)continue;if(e.burn&&e.burn.t>0){e.burn.t-=dt;e.hp-=e.burn.d*dt;if(e.hp<=0){A.fx.push({x:e.x,y:e.y-e.r,txt:'',boom:1,t:.35});continue;}}e.hit=Math.max(0,e.hit-dt);const dx=h.x-e.x,dy=h.y-e.y,l=Math.hypot(dx,dy)||1;
     if(l>e.r+16){e.x+=dx/l*e.sp*dt;e.y+=dy/l*e.sp*dt;}else{e.cd-=dt;if(e.cd<=0){e.cd=1.2;h.hp-=e.atk;h.hit=1;A.fx.push({x:h.x,y:h.y-70,txt:'-'+fmt(e.atk),col:'#ff6f8a',t:.7});}}}
   for(const f of A.fx){f.t-=dt;f.y-=30*dt;}A.fx=A.fx.filter(f=>f.t>0);
-  if(h.hp<=0){A.state='lost';axSay('<b>Besiegt!</b><br><button type="button" class="btn" id="axAgain">Nochmal</button>',999);setTimeout(()=>{const b=$('axAgain');if(b)b.onclick=()=>{axClose();axOpen();};},0);return;}
-  if(!A.en.some(e=>e.hp>0)){A.en=[];if(A.wave>A.waves){A.state='won';axSay('<b>Gebiet geschafft! 🎉</b><br><button type="button" class="btn go" id="axAgain">Nochmal</button>',999);setTimeout(()=>{const b=$('axAgain');if(b)b.onclick=()=>{axClose();axOpen();};},0);}else axPick();}
+  if(h.hp<=0){A.state='lost';axEnd(false);return;}
+  if(!A.en.some(e=>e.hp>0)){A.en=[];if(A.wave>A.waves){A.state='won';axEnd(true);}else{axGain(false);axPick();}}
   const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=stageShort(S.stage)+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
 function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Boden: Wüstenarena mit Kacheln
