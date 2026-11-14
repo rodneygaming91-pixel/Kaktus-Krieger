@@ -1200,6 +1200,12 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   .drpage .skfoot{position:fixed;left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),490px);bottom:var(--tbh,66px);margin:0;padding:6px;border-radius:10px 10px 0 0;z-index:14;box-shadow:0 -6px 12px #0008}
   #tabKampf .kbody{padding-bottom:64px}#tabKampf #skSec{padding-bottom:60px}.drpage{padding-bottom:64px}
 }
+/* Kapitel-Knopf */
+.chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
+.chapbtn>i{font-style:normal;font-size:22px}.chapbtn>span{flex:1;display:flex;flex-direction:column;line-height:1.15}.chapbtn b{font-size:15px}.chapbtn small{font-size:11px;opacity:.8}
+.chapbtn em{font-style:normal;font-weight:900;font-size:13px;background:#63c74d;color:#10300a;padding:6px 10px;border-radius:10px}
+.chapbtn.need{border-color:#ffd447;animation:chapPulse 1.4s ease-in-out infinite}@keyframes chapPulse{50%{box-shadow:0 3px 0 #2a1a0b,0 0 14px #ffd44799}}
+.axunl{margin:6px 0 0;font-weight:800;color:#7fe08a}
 #axWrap{position:fixed;inset:0;z-index:60;background:#2a1a12;touch-action:none;user-select:none;-webkit-user-select:none}
 #axCv{display:block;touch-action:none}
 .axhud{position:absolute;left:0;right:0;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:8px;padding:0 10px;pointer-events:none}
@@ -1245,6 +1251,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
+  <button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
   </div>
   
   <div class="tpanel" id="tPanel">
@@ -1521,7 +1528,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1700,6 +1707,12 @@ const RX=[
   [/^Gebiet (\d+(?:–\d+)?)$/,(m)=>'Area '+m[1]],
   [/^Gebiet (\d+(?:–\d+)?) (.+)$/,(m,t)=>'Area '+m[1]+' '+t(m[2])],
   [/^(.+) (\d+)-(\d+)$/,(m,t)=>t(m[1])+' '+m[2]+'-'+m[3]],
+  [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
+  [/^Kapitel (\d+) · Welle (\d+)\/(\d+)( · Boss)?$/,(m)=>'Chapter '+m[1]+' · Wave '+m[2]+'/'+m[3]+(m[4]?' · Boss':'')],
+  [/^Kapitel (\d+) geschafft! 🎉$/,(m)=>'Chapter '+m[1]+' cleared! 🎉'],
+  [/^🎮 Kapitel (\d+) schaffen$/,(m)=>'🎮 Clear chapter '+m[1]],
+  [/^Kapitel (\d+) schaffen, um weiterzukommen$/,(m)=>'Clear chapter '+m[1]+' to continue'],
+  [/^🔓 Gebiet (\d+) ist jetzt frei – dein Kaktus kämpft dort weiter\.$/,(m)=>'🔓 Area '+m[1]+' is now unlocked – your cactus fights on there.'],
   [/^Stufe (\d+)$/,(m)=>'Level '+m[1]],
   [/^Stage (\d+)$/,(m)=>'Stage '+m[1]],
   [/^Frei ab (.+) Lv (\d+)$/,(m,t)=>'Unlocks at '+t(m[1])+' Lv '+m[2]],
@@ -1755,7 +1768,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2232,6 +2245,8 @@ if(!S.nb1){const sum=k=>{let x=0;for(const sl of SLOTS)if(!sl.pct&&sl.stat===k&&
   S.stage=Math.min(S.stage||1,st);S.best=st;S.kills=0;S.coins=Math.round(6*cPow(st)*1500);S.twRec=0;S.tower=1;
   S.nb1=true;save();}
 // 14.11.2026 (Anpassung rb1): Begleiter und Fähigkeiten entfernt – werden neu aufgebaut (keine Erstattung)
+// 14.11.2026 (Kapitel): Gebiete werden nur über das Kapitel freigeschaltet. Bisher erreichte Gebiete zählen als geschafft.
+if(S.chap==null){S.chap=Math.max(0,gebOf(S.best||S.stage||1)-1);save();}
 if(!S.rb1){S.dr={};S.drEq=[];S.drSum={n:0};S.skl={};S.skEq=[];S.skSum={n:0};if(S.ex)S.ex={runs:{}};S.rb1=true;save();}
 // Anpassung v9: Hauptquartier wird zur Werkstatt – ausgebaute Gebäude werden voll in Münzen erstattet
 if(!S.v9){
@@ -2312,7 +2327,9 @@ function makeEnemy(isBoss){
     atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(6*cPow(S.stage)*(isBoss?15:1))};   // Balance v6: doppelt so viele Münzen pro Gegner
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
-function startBoss(){boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
+const chapCap=()=>((S.chap||0)+1)*20;
+let chapHintT=0;
+function startBoss(){if(S.stage>=chapCap()){S.kills=KILL_GOAL;if(performance.now()-chapHintT>20000){chapHintT=performance.now();banner={txt:'Kapitel '+((S.chap||0)+1)+' schaffen, um weiterzukommen',t:3};}return;}boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
 
 const alive=()=>enemies.filter(e=>!e.dying);
 const front=()=>alive().reduce((a,e)=>!a||e.x<a.x?e:a,null);
@@ -3211,7 +3228,7 @@ function hud(){
    $('elYou').innerHTML=row(w&&w.el,'Waffe',w&&w.el?ELEM[w.el].n+(w.el===Wd.weak?' <em class="pill up">+50%</em>':w.el===Wd.atkEl?' <em class="pill down">−40%</em>':''):'<em class="dim">ohne</em>')+
      row(Wd.atkEl,'Resistenz','<em class="pill '+(rs?'up':'down')+'">'+rs+'%</em>');}
   const bReady=!boss&&S.kills>=KILL_GOAL;
-  $('killTxt').textContent=boss?'Boss-Kampf':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
+  const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
   $('stageBox').classList.toggle('ready',bReady);$('stageBox').tabIndex=bReady?0:-1;
   $('bar').classList.toggle('boss',boss);
   $('barFill').style.width=(boss?100:S.kills/KILL_GOAL*100)+'%';
@@ -5790,6 +5807,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn110',date:'2026-11-14',title:'Neu: Kapitel',hero:['🎮 Steuere deinen Kaktus selbst','Unter dem Kampffeld wartet jetzt das Kapitel: Du läufst per Finger durch die Arena, dein Kaktus schießt von allein, sobald du stehen bleibst.'],items:()=>[['Ablauf:','5 Wellen und am Ende der Gebiets-Boss. Nach jeder Welle wählst du eine von drei Fähigkeiten für diesen Lauf.'],['Fortschritt:','Ein neues Gebiet öffnet sich nur, wenn du sein Kapitel schaffst. Dein Kaktus kämpft im freien Gebiet wie gewohnt weiter.'],['Beute:','Münzen, Samenkapseln und Kakteen – auch wenn du unterwegs scheiterst. Kapitel kannst du so oft spielen, wie du willst.'],['Arenen:','Jede Welt hat ihre eigene Arena mit Hindernissen, hinter denen du dich vor Fernkämpfern verstecken kannst.']],
+  en:{title:'New: Chapters',hero:['🎮 Control your cactus yourself','Below the battlefield the chapter is waiting: move through the arena with your finger, your cactus shoots by itself as soon as you stand still.'],items:()=>[['How it works:','5 waves and the area boss at the end. After each wave you pick one of three skills for this run.'],['Progress:','A new area only opens once you clear its chapter. Your cactus keeps fighting in the unlocked area as usual.'],['Loot:','Coins, seed capsules and cacti – even if you fail along the way. Play chapters as often as you like.'],['Arenas:','Every world has its own arena with obstacles you can hide behind from ranged enemies.']]}},
   {id:'pn109',date:'2026-11-14',title:'12 neue Bosse',hero:['👑 Jedes Gebiet hat seinen eigenen Boss','Alle Gebiets-Bosse wurden neu gezeichnet – jeder mit eigener Körperform statt immer wieder Würmer.'],items:()=>[['Die Neuen:','Dornenkoloss, Salzkrebs-König, Lavagolem, Kristallspinne, Sternenrochen, Pilzkönigin, Frostyeti, Donnergreif, Knochendrache, Flammenphönix, Kraken der Tiefe und der Kaktuskaiser mit Zepter und Umhang.'],['Lebendig:','Lava glüht, Sporen schweben, Flügel schlagen, Tentakel wiegen sich.']],
   en:{title:'12 new bosses',hero:['👑 Every area has its own boss','All area bosses were redrawn – each with its own body shape instead of worms over and over.'],items:()=>[['The new ones:','Thorn Colossus, Salt Crab King, Lava Golem, Crystal Spider, Star Ray, Mushroom Queen, Frost Yeti, Thunder Griffin, Bone Dragon, Flame Phoenix, Kraken of the Deep and the Cactus Emperor with scepter and cape.'],['Alive:','Lava glows, spores float, wings flap, tentacles sway.']]}},
 {id:'pn108',date:'2026-11-14',title:'Schmiede wieder entfernt',hero:['🛡 Nur deine Teile zählen','Die Schmiede ist wieder weg. Stärker wirst du ausschließlich durch bessere Ausrüstung aus den Samenkapseln.'],items:()=>[['Schmiede:','Entfernt – Schmiede-Level zählen nicht mehr.'],['Gegner:','Wurden passend angepasst, an deiner Stage ändert sich nichts.']],
@@ -5942,7 +5961,7 @@ function loop(now){
 }
 requestAnimationFrame(loop);
 setInterval(save,5000);
-// ===== 14.11.2026: Prototyp „Kapitel“ im Stil von Archero 2 (nur DEV) =====
+// ===== 14.11.2026: Kapitel im Stil von Archero 2 (seit pn110 für alle) =====
 // Dein Kaktus läuft per Joystick durch eine Arena. Steht er still, schießt er automatisch Stacheln auf den nächsten Gegner.
 // Gegner kommen in Wellen aus dem aktuellen Gebiet. Werte kommen aus deiner Ausrüstung (heroStats).
 const AX={open:false};
@@ -5962,7 +5981,7 @@ const AXS=[
 const axHas=id=>(AX.sk&&AX.sk[id])||0;
 // Arena passend zum Gebiet: Boden einmal vorzeichnen, dazu Hindernisse, die Laufen und Stacheln blockieren
 const AXOB=['kaktus','salz','fels','kristall','fels','pilz','eis','fels','knochen','lava','muschel','kaktus'];
-function axBuild(){const A=AX,Wd=world(),wi=WORLDS.indexOf(Wd),[g0,g1,g2]=Wd.ground,W=A.W,H=A.H;
+function axBuild(){const A=AX,Wd=WORLDS[worldIdx(A.st)],wi=WORLDS.indexOf(Wd),[g0,g1,g2]=Wd.ground,W=A.W,H=A.H;
   const bg=document.createElement('canvas');bg.width=W*A.dpr;bg.height=H*A.dpr;const b=bg.getContext('2d');b.scale(A.dpr,A.dpr);
   let seed=wi*977+13;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
   b.fillStyle=g0;b.fillRect(0,0,W,H);
@@ -6007,7 +6026,7 @@ function axOpen(){if(AX.open)return;const d=document.createElement('div');d.id='
     <div class="axmsg" id="axMsg" hidden></div><div class="axsk" id="axSk"></div><div class="axpick" id="axPick" hidden></div>`;
   document.body.appendChild(d);
   const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
-  const A=Object.assign(AX,{open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
+  const cg=Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{chg:cg,st:(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
   const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
   axBuild();
   const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
@@ -6036,17 +6055,17 @@ function axPick(){const A=AX;A.state='pick';A.sh=[];A.es=[];
     P.hidden=true;$('axSk').innerHTML=Object.entries(A.sk).filter(([k])=>k!=='heal').map(([k,n])=>`<span>${AXS.find(x=>x.id===k).ico}${n>1?'<em>'+n+'</em>':''}</span>`).join('');
     A.state='go';axWave();});}
 // Belohnungen: jede geschaffte Welle bringt etwas, der Boss deutlich mehr. Bei einer Niederlage bleibt das bisher Verdiente.
-function axGain(boss){const A=AX,gb=gebNow(),c=Math.round(6*cPow(S.stage)*(boss?300:30));A.rew=A.rew||{caps:0,kak:0,coins:0};
+function axGain(boss){const A=AX,gb=A.chg,c=Math.round(6*cPow(A.st)*(boss?300:30));A.rew=A.rew||{caps:0,kak:0,coins:0};
   A.rew.caps+=boss?20+2*gb:3+Math.floor(gb/2);A.rew.coins+=c;if(boss)A.rew.kak+=3+Math.floor(gb/4);}
-function axEnd(won){const A=AX;if(won)axGain(true);const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
-  const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Gebiet geschafft! 🎉':'Besiegt!'}</h3>
+function axEnd(won){const A=AX;if(won)axGain(true);const newG=won&&A.chg>(S.chap||0);if(newG){S.chap=A.chg;save();lastHud='';}const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
+  const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Kapitel '+A.chg+' geschafft! 🎉':'Besiegt!'}</h3>${newG?`<p class="axunl">🔓 Gebiet ${A.chg+1} ist jetzt frei – dein Kaktus kämpft dort weiter.</p>`:''}
     <small>${won?'Alle '+A.waves+' Wellen und der Boss sind besiegt.':'Geschafft: '+(A.wave-1)+' von '+A.waves+' Wellen.'}</small>
     <div class="axrew">${any?`${R.coins?`<span><i>🪙</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
-    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">Nochmal</button></div></div>`;P.hidden=false;
+    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">${newG?'Nächstes Kapitel':'Nochmal'}</button></div></div>`;P.hidden=false;
   const take=()=>{S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
   $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen();};}
 function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
-function axWave(){const A=AX;A.wave++;const W0=world(),p=pow(S.stage),n=3+A.wave,boss=A.wave>A.waves;
+function axWave(){const A=AX;A.wave++;const W0=WORLDS[worldIdx(A.st)],p=pow(A.st),n=3+A.wave,boss=A.wave>A.waves;
   if(boss){const ty=W0.boss;A.shake=1.2;A.en.push({ty,boss:true,fire:2.5,x:A.W/2,y:A.H*.36,hp:24*ty.hp*p*6,max:24*ty.hp*p*6,atk:6*ty.atk*p*.5,sp:30,r:ty.r*1.6,hit:0,cd:1});axSay('BOSS: '+W0.boss.n,2);return;}
   for(let i=0;i<n;i++){const ty=W0.e[Math.floor(Math.random()*W0.e.length)],side=Math.random();
     const x=side<.5?rnd(30,A.W-30):(side<.75?20:A.W-20),y=side<.5?rnd(60,A.H*.35):rnd(60,A.H*.5);
@@ -6090,7 +6109,7 @@ function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&
   for(const f of A.fx){f.t-=dt;f.y-=30*dt;}A.fx=A.fx.filter(f=>f.t>0);
   if(h.hp<=0){A.state='lost';axEnd(false);return;}
   if(!A.en.some(e=>e.hp>0)){A.en=[];if(A.wave>A.waves){A.state='won';axEnd(true);}else{axGain(false);axPick();}}
-  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=stageShort(S.stage)+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
+  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent='Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
 function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Boden: Wüstenarena mit Kacheln
   if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);
@@ -6110,8 +6129,11 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
     g.font='900 12px system-ui';g.textAlign='center';g.fillStyle='#ffe7b8';g.fillText('👑 '+tr(B.ty.n),A.W/2,by+8);}
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
-if(maint.dev){const row=document.querySelector('#tabMehr .onrow');if(row){const b=document.createElement('button');b.type='button';b.className='onbtn sm';b.id='axBtn';
-  b.innerHTML='<b>🎮 Kapitel (Test)</b><span>Archero-Prototyp</span>';row.prepend(b);b.onclick=axOpen;}}
+// 14.11.2026: Kapitel-Knopf unter dem Kampffeld – das nächste Kapitel schaltet das nächste Gebiet frei
+function chapHud(){const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
+  $('chapT').textContent='Kapitel '+g;$('chapS').textContent=Wd.n+' · '+DIFFS[diffIdx(st)].n;b.classList.toggle('need',need);b.hidden=!S.char;}
+$('chapBtn').onclick=()=>{if($('modal').hidden&&!editing&&S.char)axOpen();};
+chapHud();setInterval(chapHud,1000);
 })();
 </script>
 </body></html>
