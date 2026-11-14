@@ -863,7 +863,7 @@ button.wmchest.rd{font:inherit;font-size:.74rem;font-weight:900;padding:3px 10px
 .wbtiers span b{font-size:.68rem;color:var(--tc);white-space:nowrap}.wbtiers span small{font-size:.56rem;color:#bfae94;line-height:1.2}
 .wbtiers span.on{border-color:var(--tc);box-shadow:0 0 0 2px color-mix(in srgb,var(--tc) 40%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
 .hr{justify-self:end;display:flex;gap:5px}
-.allybtn{position:relative}.allybtn.off,.abbtn2.off{filter:grayscale(1) brightness(.75);opacity:.75}.allybtn.off::before{content:'🔒';position:absolute;top:-6px;right:-6px;font-size:.8rem;filter:none}
+.allybtn{position:relative}.allybtn.off,.abbtn2.off,.exbtn.off{filter:grayscale(1) brightness(.75);opacity:.75}.allybtn.off::before{content:'🔒';position:absolute;top:-6px;right:-6px;font-size:.8rem;filter:none}
 .allybtn[data-chat]::after{content:attr(data-chat);position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;border-radius:9px;background:#e0283a;color:#fff;font-size:.68rem;font-weight:900;display:grid;place-items:center;padding:0 4px;border:2px solid #1c140e}
 @media (max-width:400px){.chestbtn{min-width:48px;padding:3px 5px 4px}.chestbtn span{font-size:.6rem}}
 @media (max-width:400px){header{gap:4px}.hbtns{gap:3px}.hbtns .setbtn{padding:3px 6px;font-size:.74rem}.hr{gap:3px}.chestbtn{min-width:44px}.chestbtn b{font-size:1.1rem}}
@@ -1112,6 +1112,8 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .ksub{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:0 -8px;padding:5px 5px 6px;background:#1c130d;border-top:2px solid #4a3a2c;z-index:2}
 .ksub button{border:2px solid #4a3a2c;background:#2a1d14;color:#a8957a;font:inherit;font-size:.6rem;font-weight:800;border-radius:9px;padding:3px 1px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;white-space:nowrap;overflow:hidden}
 .ksub button i{font-style:normal;font-size:1rem;line-height:1.1}.ksub button.on{background:linear-gradient(#b07cff,#7a4ad0);border-color:#3a2070;color:#fff}
+.nosk .field .mods{display:none!important}
+.kbody .tsoon{min-height:220px;justify-content:flex-start;padding-top:36px}
 .tsoon{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:200px;color:var(--muted)}.tsoon i{font-style:normal;font-size:3rem;opacity:.6}
 .tsoon b{font-size:1.2rem;color:var(--sand)}.tsoon span{font-weight:900;background:#3a2a1a;border:2px solid #7a5a2a;border-radius:999px;padding:2px 14px;color:var(--sand)}
 .skeqrow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;padding:6px;border:2px solid #7a5a2a;border-radius:12px;background:#3a2a1a}
@@ -1489,7 +1491,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1723,7 +1725,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1759,12 +1761,14 @@ const inDiff=st=>((Math.max(1,st)-1)%STAGES_PER_DIFF)+1;
 // Erwartet wird die Seltenheit, die im Gebiet schon länger freigeschaltet ist (Gebiets-Sperre minus 1),
 // dazu verbesserte Teile in der Schmiede (alle 8 Stages ein Level). Münzen wachsen genauso mit.
 const RGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
+// 14.11.2026: Begleiter und Fähigkeiten sind vorerst komplett raus – sie werden neu aufgebaut
+const NO_DR=true,NO_SK=true;
 const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=16+(gx-48)/4;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
 const UPS=0.05;                                  // jedes Schmiede-Level: +5 % auf den Wert des Teils
 const upTarget=st=>(Math.max(1,st)-1)/8;        // erwartetes Schmiede-Level auf dieser Stage
 const atkTarget=st=>25+6*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
 const hpTarget=st=>300+70*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
-const POWK=8;   // Schwierigkeit: wie stark die Gegner im Verhältnis zur erwarteten Ausrüstung sind
+const POWK=2.7;   // Schwierigkeit: wie stark die Gegner im Verhältnis zur erwarteten Ausrüstung sind
 const pow=st=>atkTarget(st)/31*(1+(POWK-1)*Math.min(1,(Math.max(1,st)-1)/100));
 const cPow=st=>atkTarget(st)/31;
 // Stufenbonus ist nach oben begrenzt: ein Teil wird durch die Stufe höchstens ×1,75 (Prozentwerte ×1,14) stärker.
@@ -1891,7 +1895,7 @@ const drScale=lv=>1+0.12*(Math.min(lv,DR_MAX)-1);   // Schaden/Heilung steigen p
 const drSlots=()=>DR_SLOTS;
 const drNeed=lv=>lv+1;                               // Kopien fürs nächste Level
 const drUp=()=>Infinity;                             // (alt) Kaufen mit Münzen gibt es nicht mehr
-function drInit(){if(!S.dr||typeof S.dr!=='object')S.dr={};if(!Array.isArray(S.drEq))S.drEq=[];
+function drInit(){if(NO_DR){S.dr={};S.drEq=[];if(!S.drSum)S.drSum={n:0};return;}if(!S.dr||typeof S.dr!=='object')S.dr={};if(!Array.isArray(S.drEq))S.drEq=[];
   for(const id in S.dr){if(!DRONES.find(d=>d.id===id)){delete S.dr[id];continue;}if(S.dr[id].n==null)S.dr[id].n=0;}
   if(!Object.keys(S.dr).length)for(const id of DR_START){S.dr[id]={lv:1,n:0};if(!S.drEq.includes(id))S.drEq.push(id);}
   S.drEq=S.drEq.filter(id=>S.dr[id]).slice(0,DR_SLOTS);if(!S.drSum)S.drSum={n:0};}
@@ -1997,10 +2001,10 @@ const SKL_MAX=50,SK_ON=6,SK_START=['regen','sonne','falle'];
 const skNeed=lv=>lv+1;                          // Kopien für das nächste Level
 const skLvM=lv=>1+.12*Math.max(0,lv-1);          // Stärke pro Level
 const skDef=id=>MODS.find(m=>m.id===id);
-function skInit(){if(!S.skl||typeof S.skl!=='object'){S.skl={};for(const id of SK_START)S.skl[id]={lv:1,n:0};}
+function skInit(){if(NO_SK){S.skl={};S.skEq=[];if(!S.skSum)S.skSum={n:0};return;}if(!S.skl||typeof S.skl!=='object'){S.skl={};for(const id of SK_START)S.skl[id]={lv:1,n:0};}
   if(!Array.isArray(S.skEq))S.skEq=SK_START.slice();if(!S.skSum)S.skSum={n:0};}
 const skLv=id=>(S.skl&&S.skl[id]&&S.skl[id].lv)||0;
-const skOn=()=>(Array.isArray(S.skEq)?S.skEq:SK_START).filter(id=>skLv(id)>0&&skDef(id)).slice(0,SK_ON);
+const skOn=()=>NO_SK?[]:(Array.isArray(S.skEq)?S.skEq:SK_START).filter(id=>skLv(id)>0&&skDef(id)).slice(0,SK_ON);
 const skActive=id=>skOn().includes(id);
 const skCost=lv=>Math.round(5000*Math.pow(1.14,lv)); // alt, nur noch für die Erstattung vom 08.11.
 const pctS=x=>(Math.round(x*10)/10).toString().replace('.',',');
@@ -2197,6 +2201,8 @@ if(!S.nb1){const sum=k=>{let x=0;for(const sl of SLOTS)if(!sl.pct&&sl.stat===k&&
   S.nb1Old={stage:S.stage,best:S.best,coins:S.coins};
   S.stage=Math.min(S.stage||1,st);S.best=st;S.kills=0;S.coins=Math.round(6*cPow(st)*1500);S.twRec=0;S.tower=1;
   S.nb1=true;save();}
+// 14.11.2026 (Anpassung rb1): Begleiter und Fähigkeiten entfernt – werden neu aufgebaut (keine Erstattung)
+if(!S.rb1){S.dr={};S.drEq=[];S.drSum={n:0};S.skl={};S.skEq=[];S.skSum={n:0};if(S.ex)S.ex={runs:{}};S.rb1=true;save();}
 // Anpassung v9: Hauptquartier wird zur Werkstatt – ausgebaute Gebäude werden voll in Münzen erstattet
 if(!S.v9){
   const B={schmiede:100,turm:120,segel:150,markt:130};let back=0;
@@ -3284,7 +3290,7 @@ function drTxt(D,lv){const k=drScale(Math.max(1,lv)),p=x=>Math.round(x*k*100)+' 
     return e;}
   return a;}
 const drIco=D=>`<canvas width="96" height="96" data-dr="${D.id}" class="drico"></canvas>`;
-function renderDrones(){const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqRow='';
+function renderDrones(){if(NO_DR){const H=$('tabBegl');if(H)H.innerHTML='<div class="tsoon"><i>🐾</i><b>Begleiter</b><span>Bald – werden neu aufgebaut</span></div>';return;}const H=$('tabBegl'),re=renderDrones,L=drSumLv();let eqRow='';
   for(let i=0;i<DR_SLOTS;i++){const D=S.drEq[i]&&DRONES.find(d=>d.id===S.drEq[i]);
     eqRow+=D?`<button class="skc eqs" type="button" data-drd="${D.id}" style="--rc:${RAR[D.r].c};--ic:${D.c}"><span class="sklv">Lv ${drLv(D.id)}</span>${drIco(D)}<b>${D.n}</b><span class="skpm" data-droff="${D.id}">−</span></button>`
       :`<div class="skc eqs empty"><i>+</i><b>frei</b></div>`;}
@@ -3496,7 +3502,7 @@ function ktDetail(id,re){const K=ktDef(id),lv=ktLv(id),o=S.kt[id],rc=RAR[K.r].c,
   const u=$('ktUp');if(u)u.onclick=()=>{ktLevelAll(id);save();lastHud='';ktDetail(id,re);};}
 function renderTabKampf(){const H=$('tabKampf');if(!H)return;const L=wsLists();let body='';
   if(kSub==='kaktus')body=`<div class="tsec"><div class="thead"><b>🔨 Schmiede <em>Lv ${wsTotal()}</em></b><small>Verbessert deine Ausrüstung</small></div>${L.list0}</div>`;
-  else if(kSub==='skill')body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
+  else if(kSub==='skill'&&!NO_SK)body=`<div class="tsec" id="skSec">${skPageHtml()}</div>`;
   else{const t=KSUBS.find(x=>x[0]===kSub);body=`<div class="tsoon"><i>${t[1]}</i><b>${t[2]}</b><span>Bald</span></div>`;}
   H.innerHTML=`<div class="kbody">${body}</div><nav class="ksub">${KSUBS.map(([id,ic,n])=>`<button type="button" data-ksub="${id}" class="${kSub===id?'on':''}"><i>${ic}</i>${n}</button>`).join('')}</nav>`;
   H.querySelectorAll('[data-ksub]').forEach(b=>b.onclick=()=>{kSub=b.dataset.ksub;renderTabKampf();$('tPanel').scrollTop=0;});
@@ -4344,6 +4350,8 @@ KKL.start();
 if(!KKL.chosen)langPick(true);
 // 14.11.2026: Höhe der unteren Navigation als CSS-Variable (für die festen Leisten auf kleinen Bildschirmen)
 (function(){const f=()=>{const t=$('tabBar');if(t)document.documentElement.style.setProperty('--tbh',t.offsetHeight+'px');};f();addEventListener('resize',f);setTimeout(f,500);setTimeout(f,2000);})();
+if(NO_SK)document.documentElement.classList.add('nosk');
+if(NO_DR){const b=$('exBtn');if(b){b.classList.add('off');const sp=b.querySelector('span');if(sp)sp.textContent='🔒 Bald';}}
 $('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden){if(S.char)profileOverview();else openEditor();}};
 if(!S.char)openEditor();
 
@@ -5074,7 +5082,7 @@ function renderEx(){if(pending)return;const R=exState().runs,free=exFree(),now=D
   $('card').querySelectorAll('[data-exc]').forEach(b=>b.onclick=()=>exClaim(EX.find(x=>x.id===b.dataset.exc)));
   $('card').querySelectorAll('canvas[data-exd]').forEach(cv2=>{const D=DRONES.find(d=>d.id===cv2.dataset.exd);if(D)drawDrone(cv2.getContext('2d'),D,28,40,1.5);});
   $('exX').onclick=()=>{exOpen=false;exMsg='';exPick=null;$('modal').hidden=true;};}
-$('exBtn').onclick=()=>{if(!$('modal').hidden||editing||pending)return;exOpen=true;exMsg='';$('modal').hidden=false;renderEx();};
+$('exBtn').onclick=()=>{if(NO_DR){banner={txt:'🧭 Erkundung kommt mit den neuen Begleitern',t:2.4};return;}if(!$('modal').hidden||editing||pending)return;exOpen=true;exMsg='';$('modal').hidden=false;renderEx();};
 setInterval(()=>{if(exOpen&&!$('modal').hidden&&!pending&&!exPick)renderEx();},1000);
 // Knopf-Anzeige: fertige Missionen
 setInterval(()=>{if(!S.char)return;const R=exState().runs,n=Object.values(R).filter(r=>Date.now()>=r.end).length,k=Object.keys(R).length,e=$('exBtn').querySelector('span');
@@ -5198,10 +5206,8 @@ const TUT=[
   {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
   {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Ausrüstung beschwören“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
-  {el:'tutMods',t:'Hier unten im Kampf sind die Fähigkeiten deines Kaktus. Er setzt sie ganz von selbst ein.'},
-  {el:'tbKampf',t:'Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.'},
+  {el:'tbKampf',t:'Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.'},
   {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
-  {el:'tbBegl',t:'Unter 🐾 findest du Begleiter: Hunde und die Fledermaus kämpfen mit dir und geben dir Boni. Den ersten kannst du bald freischalten.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
@@ -5606,7 +5612,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn106',date:'2026-11-14',title:'Neue Balance: Nur Ausrüstung zählt',hero:['🛡 Ausrüstung ist alles','Die Werkstatt ist weg. Deine Stärke kommt jetzt nur noch aus deiner Ausrüstung – und aus der neuen Schmiede, in der du mit Münzen deine Ausrüstungsplätze verbesserst.'],items:()=>[['Schmiede:','Unter ⚔ Kampf → Kaktus. Jedes Level gibt +5 % auf Waffe, Handschuhe, Helm, Rüstung oder Halskette. Das Level bleibt beim Tauschen der Teile erhalten.'],['Gegner:','Wachsen jetzt passend zu der Ausrüstung, die man im jeweiligen Gebiet haben kann. Neue Seltenheiten und die Schmiede sind der Weg nach vorn.'],['Weggefallen:','Werkstatt-Werte (Panzerung, Ausweichen, Betäuben, Lebensraub …), Kaktus-Level-Bonus und Begleiter-Dauerboni. Begleiter und Fähigkeiten kämpfen aber weiter mit.'],['Umstellung:','Du bekommst Schmiede-Level passend zu deiner Stage und ein Münz-Startguthaben. Alte Münzbeträge wurden ersetzt, der Turm-Rekord startet neu.']],
+  {id:'pn107',date:'2026-11-14',title:'Begleiter & Fähigkeiten werden neu gebaut',hero:['🔧 Großer Umbau','Begleiter und Fähigkeiten sind vorerst aus dem Spiel genommen. Beide Systeme werden komplett neu aufgebaut und kommen in einem späteren Update zurück.'],items:()=>[['Begleiter:','Der Reiter zeigt „Bald“. Auch die Erkundung ruht, bis die neuen Begleiter da sind.'],['Fähigkeiten:','Im Kampf gibt es vorerst keine Fähigkeiten. Unter ⚔ Kampf steht „Bald“.'],['Hinweis:','Alle bisherigen Begleiter und Fähigkeiten wurden entfernt.'],['Gegner:','Etwas schwächer, damit Bosse ohne Begleiter und Fähigkeiten schaffbar bleiben.']],
+  en:{title:'Companions & skills are being rebuilt',hero:['🔧 Big rebuild','Companions and skills are taken out of the game for now. Both systems are being rebuilt from scratch and return in a later update.'],items:()=>[['Companions:','The tab shows “Soon”. The expedition also rests until the new companions arrive.'],['Skills:','There are no skills in battle for now. Under ⚔ Battle it says “Soon”.'],['Note:','All previous companions and skills were removed.'],['Enemies:','A bit weaker so bosses stay beatable without companions and skills.']]}},
+{id:'pn106',date:'2026-11-14',title:'Neue Balance: Nur Ausrüstung zählt',hero:['🛡 Ausrüstung ist alles','Die Werkstatt ist weg. Deine Stärke kommt jetzt nur noch aus deiner Ausrüstung – und aus der neuen Schmiede, in der du mit Münzen deine Ausrüstungsplätze verbesserst.'],items:()=>[['Schmiede:','Unter ⚔ Kampf → Kaktus. Jedes Level gibt +5 % auf Waffe, Handschuhe, Helm, Rüstung oder Halskette. Das Level bleibt beim Tauschen der Teile erhalten.'],['Gegner:','Wachsen jetzt passend zu der Ausrüstung, die man im jeweiligen Gebiet haben kann. Neue Seltenheiten und die Schmiede sind der Weg nach vorn.'],['Weggefallen:','Werkstatt-Werte (Panzerung, Ausweichen, Betäuben, Lebensraub …), Kaktus-Level-Bonus und Begleiter-Dauerboni. Begleiter und Fähigkeiten kämpfen aber weiter mit.'],['Umstellung:','Du bekommst Schmiede-Level passend zu deiner Stage und ein Münz-Startguthaben. Alte Münzbeträge wurden ersetzt, der Turm-Rekord startet neu.']],
   en:{title:'New balance: only gear matters',hero:['🛡 Gear is everything','The workshop is gone. Your power now comes only from your gear – and from the new forge, where you upgrade your gear slots with coins.'],items:()=>[['Forge:','Under ⚔ Battle → Cactus. Each level gives +5 % to weapon, gloves, helmet, chest or necklace. The level stays when you swap items.'],['Enemies:','Now grow with the gear you can have in each area. New rarities and the forge are the way forward.'],['Removed:','Workshop stats (armor, dodge, stun, lifesteal …), cactus level bonus and permanent companion bonuses. Companions and skills still fight with you.'],['Switch-over:','You get forge levels matching your stage and starting coins. Old coin amounts were replaced, the tower record starts fresh.']]}},
 {id:'pn105',date:'2026-11-14',title:'Begleiter greifen Bosse sofort an',hero:['🐾 Kein Warten mehr','Sobald ein Boss im Bild ist und die Zeit läuft, springen deine Begleiter ihn sofort an – nicht erst, wenn er bei deinem Kaktus angekommen ist.'],items:()=>[['Bosse:','Begleiter machen ab der ersten Sekunde des Boss-Kampfs Schaden.']],
   en:{title:'Companions attack bosses right away',hero:['🐾 No more waiting','As soon as a boss is on screen and the timer runs, your companions jump at it right away – not only once it reaches your cactus.'],items:()=>[['Bosses:','Companions deal damage from the first second of the boss fight.']]}},
