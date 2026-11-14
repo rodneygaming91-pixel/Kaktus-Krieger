@@ -372,6 +372,12 @@ select{background:var(--dusk);color:var(--text);border:0;border-radius:8px;paddi
 .slot small{color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em}
 .slot b{font-size:.85rem;font-variant-numeric:tabular-nums}
 .slot span{font-size:.7rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.langbtn{font-size:.95rem!important;line-height:1;padding:0!important}
+.langpick{position:fixed;inset:0;z-index:200;background:#0b0612f0;display:flex;align-items:center;justify-content:center;padding:16px}
+.langpick .lpbox{background:linear-gradient(#3a2c22,#241a14);border:3px solid #6b4f36;border-radius:16px;padding:18px 16px;width:100%;max-width:330px;display:flex;flex-direction:column;gap:12px;text-align:center;box-shadow:0 10px 30px #000a}
+.langpick h2{margin:0;font-family:var(--display);color:#ffe7b8;font-weight:400;font-size:1.3rem;line-height:1.2}.langpick h2 small{display:block;font-family:var(--body);font-size:.8rem;color:var(--sand);font-weight:700}
+.langpick .lpb{display:flex;align-items:center;gap:12px;border:3px solid #5a8a3a;border-radius:12px;background:linear-gradient(#4f8f2f,#356b1f);color:#fff;font:inherit;font-weight:900;font-size:1.05rem;padding:10px 14px;cursor:pointer}
+.langpick .lpb i{font-style:normal;font-size:1.8rem;line-height:1}.langpick .lpb.on{border-color:#ffd447;box-shadow:0 0 0 2px #ffd44788}
 .modal{position:fixed;inset:0;background:#0b0612e0;display:flex;align-items:center;justify-content:center;z-index:20;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .modal.kb{align-items:flex-start;padding-top:max(10px,env(safe-area-inset-top,0px));overflow-y:auto}
@@ -1184,7 +1190,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 
 <div class="game">
   <header>
-    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div><div class="hres"><div class="chip hcoin" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip hcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div></div>
+    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn langbtn" id="langBtn" type="button" title="Sprache" aria-label="Sprache">🇩🇪</button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div><div class="hres"><div class="chip hcoin" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip hcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
     <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button><div class="chip kak hkak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
@@ -1243,6 +1249,103 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 <div class="modal" id="modal" hidden><div class="card" id="card"></div></div>
 
 <script>
+// ---------- Sprache / Language (14.11.2026) ----------
+// Deutsch ist die Grundsprache. Auf Englisch werden alle Texte im Bild automatisch übersetzt:
+// Textknoten, title/aria-label/placeholder und alles, was auf das Spielfeld (Canvas) geschrieben wird.
+// Fehlt eine Übersetzung, bleibt der deutsche Text stehen – so geht nie etwas kaputt.
+(function(){
+let cur='de';try{cur=localStorage.getItem('kk-lang')||'';}catch(e){}
+const L={cur:cur||'de',chosen:!!cur};window.KKL=L;
+const EN={
+// Leiste unten & Unterreiter
+'Kampf':'Battle','Ausrüstung':'Gear','Begleiter':'Companions','Gärtnerei':'Garden','Mehr':'More',
+'Kaktus':'Cactus','Fähigkeiten':'Skills','Relikte':'Relics','Meister':'Mastery','Merkmale':'Traits','Bald':'Soon',
+// Kopfzeile & Kampfbox
+'Allianz':'Alliance','Gegner':'Enemy','Schwäche':'Weakness','Waffe':'Weapon','Resistenz':'Resistance',
+'Optionen':'Options','Poststelle':'Mailbox','Aussehen und Klasse ändern':'Change look and class','Deine Stärke':'Your power',
+'Kakteen':'Cacti','Kaktus-Münzen':'Cactus coins','Münzen':'Coins','Samenkapseln':'Seed capsules','Kapseln':'Capsules','Samenkapsel':'Seed capsule',
+'Spielzeit-Truhen':'Playtime chests','Video ansehen: 30 Minuten doppeltes Kampftempo':'Watch video: 30 minutes of double battle speed',
+'Fähigkeiten automatisch einsetzen':'Use skills automatically','Samenkapseln automatisch öffnen':'Open seed capsules automatically',
+'Boss startet automatisch (antippen: hier weiter farmen)':'Boss starts automatically (tap: keep farming here)',
+'Schwierigkeit':'Difficulty','Profil, Freunde und Rangliste':'Profile, friends and leaderboard',
+'Freier Platz – Fähigkeit ausrüsten':'Empty slot – equip a skill','Freier Platz':'Empty slot',
+'Boss-Kampf':'Boss fight','Boss bereit · antippen':'Boss ready · tap','Stage geschafft!':'Stage cleared!',
+'Sprache':'Language','Sprache wählen':'Choose language',
+'heute':'today','neu':'new','Alles klar':'Got it','Schließen':'Close','Patch Notes':'Patch Notes',
+// Werkstatt
+'🔨 Werkstatt':'🔨 Workshop','Werkstatt':'Workshop','Nur mit Münzen':'Coins only','Alle leveln':'Level all','Beschwören':'Summon',
+'Angriff':'Attack','Leben':'Health','Tempo':'Speed','Panzerung':'Armor','Krit-Chance':'Crit chance','Regeneration':'Regeneration',
+'Krit-Schaden':'Crit damage','Ausweichen':'Dodge','Betäuben':'Stun','Lebensraub':'Lifesteal',
+'weniger Schaden':'less damage','Leben pro s':'health per s','Tempo (Sekunden pro Schlag)':'Speed (seconds per hit)',
+// Ausrüstungsplätze
+'Helm':'Helmet','Ring':'Ring','Rüstung':'Chestplate','Schild':'Shield','Schuhe':'Boots','Umhang':'Cloak','Halskette':'Necklace','Handschuhe':'Gloves',
+// Elemente
+'Gift':'Poison','Eis':'Ice','Feuer':'Fire','Blitz':'Lightning','Schatten':'Shadow','Licht':'Light',
+// Kakteen (Klassen)
+'Stachelschütze':'Spike Shooter','Fasskaktus':'Barrel Cactus','Flinkdorn':'Swiftthorn','Blütenmagier':'Blossom Mage','Igelkaktus':'Hedgehog Cactus',
+'Wüstenwächter':'Desert Warden','Mondkaktus':'Moon Cactus','Goldkaktus':'Golden Cactus','Feuerdorn':'Firethorn','Urkaktus':'Primal Cactus',
+// Gebiete, Gegner, Bosse
+'Dornental':'Thorn Valley','Salzsee':'Salt Lake','Vulkanwüste':'Volcano Desert','Kristallschlucht':'Crystal Gorge','Sternendüne':'Star Dune',
+'Pilzsumpf':'Mushroom Swamp','Frostgipfel':'Frost Peak','Gewittersteppe':'Storm Steppe','Knochenwüste':'Bone Desert','Glutcanyon':'Ember Canyon',
+'Nebelküste':'Fog Coast','Kaktusthron':'Cactus Throne',
+'Sandkäfer':'Sand Beetle','Skorpion':'Scorpion','Geier':'Vulture','Steppenwurm':'Steppe Worm','Salzkrebs':'Salt Crab','Eiskäfer':'Ice Beetle',
+'Möwe':'Gull','Krebskönig':'Crab King','Glutkäfer':'Ember Beetle','Lavaskorpion':'Lava Scorpion','Aschefalke':'Ash Falcon','Magmawurm':'Magma Worm',
+'Splitterkrebs':'Shard Crab','Kristallskorpion':'Crystal Scorpion','Prismafalter':'Prism Moth','Kristallskorpion-Fürst':'Crystal Scorpion Lord',
+'Sternkäfer':'Star Beetle','Nachtkrebs':'Night Crab','Kometenvogel':'Comet Bird','Sternenwächter':'Star Warden','Sporenkäfer':'Spore Beetle',
+'Sumpfkrebs':'Swamp Crab','Moorkrähe':'Bog Crow','Riesenpilzwurm':'Giant Mushroom Worm','Frostskorpion':'Frost Scorpion','Eiskrebs':'Ice Crab',
+'Schneeeule':'Snowy Owl','Gletscherwurm':'Glacier Worm','Funkenkäfer':'Spark Beetle','Donnerskorpion':'Thunder Scorpion','Sturmfalke':'Storm Falcon',
+'Donnervogel':'Thunderbird','Knochenkäfer':'Bone Beetle','Schattenskorpion':'Shadow Scorpion','Aasgeier':'Carrion Vulture','Knochenwurm':'Bone Worm',
+'Flammenkrebs':'Flame Crab','Glutskorpion':'Ember Scorpion','Feuerphönix':'Fire Phoenix','Lavakönig':'Lava King','Nebelkrebs':'Fog Crab',
+'Muschelkäfer':'Shell Beetle','Sturmmöwe':'Storm Gull','Kraken der Tiefe':'Kraken of the Deep','Dornenritter':'Thorn Knight',
+'Schattenkäfer':'Shadow Beetle','Nachtadler':'Night Eagle','Kaktuskaiser':'Cactus Emperor'
+};
+// Muster für Texte mit Zahlen oder Zusammensetzungen; f bekommt die Treffer und die Übersetzungsfunktion
+const RX=[
+  [/^(\d+) \/ (\d+) besiegt$/,(m)=>m[1]+' / '+m[2]+' defeated'],
+  [/^Gebiet (\d+(?:–\d+)?)$/,(m)=>'Area '+m[1]],
+  [/^Gebiet (\d+(?:–\d+)?) (.+)$/,(m,t)=>'Area '+m[1]+' '+t(m[2])],
+  [/^(.+) (\d+)-(\d+)$/,(m,t)=>t(m[1])+' '+m[2]+'-'+m[3]],
+  [/^Stufe (\d+)$/,(m)=>'Level '+m[1]],
+  [/^Stage (\d+)$/,(m)=>'Stage '+m[1]],
+  [/^Frei ab (.+) Lv (\d+)$/,(m,t)=>'Unlocks at '+t(m[1])+' Lv '+m[2]],
+  [/^BOSS: (.+)$/,(m,t)=>'BOSS: '+t(m[1])],
+  [/^Element: (.+)$/,(m,t)=>'Element: '+t(m[1])],
+  [/^(.+)-Resistenz$/,(m,t)=>t(m[1])+' resistance'],
+  [/^(.+) ✎$/,(m,t)=>t(m[1])+' ✎'],
+  [/^(.+): undefined$/,(m,t)=>t(m[1])],
+  [/^([+−\-]?[\d.,]+[KMBTkmbt]?\s?%?\s?)(.+)$/,(m,t)=>m[1]+t(m[2])],
+  [/^([\p{Extended_Pictographic}☀-➿]️?\s*)(.+)$/u,(m,t)=>m[1]+t(m[2])]
+];
+const cache=new Map();
+function core(k,depth){
+  if(EN[k]!==undefined)return EN[k];
+  if(depth>4)return k;
+  if(k.includes(' · ')){const p=k.split(' · '),q=p.map(x=>core(x,depth+1));if(q.some((x,i)=>x!==p[i]))return q.join(' · ');}
+  for(const [rx,f] of RX){const m=k.match(rx);if(m){const r=f(m,x=>core(x,depth+1));if(r!==k)return r;}}
+  return k;}
+function tr(t){if(L.cur!=='en'||t==null)return t;t=String(t);const k=t.trim();if(!k||!/[A-Za-zÄÖÜäöüß]/.test(k))return t;
+  let r=cache.get(k);if(r===undefined){r=core(k,0);if(cache.size>8000)cache.clear();cache.set(k,r);}
+  return r===k?t:t.replace(k,r);}
+window.tr=tr;window.KK_EN=EN;
+// Spielfeld (Canvas)
+const CP=CanvasRenderingContext2D.prototype;
+['fillText','strokeText','measureText'].forEach(fn=>{const o=CP[fn];CP[fn]=function(t,...a){return o.call(this,L.cur==='en'?tr(t):t,...a);};});
+// Bildschirmtexte
+const ATTR=['title','aria-label','placeholder'];
+function trNode(n){if(n.nodeType===3){const v=n.nodeValue,r=tr(v);if(r!==v)n.nodeValue=r;return;}
+  if(n.nodeType!==1||n.tagName==='SCRIPT'||n.tagName==='STYLE')return;
+  for(const a of ATTR){const v=n.getAttribute&&n.getAttribute(a);if(v){const r=tr(v);if(r!==v)n.setAttribute(a,r);}}
+  for(let c=n.firstChild;c;c=c.nextSibling)trNode(c);}
+let obs=null;
+function start(){if(L.cur!=='en'||obs)return;trNode(document.body);
+  obs=new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData')trNode(m.target);else if(m.type==='attributes')trNode(m.target);else m.addedNodes.forEach(trNode);}});
+  obs.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATTR});}
+L.start=start;
+L.set=(v,reload)=>{try{localStorage.setItem('kk-lang',v);}catch(e){}L.chosen=true;if(reload&&v!==L.cur){location.reload();return;}L.cur=v;document.documentElement.lang=v;start();};
+document.documentElement.lang=L.cur;
+})();
+</script>
+<script>
 (function(){
 const KEY='kaktus-krieger-v1';
 {const r=document.createElement('div');r.id='rotNote';r.innerHTML='<i>📱</i>Bitte halte dein Handy hochkant.<small style="font-size:.8rem;color:#c9b593;font-weight:700">Kaktus-Krieger spielt man im Hochformat.</small>';document.body.appendChild(r);
@@ -1256,7 +1359,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3809,6 +3912,18 @@ function drawPreview(){
   M.addEventListener('focusout',()=>{setTimeout(()=>{const a=document.activeElement;if(a&&M.contains(a)&&/^(INPUT|TEXTAREA)$/.test(a.tagName))return;
     M.classList.remove('kb');M.style.top=M.style.height=M.style.bottom='';window.scrollTo(0,0);},120);});
   if(vv){vv.addEventListener('resize',fit);vv.addEventListener('scroll',fit);}})();
+// 14.11.2026: Sprachwahl – Flagge oben, beim ersten Start fragen
+function langPick(first){const d=document.createElement('div');d.className='langpick';
+  d.innerHTML=`<div class="lpbox"><h2>🌍 Sprache wählen<small>Choose language</small></h2>
+    <button type="button" class="lpb${KKL.cur==='de'?' on':''}" data-l="de"><i>🇩🇪</i>Deutsch</button>
+    <button type="button" class="lpb${KKL.cur==='en'?' on':''}" data-l="en"><i>🇬🇧</i>English</button>
+    ${first?'':'<button type="button" class="btn" data-l="x">✕</button>'}</div>`;
+  document.body.appendChild(d);
+  d.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{const v=b.dataset.l;d.remove();if(v==='x')return;KKL.set(v,!first);$('langBtn').textContent=v==='en'?'🇬🇧':'🇩🇪';lastHud='';});}
+$('langBtn').textContent=KKL.cur==='en'?'🇬🇧':'🇩🇪';
+$('langBtn').onclick=()=>langPick(false);
+KKL.start();
+if(!KKL.chosen)langPick(true);
 $('editBtn').onclick=()=>{if(!pending&&!gOpen&&$('modal').hidden){if(S.char)profileOverview();else openEditor();}};
 if(!S.char)openEditor();
 
@@ -5071,7 +5186,9 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
-  {id:'pn96',date:'2026-11-14',title:'Gebiete mit Nummern',hero:['🗺 Gebiet 1, 2, 3 …','Statt Leicht, Normal, Schwer und Ultra schwer haben alle Gebiete jetzt eine fortlaufende Nummer. So siehst du sofort, wie weit du bist – und welches Gebiet du für die nächste Seltenheit brauchst.'],items:()=>[['Kampfbox:','Oben steht dein Gebiet und die Stage, z. B. „Gebiet 16 · Stage 12“, darunter der Name des Gebiets.'],['Leiste unter der Kampfbox:','Gebiet 1–12, 13–24, 25–36 und 37–48.'],['Weltkarte & Rangliste:','Ebenfalls mit Gebietsnummern.']]},
+  {id:'pn97',date:'2026-11-14',title:'Englisch & Sprachwahl',hero:['🇬🇧 Kaktus-Krieger auf Englisch','Oben neben dem Briefumschlag findest du jetzt eine Flagge. Damit wechselst du zwischen Deutsch und Englisch. Beim ersten Start fragt das Spiel nach deiner Sprache.'],items:()=>[['Sprachwahl:','Flagge oben links antippen und Sprache wählen.'],['Englisch:','Hauptbildschirm, Kampfbox, Werkstatt, Leiste unten, Gebiete und Gegner sind schon übersetzt – der Rest folgt in den nächsten Updates.']],
+  en:{title:'English & language choice',hero:['🇬🇧 Kaktus-Krieger in English','Tap the flag at the top next to the envelope to switch between German and English. On first start the game asks for your language.'],items:()=>[['Language:','Tap the flag at the top left and pick your language.'],['English:','Main screen, battle box, workshop, bottom bar, areas and enemies are translated already – the rest follows in the next updates.']]}},
+{id:'pn96',date:'2026-11-14',title:'Gebiete mit Nummern',hero:['🗺 Gebiet 1, 2, 3 …','Statt Leicht, Normal, Schwer und Ultra schwer haben alle Gebiete jetzt eine fortlaufende Nummer. So siehst du sofort, wie weit du bist – und welches Gebiet du für die nächste Seltenheit brauchst.'],items:()=>[['Kampfbox:','Oben steht dein Gebiet und die Stage, z. B. „Gebiet 16 · Stage 12“, darunter der Name des Gebiets.'],['Leiste unter der Kampfbox:','Gebiet 1–12, 13–24, 25–36 und 37–48.'],['Weltkarte & Rangliste:','Ebenfalls mit Gebietsnummern.']]},
 {id:'pn95',date:'2026-11-13',title:'Feinschliff Ausrüstungs-Seltenheiten',hero:['✨ Neue Seltenheit = erst selten','Wird eine Seltenheit durch ein neues Gebiet freigeschaltet, startet sie jetzt ebenfalls mit sehr kleiner Chance.'],items:()=>[['Ausrüstung:','Die Chance einer neu freigeschalteten Seltenheit steigt über die nächsten 4 Gebiete auf den normalen Wert – auch wenn deine Beschwörungsstufe schon weiter ist.']]},
 {id:'pn94',date:'2026-11-13',title:'Fähigkeiten & Begleiter: neues Balancing',hero:['🔮 Länger etwas zu entdecken','Fähigkeiten und Begleiter steigen langsamer im Beschwörungslevel, und seltene Stufen brauchen ein erreichtes Gebiet.'],items:()=>[['Beschwörungsstufe:','Stufe 10 jetzt nach 3.600 statt 1.125 Beschwörungen.'],['Gebiets-Sperre:','Selten ab Gebiet 3, Episch ab Gebiet 8, Legendär ab Gebiet 16, Mythisch ab Gebiet 28.'],['Sehr selten zu Beginn:','Eine neu freigeschaltete Seltenheit startet mit kleiner Chance und wird über 4 Gebiete normal häufig.'],['Anzeige:','Gesperrte Seltenheiten zeigen im Beschwörungsfenster, welches Gebiet du brauchst.']]},
 {id:'pn93',date:'2026-11-13',title:'Seltenheiten: langsamer & mit Gebieten',hero:['🗺 Seltenheit braucht Fortschritt','Höhere Seltenheiten brauchen jetzt zusätzlich zu den Beschwörungen ein erreichtes Gebiet. Neu freigeschaltete Seltenheiten sind anfangs sehr selten.'],items:()=>[['Gebiets-Sperre:','Z. B. Legendär ab Gebiet 7, Kosmisch ab Gebiet 18, Allmacht erst im letzten Gebiet (48).'],['Sehr selten zu Beginn:','Eine neue Seltenheit startet mit winziger Chance und wird über 6 Beschwörungsstufen normal häufig.'],['Anzeige:','Im Beschwörungsfenster siehst du, welches Gebiet du für die nächste Seltenheit brauchst.'],['Anpassung:','Vorhandene Ausrüstung über deiner erreichten Seltenheit wurde auf deine aktuelle Höchst-Seltenheit abgestuft.']]},
@@ -5134,7 +5251,7 @@ const PATCHES=[
   const L=(t,x)=>`<li><b>${t}</b> ${x}</li>`,dd=list[list.length-1].date.split('-').reverse().join('.');
   const ws=list.some(p=>p.ws);
   $('card').innerHTML=`<h2>Patch Notes <span style="color:var(--sand)">${list.every(p=>p.date===today)?'heute':dd}</span></h2>
-    <div class="pnlist">${list.slice().reverse().map(P=>`<section class="pnsec"><h3>${P.title}${S[P.id]?'':' <em class="pnnew">neu</em>'}</h3>
+    <div class="pnlist">${list.slice().reverse().map(P=>(window.KKL&&KKL.cur==='en'&&P.en)?Object.assign({},P,P.en):P).map(P=>`<section class="pnsec"><h3>${P.title}${S[P.id]?'':' <em class="pnnew">neu</em>'}</h3>
       <div class="pnhero"><b>${P.hero[0]}</b><span>${P.hero[1]}</span></div>
       <ul class="pn">${P.items().map(([a,b])=>L(a,b)).join('')}</ul></section>`).join('')}</div>
     <div class="row"><button class="btn${ws?'':' go'}" id="pnOk" type="button">${ws?'Schließen':'Alles klar'}</button>${ws?'<button class="btn go" id="pnWs" type="button">Zur Werkstatt</button>':''}</div>`;
