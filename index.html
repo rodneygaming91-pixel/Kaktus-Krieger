@@ -1069,7 +1069,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .tpanel .drow b{font-size:.9rem}.tpanel .drow small{font-size:.7rem}.tpanel .drow .bon{font-size:.7rem}.tpanel .dbtns{gap:4px}.tpanel .dbtns .btn{padding:5px 9px;font-size:.74rem}
 .tpanel .gart .row{margin:0}.tpanel .gart .row .btn{width:100%}.tpanel .gart .btn small{display:block;font-size:.66rem}
 .tpanel .odds{gap:3px}.tpanel .odd{font-size:.8rem;gap:6px;grid-template-columns:6.8em 1fr 3em 3.7em}.tpanel .odd .nx{font-size:.72rem;white-space:nowrap}
-.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(5,1fr);
+.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(4,1fr);
   background:#1c130d;border-top:3px solid #4a3a2c;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px))}
 .tabbar button{border:0;background:none;color:#a8957a;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 0;border-radius:10px;cursor:pointer}
 .tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
@@ -1214,6 +1214,8 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .vup>span{flex:1;display:flex;flex-direction:column;min-width:0}.vup b{font-size:.8rem;color:#ffe7b8}.vup small{font-size:.66rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vup em{font-style:normal}.vup em.up{color:#7fe08a;font-weight:800}
 .vup .sbtn{display:flex;flex-direction:column;align-items:center;min-width:92px}.vup .sbtn small{font-size:.58rem;color:inherit;opacity:.85}
+.vlab .vripe{background:#63c74d;color:#10300a;border-radius:6px;padding:0 4px;opacity:1}
+.vback{align-self:flex-start}
 .vbar{height:14px;border-radius:7px;background:#1c130d;border:2px solid #4a3a2c;overflow:hidden;position:relative}.vbar i{display:block;height:100%;background:linear-gradient(90deg,#ffae00,#ffd447)}
 .vbar b{position:absolute;inset:0;font-size:.62rem;text-align:center;line-height:11px;color:#fff;text-shadow:0 1px 2px #000}
 /* Kapitel-Knopf */
@@ -1305,7 +1307,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
     <button type="button" id="tbDorf" data-tab2="dorf"><i>🏘</i><span>Dorf</span></button>
     <button type="button" id="tbAusr" data-tab2="ausr" class="on"><i>🎒</i><span>Ausrüstung</span></button>
     <button type="button" id="tbBegl" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
-    <button type="button" id="tbGart" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
+    <!-- 15.11.2026: Gärtnerei liegt jetzt im Dorf -->
     <button type="button" id="tbMehr" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
   </nav>
   <div class="actions" hidden>
@@ -1546,7 +1548,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🛒 Angebote heute':'🛒 Today\'s offers','Kaufen':'Buy','Heute ausverkauft':'Sold out today','10 Samenkapseln':'10 seed capsules','40 Samenkapseln':'40 seed capsules','30 Eisenerz':'30 iron ore','100 Eisenerz':'100 iron ore','5 Kakteen':'5 cacti','Bauzeit −15 min':'Build time −15 min','Max':'Max','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','← Zurück ins Dorf':'← Back to the village','🌱 Zur Gärtnerei':'🌱 To the garden','Deine Kaktusbeete. Pflanze Samenkapseln, ernte reife Kakteen. Die Stufe steigt mit jeder Ernte.':'Your cactus beds. Plant seed capsules, harvest ripe cacti. The level rises with every harvest.','Im Dorf baust du Gebäude: die Schmiede, den Händler und deine Gärtnerei mit den Kakteenbeeten.':'In the village you build buildings: the forge, the merchant and your garden with the cactus beds.','🛒 Angebote heute':'🛒 Today\'s offers','Kaufen':'Buy','Heute ausverkauft':'Sold out today','10 Samenkapseln':'10 seed capsules','40 Samenkapseln':'40 seed capsules','30 Eisenerz':'30 iron ore','100 Eisenerz':'100 iron ore','5 Kakteen':'5 cacti','Bauzeit −15 min':'Build time −15 min','Max':'Max','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1743,6 +1745,9 @@ const RX=[
   [/^Heute ausverkauft · nur während gebaut wird$/,()=>'Sold out today · only while building'],
   [/^Neue Waren in (.+) · (\d+) Angebote( \(mehr ab Händler Stufe (\d+)\))?$/,(m)=>'New goods in '+m[1]+' · '+m[2]+' offers'+(m[3]?' (more from merchant level '+m[4]+')':'')],
   [/^Gekauft: (.+)$/,(m,t)=>'Bought: '+t(m[1])],
+  [/^(\d+) reif$/,(m)=>m[1]+' ripe'],
+  [/^🌵 (\d+) Beete · (\d+) reif · (\d+) leer$/,(m)=>'🌵 '+m[1]+' beds · '+m[2]+' ripe · '+m[3]+' empty'],
+  [/^Samenkapseln: (.+)$/,(m)=>'Seed capsules: '+m[1]],
   [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
   [/^Kapitel (\d+) · Welle (\d+)\/(\d+)( · Boss)?$/,(m)=>'Chapter '+m[1]+' · Wave '+m[2]+'/'+m[3]+(m[4]?' · Boss':'')],
   [/^Kapitel (\d+) geschafft! 🎉$/,(m)=>'Chapter '+m[1]+' cleared! 🎉'],
@@ -1804,7 +1809,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3448,14 +3453,14 @@ function renderGarden(){farmInit();const F=S.farm,L=fLv(),now=Date.now(),a0=fAt(
     return`<button type="button" class="fbed${ripe?' ripe':''}${ripe&&b.b?' bloom':''}" data-fh="${i}" style="--sc:${sd.c}"><canvas width="120" height="110" data-fb="${i}"></canvas>
       ${ripe?`<span class="fbt">${b.b?'🌸 ':''}Ernten!</span>`:`<span class="fbbar"><i style="width:${p*100}%"></i><em data-fl="${i}">${fmtT((dur-(now-b.t))/1000)}</em></span>`}</button>`;};
   const lock=nb<FB_MAX?`<button type="button" class="fbed lock" id="fBuy" ${(S.kak||0)<fbCost(nb)?'disabled':''}><b>🔒</b><span class="fbt">Neues Beet</span><small>${fbCost(nb)} 🌵</small></button>`:'';
-  $('tabGart').innerHTML=`<div class="tsec gart2">
+  $('tabGart').innerHTML=`<button type="button" class="sbtn vback" id="fBack">← Zurück ins Dorf</button><div class="tsec gart2">
     <div class="fhead"><div><b>🌱 Gärtnerei Lv ${L}</b><small>${fmt(F.h)} Ernten · noch ${b0-F.h} bis Lv ${L+1}${nxt?' · '+nxt.n+' ab Lv '+nxt.lv:''}</small>
       <div class="gprog"><div style="width:${Math.min(100,(F.h-a0)/(b0-a0)*100)}%"></div></div></div>
       <div class="fres"><span>🌱 ${fmt(S.caps||0)}</span><span>🌵 ${fmt(S.kak||0)}</span></div></div>
     <div class="fgreen"><div class="fgrid">${F.beds.map(cell).join('')}${lock}${'<div class="fbed fill"></div>'.repeat((3-((nb+(lock?1:0))%3))%3)}</div></div>
     <div class="row"><button class="btn go" type="button" id="fAll" ${F.beds.some(b=>!b)?'':'disabled'}>🌱 Alle leeren Beete bepflanzen<small>${(SEEDS.find(x=>x.id===F.last)||SEEDS[0]).n}</small></button></div>
     <p class="hint" style="margin:0;text-align:center">Pflanze Samenkapseln, ernte die reifen Kakteen per Hand. Blühende Pflanzen 🌸 geben dir mehr Samen zurück, als du gepflanzt hast. Mit Kakteen kaufst du neue Beete.</p></div>`;
-  drawFarm();
+  drawFarm();{const fb=$('fBack');if(fb)fb.onclick=()=>tabGo('dorf');}
   $('tabGart').querySelectorAll('[data-fp]').forEach(b=>b.onclick=()=>farmPick(+b.dataset.fp));
   $('tabGart').querySelectorAll('[data-fh]').forEach(b=>b.onclick=()=>farmHarvest(+b.dataset.fh,b));
   {const bb=$('fBuy');if(bb)bb.onclick=()=>{const c=fbCost(F.beds.length);if((S.kak||0)<c||F.beds.length>=FB_MAX)return;S.kak-=c;F.beds.push(null);save();lastHud='';banner={txt:'Neues Beet! ('+F.beds.length+'/'+FB_MAX+')',t:1.6};renderGarden();};}
@@ -3775,7 +3780,7 @@ setInterval(()=>{if(curTab==='kampf'&&S.char&&!wsHold&&tkSigNow()!==tkSig){const
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
 function tabGo(t){if(t==='kampf')t='ausr';
   curTab=t;document.querySelectorAll('#tPanel>.tab').forEach(x=>x.hidden=x.dataset.t!==t);
-  document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.classList.toggle('on',b.dataset.tab2===t));
+  document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.classList.toggle('on',b.dataset.tab2===t||(t==='gart'&&b.dataset.tab2==='dorf')));
   if(t==='dorf')renderDorf();if(t==='kampf')renderTabKampf();if(t==='begl')renderDrones();if(t==='gart')renderGarden();$('tPanel').scrollTop=0;}
 document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.onclick=()=>tabGo(b.dataset.tab2));
 setTimeout(()=>renderTabKampf(),0);
@@ -5468,7 +5473,7 @@ const TUT=[
   {el:'stageBox',t:'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.'},
   {el:'capBtn',act:'cap',t:'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.',d:'👉 Tippe auf „Ausrüstung beschwören“!'},
   {el:'gearBtn',t:'Super! Ist ein neues Teil besser, legst du es an. Schwächere Teile zerstörst du für Münzen. Hier siehst du deine Ausrüstung und dein Inventar.'},
-  {el:'tbGart',t:'Je öfter du Ausrüstung beschwörst, desto höher wird deine Beschwörungsstufe – und desto öfter kommen seltene, stärkere Teile.'},
+  {el:'tbDorf',t:'Im Dorf baust du Gebäude: die Schmiede, den Händler und deine Gärtnerei mit den Kakteenbeeten.'},
   {el:'editBtn',t:'Tippe oben auf deinen Namen: Dort findest du dein Profil, deine Kakteen, Freunde und die Rangliste. Weltboss, Turm und Arena findest du unter 🏰 Mehr.'},
   {t:'Das war’s schon! Als Starthilfe schenke ich dir <b>5 Samenkapseln</b>. Komm jeden Tag vorbei, es gibt eine tägliche Belohnung. Viel Spaß!',last:1}
 ];
@@ -5873,6 +5878,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn117',date:'2026-11-15',title:'Dorf: Gärtnerei zieht um',hero:['🌱 Deine Beete liegen jetzt im Dorf','Die Gärtnerei hat keinen eigenen Knopf mehr unten, sie steht jetzt als Kakteenbeet in deinem Dorf.'],items:()=>[['So geht’s:','Im Dorf auf die Gärtnerei tippen und „Zur Gärtnerei“ wählen. Mit „Zurück ins Dorf“ geht es wieder raus.'],['Auf einen Blick:','Am Beet im Dorf siehst du, wie viele Kakteen reif sind.'],['Deine Pflanzen:','Alles bleibt, wie es war.']],
+  en:{title:'Village: The garden moves',hero:['🌱 Your beds are now in the village','The garden no longer has its own button at the bottom – it now sits as a cactus bed in your village.'],items:()=>[['How it works:','Tap the garden in the village and choose “To the garden”. “Back to the village” takes you out again.'],['At a glance:','The bed in the village shows how many cacti are ripe.'],['Your plants:','Everything stays as it was.']]}},
   {id:'pn116',date:'2026-11-15',title:'Dorf: Der Händler',hero:['🛒 Jeden Tag neue Waren','Ab Rathaus Stufe 2 kannst du den Händler bauen. Er verkauft jeden Tag andere Angebote zu festen Preisen – ohne Zufall.'],items:()=>[['Waren:','Samenkapseln, Eisenerz, Kakteen und Bauzeit-Verkürzung für dein Dorf.'],['Begrenzt:','Jedes Angebot gibt es nur ein paar Mal pro Tag. Um Mitternacht kommen neue Waren.'],['Ausbauen:','Ab Händler Stufe 3 gibt es 4 Angebote, ab Stufe 5 sogar 5.']],
   en:{title:'Village: The merchant',hero:['🛒 New goods every day','From town hall level 2 you can build the merchant. He sells different offers every day at fixed prices – no randomness.'],items:()=>[['Goods:','Seed capsules, iron ore, cacti and build time reductions for your village.'],['Limited:','Each offer is only available a few times per day. New goods arrive at midnight.'],['Upgrade:','From merchant level 3 there are 4 offers, from level 5 even 5.']]}},
   {id:'pn115',date:'2026-11-15',title:'Schmiede: Teile verbessern',hero:['⭐ Mach deine Teile stärker','In der Schmiede verbesserst du jetzt Waffe, Helm, Rüstung, Handschuhe und Halskette mit Eisenerz und Münzen.'],items:()=>[['Sterne:','Jeder ⭐ gibt +5 % auf den Wert des Teils. Wie viele ⭐ möglich sind, bestimmt die Stufe der Schmiede.'],['Gehören zum Teil:','Ziehst du ein besseres Teil, fängt es bei ⭐0 an. Zerlegst du ein verbessertes Teil, bekommst du 70 % des Erzes zurück.'],['Gegner:','Erst ab Stage 480 rechnen die Gegner mit verbesserten Teilen.']],
@@ -6045,9 +6052,10 @@ const VB=[
   {id:'rat', n:'Rathaus',   ico:'🏛',x:.5, y:.40,max:10,need:0,txt:'Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.'},
   {id:'schm',n:'Schmiede',  ico:'⚒',x:.21,y:.68,max:10,need:1,txt:'Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.'},
   {id:'hand',n:'Händler',   ico:'🛒',x:.79,y:.68,max:10,need:2,txt:'Verkauft jeden Tag wechselnde Waren zu festen Preisen.'},
-  {id:'gart',n:'Gärtnerei', ico:'🌱',x:.5, y:.80,max:10,need:1,soon:1,txt:'Deine Kaktusbeete – bald hier im Dorf.'}];
+  {id:'gart',n:'Gärtnerei', ico:'🌱',x:.5, y:.80,max:0,need:0,txt:'Deine Kaktusbeete. Pflanze Samenkapseln, ernte reife Kakteen. Die Stufe steigt mit jeder Ernte.'}];
 const vInit=()=>{if(!S.vil||!S.vil.b)S.vil={b:{rat:1},job:null};return S.vil;};
-const vLv=id=>(vInit().b[id]||0);
+const vLv=id=>id==='gart'?fLv():(vInit().b[id]||0);
+const farmRipe=()=>{const F=S.farm;if(!F||!F.beds)return 0;const now=Date.now();return F.beds.filter(b=>{if(!b)return false;const sd=SEEDS.find(x=>x.id===b.s);return sd&&now-b.t>=sd.min*60000;}).length;};
 // Kosten: Münzen ≈ so viele Minuten Kampf, wie die Stufe verlangt; dazu Kakteen. Bauzeit steigt mit der Stufe.
 const vMin=[5,10,30,60,120,180,300,480,720,960,1200];   // Index = Zielstufe−1
 const vCost=(B,to)=>{const k=B.id==='rat'?1:.6;return{coins:Math.round(240*cPow(Math.max(1,S.best||1))*25*Math.pow(to,1.5)*k),kak:Math.round(12*Math.pow(to,1.45)*k),sec:(vMin[to-1]||1200)*60*(B.id==='rat'?1:.75)};};
@@ -6058,14 +6066,14 @@ function vBuild(){const V=vInit(),B=VB.find(x=>x.id===vSel),lv=vLv(B.id),to=lv+1
   if(V.job||lv>=B.max||vLv('rat')<B.need||(B.id!=='rat'&&to>vLv('rat'))||(S.coins||0)<c.coins||(S.kak||0)<c.kak)return;
   S.coins-=c.coins;S.kak-=c.kak;V.job={id:B.id,to,end:Date.now()+c.sec*1000,dur:c.sec*1000};save();lastHud='';renderDorf();}
 function renderDorf(){const H=$('tabDorf');if(!H)return;const V=vInit();vDone();
-  const labs=VB.map(B=>{const lv=vLv(B.id),lock=vLv('rat')<B.need;return`<button type="button" class="vlab${vSel===B.id?' on':''}${lock||B.soon?' lock':''}" data-vb="${B.id}" style="left:${B.x*100}%;top:${(B.y+.06)*100}%">${B.ico} ${B.n}${lock?' 🔒':B.soon?'':lv===0?' 🚧':` <em>Lv ${lv}</em>`}</button>`;}).join('');
+  const labs=VB.map(B=>{const lv=vLv(B.id),lock=vLv('rat')<B.need;return`<button type="button" class="vlab${vSel===B.id?' on':''}${lock||B.soon?' lock':''}" data-vb="${B.id}" style="left:${B.x*100}%;top:${(B.y+.06)*100}%">${B.ico} ${B.n}${lock?' 🔒':B.soon?'':lv===0?' 🚧':` <em>Lv ${lv}</em>`}${B.id==='gart'&&farmRipe()?` <em class="vripe">${farmRipe()} reif</em>`:''}</button>`;}).join('');
   H.innerHTML=`<div class="tsec dorf"><div class="fhead"><div><b>🏘 Dein Dorf</b><small>Ein Bauarbeiter · baut immer ein Gebäude zur Zeit</small></div>
     <div class="fres"><span>🪙 ${fmt(S.coins||0)}</span><span>🌵 ${fmt(S.kak||0)}</span>${vLv('schm')?`<span>🪨 ${fmt(S.ore||0)}</span>`:''}</div></div>
     <div class="vscene"><canvas id="vCv" width="720" height="520"></canvas>${labs}</div><div class="vpanel" id="vPanel"></div></div>`;
   H.querySelectorAll('[data-vb]').forEach(b=>b.onclick=()=>{vSel=b.dataset.vb;renderDorf();});
   vPanel();drawDorf();}
 function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>x.id===vSel),lv=vLv(B.id),rat=vLv('rat'),lock=rat<B.need,j=V.job;
-  let h=`<h3><span>${B.ico} ${B.n}</span><small>${lock?'🔒 ab Rathaus Stufe '+B.need:B.soon?'🚧 Bald':'Stufe '+lv+' / '+B.max}</small></h3><p>${B.txt}</p>`;
+  let h=`<h3><span>${B.ico} ${B.n}</span><small>${lock?'🔒 ab Rathaus Stufe '+B.need:B.soon?'🚧 Bald':B.id==='gart'?'Stufe '+lv:'Stufe '+lv+' / '+B.max}</small></h3><p>${B.txt}</p>`;
   if(B.id==='rat'){const nx=VB.filter(x=>x.need===lv+1).map(x=>x.n);
     h+=`<ul><li>Andere Gebäude bis Stufe ${lv}</li>${nx.length&&lv<B.max?`<li>Nächste Stufe schaltet frei: ${nx.join(', ')}</li>`:''}</ul>`;}
   if(B.id==='schm'&&lv>0){const w=vWorse(),o=w.reduce((a,it)=>a+oreFor(it,lv),0),c=w.reduce((a,it)=>a+sellValue(it),0);
@@ -6076,6 +6084,8 @@ function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>
         return`<div class="vup" style="--rc:${RAR[it.r].c}"><span><b>${sl.n} ${u?'⭐'+u:''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))} ${sl.unit}</em>${mx?'':' → <em class="up">+'+fmtV(sl,it.v*(1+UPS*(u+1)))+'</em>'}</small></span>
           <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} 🪙</small>`}</button></div>`;}).join('')}</div>`;}
   if(B.id==='hand'&&lv>0)h+=shopHtml(lv);
+  if(B.id==='gart'){const F=S.farm||{beds:[]},r=farmRipe(),e=F.beds.filter(b=>!b).length;
+    h+=`<div class="vsub"><b>🌵 ${F.beds.length} Beete · ${r} reif · ${e} leer</b><small>Samenkapseln: ${fmt(S.caps||0)}</small></div><button type="button" class="btn go" id="vGart">🌱 Zur Gärtnerei</button>`;}
   if(j&&j.id===B.id){const left=Math.max(0,j.end-Date.now()),pc=100-left/j.dur*100;
     h+=`<div class="vbar"><i id="vBarI" style="width:${pc}%"></i><b id="vBarT">Baut Stufe ${j.to} · noch ${fmtT(left/1000)}</b></div>`;}
   else if(!lock&&!B.soon&&lv<B.max){const c=vCost(B,lv+1),okC=(S.coins||0)>=c.coins,okK=(S.kak||0)>=c.kak,cap=B.id!=='rat'&&lv+1>rat,busy=!!j;
@@ -6085,6 +6095,7 @@ function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>
   P.querySelectorAll('[data-vup]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vup],lv=vLv('schm');if(!it||(it.up||0)>=lv)return;const c=upCost(it);
     if((S.ore||0)<c.ore||(S.coins||0)<c.coins)return;S.ore-=c.ore;S.coins-=c.coins;it.up=(it.up||0)+1;it.oreIn=(it.oreIn||0)+c.ore;save();lastHud='';
     banner={txt:slotOf(it.slot).n+' ⭐'+it.up+'!',t:1.6};renderDorf();});
+  {const gb=$('vGart');if(gb)gb.onclick=()=>tabGo('gart');}
   P.querySelectorAll('[data-shop]').forEach(b=>b.onclick=()=>shopBuy(b.dataset.shop));
   const sc=$('vScrap');if(sc)sc.onclick=()=>{const w=vWorse();if(!w.length)return;const ids=new Set(w.map(it=>it.id));let o0=S.ore||0,c=0;
     S.inv=S.inv.filter(it=>{if(!ids.has(it.id))return true;c+=scrap(it);return false;});S.coins+=c;save();lastHud='';
@@ -6138,6 +6149,17 @@ function vScaf(g,x,y,w,t){g.strokeStyle='#8a5a2a';g.lineWidth=2.5;for(const dx o
   for(let k=1;k<4;k++){g.beginPath();g.moveTo(x-w,y-k*14);g.lineTo(x+w,y-k*14);g.stroke();}
   const hx=x+Math.sin(t*1.5)*w*.6;g.font='14px system-ui';g.textAlign='center';g.fillText('🔨',hx,y-58+Math.abs(Math.sin(t*6))*-4);}
 const vDraw={
+  gart(g,x,y,lv,t){const F=S.farm||{beds:[]},now=Date.now();g.lineWidth=2;g.strokeStyle=vOL;
+    g.fillStyle='#a0703a';g.beginPath();g.roundRect(x-40,y-18,80,24,5);g.fill();g.stroke();   // Holzrahmen
+    g.fillStyle='#6b4423';g.beginPath();g.roundRect(x-36,y-15,72,18,4);g.fill();               // Erde
+    for(let k=0;k<6;k++){const b=F.beds[k],cx=x-30+k*12,cy=y-4;if(!b){g.fillStyle='#5a3a1e';g.beginPath();g.ellipse(cx,cy,3,1.5,0,0,7);g.fill();continue;}
+      const sd=SEEDS.find(q=>q.id===b.s)||SEEDS[0],p=Math.min(1,(now-b.t)/(sd.min*60000)),h=4+p*10;g.fillStyle=sd.c;g.strokeStyle=vOL;g.lineWidth=1.5;
+      g.beginPath();sd.shape==='kugel'?g.ellipse(cx,cy-h*.45,3+p*2,h*.5,0,0,7):g.roundRect(cx-2.5,cy-h,5,h,2.5);g.fill();g.stroke();
+      if(p>=1&&b.b){g.fillStyle='#ff7ad0';g.beginPath();g.arc(cx,cy-h-1,2.2,0,7);g.fill();}}
+    // Schild
+    g.fillStyle='#7a5a2a';g.fillRect(x+40,y-26,3,24);g.fillStyle='#e8c88a';g.strokeStyle=vOL;g.lineWidth=1.5;g.beginPath();g.roundRect(x+33,y-34,18,11,2);g.fill();g.stroke();
+    g.font='8px system-ui';g.textAlign='center';g.fillText('🌱',x+42,y-26);
+    const r=farmRipe();if(r){g.globalAlpha=.6+.4*Math.sin(t*4);g.font='12px system-ui';g.fillText('✨',x-40,y-22);g.globalAlpha=1;}},
   hand(g,x,y,lv,t){g.lineWidth=2.5;g.strokeStyle=vOL;
     g.fillStyle='#a0703a';for(const [dx,w,h] of[[-30,14,12],[-18,10,9],[22,14,13]]){g.beginPath();g.rect(x+dx,y-h,w,h);g.fill();g.stroke();}   // Kisten
     g.fillStyle='#e9d6b0';g.beginPath();g.roundRect(x-20,y-24,40,24,2);g.fill();g.stroke();   // Stand
