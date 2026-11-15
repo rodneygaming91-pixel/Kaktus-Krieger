@@ -6765,7 +6765,7 @@ function renderPets(){const H=$('tabBegl');if(!H)return;petInit();setTimeout(()=
 // ---- Sammelalbum (15.11.2026): jede Welt ist eine Seite; volle Seite = dauerhaft +1 % Angriff ----
 function albMark(ty){if(!ty||!ty.n)return;S.alb=S.alb||{};S.alb[ty.n]=(S.alb[ty.n]||0)+1;}
 const albList=w=>[...w.e,w.boss];
-function albPages(){if(!S||!S.alb)return 0;let n=0;for(const w of WORLDS)if(albList(w).every(t=>S.alb[t.n]))n++;return n;}
+function albPages(){try{if(!S||!S.alb)return 0;let n=0;for(const w of WORLDS)if(albList(w).every(t=>S.alb[t.n]))n++;return n;}catch(e){return 0;}}   // früh beim Laden sind die Welten noch nicht da
 let albOpen=false;
 function albShow(){albOpen=true;$('modal').hidden=false;const tot=WORLDS.reduce((a,w)=>a+albList(w).length,0),seen=WORLDS.reduce((a,w)=>a+albList(w).filter(t=>S.alb[t.n]).length,0);
   $('card').innerHTML=`<h2>📖 Sammelalbum</h2><p class="hint" style="margin:0">${seen} / ${tot} Gegner entdeckt · ${albPages()} / ${WORLDS.length} Seiten voll = <b>+${albPages()} % Angriff</b> dauerhaft</p>
