@@ -1859,7 +1859,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2280,7 +2280,10 @@ applyEco();
 const $=id=>document.getElementById(id);
 const rnd=(a,b)=>a+Math.random()*(b-a);
 const FMT_U=['K','M','B','T','Qa','Qi','Sx','Sp','Oc','No','Dc','Ud','Dd','Td','Qad','Qid'];
-const fmt=n=>{n=Math.floor(n);if(!isFinite(n))return '∞';if(n<1000)return String(n);let i=-1;while(n>=1000&&i<FMT_U.length-1){n/=1000;i++;}return n.toFixed(1)+FMT_U[i];};
+// 15.11.2026: Auf Deutsch mit Komma und deutschen Abkürzungen (338,4 Tsd.), auf Englisch wie bisher (338.4K)
+const FMT_DE=['Tsd.','Mio.','Mrd.','Bio.','Brd.','Trio.','Trd.','Quad.','Quadrd.','Quint.','Quintd.','Sext.','Sextd.','Sept.','Septd.','Okt.'];
+const fmt=n=>{n=Math.floor(n);if(!isFinite(n))return '∞';const de=!(window.KKL&&KKL.cur==='en');if(n<1000)return String(n);let i=-1;while(n>=1000&&i<FMT_U.length-1){n/=1000;i++;}
+  return de?n.toFixed(1).replace('.',',')+'\u202f'+FMT_DE[i]:n.toFixed(1)+FMT_U[i];};
 
 const drT={};
 
@@ -5932,6 +5935,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn128',date:'2026-11-15',title:'Lebendiges Dorf und deutsche Zahlen',hero:['🌙 Dein Dorf lebt','Kleine Kaktus-Dorfbewohner laufen jetzt zwischen deinen Gebäuden hin und her, tagsüber fliegen Vögel – und das Dorf folgt der echten Uhrzeit.'],items:()=>[['Tag und Nacht:','Morgens und abends färbt sich der Himmel orange, nachts gibt es Sterne, Mond und warm leuchtende Gebäude und Laternen.'],['Zahlen:','Auf Deutsch stehen große Zahlen jetzt mit Komma und deutschen Abkürzungen da, z. B. 338,4 Tsd. oder 2,1 Mio.']],
+  en:{title:'Living village',hero:['🌙 Your village is alive','Little cactus villagers now walk between your buildings, birds fly during the day – and the village follows the real time of day.'],items:()=>[['Day and night:','Mornings and evenings turn the sky orange, at night there are stars, a moon and warmly lit buildings and lanterns.'],['Numbers:','In German, big numbers now use a comma and German abbreviations. In English they stay as before (e.g. 338.4K).']]}},
   {id:'pn127',date:'2026-11-15',title:'Kapitel: Mehr Wucht',hero:['💥 Kämpfe fühlen sich kräftiger an','Getroffene Gegner werden ein Stück zurückgestoßen, und aus besiegten Gegnern springen Münzen.'],items:()=>[['Bosse:','Beim Sieg blitzt der Bildschirm kurz auf, wackelt und ein ganzer Münzregen springt heraus.']],
   en:{title:'Chapters: More impact',hero:['💥 Fights feel punchier','Hit enemies get knocked back a little, and coins pop out of defeated enemies.'],items:()=>[['Bosses:','On a win the screen flashes, shakes and a whole shower of coins pops out.']]}},
   {id:'pn126',date:'2026-11-15',title:'Kapitel: Schönere Arenen',hero:['🏜 Arenen mit eigener Kulisse','Oben in der Arena siehst du jetzt den Himmel deiner Welt mit Mond, Sternen und Tafelbergen statt einer dunklen Zackenwand.'],items:()=>[['Knochenwüste:','Die Schädel-Steine sahen aus wie Gegner. Jetzt liegen dort Rippenbögen und gekreuzte Knochen.'],['Schadenszahlen:','Erscheinen leicht versetzt und überlappen sich nicht mehr.']],
@@ -6276,7 +6281,11 @@ function vWorse(){ensureIds();return S.inv.filter(it=>{const cur=S.gear[it.slot]
 // Dorf zeichnen
 function drawDorf(){const cv2=$('vCv');if(!cv2)return;const sc=cv2.parentElement,rw=sc.clientWidth||360,rh=sc.clientHeight||260,W=360,Hh=Math.max(260,Math.round(360*rh/rw)),k=2;
   if(cv2.width!==W*k||cv2.height!==Hh*k){cv2.width=W*k;cv2.height=Hh*k;}const g=cv2.getContext('2d'),t=Date.now()/1000,V=vInit();g.setTransform(k,0,0,k,0,0);
-  const sky=g.createLinearGradient(0,0,0,70);sky.addColorStop(0,'#8fd3ff');sky.addColorStop(1,'#ffe3a8');g.fillStyle=sky;g.fillRect(0,0,W,70);
+  const hr=new Date().getHours()+new Date().getMinutes()/60,night=hr<6||hr>=20,dusk=!night&&(hr<7.5||hr>=18.5);   // Tag & Nacht nach echter Uhrzeit
+  const sky=g.createLinearGradient(0,0,0,70);if(night){sky.addColorStop(0,'#0e1438');sky.addColorStop(1,'#3a3a6e');}else if(dusk){sky.addColorStop(0,'#5a6fc0');sky.addColorStop(1,'#ffb37a');}else{sky.addColorStop(0,'#8fd3ff');sky.addColorStop(1,'#ffe3a8');}
+  g.fillStyle=sky;g.fillRect(0,0,W,70);
+  if(night){g.fillStyle='#fff';for(let i=0;i<40;i++){const sx=(i*97)%W,sy=(i*53)%58;g.globalAlpha=.4+.4*Math.sin(t*2+i);g.fillRect(sx,sy,1.5,1.5);}g.globalAlpha=1;g.fillStyle='#fff6d8';g.beginPath();g.arc(310,22,9,0,7);g.fill();g.fillStyle='#0e1438';g.beginPath();g.arc(314,19,8,0,7);g.fill();}
+  else{g.fillStyle=dusk?'#ffcf8a':'#fff3b0';g.globalAlpha=.9;g.beginPath();g.arc(dusk?40:310,dusk?56:22,10,0,7);g.fill();g.globalAlpha=1;}
   g.fillStyle='#e8b877';g.beginPath();g.moveTo(0,62);g.quadraticCurveTo(90,40,170,60);g.quadraticCurveTo(260,38,360,58);g.lineTo(360,70);g.lineTo(0,70);g.fill();
   const gr=g.createLinearGradient(0,60,0,Hh);gr.addColorStop(0,'#f0cf8e');gr.addColorStop(1,'#d9a960');g.fillStyle=gr;g.fillRect(0,60,W,Hh-60);
   // Wege
@@ -6293,7 +6302,29 @@ function drawDorf(){const cv2=$('vCv');if(!cv2)return;const sc=cv2.parentElement
     if(B.id!=='mauer'){g.fillStyle='#0003';g.beginPath();g.ellipse(x,y+4,B.id==='rat'?56:34,8,0,0,7);g.fill();}
     if(B.soon||lock||lv===0)vPlot(g,x,y,lock);else vDraw[B.id](g,x,y,lv,t);
     if(building)vScaf(g,x,y,B.id==='rat'?46:30,t);}
+  vLife(g,W,Hh,t,night,dusk);
 }
+// ---- Leben im Dorf (15.11.2026): Dorfbewohner auf den Wegen, Vögel, nachts Licht ----
+let vWalk=null,vLT=0;
+function vLife(g,W,Hh,t,night,dusk){const now=performance.now()/1000,dt=Math.min(.1,now-(vLT||now));vLT=now;
+  const spots=VB.filter(B=>B.id!=='mauer'&&(B.id==='gart'||vLv(B.id)>0)).map(B=>({x:B.x*W,y:B.y*Hh+6,ry:B.y}));if(spots.length<2)return;
+  const route=(a,b)=>[[a.x,a.y],[180,a.ry===.27?a.y:a.y-6],[180,b.ry===.27?b.y:b.y-6],[b.x,b.y]];
+  if(!vWalk)vWalk=[0,1,2].map(i=>{const a=spots[i%spots.length];return{p:route(a,spots[(i+1)%spots.length]),k:0,x:a.x,y:a.y,w:i*1.5,c:['#4caf50','#6cc04a','#3e9a5a'][i],hat:['#d6336c','#ffd447','#4fb8ff'][i]};});
+  for(const v of vWalk){if(v.w>0){v.w-=dt;continue;}const q=v.p[v.k+1];if(!q){const a=spots.find(s=>Math.hypot(s.x-v.x,s.y-v.y)<4)||spots[0],b=spots[Math.floor(Math.random()*spots.length)];v.p=route({x:v.x,y:v.y,ry:a.ry},b);v.k=0;v.w=1.5+Math.random()*3;continue;}
+    const dx=q[0]-v.x,dy=q[1]-v.y,l=Math.hypot(dx,dy);if(l<1){v.k++;continue;}const sp=20*dt;v.x+=dx/l*Math.min(l,sp);v.y+=dy/l*Math.min(l,sp);v.f=dx<0?-1:dx>0?1:v.f||1;}
+  for(const v of vWalk){const mv=v.w<=0,b=mv?Math.abs(Math.sin(t*9+v.x))*1.6:0;g.save();g.translate(v.x,v.y);g.scale(v.f||1,1);
+    g.fillStyle='#0003';g.beginPath();g.ellipse(0,1,5,1.8,0,0,7);g.fill();g.strokeStyle=vOL;g.lineWidth=1.4;
+    g.fillStyle=v.c;g.beginPath();g.roundRect(-3.5,-12-b,7,11,3.5);g.fill();g.stroke();g.beginPath();g.moveTo(-3.5,-7-b);g.lineTo(-6,-9-b);g.moveTo(3.5,-6-b);g.lineTo(6,-8-b+(mv?Math.sin(t*9)*1.5:0));g.stroke();
+    g.fillStyle=v.hat;g.beginPath();g.ellipse(0,-12-b,4.5,1.6,0,0,7);g.fill();g.stroke();g.beginPath();g.roundRect(-2.5,-15.5-b,5,3.5,1);g.fill();g.stroke();
+    g.fillStyle=vOL;g.fillRect(.5,-9.5-b,1.2,1.2);g.restore();}
+  if(!night){g.strokeStyle='#3a2a2a';g.lineWidth=1.3;for(let i=0;i<3;i++){const bx=((t*24+i*130)%(W+80))-40,by=24+i*9+Math.sin(t*1.3+i)*3,fl=Math.sin(t*10+i)*2.5;g.beginPath();g.moveTo(bx-5,by-fl);g.quadraticCurveTo(bx-2,by-2,bx,by);g.quadraticCurveTo(bx+2,by-2,bx+5,by-fl);g.stroke();}}
+  if(night||dusk){g.fillStyle=night?'rgba(18,24,70,.42)':'rgba(255,140,60,.12)';g.fillRect(0,0,W,Hh);
+    if(night){g.save();g.globalCompositeOperation='lighter';for(const B of VB){if(B.id==='mauer'||(B.id!=='gart'&&vLv(B.id)<1))continue;const x=B.x*W,y=B.y*Hh-18,gr=g.createRadialGradient(x,y,2,x,y,34);gr.addColorStop(0,'rgba(255,200,90,.55)');gr.addColorStop(1,'rgba(255,200,90,0)');g.fillStyle=gr;g.fillRect(x-34,y-34,68,68);}
+      for(const ly of[.37,.57,.77]){const gr=g.createRadialGradient(194,ly*Hh-14,1,194,ly*Hh-14,16);gr.addColorStop(0,'rgba(255,220,120,.7)');gr.addColorStop(1,'rgba(255,220,120,0)');g.fillStyle=gr;g.fillRect(178,ly*Hh-30,32,32);}g.restore();}
+    for(const ly of[.37,.57,.77]){g.fillStyle='#4a2a14';g.fillRect(193,ly*Hh-14,2,14);g.fillStyle=night?'#ffe08a':'#c9a060';g.beginPath();g.arc(194,ly*Hh-15,2.6,0,7);g.fill();}}
+}
+// flüssige Bewegung, solange das Dorf offen ist
+(function vLoop(){let last=0;const f=ts=>{if(curTab==='dorf'&&!document.hidden&&ts-last>33){last=ts;drawDorf();}requestAnimationFrame(f);};requestAnimationFrame(f);})();
 const vOL='#3a2414';
 function vPlot(g,x,y,lock){g.fillStyle='#c99a5a';g.strokeStyle='#8a6a3a';g.lineWidth=2;g.setLineDash([4,3]);g.beginPath();g.roundRect(x-28,y-14,56,22,6);g.fill();g.stroke();g.setLineDash([]);
   g.fillStyle='#7a5a2a';g.fillRect(x-1.5,y-30,3,20);g.fillStyle='#e8c88a';g.strokeStyle=vOL;g.lineWidth=1.5;g.beginPath();g.roundRect(x-11,y-34,22,12,2);g.fill();g.stroke();
