@@ -1859,7 +1859,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -5932,6 +5932,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn127',date:'2026-11-15',title:'Kapitel: Mehr Wucht',hero:['💥 Kämpfe fühlen sich kräftiger an','Getroffene Gegner werden ein Stück zurückgestoßen, und aus besiegten Gegnern springen Münzen.'],items:()=>[['Bosse:','Beim Sieg blitzt der Bildschirm kurz auf, wackelt und ein ganzer Münzregen springt heraus.']],
+  en:{title:'Chapters: More impact',hero:['💥 Fights feel punchier','Hit enemies get knocked back a little, and coins pop out of defeated enemies.'],items:()=>[['Bosses:','On a win the screen flashes, shakes and a whole shower of coins pops out.']]}},
   {id:'pn126',date:'2026-11-15',title:'Kapitel: Schönere Arenen',hero:['🏜 Arenen mit eigener Kulisse','Oben in der Arena siehst du jetzt den Himmel deiner Welt mit Mond, Sternen und Tafelbergen statt einer dunklen Zackenwand.'],items:()=>[['Knochenwüste:','Die Schädel-Steine sahen aus wie Gegner. Jetzt liegen dort Rippenbögen und gekreuzte Knochen.'],['Schadenszahlen:','Erscheinen leicht versetzt und überlappen sich nicht mehr.']],
   en:{title:'Chapters: Nicer arenas',hero:['🏜 Arenas with their own backdrop','At the top of the arena you now see your world\'s sky with moon, stars and mesas instead of a dark jagged wall.'],items:()=>[['Bone Desert:','The skull rocks looked like enemies. Now there are rib cages and crossed bones instead.'],['Damage numbers:','Appear slightly offset and no longer overlap.']]}},
   {id:'pn125',date:'2026-11-15',title:'Aufgeräumter Hauptbildschirm',hero:['🧹 Mehr Platz für den Kampf','Der Hauptbildschirm ist aufgeräumt: Im Kampffeld liegen weniger Kästen, damit du deinen Kaktus besser siehst.'],items:()=>[['Elemente:','Gegner, Schwäche, Waffe und Resistenz stehen jetzt in einer Leiste unter dem Kampf.'],['Oben:','Samenkapseln und Kakteen stehen rechts untereinander, der Allianz-Knopf ist weg, solange Allianzen pausiert sind.'],['Ansagen:','Hinweise wie „BOSS: …“ erscheinen jetzt gut lesbar in einem Kasten.'],['Unten:','Begleiter sind ausgeblendet, bis sie neu kommen. Die Schwierigkeits-Reiter findest du in der Weltkarte.']],
@@ -6435,7 +6437,7 @@ function axOpen(pvp){if(AX.open)return;const d=document.createElement('div');d.i
     <div class="axmsg" id="axMsg" hidden></div><div class="axsk" id="axSk"></div><div class="axpick" id="axPick" hidden></div>`;
   document.body.appendChild(d);
   const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
-  const cg=Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{pvp:pvp||null,rep:false,pk:[],pkT:null,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
+  const cg=Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
   const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
   axBuild();
   const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
@@ -6445,7 +6447,7 @@ function axOpen(pvp){if(AX.open)return;const d=document.createElement('div');d.i
   const up=e=>{if(A.joy&&A.joy.id===e.pointerId)A.joy=null;};cv2.addEventListener('pointerup',up);cv2.addEventListener('pointercancel',up);
   $('axX').onclick=axClose;
   axWave();requestAnimationFrame(axStep);}
-function axClose(){if(AX.pvp&&AX.state==='go')vlReport(false);AX.open=false;AX.rew=null;const d=$('axWrap');if(d)d.remove();}
+function axClose(){if(AX.pvp&&AX.state==='go')vlReport(AX.winT!=null);AX.open=false;AX.rew=null;const d=$('axWrap');if(d)d.remove();}
 function axPick(){const A=AX;A.state='pick';A.sh=[];A.es=[];
   const pool=AXS.slice().sort(()=>Math.random()-.5).slice(0,3),P=$('axPick');
   // Drei Karten mischen kurz durch und bleiben nacheinander stehen (ohne Glücksspiel-Optik)
@@ -6495,6 +6497,10 @@ function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=WORLDS
 function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;axUpdate(dt);axDraw();requestAnimationFrame(axStep);}
 // 15.11.2026: sichtbare Körpermitte und Größe eines Gegners – darauf wird gezielt und damit getroffen
 function axC(e){return e.tower?{y:e.y-26,r:18}:e.cactus?{y:e.y-34,r:30}:e.boss?{y:e.y-e.r*1.15,r:e.r*1.25}:{y:e.y-e.r,r:e.r};}
+// 15.11.2026: Treffer-Gefühl – Münzen springen aus besiegten Gegnern, beim Boss mit Bildschirm-Wackler
+function axDie(e){const A=AX,c=axC(e),n=e.boss||e.cactus?26:e.tower?8:3;A.fx.push({x:e.x,y:c.y,txt:'',boom:1,t:.35});A.pt=A.pt||[];
+  for(let i=0;i<n;i++){const a=rnd(-Math.PI*.95,-Math.PI*.05),v=rnd(90,e.boss?300:200);A.pt.push({x:e.x,y:c.y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,t:rnd(.7,1.1),gy:c.y+rnd(10,40)});}
+  if(e.boss||e.cactus){A.shake=.7;A.flash=.25;}}
 function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&$('axMsg'))$('axMsg').hidden=true;}
   if(A.state!=='go')return;
   if(A.shake>0)A.shake-=dt;
@@ -6515,15 +6521,15 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
   A.pk=A.pk.filter(q=>!q.got);
   // Stacheln
   for(const s of A.sh){if(s.wait>0){s.wait-=dt;s.x=h.x;s.y=h.y-30;continue;}s.x+=s.vx*dt;s.y+=s.vy*dt;s.t-=dt;
-    for(const e of A.en){if(e.hp<=0||s.t<=0||s.hitIds.includes(e))continue;const ec=axC(e);if(Math.hypot(e.x-s.x,ec.y-s.y)<ec.r+4){const cr=Math.random()*100<h.crit+10*axHas('crit'),d=h.atk*(1+.3*axHas('atk'))*(cr?h.critM:1);e.hp-=d;e.hit=.12;s.hitIds.push(e);
+    for(const e of A.en){if(e.hp<=0||s.t<=0||s.hitIds.includes(e))continue;const ec=axC(e);if(Math.hypot(e.x-s.x,ec.y-s.y)<ec.r+4){const cr=Math.random()*100<h.crit+10*axHas('crit'),d=h.atk*(1+.3*axHas('atk'))*(cr?h.critM:1);e.hp-=d;e.hit=.12;s.hitIds.push(e);if(!e.boss&&!e.tower){const sl=Math.hypot(s.vx,s.vy)||1;e.x+=s.vx/sl*7;e.y+=s.vy/sl*7;}
       if(axHas('burn'))e.burn={t:2,d:d*.25*axHas('burn')};
       if(axHas('pierce')){}else if(s.b>0){s.b--;const nx=A.en.filter(o=>o.hp>0&&!s.hitIds.includes(o)).reduce((a,o)=>!a||Math.hypot(o.x-e.x,o.y-e.y)<Math.hypot(a.x-e.x,a.y-e.y)?o:a,null);
         if(nx){const a2=Math.atan2(axC(nx).y-s.y,nx.x-s.x);s.vx=Math.cos(a2)*420;s.vy=Math.sin(a2)*420;s.t=1;}else s.t=0;}else s.t=0;
-      A.fx.push({x:e.x,y:ec.y-ec.r,txt:(cr?'💥':'')+fmt(d),col:cr?'#ffd447':'#fff',t:.7});if(e.hp<=0)A.fx.push({x:e.x,y:e.y-e.r,txt:'',boom:1,t:.35});}}}
+      A.fx.push({x:e.x,y:ec.y-ec.r,txt:(cr?'💥':'')+fmt(d),col:cr?'#ffd447':'#fff',t:.7});if(e.hp<=0)axDie(e);}}}
   for(const s of A.sh){if(s.wait>0||s.t<=0)continue;for(const q of A.obs||[])if(Math.hypot(s.x-q.x,s.y-(q.y-q.r*.6))<q.r*.9){s.t=0;A.fx.push({x:s.x,y:s.y,txt:'',boom:1,t:.2});}}
   A.sh=A.sh.filter(s=>s.t>0&&s.x>-20&&s.x<A.W+20&&s.y>-20&&s.y<A.H+20);
   // Gegner laufen auf den Kaktus zu
-  for(const e of A.en){if(e.hp<=0)continue;if(e.burn&&e.burn.t>0){e.burn.t-=dt;e.hp-=e.burn.d*dt;if(e.hp<=0){A.fx.push({x:e.x,y:e.y-e.r,txt:'',boom:1,t:.35});continue;}}e.hit=Math.max(0,e.hit-dt);const dx=h.x-e.x,dy=h.y-e.y,l=Math.hypot(dx,dy)||1;
+  for(const e of A.en){if(e.hp<=0)continue;if(e.burn&&e.burn.t>0){e.burn.t-=dt;e.hp-=e.burn.d*dt;if(e.hp<=0){axDie(e);continue;}}e.hit=Math.max(0,e.hit-dt);const dx=h.x-e.x,dy=h.y-e.y,l=Math.hypot(dx,dy)||1;
     // Fernkämpfer halten Abstand und schießen; der Boss schießt einen Fächer
     if(e.rng||e.boss){e.fire-=dt;if(e.fire<=0){const oc=axC(e),a0=Math.atan2(h.y-30-oc.y,h.x-e.x),n=e.boss?5:1;
         for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.28;A.es.push({x:e.x,y:oc.y,vx:Math.cos(a)*(e.boss?150:170),vy:Math.sin(a)*(e.boss?150:170),d:e.atk*(e.boss?.6:.7),t:4,r:e.boss?8:6});}
@@ -6535,11 +6541,12 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
     for(const q of A.obs||[])if(Math.hypot(b.x-q.x,b.y-(q.y-q.r*.6))<q.r*.9){b.t=0;A.fx.push({x:b.x,y:b.y,txt:'',boom:1,t:.2});}
     if(b.t>0&&Math.hypot(b.x-h.x,b.y-(h.y-28))<16+b.r){b.t=0;h.hp-=b.d;h.hit=1;A.fx.push({x:h.x,y:h.y-70,txt:'-'+fmt(b.d),col:'#ff6f8a',t:.7});}}
   A.es=A.es.filter(b=>b.t>0&&b.x>-20&&b.x<A.W+20&&b.y>-20&&b.y<A.H+20);
+  for(const q of A.pt||[]){q.t-=dt;q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=520*dt;if(q.y>q.gy){q.y=q.gy;q.vy*=-.45;q.vx*=.7;}}if(A.pt)A.pt=A.pt.filter(q=>q.t>0);if(A.flash>0)A.flash-=dt;
   for(const f of A.fx){if(f.jx==null&&!f.boom){f.jx=1;f.x+=rnd(-16,16);f.y+=rnd(-8,4);}f.t-=dt;f.y-=34*dt;}A.fx=A.fx.filter(f=>f.t>0);   // Zahlen leicht versetzt, damit sie sich nicht überlappen
-  if(h.hp<=0){A.state='lost';axEnd(false);return;}
-  if(!A.en.some(e=>e.hp>0)){A.en=[];if(A.wave>A.waves){A.state='won';axEnd(true);}else{axGain(false);axPick();}}
+  if(h.hp<=0&&A.winT==null){A.state='lost';axEnd(false);return;}
+  if(!A.en.some(e=>e.hp>0)){if(A.wave>A.waves){A.es=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);axPick();}}   // Sieg: kurz den Münzregen zeigen
   const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
-function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
+function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);if(A.shake>0&&A.flash>-1&&!A.en.some(e=>e.boss&&e.hp>0))g.translate((Math.random()-.5)*10*A.shake,(Math.random()-.5)*10*A.shake);
   // Boden: Wüstenarena mit Kacheln
   if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);
   for(const q of A.pk||[]){const b=Math.sin(q.t*4)*3,sc=Math.min(1,q.t*4);g.save();g.translate(q.x,q.y+b);g.scale(sc,sc);g.fillStyle='#0004';g.beginPath();g.ellipse(0,14-b,10,3,0,0,7);g.fill();
@@ -6557,6 +6564,8 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   for(const b of A.es){g.fillStyle='#ff5a2a';g.beginPath();g.arc(b.x,b.y,b.r+3,0,7);g.globalAlpha=.35;g.fill();g.globalAlpha=1;g.fillStyle='#ff8a3a';g.beginPath();g.arc(b.x,b.y,b.r,0,7);g.fill();g.lineWidth=2;g.strokeStyle='#7a1d14';g.stroke();g.fillStyle='#ffe0a0';g.beginPath();g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.35,0,7);g.fill();}
   for(const e of A.en)if(e.hp>0&&e.warn&&e.fire>0){g.fillStyle='#ff3d3d';g.font='900 18px system-ui';g.textAlign='center';g.fillText('!',e.x,e.y-e.r*(e.boss?3.9:2.7)-10);}
   g.fillStyle='#fff6d8';g.strokeStyle='#2a1a12';g.lineWidth=1.5;for(const s of A.sh){g.save();g.translate(s.x,s.y);g.rotate(Math.atan2(s.vy,s.vx));g.beginPath();g.moveTo(9,0);g.lineTo(-7,-3);g.lineTo(-7,3);g.closePath();g.fill();g.stroke();g.restore();}
+  for(const q of A.pt||[]){g.globalAlpha=Math.min(1,q.t*3);g.fillStyle='#ffd447';g.strokeStyle='#7a4a00';g.lineWidth=1.5;g.beginPath();g.ellipse(q.x,q.y,4.5*Math.abs(Math.cos(q.t*12))+1,4.5,0,0,7);g.fill();g.stroke();}g.globalAlpha=1;
+  if(A.flash>0){g.fillStyle=`rgba(255,255,255,${A.flash*1.6})`;g.fillRect(0,0,A.W,A.H);}
   g.textAlign='center';g.font='900 14px system-ui';for(const f of A.fx){if(f.boom){g.globalAlpha=f.t/.35;g.fillStyle='#fff';g.beginPath();g.arc(f.x,f.y,22*(1-f.t/.35)+6,0,7);g.fill();g.globalAlpha=1;continue;}
     g.globalAlpha=Math.min(1,f.t/.3);g.lineWidth=3;g.strokeStyle='#000';g.strokeText(f.txt,f.x,f.y);g.fillStyle=f.col;g.fillText(f.txt,f.x,f.y);g.globalAlpha=1;}
   // große Boss-Leiste oben
