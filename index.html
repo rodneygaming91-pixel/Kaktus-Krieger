@@ -807,7 +807,7 @@ header .res .chip{justify-content:flex-end;padding:3px 9px;font-size:.92rem}
 .dtag{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-style:normal;font-family:var(--body);font-weight:900;font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
   padding:1px 8px;border-radius:999px;background:#1c140f;color:var(--dc,#7fe08a);border:1.5px solid var(--dc,#7fe08a);box-shadow:0 1px 0 #000}
 .wm{display:flex;flex-direction:column;gap:8px}.wm h2{margin:0;text-align:center}
-.wmtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.wmtab{position:relative;font:inherit;font-size:.7rem;font-weight:800;padding:6px 2px;border-radius:8px;border:2px solid var(--dc);background:#241a14;color:var(--dc);cursor:pointer}
+.wmtabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.wmtab{position:relative;font:inherit;font-size:.7rem;font-weight:800;padding:6px 2px;border-radius:8px;border:2px solid var(--dc);background:#241a14;color:var(--dc);cursor:pointer}
 .wmtab.on{background:var(--dc);color:#1c140e}.wmtab:disabled{opacity:.45;border-color:#6b5644;color:var(--muted);cursor:default}.wmtab i{position:absolute;top:-7px;right:-5px;font-style:normal;background:#e0283a;color:#fff;border-radius:9px;min-width:17px;height:17px;font-size:.62rem;display:grid;place-items:center}
 .wmsum{display:flex;justify-content:space-between;align-items:baseline;padding:0 4px}.wmsum b{color:var(--dc)}.wmsum span{font-size:.78rem;color:var(--muted)}
 .wmlist{max-height:56vh;overflow-y:auto;padding:6px 4px;border-radius:12px;background:radial-gradient(circle at 30% 20%,#3a2a1c,#1c140e);border:2px solid #6b5644;display:flex;flex-direction:column;align-items:stretch}
@@ -1200,6 +1200,17 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   .drpage .skfoot{position:fixed;left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),490px);bottom:var(--tbh,66px);margin:0;padding:6px;border-radius:10px 10px 0 0;z-index:14;box-shadow:0 -6px 12px #0008}
   #tabKampf .kbody{padding-bottom:64px}#tabKampf #skSec{padding-bottom:60px}.drpage{padding-bottom:64px}
 }
+/* ===== Dorf (15.11.2026) ===== */
+.dorf{gap:8px}.vscene{position:relative;border:5px solid #7a4a26;border-radius:14px;overflow:hidden;box-shadow:inset 0 0 0 2px #4a2a14,0 3px 0 #0008;aspect-ratio:36/26}
+.vscene canvas{display:block;width:100%;height:100%}
+.vlab{position:absolute;transform:translate(-50%,0);border:2px solid #3a2414;background:#2a1d14e6;color:#ffe7b8;font:inherit;font-size:.66rem;font-weight:900;border-radius:9px;padding:2px 7px;white-space:nowrap;cursor:pointer;display:flex;gap:4px;align-items:center}
+.vlab.on{background:#ffd447;color:#2a1a0b;border-color:#7a5a2a}.vlab.lock{opacity:.75}.vlab em{font-style:normal;font-weight:800;opacity:.8}
+.vpanel{background:linear-gradient(#3a2a1c,#2a1e14);border:2px solid #6b5644;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:7px}
+.vpanel h3{margin:0;font-size:1rem;color:#ffd447;display:flex;justify-content:space-between;align-items:baseline}.vpanel h3 small{color:var(--muted);font-size:.72rem}
+.vpanel p{margin:0;font-size:.78rem;color:#d9c6a6}.vpanel ul{margin:0;padding-left:18px;font-size:.76rem;color:#d9c6a6}
+.vcost{display:flex;gap:8px;flex-wrap:wrap;font-weight:900;font-size:.82rem}.vcost span{background:#1c130d;border:2px solid #4a3a2c;border-radius:9px;padding:3px 8px}.vcost span.no{color:#ff6b6b}
+.vbar{height:14px;border-radius:7px;background:#1c130d;border:2px solid #4a3a2c;overflow:hidden;position:relative}.vbar i{display:block;height:100%;background:linear-gradient(90deg,#ffae00,#ffd447)}
+.vbar b{position:absolute;inset:0;font-size:.62rem;text-align:center;line-height:11px;color:#fff;text-shadow:0 1px 2px #000}
 /* Kapitel-Knopf */
 .chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
 .chapbtn>i{font-style:normal;font-size:22px}.chapbtn>span{flex:1;display:flex;flex-direction:column;line-height:1.15}.chapbtn b{font-size:15px}.chapbtn small{font-size:11px;opacity:.8}
@@ -1256,6 +1267,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   
   <div class="tpanel" id="tPanel">
   <section class="tab" id="tabKampf" data-t="kampf" hidden></section>
+  <section class="tab" id="tabDorf" data-t="dorf" hidden></section>
   <section class="tab" id="tabAusr" data-t="ausr">
   <div class="foot">
     <span class="fst" title="Angriff"><em>⚔</em><b id="sAtk">0</b></span>
@@ -1284,7 +1296,8 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   </section>
   </div>
   <nav class="tabbar" id="tabBar">
-    <!-- 15.11.2026: Kampf-Reiter (Kaktus, Fähigkeiten, Relikte, Meister, Merkmale) vorerst entfernt -->
+    <!-- 15.11.2026: Kampf-Reiter (Kaktus, Fähigkeiten, Relikte, Meister, Merkmale) vorerst entfernt; dafür das Dorf -->
+    <button type="button" id="tbDorf" data-tab2="dorf"><i>🏘</i><span>Dorf</span></button>
     <button type="button" id="tbAusr" data-tab2="ausr" class="on"><i>🎒</i><span>Ausrüstung</span></button>
     <button type="button" id="tbBegl" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
     <button type="button" id="tbGart" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
@@ -1528,7 +1541,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1707,6 +1720,13 @@ const RX=[
   [/^Gebiet (\d+(?:–\d+)?)$/,(m)=>'Area '+m[1]],
   [/^Gebiet (\d+(?:–\d+)?) (.+)$/,(m,t)=>'Area '+m[1]+' '+t(m[2])],
   [/^(.+) (\d+)-(\d+)$/,(m,t)=>t(m[1])+' '+m[2]+'-'+m[3]],
+  [/^Stufe (\d+) \/ (\d+)$/,(m)=>'Level '+m[1]+' / '+m[2]],
+  [/^🔒 ab Rathaus Stufe (\d+)$/,(m)=>'🔒 from town hall level '+m[1]],
+  [/^Andere Gebäude bis Stufe (\d+)$/,(m)=>'Other buildings up to level '+m[1]],
+  [/^Nächste Stufe schaltet frei: (.+)$/,(m,t)=>'Next level unlocks: '+m[1].split(', ').map(t).join(', ')],
+  [/^Baut Stufe (\d+) · noch (.+)$/,(m)=>'Building level '+m[1]+' · '+m[2]+' left'],
+  [/^🔨 Auf Stufe (\d+) ausbauen$/,(m)=>'🔨 Upgrade to level '+m[1]],
+  [/^(.+) Stufe (\d+) fertig!$/,(m,t)=>t(m[1])+' level '+m[2]+' done!'],
   [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
   [/^Kapitel (\d+) · Welle (\d+)\/(\d+)( · Boss)?$/,(m)=>'Chapter '+m[1]+' · Wave '+m[2]+'/'+m[3]+(m[4]?' · Boss':'')],
   [/^Kapitel (\d+) geschafft! 🎉$/,(m)=>'Chapter '+m[1]+' cleared! 🎉'],
@@ -1768,7 +1788,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3733,7 +3753,7 @@ setInterval(()=>{if(curTab==='kampf'&&S.char&&!wsHold&&tkSigNow()!==tkSig){const
 function tabGo(t){if(t==='kampf')t='ausr';
   curTab=t;document.querySelectorAll('#tPanel>.tab').forEach(x=>x.hidden=x.dataset.t!==t);
   document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.classList.toggle('on',b.dataset.tab2===t));
-  if(t==='kampf')renderTabKampf();if(t==='begl')renderDrones();if(t==='gart')renderGarden();$('tPanel').scrollTop=0;}
+  if(t==='dorf')renderDorf();if(t==='kampf')renderTabKampf();if(t==='begl')renderDrones();if(t==='gart')renderGarden();$('tPanel').scrollTop=0;}
 document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.onclick=()=>tabGo(b.dataset.tab2));
 setTimeout(()=>renderTabKampf(),0);
 const wsCanBuy=()=>WS.some(W=>!wsMax(W)&&S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W));
@@ -5830,6 +5850,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn113',date:'2026-11-15',title:'Neu: Dein Dorf',hero:['🏘 Baue dein eigenes Dorf','Unten links gibt es jetzt den Reiter „Dorf“. Los geht es mit dem Rathaus – weitere Gebäude folgen Schritt für Schritt.'],items:()=>[['Rathaus:','Mit Münzen und Kakteen ausbauen. Jede Stufe braucht etwas Bauzeit, dein Bauarbeiter arbeitet auch, wenn das Spiel zu ist.'],['Bald:','Schmiede (alte Teile zerlegen, Teile verbessern), Händler mit täglich wechselnden Waren und die Gärtnerei im Dorf.']],
+  en:{title:'New: Your village',hero:['🏘 Build your own village','Bottom left there is now the “Village” tab. It starts with the town hall – more buildings follow step by step.'],items:()=>[['Town hall:','Upgrade it with coins and cacti. Every level takes some build time, and your builder keeps working while the game is closed.'],['Soon:','Forge (break down old items, upgrade items), a merchant with daily changing goods and the garden in the village.']]}},
   {id:'pn112',date:'2026-11-15',title:'Gärtnerei: echte Kakteen',hero:['🌵 Endlich sehen sie aus wie Kakteen','Reife Pflanzen wurden vorher zu riesigen bunten Balken. Das ist behoben, und alle Pflanzen sind neu gezeichnet.'],items:()=>[['Säulenkaktus:','Mit Rippen, Stacheln und zwei Armen, die beim Wachsen dazukommen.'],['Kugelkaktus:','Rund mit Rippen und Stachelbüscheln.'],['Feigenkaktus:','Mit Ohren und roten Früchten, wenn er reif ist.']],
   en:{title:'Garden: real cacti',hero:['🌵 They finally look like cacti','Ripe plants used to turn into huge colored bars. That is fixed, and all plants were redrawn.'],items:()=>[['Saguaro:','With ribs, spines and two arms that grow over time.'],['Barrel cactus:','Round with ribs and spine tufts.'],['Prickly pear:','With pads and red fruits when ripe.']]}},
   {id:'pn111',date:'2026-11-15',title:'Kampf-Reiter vorerst entfernt',hero:['🧹 Aufgeräumt','Der Reiter „Kampf“ mit Kaktus, Fähigkeiten, Relikten, Meister und Merkmalen ist vorerst weg. Das Spiel startet jetzt direkt bei der Ausrüstung.'],items:()=>[['Warum:','Diese Bereiche werden neu aufgebaut und kommen später zurück.'],['Dein Fortschritt:','Bleibt komplett erhalten.']],
@@ -5988,6 +6010,77 @@ function loop(now){
 }
 requestAnimationFrame(loop);
 setInterval(save,5000);
+
+// ===== 15.11.2026: Dorf – Gebäude bauen und ausbauen (Schritt 1: Dorfansicht und Rathaus mit Bauzeit) =====
+const VB=[
+  {id:'rat', n:'Rathaus',   ico:'🏛',x:.5, y:.40,max:10,need:0,txt:'Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.'},
+  {id:'schm',n:'Schmiede',  ico:'⚒',x:.21,y:.68,max:10,need:1,soon:1,txt:'Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.'},
+  {id:'hand',n:'Händler',   ico:'🛒',x:.79,y:.68,max:10,need:2,soon:1,txt:'Verkauft jeden Tag wechselnde Waren zu festen Preisen.'},
+  {id:'gart',n:'Gärtnerei', ico:'🌱',x:.5, y:.80,max:10,need:1,soon:1,txt:'Deine Kaktusbeete – bald hier im Dorf.'}];
+const vInit=()=>{if(!S.vil||!S.vil.b)S.vil={b:{rat:1},job:null};return S.vil;};
+const vLv=id=>(vInit().b[id]||0);
+// Kosten: Münzen ≈ so viele Minuten Kampf, wie die Stufe verlangt; dazu Kakteen. Bauzeit steigt mit der Stufe.
+const vMin=[0,10,30,60,120,180,300,480,720,960,1200];
+const vCost=(B,to)=>{const k=B.id==='rat'?1:.6;return{coins:Math.round(240*cPow(Math.max(1,S.best||1))*25*Math.pow(to,1.5)*k),kak:Math.round(12*Math.pow(to,1.45)*k),sec:(vMin[to-1]||1200)*60*(B.id==='rat'?1:.75)};};
+let vSel='rat',vT=0;
+function vDone(){const V=vInit(),j=V.job;if(!j||Date.now()<j.end)return false;V.b[j.id]=j.to;V.job=null;save();lastHud='';
+  const B=VB.find(x=>x.id===j.id);banner={txt:B.n+' Stufe '+j.to+' fertig!',t:2.4};return true;}
+function vBuild(){const V=vInit(),B=VB.find(x=>x.id===vSel),lv=vLv(B.id),to=lv+1,c=vCost(B,to);
+  if(V.job||lv>=B.max||vLv('rat')<B.need||(B.id!=='rat'&&to>vLv('rat'))||(S.coins||0)<c.coins||(S.kak||0)<c.kak)return;
+  S.coins-=c.coins;S.kak-=c.kak;V.job={id:B.id,to,end:Date.now()+c.sec*1000,dur:c.sec*1000};save();lastHud='';renderDorf();}
+function renderDorf(){const H=$('tabDorf');if(!H)return;const V=vInit();vDone();
+  const labs=VB.map(B=>{const lv=vLv(B.id),lock=vLv('rat')<B.need;return`<button type="button" class="vlab${vSel===B.id?' on':''}${lock||B.soon?' lock':''}" data-vb="${B.id}" style="left:${B.x*100}%;top:${(B.y+.06)*100}%">${B.ico} ${B.n}${lock?' 🔒':B.soon?'':` <em>Lv ${lv}</em>`}</button>`;}).join('');
+  H.innerHTML=`<div class="tsec dorf"><div class="fhead"><div><b>🏘 Dein Dorf</b><small>Ein Bauarbeiter · baut immer ein Gebäude zur Zeit</small></div>
+    <div class="fres"><span>🪙 ${fmt(S.coins||0)}</span><span>🌵 ${fmt(S.kak||0)}</span></div></div>
+    <div class="vscene"><canvas id="vCv" width="720" height="520"></canvas>${labs}</div><div class="vpanel" id="vPanel"></div></div>`;
+  H.querySelectorAll('[data-vb]').forEach(b=>b.onclick=()=>{vSel=b.dataset.vb;renderDorf();});
+  vPanel();drawDorf();}
+function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>x.id===vSel),lv=vLv(B.id),rat=vLv('rat'),lock=rat<B.need,j=V.job;
+  let h=`<h3><span>${B.ico} ${B.n}</span><small>${lock?'🔒 ab Rathaus Stufe '+B.need:B.soon?'🚧 Bald':'Stufe '+lv+' / '+B.max}</small></h3><p>${B.txt}</p>`;
+  if(B.id==='rat'){const nx=VB.filter(x=>x.need===lv+1).map(x=>x.n);
+    h+=`<ul><li>Andere Gebäude bis Stufe ${lv}</li>${nx.length&&lv<B.max?`<li>Nächste Stufe schaltet frei: ${nx.join(', ')}</li>`:''}</ul>`;}
+  if(j&&j.id===B.id){const left=Math.max(0,j.end-Date.now()),pc=100-left/j.dur*100;
+    h+=`<div class="vbar"><i id="vBarI" style="width:${pc}%"></i><b id="vBarT">Baut Stufe ${j.to} · noch ${fmtT(left/1000)}</b></div>`;}
+  else if(!lock&&!B.soon&&lv<B.max){const c=vCost(B,lv+1),okC=(S.coins||0)>=c.coins,okK=(S.kak||0)>=c.kak,cap=B.id!=='rat'&&lv+1>rat,busy=!!j;
+    h+=`<div class="vcost"><span class="${okC?'':'no'}">🪙 ${fmt(c.coins)}</span><span class="${okK?'':'no'}">🌵 ${fmt(c.kak)}</span><span>⏱ ${fmtT(c.sec)}</span></div>
+      <button type="button" class="btn go" id="vGo" ${okC&&okK&&!cap&&!busy?'':'disabled'}>${busy?'🔨 Bauarbeiter ist beschäftigt':cap?'Erst Rathaus ausbauen':'🔨 Auf Stufe '+(lv+1)+' ausbauen'}</button>`;}
+  P.innerHTML=h;const g=$('vGo');if(g)g.onclick=vBuild;}
+// Dorf zeichnen
+function drawDorf(){const cv2=$('vCv');if(!cv2)return;const g=cv2.getContext('2d'),W=360,Hh=260,t=Date.now()/1000,V=vInit();g.setTransform(2,0,0,2,0,0);
+  const sky=g.createLinearGradient(0,0,0,70);sky.addColorStop(0,'#8fd3ff');sky.addColorStop(1,'#ffe3a8');g.fillStyle=sky;g.fillRect(0,0,W,70);
+  g.fillStyle='#e8b877';g.beginPath();g.moveTo(0,62);g.quadraticCurveTo(90,40,170,60);g.quadraticCurveTo(260,38,360,58);g.lineTo(360,70);g.lineTo(0,70);g.fill();
+  const gr=g.createLinearGradient(0,60,0,Hh);gr.addColorStop(0,'#f0cf8e');gr.addColorStop(1,'#d9a960');g.fillStyle=gr;g.fillRect(0,60,W,Hh-60);
+  // Wege
+  g.strokeStyle='#c99a5a';g.lineWidth=14;g.lineCap='round';g.beginPath();g.moveTo(180,120);g.lineTo(180,230);g.moveTo(180,170);g.quadraticCurveTo(120,175,76,190);g.moveTo(180,170);g.quadraticCurveTo(240,175,284,190);g.stroke();
+  // Deko
+  const cac=(x,y,s)=>{g.save();g.translate(x,y);g.scale(s,s);g.lineCap='round';for(const [w,c] of[[9,'#1c140e'],[6,'#4caf50']]){g.strokeStyle=c;g.lineWidth=w;g.beginPath();g.moveTo(0,0);g.lineTo(0,-22);g.moveTo(0,-10);g.lineTo(-7,-10);g.lineTo(-7,-17);g.moveTo(0,-13);g.lineTo(7,-13);g.lineTo(7,-20);g.stroke();}g.restore();};
+  cac(22,110,1);cac(340,120,.9);cac(345,180,1.05);cac(30,245,.8);cac(120,80,.6);cac(250,82,.6);
+  g.fillStyle='#b8865088';for(const [x,y,r] of[[300,100,6],[60,140,5],[250,240,4],[110,235,5]]){g.beginPath();g.ellipse(x,y,r*1.6,r,0,0,7);g.fill();}
+  for(const B of VB){const lv=vLv(B.id),x=B.x*W,y=B.y*Hh,lock=vLv('rat')<B.need,building=V.job&&V.job.id===B.id;
+    g.fillStyle='#0003';g.beginPath();g.ellipse(x,y+4,B.id==='rat'?56:34,8,0,0,7);g.fill();
+    if(B.soon||lock||lv===0)vPlot(g,x,y,lock);else vDraw[B.id](g,x,y,lv,t);
+    if(building)vScaf(g,x,y,B.id==='rat'?46:30,t);}
+}
+const vOL='#3a2414';
+function vPlot(g,x,y,lock){g.fillStyle='#c99a5a';g.strokeStyle='#8a6a3a';g.lineWidth=2;g.setLineDash([4,3]);g.beginPath();g.roundRect(x-28,y-14,56,22,6);g.fill();g.stroke();g.setLineDash([]);
+  g.fillStyle='#7a5a2a';g.fillRect(x-1.5,y-30,3,20);g.fillStyle='#e8c88a';g.strokeStyle=vOL;g.lineWidth=1.5;g.beginPath();g.roundRect(x-11,y-34,22,12,2);g.fill();g.stroke();
+  g.font='9px system-ui';g.textAlign='center';g.fillStyle=vOL;g.fillText(lock?'🔒':'🚧',x,y-25);}
+function vScaf(g,x,y,w,t){g.strokeStyle='#8a5a2a';g.lineWidth=2.5;for(const dx of[-w,w]){g.beginPath();g.moveTo(x+dx,y);g.lineTo(x+dx,y-52);g.stroke();}
+  for(let k=1;k<4;k++){g.beginPath();g.moveTo(x-w,y-k*14);g.lineTo(x+w,y-k*14);g.stroke();}
+  const hx=x+Math.sin(t*1.5)*w*.6;g.font='14px system-ui';g.textAlign='center';g.fillText('🔨',hx,y-58+Math.abs(Math.sin(t*6))*-4);}
+const vDraw={
+  rat(g,x,y,lv,t){const w=40+Math.min(lv,10)*1.2,h=40;g.lineWidth=2.5;g.strokeStyle=vOL;
+    if(lv>=3){g.fillStyle='#e9c48a';g.beginPath();g.rect(x-w-14,y-30,18,30);g.rect(x+w-4,y-30,18,30);g.fill();g.stroke();}
+    g.fillStyle='#f2d29a';g.beginPath();g.roundRect(x-w,y-h,w*2,h,4);g.fill();g.stroke();
+    g.fillStyle='#d9a960';g.beginPath();g.roundRect(x-w-4,y-h-6,w*2+8,8,3);g.fill();g.stroke();
+    if(lv>=5){g.fillStyle='#e9c48a';g.beginPath();g.roundRect(x-16,y-h-30,32,26,3);g.fill();g.stroke();g.fillStyle='#4fb8ff';g.beginPath();g.arc(x,y-h-17,6,0,7);g.fill();g.stroke();}
+    g.fillStyle='#7a4a26';g.beginPath();g.moveTo(x-9,y);g.lineTo(x-9,y-18);g.arc(x,y-18,9,Math.PI,0);g.lineTo(x+9,y);g.fill();g.stroke();
+    g.fillStyle='#5a8fd0';for(const dx of[-w+10,w-22]){g.beginPath();g.roundRect(x+dx,y-30,12,12,3);g.fill();g.stroke();}
+    const fy=y-h-(lv>=5?30:6);g.strokeStyle=vOL;g.lineWidth=2;g.beginPath();g.moveTo(x+w-6,fy);g.lineTo(x+w-6,fy-26);g.stroke();
+    g.fillStyle='#63c74d';g.beginPath();g.moveTo(x+w-6,fy-26);g.quadraticCurveTo(x+w+6,fy-26+Math.sin(t*3)*2,x+w+16,fy-22);g.lineTo(x+w-6,fy-16);g.fill();g.stroke();}
+};
+setInterval(()=>{const was=vDone();if(curTab!=='dorf')return;if(was){renderDorf();return;}drawDorf();
+  const j=S.vil&&S.vil.job,bi=$('vBarI'),bt=$('vBarT');if(j&&bi&&bt){const left=Math.max(0,j.end-Date.now());bi.style.width=(100-left/j.dur*100)+'%';bt.textContent='Baut Stufe '+j.to+' · noch '+fmtT(left/1000);}},250);
 // ===== 14.11.2026: Kapitel im Stil von Archero 2 (seit pn110 für alle) =====
 // Dein Kaktus läuft per Joystick durch eine Arena. Steht er still, schießt er automatisch Stacheln auf den nächsten Gegner.
 // Gegner kommen in Wellen aus dem aktuellen Gebiet. Werte kommen aus deiner Ausrüstung (heroStats).
