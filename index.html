@@ -1069,7 +1069,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .tpanel .drow b{font-size:.9rem}.tpanel .drow small{font-size:.7rem}.tpanel .drow .bon{font-size:.7rem}.tpanel .dbtns{gap:4px}.tpanel .dbtns .btn{padding:5px 9px;font-size:.74rem}
 .tpanel .gart .row{margin:0}.tpanel .gart .row .btn{width:100%}.tpanel .gart .btn small{display:block;font-size:.66rem}
 .tpanel .odds{gap:3px}.tpanel .odd{font-size:.8rem;gap:6px;grid-template-columns:6.8em 1fr 3em 3.7em}.tpanel .odd .nx{font-size:.72rem;white-space:nowrap}
-.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(4,1fr);
+.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(3,1fr);
   background:#1c130d;border-top:3px solid #4a3a2c;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px))}
 .tabbar button{border:0;background:none;color:#a8957a;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 0;border-radius:10px;cursor:pointer}
 .tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
@@ -1234,6 +1234,13 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .vbar.sm{height:12px;margin-top:3px}.vbar.sm b{line-height:9px;font-size:.56rem}.vup.qgot{opacity:.6}
 .vbar{height:14px;border-radius:7px;background:#1c130d;border:2px solid #4a3a2c;overflow:hidden;position:relative}.vbar i{display:block;height:100%;background:linear-gradient(90deg,#ffae00,#ffd447)}
 .vbar b{position:absolute;inset:0;font-size:.62rem;text-align:center;line-height:11px;color:#fff;text-shadow:0 1px 2px #000}
+/* 15.11.2026: Hauptbildschirm aufgeräumt – Elemente als Leiste unter dem Kampf, Gebiets-Reiter nur noch in der Weltkarte */
+#diffRow,#diffHint{display:none!important}
+.elstrip{display:flex;gap:6px;margin:6px 8px 0}
+.elstrip .elbox{position:static;max-width:none;flex:1;flex-direction:row;justify-content:space-between;gap:6px;padding:4px 8px;top:auto;left:auto;right:auto}
+.elstrip .elbox.r .er{flex-direction:row;text-align:left}.elstrip .elbox.r .er b{justify-content:flex-start}
+.elstrip .er small{font-size:.5rem}.elstrip .er b{font-size:.7rem}.elstrip .elbox{min-width:0;overflow:hidden}
+@media (max-width:420px){.elstrip{gap:4px;margin:5px 4px 0}.elstrip .elbox{padding:3px 5px;gap:3px}.elstrip .er{gap:3px}.elstrip .er small{font-size:.42rem}.elstrip .er b{font-size:.6rem}.elstrip .eb{width:14px;height:14px;font-size:.5rem}}
 /* Kapitel-Knopf */
 .chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
 .chapbtn>i{font-style:normal;font-size:22px}.chapbtn>span{flex:1;display:flex;flex-direction:column;line-height:1.15}.chapbtn b{font-size:15px}.chapbtn small{font-size:11px;opacity:.8}
@@ -1274,15 +1281,16 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 
 <div class="game">
   <header>
-    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn langbtn" id="langBtn" type="button" title="Sprache" aria-label="Sprache">🇩🇪</button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div><div class="hres"><div class="chip hcoin" title="Münzen"><i></i><span id="coins">0</span></div><div class="chip hcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div></div></div>
+    <div class="hl"><h1 hidden>Kaktus<span>-</span>Krieger</h1><div class="hbtns"><button class="setbtn" id="setBtn" type="button" title="Optionen" aria-label="Optionen">⚙<i id="ecoTag" hidden>🔋</i></button><button class="setbtn mailbtn" id="mailBtn" type="button" title="Poststelle" aria-label="Poststelle">✉<em id="mailN" hidden>0</em></button><button class="setbtn langbtn" id="langBtn" type="button" title="Sprache" aria-label="Sprache">🇩🇪</button><button hidden class="setbtn onbtn hon" id="onBtn" type="button" data-st="idle" title="Profil, Freunde und Rangliste" aria-label="Profil, Freunde und Rangliste">👤<span id="onSub" class="sr">verbinde …</span></button></div><div class="hres"><div class="chip hcoin" title="Münzen"><i></i><span id="coins">0</span></div></div></div>
     <button class="who plate" id="editBtn" type="button" title="Aussehen und Klasse ändern"><b id="whoName">Stachel</b><small id="whoCls">Stachelschütze</small>
       <span class="pow" title="Deine Stärke"><em>⚔</em><span id="whoPow">0</span></span></button>
-    <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button><div class="chip kak hkak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
+    <div class="hr"><button class="chestbtn allybtn" id="allyBtn" type="button" title="Allianz" aria-label="Allianz"><b>🛡</b><span>Allianz</span></button><div class="chip hcap" title="Samenkapseln"><b>🌱</b><span id="tCap">0</span></div><div class="chip kak hkak" title="Kakteen"><b>🌵</b><span id="kak">0</span></div></div>
   </header>
   <div class="topbox">
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
-    <div class="elbox l" id="elEnemy"></div><div class="fright"><div class="elbox r" id="elYou"></div><button class="chestbtn fchest" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button></div>
+    <div class="fright"><button class="chestbtn fchest" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
+  <div class="elstrip"><div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
@@ -1320,9 +1328,9 @@ html.fixhome body.vfull .game{overflow:hidden!important}
   </div>
   <nav class="tabbar" id="tabBar">
     <!-- 15.11.2026: Kampf-Reiter (Kaktus, Fähigkeiten, Relikte, Meister, Merkmale) vorerst entfernt; dafür das Dorf -->
-    <button type="button" id="tbDorf" data-tab2="dorf"><i>🏘</i><span>Dorf</span></button>
+    <button type="button" id="tbDorf" data-tab2="dorf"><i>🏘️</i><span>Dorf</span></button>
     <button type="button" id="tbAusr" data-tab2="ausr" class="on"><i>🎒</i><span>Ausrüstung</span></button>
-    <button type="button" id="tbBegl" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
+    <button type="button" id="tbBegl" data-tab2="begl" hidden><i>🐾</i><span>Begleiter</span></button>
     <!-- 15.11.2026: Gärtnerei liegt jetzt im Dorf -->
     <button type="button" id="tbMehr" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
   </nav>
@@ -1851,7 +1859,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3283,7 +3291,8 @@ function draw(){
   if(b){c.fillStyle='#170f2ecc';c.fillRect(110,74,260,22);bar(116,86,248,6,b.hp/b.max,'#ff6fae');
     c.font='800 10px Nunito, system-ui, sans-serif';c.fillStyle='#f4ecff';c.textAlign='left';c.fillText(b.ty.n,116,83);c.textAlign='right';c.fillText(Math.ceil(bossT)+' s',364,83);}
   if(banner){c.globalAlpha=Math.min(1,banner.t*2);c.font='26px "Lilita One", "Arial Black", sans-serif';c.textAlign='center';
-    c.fillStyle='#170f2e';c.fillText(banner.txt,W/2+2,H/2-38);c.fillStyle='#f0b866';c.fillText(banner.txt,W/2,H/2-40);c.globalAlpha=1;}
+    {const by=H*.5,bw=Math.min(W-20,c.measureText(banner.txt).width+40);c.fillStyle='#1a1008cc';c.beginPath();c.roundRect(W/2-bw/2,by-30,bw,42,12);c.fill();c.strokeStyle='#c9963d';c.lineWidth=2;c.stroke();
+    c.fillStyle='#170f2e';c.fillText(banner.txt,W/2+2,by+2);c.fillStyle='#ffd98a';c.fillText(banner.txt,W/2,by);}c.globalAlpha=1;}
   c.restore();
 }
 // ---------- HUD ----------
@@ -4224,7 +4233,7 @@ async function abClaim(){if(ab.claimBusy)return;ab.claimBusy=true;renderOnline()
 const GUILD_COST=1000;
 // 13.11.2026: Allianzen vorübergehend deaktiviert (Knopf gesperrt, Allianzboss gesperrt, kein Chat-Abruf)
 const ALLY_OFF=true;
-if(ALLY_OFF){$('allyBtn').classList.add('off');$('abBtn2').classList.add('off');const sp=$('abBtn2').querySelector('span');if(sp)sp.textContent='🔒 Deaktiviert';}
+if(ALLY_OFF){$('allyBtn').hidden=true;$('allyBtn').classList.add('off');$('abBtn2').classList.add('off');const sp=$('abBtn2').querySelector('span');if(sp)sp.textContent='🔒 Deaktiviert';}
 // Allianz-Chat: Nachrichten werden alle 4 s nachgeladen, solange der Chat offen ist, sonst jede Minute (für die Ungelesen-Anzeige)
 let chat={msgs:[],last:0,unread:0,seen:+(localStorage.getItem('kk-chat-seen')||0)||0,busy:false};
 function chatHtml(){if(!chat.msgs.length)return'<p class="hint">Noch keine Nachrichten. Sag Hallo!</p>';
@@ -5923,6 +5932,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn125',date:'2026-11-15',title:'Aufgeräumter Hauptbildschirm',hero:['🧹 Mehr Platz für den Kampf','Der Hauptbildschirm ist aufgeräumt: Im Kampffeld liegen weniger Kästen, damit du deinen Kaktus besser siehst.'],items:()=>[['Elemente:','Gegner, Schwäche, Waffe und Resistenz stehen jetzt in einer Leiste unter dem Kampf.'],['Oben:','Samenkapseln und Kakteen stehen rechts untereinander, der Allianz-Knopf ist weg, solange Allianzen pausiert sind.'],['Ansagen:','Hinweise wie „BOSS: …“ erscheinen jetzt gut lesbar in einem Kasten.'],['Unten:','Begleiter sind ausgeblendet, bis sie neu kommen. Die Schwierigkeits-Reiter findest du in der Weltkarte.']],
+  en:{title:'Tidier main screen',hero:['🧹 More room for the fight','The main screen is tidied up: fewer boxes on the battlefield so you can see your cactus better.'],items:()=>[['Elements:','Enemy, weakness, weapon and resistance are now in a bar below the fight.'],['Top:','Seed capsules and cacti sit on the right, the alliance button is gone while alliances are paused.'],['Announcements:','Messages like “BOSS: …” now appear in an easy-to-read box.'],['Bottom:','Companions are hidden until they return. The difficulty tabs are in the world map.']]}},
   {id:'pn124',date:'2026-11-15',title:'Kapitel: Genaueres Zielen',hero:['🎯 Schüsse treffen da, wo der Gegner ist','Dein Kaktus zielt jetzt auf die Körpermitte der Gegner statt auf ihre Füße. Schüsse fliegen nicht mehr scheinbar hinter dem Gegner vorbei.'],items:()=>[['Bosse:','Die Trefferfläche passt jetzt zur Größe der großen Bosse, Türme und Kakteen bei Dorf-Angriffen.'],['Gegner-Schüsse:','Kommen jetzt sichtbar aus dem Körper des Gegners.']],
   en:{title:'Chapters: More precise aiming',hero:['🎯 Shots hit where the enemy is','Your cactus now aims at the middle of the enemy\'s body instead of their feet. Shots no longer seem to fly behind the enemy.'],items:()=>[['Bosses:','The hit area now matches the size of big bosses, towers and cacti in village attacks.'],['Enemy shots:','Now visibly come out of the enemy\'s body.']]}},
   {id:'pn123',date:'2026-11-15',title:'Kapitel: Herzen und Dauerfeuer',hero:['❤ Mehr Leben in der Arena','In Kapiteln und bei Dorf-Angriffen erscheinen jetzt immer wieder Herzen. Läufst du drüber, heilt dein Kaktus 20 % seines Lebens.'],items:()=>[['Dauerfeuer:','Dein Kaktus schießt jetzt immer – auch während du läufst. Du kannst also ausweichen und gleichzeitig angreifen.'],['Herzen:','Etwa alle 10 Sekunden ein neues, höchstens zwei gleichzeitig.']],
