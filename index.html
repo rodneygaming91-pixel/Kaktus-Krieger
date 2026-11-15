@@ -1546,7 +1546,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Max':'Max','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','🛒 Angebote heute':'🛒 Today\'s offers','Kaufen':'Buy','Heute ausverkauft':'Sold out today','10 Samenkapseln':'10 seed capsules','40 Samenkapseln':'40 seed capsules','30 Eisenerz':'30 iron ore','100 Eisenerz':'100 iron ore','5 Kakteen':'5 cacti','Bauzeit −15 min':'Build time −15 min','Max':'Max','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1739,6 +1739,10 @@ const RX=[
   [/^🔨 (.+) bauen$/,(m,t)=>'🔨 Build '+t(m[1])],
   [/^Max\. ⭐(\d+) \(Schmiede-Stufe\) · jeder ⭐ \+5 % · ⭐ gehören zum Teil – zerlegst du es, gibt es 70 % des Erzes zurück\.$/,(m)=>'Max. ⭐'+m[1]+' (forge level) · each ⭐ +5 % · ⭐ belong to the item – break it down and you get 70 % of the ore back.'],
   [/^Max ⭐(\d+)$/,(m)=>'Max ⭐'+m[1]],
+  [/^Noch (\d+)× heute( · nur während gebaut wird)?$/,(m)=>m[1]+'× left today'+(m[2]?' · only while building':'')],
+  [/^Heute ausverkauft · nur während gebaut wird$/,()=>'Sold out today · only while building'],
+  [/^Neue Waren in (.+) · (\d+) Angebote( \(mehr ab Händler Stufe (\d+)\))?$/,(m)=>'New goods in '+m[1]+' · '+m[2]+' offers'+(m[3]?' (more from merchant level '+m[4]+')':'')],
+  [/^Gekauft: (.+)$/,(m,t)=>'Bought: '+t(m[1])],
   [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
   [/^Kapitel (\d+) · Welle (\d+)\/(\d+)( · Boss)?$/,(m)=>'Chapter '+m[1]+' · Wave '+m[2]+'/'+m[3]+(m[4]?' · Boss':'')],
   [/^Kapitel (\d+) geschafft! 🎉$/,(m)=>'Chapter '+m[1]+' cleared! 🎉'],
@@ -1800,7 +1804,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -5869,6 +5873,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn116',date:'2026-11-15',title:'Dorf: Der Händler',hero:['🛒 Jeden Tag neue Waren','Ab Rathaus Stufe 2 kannst du den Händler bauen. Er verkauft jeden Tag andere Angebote zu festen Preisen – ohne Zufall.'],items:()=>[['Waren:','Samenkapseln, Eisenerz, Kakteen und Bauzeit-Verkürzung für dein Dorf.'],['Begrenzt:','Jedes Angebot gibt es nur ein paar Mal pro Tag. Um Mitternacht kommen neue Waren.'],['Ausbauen:','Ab Händler Stufe 3 gibt es 4 Angebote, ab Stufe 5 sogar 5.']],
+  en:{title:'Village: The merchant',hero:['🛒 New goods every day','From town hall level 2 you can build the merchant. He sells different offers every day at fixed prices – no randomness.'],items:()=>[['Goods:','Seed capsules, iron ore, cacti and build time reductions for your village.'],['Limited:','Each offer is only available a few times per day. New goods arrive at midnight.'],['Upgrade:','From merchant level 3 there are 4 offers, from level 5 even 5.']]}},
   {id:'pn115',date:'2026-11-15',title:'Schmiede: Teile verbessern',hero:['⭐ Mach deine Teile stärker','In der Schmiede verbesserst du jetzt Waffe, Helm, Rüstung, Handschuhe und Halskette mit Eisenerz und Münzen.'],items:()=>[['Sterne:','Jeder ⭐ gibt +5 % auf den Wert des Teils. Wie viele ⭐ möglich sind, bestimmt die Stufe der Schmiede.'],['Gehören zum Teil:','Ziehst du ein besseres Teil, fängt es bei ⭐0 an. Zerlegst du ein verbessertes Teil, bekommst du 70 % des Erzes zurück.'],['Gegner:','Erst ab Stage 480 rechnen die Gegner mit verbesserten Teilen.']],
   en:{title:'Forge: Upgrade items',hero:['⭐ Make your items stronger','In the forge you can now upgrade weapon, helmet, chestplate, gloves and necklace with iron ore and coins.'],items:()=>[['Stars:','Each ⭐ gives +5 % on the item\'s value. The forge level decides how many ⭐ are possible.'],['Belong to the item:','A better new item starts at ⭐0. Break down an upgraded item and you get 70 % of the ore back.'],['Enemies:','Only from stage 480 on do enemies expect upgraded items.']]}},
   {id:'pn114',date:'2026-11-15',title:'Dorf: Die Schmiede',hero:['⚒ Alte Teile werden zu Eisenerz','Im Dorf kannst du jetzt die Schmiede bauen. Danach gibt jedes zerstörte Teil zusätzlich zu den Münzen auch Eisenerz.'],items:()=>[['Zerlegen:','In der Schmiede zerlegst du mit einem Tipp alle Teile, die schlechter sind als deine angelegten (★ Build-Teile bleiben verschont).'],['Überall:','Auch beim Beschwören und im Inventar gibt es Erz, sobald die Schmiede steht. Seltenere Teile geben mehr Erz, jede Schmiede-Stufe +10 %.'],['Bald:','Mit dem Erz verbesserst du deine Teile.'],['Behoben:','Die Reiter der Weltkarte standen kurz schief.']],
@@ -6038,7 +6044,7 @@ setInterval(save,5000);
 const VB=[
   {id:'rat', n:'Rathaus',   ico:'🏛',x:.5, y:.40,max:10,need:0,txt:'Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.'},
   {id:'schm',n:'Schmiede',  ico:'⚒',x:.21,y:.68,max:10,need:1,txt:'Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.'},
-  {id:'hand',n:'Händler',   ico:'🛒',x:.79,y:.68,max:10,need:2,soon:1,txt:'Verkauft jeden Tag wechselnde Waren zu festen Preisen.'},
+  {id:'hand',n:'Händler',   ico:'🛒',x:.79,y:.68,max:10,need:2,txt:'Verkauft jeden Tag wechselnde Waren zu festen Preisen.'},
   {id:'gart',n:'Gärtnerei', ico:'🌱',x:.5, y:.80,max:10,need:1,soon:1,txt:'Deine Kaktusbeete – bald hier im Dorf.'}];
 const vInit=()=>{if(!S.vil||!S.vil.b)S.vil={b:{rat:1},job:null};return S.vil;};
 const vLv=id=>(vInit().b[id]||0);
@@ -6069,6 +6075,7 @@ function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>
       <div class="vups">${SLOTS.filter(sl=>!sl.pct).map(sl=>{const it=S.gear[sl.id];if(!it)return'';const u=it.up||0,mx=u>=lv,c=upCost(it),ok=!mx&&(S.ore||0)>=c.ore&&(S.coins||0)>=c.coins;
         return`<div class="vup" style="--rc:${RAR[it.r].c}"><span><b>${sl.n} ${u?'⭐'+u:''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))} ${sl.unit}</em>${mx?'':' → <em class="up">+'+fmtV(sl,it.v*(1+UPS*(u+1)))+'</em>'}</small></span>
           <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} 🪙</small>`}</button></div>`;}).join('')}</div>`;}
+  if(B.id==='hand'&&lv>0)h+=shopHtml(lv);
   if(j&&j.id===B.id){const left=Math.max(0,j.end-Date.now()),pc=100-left/j.dur*100;
     h+=`<div class="vbar"><i id="vBarI" style="width:${pc}%"></i><b id="vBarT">Baut Stufe ${j.to} · noch ${fmtT(left/1000)}</b></div>`;}
   else if(!lock&&!B.soon&&lv<B.max){const c=vCost(B,lv+1),okC=(S.coins||0)>=c.coins,okK=(S.kak||0)>=c.kak,cap=B.id!=='rat'&&lv+1>rat,busy=!!j;
@@ -6078,9 +6085,31 @@ function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>
   P.querySelectorAll('[data-vup]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vup],lv=vLv('schm');if(!it||(it.up||0)>=lv)return;const c=upCost(it);
     if((S.ore||0)<c.ore||(S.coins||0)<c.coins)return;S.ore-=c.ore;S.coins-=c.coins;it.up=(it.up||0)+1;it.oreIn=(it.oreIn||0)+c.ore;save();lastHud='';
     banner={txt:slotOf(it.slot).n+' ⭐'+it.up+'!',t:1.6};renderDorf();});
+  P.querySelectorAll('[data-shop]').forEach(b=>b.onclick=()=>shopBuy(b.dataset.shop));
   const sc=$('vScrap');if(sc)sc.onclick=()=>{const w=vWorse();if(!w.length)return;const ids=new Set(w.map(it=>it.id));let o0=S.ore||0,c=0;
     S.inv=S.inv.filter(it=>{if(!ids.has(it.id))return true;c+=scrap(it);return false;});S.coins+=c;save();lastHud='';
     banner={txt:w.length+' Teile zerlegt: +'+fmt((S.ore||0)-o0)+' Erz',t:2.2};renderDorf();};}
+// ---- Händler: jeden Tag wechselnde Angebote zu festen Preisen, jedes Angebot nur begrenzt oft ----
+const cMin=m=>Math.round(240*cPow(Math.max(1,S.best||1))*m);   // Münzpreis ≈ m Minuten Kampf
+const SHOP=[
+  {id:'caps10',ico:'🌱',n:'10 Samenkapseln',  lim:3,pay:()=>({coins:cMin(3)}),   give:()=>{S.caps=(S.caps||0)+10;}},
+  {id:'caps40',ico:'🌱',n:'40 Samenkapseln',  lim:1,pay:()=>({kak:8}),            give:()=>{S.caps=(S.caps||0)+40;}},
+  {id:'ore30', ico:'🪨',n:'30 Eisenerz',       lim:3,pay:()=>({coins:cMin(8)}),   give:()=>{S.ore=(S.ore||0)+30;},need:()=>vLv('schm')>0},
+  {id:'ore100',ico:'🪨',n:'100 Eisenerz',      lim:1,pay:()=>({kak:12}),          give:()=>{S.ore=(S.ore||0)+100;},need:()=>vLv('schm')>0},
+  {id:'kak5',  ico:'🌵',n:'5 Kakteen',         lim:2,pay:()=>({coins:cMin(15)}),  give:()=>{S.kak=(S.kak||0)+5;}},
+  {id:'speed', ico:'⏩',n:'Bauzeit −15 min',   lim:3,pay:()=>({kak:4}),           give:()=>{const j=S.vil.job;if(j)j.end-=15*60000;},can:()=>!!(S.vil&&S.vil.job)}];
+const shopN=lv=>lv>=5?5:lv>=3?4:3;
+function shopDay(){const d=todayStr();if(!S.shop||S.shop.day!==d)S.shop={day:d,b:{}};return S.shop;}
+function shopToday(lv){const d=todayStr();let h=0;for(const ch of d+(S.char&&S.char.name||''))h=(h*31+ch.charCodeAt(0))>>>0;
+  const pool=SHOP.filter(o=>!o.need||o.need()),out=[];while(pool.length&&out.length<shopN(lv)){h=(h*1103515245+12345)>>>0;out.push(pool.splice(h%pool.length,1)[0]);}return out;}
+function shopHtml(lv){const D=shopDay(),now=new Date(),mid=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+  return`<div class="vsub"><b>🛒 Angebote heute</b><small>Neue Waren in ${fmtT((mid-now)/1000)} · ${shopN(lv)} Angebote${lv<5?' (mehr ab Händler Stufe '+(lv<3?3:5)+')':''}</small></div>
+    <div class="vups">${shopToday(lv).map(o=>{const c=o.pay(),left=o.lim-(D.b[o.id]||0),ok=left>0&&(!c.coins||(S.coins||0)>=c.coins)&&(!c.kak||(S.kak||0)>=c.kak)&&(!o.can||o.can());
+      return`<div class="vup" style="--rc:#b07a3a"><span><b>${o.ico} ${o.n}</b><small>${left>0?'Noch '+left+'× heute':'Heute ausverkauft'}${o.can&&!o.can()?' · nur während gebaut wird':''}</small></span>
+        <button type="button" class="sbtn${ok?' go':''}" data-shop="${o.id}" ${ok?'':'disabled'}>${left>0?'Kaufen':'—'}<small>${c.coins?fmt(c.coins)+' 🪙':fmt(c.kak)+' 🌵'}</small></button></div>`;}).join('')}</div>`;}
+function shopBuy(id){const lv=vLv('hand'),o=shopToday(lv).find(x=>x.id===id),D=shopDay();if(!o)return;const c=o.pay();
+  if((D.b[id]||0)>=o.lim||(c.coins&&(S.coins||0)<c.coins)||(c.kak&&(S.kak||0)<c.kak)||(o.can&&!o.can()))return;
+  if(c.coins)S.coins-=c.coins;if(c.kak)S.kak-=c.kak;o.give();D.b[id]=(D.b[id]||0)+1;save();lastHud='';banner={txt:'Gekauft: '+o.n,t:1.6};vDone();renderDorf();}
 // Kosten für den nächsten ⭐: Erz steigt mit Seltenheit und ⭐, Münzen ≈ ein paar Minuten Kampf
 function upCost(it){const n=(it.up||0)+1;return{ore:Math.round(3*Math.pow(1+it.r,1.5)*Math.pow(n,1.6)),coins:Math.round(240*cPow(Math.max(1,S.best||1))*10*n)};}
 // Teile im Inventar, die nicht besser sind als das angelegte (ohne ★ Build-Teile)
@@ -6109,6 +6138,14 @@ function vScaf(g,x,y,w,t){g.strokeStyle='#8a5a2a';g.lineWidth=2.5;for(const dx o
   for(let k=1;k<4;k++){g.beginPath();g.moveTo(x-w,y-k*14);g.lineTo(x+w,y-k*14);g.stroke();}
   const hx=x+Math.sin(t*1.5)*w*.6;g.font='14px system-ui';g.textAlign='center';g.fillText('🔨',hx,y-58+Math.abs(Math.sin(t*6))*-4);}
 const vDraw={
+  hand(g,x,y,lv,t){g.lineWidth=2.5;g.strokeStyle=vOL;
+    g.fillStyle='#a0703a';for(const [dx,w,h] of[[-30,14,12],[-18,10,9],[22,14,13]]){g.beginPath();g.rect(x+dx,y-h,w,h);g.fill();g.stroke();}   // Kisten
+    g.fillStyle='#e9d6b0';g.beginPath();g.roundRect(x-20,y-24,40,24,2);g.fill();g.stroke();   // Stand
+    for(let k=0;k<5;k++){g.fillStyle=k%2?'#fff4dc':'#d6336c';g.beginPath();g.moveTo(x-26+k*10.4,y-24);g.lineTo(x-26+(k+1)*10.4,y-24);g.lineTo(x-24+(k+1)*9.6,y-40);g.lineTo(x-24+k*9.6,y-40);g.closePath();g.fill();}
+    g.beginPath();g.moveTo(x-26,y-24);g.lineTo(x+26,y-24);g.lineTo(x+24,y-40);g.lineTo(x-24,y-40);g.closePath();g.stroke();   // Markise
+    g.strokeStyle=vOL;g.beginPath();g.moveTo(x-24,y-40);g.lineTo(x-24,y);g.moveTo(x+24,y-40);g.lineTo(x+24,y);g.stroke();
+    g.font='10px system-ui';g.textAlign='center';g.fillText('🌱',x-9,y-9);g.fillText('🪨',x+1,y-9);g.fillText('🌵',x+11,y-9);
+    g.fillStyle='#ffd447';g.beginPath();g.arc(x+30,y-30+Math.sin(t*2)*1.5,4,0,7);g.fill();g.stroke();},
   schm(g,x,y,lv,t){g.lineWidth=2.5;g.strokeStyle=vOL;
     g.fillStyle='#8a8f9a';g.beginPath();g.roundRect(x+12,y-46,10,30,2);g.fill();g.stroke(); // Schornstein
     for(let k=0;k<3;k++){const ph=(t*.6+k/3)%1;g.globalAlpha=.5*(1-ph);g.fillStyle='#ddd';g.beginPath();g.arc(x+17+Math.sin(ph*6+k)*4,y-50-ph*26,4+ph*6,0,7);g.fill();}g.globalAlpha=1;
