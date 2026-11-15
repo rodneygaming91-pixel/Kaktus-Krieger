@@ -1210,6 +1210,10 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .vpanel p{margin:0;font-size:.78rem;color:#d9c6a6}.vpanel ul{margin:0;padding-left:18px;font-size:.76rem;color:#d9c6a6}
 .vcost{display:flex;gap:8px;flex-wrap:wrap;font-weight:900;font-size:.82rem}.vcost span{background:#1c130d;border:2px solid #4a3a2c;border-radius:9px;padding:3px 8px}.vcost span.no{color:#ff6b6b}
 .vsub{display:flex;flex-direction:column;gap:2px;background:#1c130d;border:2px solid #4a3a2c;border-radius:10px;padding:6px 8px}.vsub b{font-size:.85rem;color:#ffe7b8}.vsub small{font-size:.7rem;color:var(--muted)}.vsub.dim{opacity:.6}
+.vups{display:flex;flex-direction:column;gap:5px}.vup{display:flex;align-items:center;gap:8px;background:#1c130d;border:2px solid var(--rc);border-radius:10px;padding:5px 6px 5px 9px}
+.vup>span{flex:1;display:flex;flex-direction:column;min-width:0}.vup b{font-size:.8rem;color:#ffe7b8}.vup small{font-size:.66rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vup em{font-style:normal}.vup em.up{color:#7fe08a;font-weight:800}
+.vup .sbtn{display:flex;flex-direction:column;align-items:center;min-width:92px}.vup .sbtn small{font-size:.58rem;color:inherit;opacity:.85}
 .vbar{height:14px;border-radius:7px;background:#1c130d;border:2px solid #4a3a2c;overflow:hidden;position:relative}.vbar i{display:block;height:100%;background:linear-gradient(90deg,#ffae00,#ffd447)}
 .vbar b{position:absolute;inset:0;font-size:.62rem;text-align:center;line-height:11px;color:#fff;text-shadow:0 1px 2px #000}
 /* Kapitel-Knopf */
@@ -1542,7 +1546,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
+'Opa Stachel':'Grandpa Spike','Max':'Max','Noch nicht gebaut.':'Not built yet.','Nichts zu zerlegen':'Nothing to break down','✨ Verbessern':'✨ Upgrade','Kommt im nächsten Schritt.':'Coming in the next step.','Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.':'Every destroyed item now also gives ore – in the inventory and when summoning too.','Dorf':'Village','🏘 Dein Dorf':'🏘 Your village','Rathaus':'Town hall','Schmiede':'Forge','Händler':'Merchant','🚧 Bald':'🚧 Soon','Ein Bauarbeiter · baut immer ein Gebäude zur Zeit':'One builder · builds one building at a time','🔨 Bauarbeiter ist beschäftigt':'🔨 Builder is busy','Erst Rathaus ausbauen':'Upgrade the town hall first','Das Herz deines Dorfs. Je höher das Rathaus, desto mehr Gebäude kannst du bauen und desto weiter darfst du sie ausbauen.':'The heart of your village. The higher the town hall, the more buildings you can build and the further you can upgrade them.','Hier zerlegst du alte Ausrüstung zu Eisenerz und verbesserst deine angelegten Teile.':'Here you break down old gear into iron ore and upgrade your equipped items.','Verkauft jeden Tag wechselnde Waren zu festen Preisen.':'Sells changing goods every day at fixed prices.','Deine Kaktusbeete – bald hier im Dorf.':'Your cactus beds – soon here in the village.','Spielen ▶':'Play ▶','Nächstes Kapitel':'Next chapter','Gebiet geschafft! 🎉':'Area cleared! 🎉','Besiegt!':'Defeated!','Einsammeln':'Collect','Diesmal keine Beute.':'No loot this time.','Fähigkeiten werden gezogen …':'Drawing skills …','Tippe auf deine Fähigkeit':'Tap your skill','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung.':'Under ⚔ Battle you upgrade your gear with coins in the forge.','Bald – werden neu aufgebaut':'Soon – being rebuilt','🧭 Erkundung kommt mit den neuen Begleitern':'🧭 Expedition returns with the new companions','🔒 Bald':'🔒 Soon','Unter ⚔ Kampf verbesserst du in der Schmiede mit Münzen deine Ausrüstung – und levelst deine Fähigkeiten.':'Under ⚔ Battle you upgrade your gear with coins in the forge – and level up your skills.',
 'Dein Kaktus kämpft ganz von allein. Besiegte Gegner lassen Münzen und Samenkapseln fallen.':'Your cactus fights all by itself. Defeated enemies drop coins and seed capsules.',
 'Besiege 30 Gegner, dann kommt der Boss. Schlägst du ihn, geht es zur nächsten Stage, und du bekommst 🌵 Kakteen.':'Defeat 30 enemies, then the boss appears. Beat it to reach the next stage and earn 🌵 cacti.',
 'Jetzt das Wichtigste: In jeder Samenkapsel steckt ein Ausrüstungsteil.':'Now the most important part: every seed capsule holds a gear item.',
@@ -1733,6 +1737,8 @@ const RX=[
   [/^(\d+) Teile zerlegt: \+(.+) Erz$/,(m)=>m[1]+' items broken down: +'+m[2]+' ore'],
   [/^\+(\d+) % Erz durch die Schmiede-Stufe · (.+)$/,(m,t)=>'+'+m[1]+' % ore from the forge level · '+t(m[2])],
   [/^🔨 (.+) bauen$/,(m,t)=>'🔨 Build '+t(m[1])],
+  [/^Max\. ⭐(\d+) \(Schmiede-Stufe\) · jeder ⭐ \+5 % · ⭐ gehören zum Teil – zerlegst du es, gibt es 70 % des Erzes zurück\.$/,(m)=>'Max. ⭐'+m[1]+' (forge level) · each ⭐ +5 % · ⭐ belong to the item – break it down and you get 70 % of the ore back.'],
+  [/^Max ⭐(\d+)$/,(m)=>'Max ⭐'+m[1]],
   [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
   [/^Kapitel (\d+) · Welle (\d+)\/(\d+)( · Boss)?$/,(m)=>'Chapter '+m[1]+' · Wave '+m[2]+'/'+m[3]+(m[4]?' · Boss':'')],
   [/^Kapitel (\d+) geschafft! 🎉$/,(m)=>'Chapter '+m[1]+' cleared! 🎉'],
@@ -1794,7 +1800,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -1833,8 +1839,9 @@ const RGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
 // 14.11.2026: Begleiter und Fähigkeiten sind vorerst komplett raus – sie werden neu aufgebaut
 const NO_DR=true,NO_SK=true;
 const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=16+(gx-48)/4;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
-const UPS=0.05;                                  // jedes Schmiede-Level: +5 % auf den Wert des Teils
-const upTarget=st=>0;   // 14.11.2026: Schmiede wieder entfernt – nur die Teile selbst zählen
+const UPS=0.05;                                  // 15.11.2026: jeder ⭐ aus der Dorf-Schmiede: +5 % auf den Wert des Teils (nur Angriff/Leben)
+// 15.11.2026: Gegner rechnen erst ab Stage 480 (hinter allen jetzigen Spielern) mit verbesserten Teilen – bis 8 ⭐ bei Stage 800
+const upTarget=st=>Math.min(8,Math.max(0,(st-480)/40));
 const atkTarget=st=>25+6*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
 const hpTarget=st=>300+70*Math.pow(1.5,needR(st))*itemScale(st)*(1+UPS*upTarget(st));
 const POWK=2.7;   // Schwierigkeit: wie stark die Gegner im Verhältnis zur erwarteten Ausrüstung sind
@@ -2022,7 +2029,7 @@ const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1);
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
   // 14.11.2026: nur noch die Ausrüstung (plus Schmiede-Level des Platzes) bestimmt die Werte; die Kaktus-Klasse gibt ihre festen Eigenschaften
-  const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v*(sl.pct?1:upMul(sl.id));return s;};
+  const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=sl.pct?g[sl.id].v:itemV(g[sl.id]);return s;};
   return{atk:(25+v('atk'))*m.atk,hp:Math.round((300+v('hp'))*m.hp),
     armor:0,spd:0.9/(1+Math.min(150,v('spd'))/100)/m.spd,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+ktX('crit')),res:resSum(),
     critM:2+ktX('critd')/100,dodge:Math.min(60,ktX('dodge')),stun:0,steal:ktX('steal')};
@@ -2194,9 +2201,12 @@ function rollItem(){
   return it;
 }
 const sellValue=it=>Math.ceil(5*cPow(it.lvl)*RAR[it.r].pm);
+// ⭐ aus der Schmiede gehören zum Teil selbst (Angriff/Leben-Teile); Prozent-Teile werden nicht verbessert
+const itemV=it=>it.v*(1+UPS*(it.up||0));
+const upOk=it=>{const sl=SLOTS.find(x=>x.id===it.slot);return !!sl&&!sl.pct;};
 // 15.11.2026: Mit gebauter Schmiede gibt jedes zerstörte Teil zusätzlich Eisenerz (Stufe der Schmiede: +10 % je Stufe)
 function oreFor(it,L){L=L==null?((S.vil&&S.vil.b&&S.vil.b.schm)||0):L;return L>0?Math.round(Math.pow(1+it.r,1.5)*(1+.1*(L-1))):0;}
-function scrap(it){const o=oreFor(it);if(o)S.ore=(S.ore||0)+o;return sellValue(it);}
+function scrap(it){const o=oreFor(it)+Math.floor(.7*(it.oreIn||0));if(o)S.ore=(S.ore||0)+o;return sellValue(it);}   // verbesserte Teile: 70 % des Erzes zurück
 function itemValue(sl,r,lvl,f){const v=sl.pct?sl.base*RAR[r].pm*pctScale(lvl)*f:sl.base*RAR[r].m*itemScale(lvl)*f;return sl.pct?Math.round(v*10)/10:Math.round(v);}
 const fmtV=(sl,v)=>sl.pct?v.toFixed(1):fmt(v);
 
@@ -2340,7 +2350,7 @@ const elMulFor=el=>{const Wd=world();return !el?1:el===Wd.weak?1.5:el===Wd.atkEl
 const elMul=()=>elMulFor(S.gear.waffe&&S.gear.waffe.el);
 // „Besser“ heißt: höherer Wert. Element und Resistenz sind nur Zusatzinfos und entscheiden höchstens bei exakt gleichem Wert.
 // Waffen zählen mit ihrem Element in der aktuellen Welt (Schwäche ×1,5, gleiches Element wie die Gegner ×0,6) – 09.11.2026
-const itemScore=it=>it.v*(it.slot==='waffe'?elMulFor(it.el):1)+((it.res&&it.res.el===world().atkEl)?1e-6:0);
+const itemScore=it=>itemV(it)*(it.slot==='waffe'?elMulFor(it.el):1)+((it.res&&it.res.el===world().atkEl)?1e-6:0);
 // Effekt-Symbol an angelegten Teilen: genau wie im Inventar-Fenster (Element-Zeichen unten rechts in Elementfarbe)
 function effBadges(it){if(!it.el&&!it.res)return'';const E=ELEM[it.el||it.res.el];
   return`<b class="eld" style="--ec:${E.c}" title="${it.el?'Element: '+E.n:it.res.v+' % '+E.n+'-Resistenz'}">${E.ico}</b>`;}
@@ -3239,7 +3249,7 @@ function hud(){
       if(!it)return`<span class="dslot empty"><span class="dl">${sl.n}</span><i>+</i></span>`;
       const R=RAR[it.r];const up=S.inv.some(x=>x.slot===id&&itemScore(x)>itemScore(it));
       return`<span class="dslot${it.r>=4?' hi':''}" style="--rc:${R.c}"><span class="dl">${sl.n}</span><span class="dd" style="background:${R.c}"></span>${up?'<b class="dup">▲</b>':''}
-        <canvas width="112" height="112" data-gicon="${id}" title="${sl.n}"></canvas><b class="dv">+${fmtV(sl,it.v)}</b>${effBadges(it)}</span>`;};
+        <canvas width="112" height="112" data-gicon="${id}" title="${sl.n}"></canvas><b class="dv">+${fmtV(sl,itemV(it))}${it.up?' ⭐'+it.up:''}</b>${effBadges(it)}</span>`;};
    const st=heroStats();
    $('gear').innerHTML=`<span class="dcol">${LEFT.map(cell).join('')}</span>
      <span class="dmid"><span class="dpow">⚔ ${fmt(powerNow())}</span><canvas id="dollcv" width="440" height="560"></canvas>
@@ -3280,7 +3290,7 @@ function cmpCard(it,sl,label,other,id){
   return`<div class="cc${it.r>=3?' rare':''}${label==='Neu'&&better&&!same?' win':''}" style="--rc:${R.c}"><small class="cl">${label}</small>
     <div class="ci"><canvas width="180" height="180" id="${id}"></canvas></div>
     <span class="cr" style="color:${R.c}">${R.n}</span><b style="color:${R.c}">${it.name}</b>
-    <span class="cv">+${fmtV(sl,it.v)} ${sl.unit}</span>${el}${rs}<small class="cs">Stage ${it.lvl}</small></div>`;}
+    <span class="cv">+${fmtV(sl,itemV(it))} ${sl.unit}${it.up?' ⭐'+it.up:''}</span>${el}${rs}<small class="cs">Stage ${it.lvl}</small></div>`;}
 function reveal(){
   clearTimeout(revealT);if(!pending)return;
   const it=pending,sl=SLOTS.find(s=>s.id===it.slot),cur=S.gear[it.slot],R=RAR[it.r];
@@ -3874,10 +3884,10 @@ function slotCell(id){const it=S.gear[id],sl=slotOf(id),sel=eqSel&&eqSel.src==='
 function renderEq(){
   const st=heroStats(),selIt=eqSel?(eqSel.src==='gear'?S.gear[eqSel.slot]:S.inv[eqSel.i]):null;
   let detail='<p class="hint">Tippe ein Teil an, um es anzusehen.</p>';
-  if(selIt){const sl=slotOf(selIt.slot),R=RAR[selIt.r],cur=S.gear[selIt.slot],inInv=eqSel.src==='inv',diff=inInv&&cur?selIt.v-cur.v:null;
+  if(selIt){const sl=slotOf(selIt.slot),R=RAR[selIt.r],cur=S.gear[selIt.slot],inInv=eqSel.src==='inv',diff=inInv&&cur?itemV(selIt)-itemV(cur):null;
     detail=`<div class="eqd" style="--rc:${R.c}"><canvas width="112" height="112" data-icon="sel"></canvas><div>
       <span class="rar" style="color:${R.c}">${R.n} · ${sl.n}</span><b>${selIt.name}</b>
-      <span>+${fmtV(sl,selIt.v)} ${sl.unit}${diff!=null?` <em class="${diff>=0?'up':'down'}">${diff>=0?'▲':'▼'} ${fmtV(sl,Math.abs(diff))}</em>`:inInv&&!cur?' <em class="up">Slot leer</em>':''}</span>${itemExtra(selIt)}</div>
+      <span>+${fmtV(sl,itemV(selIt))} ${sl.unit}${selIt.up?' ⭐'+selIt.up:''}${diff!=null?` <em class="${diff>=0?'up':'down'}">${diff>=0?'▲':'▼'} ${fmtV(sl,Math.abs(diff))}</em>`:inInv&&!cur?' <em class="up">Slot leer</em>':''}</span>${itemExtra(selIt)}</div>
       <div class="eqdb">${inInv?`<button class="sbtn go" type="button" id="eqEquip">Ausrüsten</button>`:`<button class="sbtn" type="button" id="eqUnequip" ${S.inv.length>=invMax()?'disabled':''}>Ablegen</button>`}
       <button class="sbtn red" type="button" id="eqSell">Verkaufen +${fmt(sellValue(selIt))}</button></div>${inBuild(selIt.id)?'<p class="hint warn" style="grid-column:1/-1">★ Dieses Teil gehört zu einem Build.</p>':''}</div>`;}
   const tabs=`<div class="eqtabs" role="tablist"><button type="button" role="tab" aria-selected="${eqTab==='gear'}" data-tab="gear">Ausrüstung</button><button type="button" role="tab" aria-selected="${eqTab==='builds'}" data-tab="builds">Builds</button></div>`;
@@ -5859,6 +5869,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn115',date:'2026-11-15',title:'Schmiede: Teile verbessern',hero:['⭐ Mach deine Teile stärker','In der Schmiede verbesserst du jetzt Waffe, Helm, Rüstung, Handschuhe und Halskette mit Eisenerz und Münzen.'],items:()=>[['Sterne:','Jeder ⭐ gibt +5 % auf den Wert des Teils. Wie viele ⭐ möglich sind, bestimmt die Stufe der Schmiede.'],['Gehören zum Teil:','Ziehst du ein besseres Teil, fängt es bei ⭐0 an. Zerlegst du ein verbessertes Teil, bekommst du 70 % des Erzes zurück.'],['Gegner:','Erst ab Stage 480 rechnen die Gegner mit verbesserten Teilen.']],
+  en:{title:'Forge: Upgrade items',hero:['⭐ Make your items stronger','In the forge you can now upgrade weapon, helmet, chestplate, gloves and necklace with iron ore and coins.'],items:()=>[['Stars:','Each ⭐ gives +5 % on the item\'s value. The forge level decides how many ⭐ are possible.'],['Belong to the item:','A better new item starts at ⭐0. Break down an upgraded item and you get 70 % of the ore back.'],['Enemies:','Only from stage 480 on do enemies expect upgraded items.']]}},
   {id:'pn114',date:'2026-11-15',title:'Dorf: Die Schmiede',hero:['⚒ Alte Teile werden zu Eisenerz','Im Dorf kannst du jetzt die Schmiede bauen. Danach gibt jedes zerstörte Teil zusätzlich zu den Münzen auch Eisenerz.'],items:()=>[['Zerlegen:','In der Schmiede zerlegst du mit einem Tipp alle Teile, die schlechter sind als deine angelegten (★ Build-Teile bleiben verschont).'],['Überall:','Auch beim Beschwören und im Inventar gibt es Erz, sobald die Schmiede steht. Seltenere Teile geben mehr Erz, jede Schmiede-Stufe +10 %.'],['Bald:','Mit dem Erz verbesserst du deine Teile.'],['Behoben:','Die Reiter der Weltkarte standen kurz schief.']],
   en:{title:'Village: The forge',hero:['⚒ Old items become iron ore','You can now build the forge in your village. After that every destroyed item gives iron ore on top of the coins.'],items:()=>[['Break down:','In the forge you break down all items that are worse than your equipped ones with one tap (★ build items are spared).'],['Everywhere:','Summoning and the inventory also give ore once the forge stands. Rarer items give more ore, every forge level +10 %.'],['Soon:','Use the ore to upgrade your items.'],['Fixed:','The world map tabs were briefly misaligned.']]}},
   {id:'pn113',date:'2026-11-15',title:'Neu: Dein Dorf',hero:['🏘 Baue dein eigenes Dorf','Unten links gibt es jetzt den Reiter „Dorf“. Los geht es mit dem Rathaus – weitere Gebäude folgen Schritt für Schritt.'],items:()=>[['Rathaus:','Mit Münzen und Kakteen ausbauen. Jede Stufe braucht etwas Bauzeit, dein Bauarbeiter arbeitet auch, wenn das Spiel zu ist.'],['Bald:','Schmiede (alte Teile zerlegen, Teile verbessern), Händler mit täglich wechselnden Waren und die Gärtnerei im Dorf.']],
@@ -6053,16 +6065,24 @@ function vPanel(){const P=$('vPanel');if(!P)return;const V=vInit(),B=VB.find(x=>
   if(B.id==='schm'&&lv>0){const w=vWorse(),o=w.reduce((a,it)=>a+oreFor(it,lv),0),c=w.reduce((a,it)=>a+sellValue(it),0);
     h+=`<div class="vsub"><b>🪨 Eisenerz: ${fmt(S.ore||0)}</b><small>${lv>1?'+'+(lv*10-10)+' % Erz durch die Schmiede-Stufe · ':''}Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören.</small></div>
       <button type="button" class="btn go" id="vScrap" ${w.length?'':'disabled'}>⚒ ${w.length} schlechtere Teile zerlegen<small>${w.length?'+'+fmt(o)+' 🪨 · +'+fmt(c)+' 🪙':'Nichts zu zerlegen'}</small></button>
-      <div class="vsub dim"><b>✨ Verbessern</b><small>Kommt im nächsten Schritt.</small></div>`;}
+      <div class="vsub"><b>✨ Verbessern</b><small>Max. ⭐${lv} (Schmiede-Stufe) · jeder ⭐ +5 % · ⭐ gehören zum Teil – zerlegst du es, gibt es 70 % des Erzes zurück.</small></div>
+      <div class="vups">${SLOTS.filter(sl=>!sl.pct).map(sl=>{const it=S.gear[sl.id];if(!it)return'';const u=it.up||0,mx=u>=lv,c=upCost(it),ok=!mx&&(S.ore||0)>=c.ore&&(S.coins||0)>=c.coins;
+        return`<div class="vup" style="--rc:${RAR[it.r].c}"><span><b>${sl.n} ${u?'⭐'+u:''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))} ${sl.unit}</em>${mx?'':' → <em class="up">+'+fmtV(sl,it.v*(1+UPS*(u+1)))+'</em>'}</small></span>
+          <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} 🪙</small>`}</button></div>`;}).join('')}</div>`;}
   if(j&&j.id===B.id){const left=Math.max(0,j.end-Date.now()),pc=100-left/j.dur*100;
     h+=`<div class="vbar"><i id="vBarI" style="width:${pc}%"></i><b id="vBarT">Baut Stufe ${j.to} · noch ${fmtT(left/1000)}</b></div>`;}
   else if(!lock&&!B.soon&&lv<B.max){const c=vCost(B,lv+1),okC=(S.coins||0)>=c.coins,okK=(S.kak||0)>=c.kak,cap=B.id!=='rat'&&lv+1>rat,busy=!!j;
     h+=`${lv===0?'<p><b>Noch nicht gebaut.</b></p>':''}<div class="vcost"><span class="${okC?'':'no'}">🪙 ${fmt(c.coins)}</span><span class="${okK?'':'no'}">🌵 ${fmt(c.kak)}</span><span>⏱ ${fmtT(c.sec)}</span></div>
       <button type="button" class="btn go" id="vGo" ${okC&&okK&&!cap&&!busy?'':'disabled'}>${busy?'🔨 Bauarbeiter ist beschäftigt':cap?'Erst Rathaus ausbauen':lv===0?'🔨 '+B.n+' bauen':'🔨 Auf Stufe '+(lv+1)+' ausbauen'}</button>`;}
   P.innerHTML=h;const g=$('vGo');if(g)g.onclick=vBuild;
+  P.querySelectorAll('[data-vup]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vup],lv=vLv('schm');if(!it||(it.up||0)>=lv)return;const c=upCost(it);
+    if((S.ore||0)<c.ore||(S.coins||0)<c.coins)return;S.ore-=c.ore;S.coins-=c.coins;it.up=(it.up||0)+1;it.oreIn=(it.oreIn||0)+c.ore;save();lastHud='';
+    banner={txt:slotOf(it.slot).n+' ⭐'+it.up+'!',t:1.6};renderDorf();});
   const sc=$('vScrap');if(sc)sc.onclick=()=>{const w=vWorse();if(!w.length)return;const ids=new Set(w.map(it=>it.id));let o0=S.ore||0,c=0;
     S.inv=S.inv.filter(it=>{if(!ids.has(it.id))return true;c+=scrap(it);return false;});S.coins+=c;save();lastHud='';
     banner={txt:w.length+' Teile zerlegt: +'+fmt((S.ore||0)-o0)+' Erz',t:2.2};renderDorf();};}
+// Kosten für den nächsten ⭐: Erz steigt mit Seltenheit und ⭐, Münzen ≈ ein paar Minuten Kampf
+function upCost(it){const n=(it.up||0)+1;return{ore:Math.round(3*Math.pow(1+it.r,1.5)*Math.pow(n,1.6)),coins:Math.round(240*cPow(Math.max(1,S.best||1))*10*n)};}
 // Teile im Inventar, die nicht besser sind als das angelegte (ohne ★ Build-Teile)
 function vWorse(){ensureIds();return S.inv.filter(it=>{const cur=S.gear[it.slot];return cur&&itemScore(it)<=itemScore(cur)&&!inBuild(it.id);});}
 // Dorf zeichnen
