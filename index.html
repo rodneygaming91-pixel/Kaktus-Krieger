@@ -1069,7 +1069,7 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .tpanel .drow b{font-size:.9rem}.tpanel .drow small{font-size:.7rem}.tpanel .drow .bon{font-size:.7rem}.tpanel .dbtns{gap:4px}.tpanel .dbtns .btn{padding:5px 9px;font-size:.74rem}
 .tpanel .gart .row{margin:0}.tpanel .gart .row .btn{width:100%}.tpanel .gart .btn small{display:block;font-size:.66rem}
 .tpanel .odds{gap:3px}.tpanel .odd{font-size:.8rem;gap:6px;grid-template-columns:6.8em 1fr 3em 3.7em}.tpanel .odd .nx{font-size:.72rem;white-space:nowrap}
-.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(5,1fr);
+.tabbar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,560px);z-index:15;display:grid;grid-template-columns:repeat(4,1fr);
   background:#1c130d;border-top:3px solid #4a3a2c;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px))}
 .tabbar button{border:0;background:none;color:#a8957a;font:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;padding:4px 0;border-radius:10px;cursor:pointer}
 .tabbar button i{font-style:normal;font-size:1.45rem;line-height:1.1;filter:grayscale(.5)}
@@ -1255,8 +1255,8 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   </div>
   
   <div class="tpanel" id="tPanel">
-  <section class="tab" id="tabKampf" data-t="kampf"></section>
-  <section class="tab" id="tabAusr" data-t="ausr" hidden>
+  <section class="tab" id="tabKampf" data-t="kampf" hidden></section>
+  <section class="tab" id="tabAusr" data-t="ausr">
   <div class="foot">
     <span class="fst" title="Angriff"><em>⚔</em><b id="sAtk">0</b></span>
     <span class="fst" title="Leben"><em style="color:#ff6fae">♥</em><b id="sHp">0</b></span>
@@ -1284,8 +1284,8 @@ header .hr{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
   </section>
   </div>
   <nav class="tabbar" id="tabBar">
-    <button type="button" id="tbKampf" data-tab2="kampf" class="on"><i>⚔</i><span>Kampf</span></button>
-    <button type="button" id="tbAusr" data-tab2="ausr"><i>🎒</i><span>Ausrüstung</span></button>
+    <!-- 15.11.2026: Kampf-Reiter (Kaktus, Fähigkeiten, Relikte, Meister, Merkmale) vorerst entfernt -->
+    <button type="button" id="tbAusr" data-tab2="ausr" class="on"><i>🎒</i><span>Ausrüstung</span></button>
     <button type="button" id="tbBegl" data-tab2="begl"><i>🐾</i><span>Begleiter</span></button>
     <button type="button" id="tbGart" data-tab2="gart"><i>🌱</i><span>Gärtnerei</span></button>
     <button type="button" id="tbMehr" data-tab2="mehr"><i>🏰</i><span>Mehr</span></button>
@@ -1760,7 +1760,7 @@ const KEY='kaktus-krieger-v1';
 {const r=document.createElement('div');r.id='rotNote';r.innerHTML='<i>📱</i>Bitte halte dein Handy hochkant.<small style="font-size:.8rem;color:#c9b593;font-weight:700">Kaktus-Krieger spielt man im Hochformat.</small>';document.body.appendChild(r);
  try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('portrait').catch(()=>{});}catch(e){}}
 // Neue Oberfläche (11.11.2026): oben Kampfbox, darunter scrollbarer Bereich, unten Symbol-Leiste
-let homePage=0,curTab='kampf';function homeGo(){}function homeFit(){}
+let homePage=0,curTab='ausr';function homeGo(){}function homeFit(){}
 document.documentElement.classList.add('fixhome');
 // Seite darf nie verrutschen (z. B. wenn ein Knopf im Fenster den Fokus bekommt)
 document.addEventListener('scroll',e=>{if(!document.documentElement.classList.contains('fixhome'))return;const t=e.target;
@@ -1768,7 +1768,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3707,7 +3707,7 @@ let tkSig='';const tkSigNow=()=>[S.coins>0?Math.floor(Math.log10(S.coins+1)*20):
   WS.map(W=>S.coins>=wsCost(W)&&(S.kak||0)>=wsKak(W)?1:0).join(''),S.kak,S.caps,JSON.stringify(S.skl||{}),(S.skEq||[]).join(),(S.skSum||{}).n,JSON.stringify(S.kt||{}),S.char&&S.char.cls].join('|');
 setInterval(()=>{if(curTab==='kampf'&&S.char&&!wsHold&&tkSigNow()!==tkSig){const P=$('tPanel'),y=P.scrollTop;renderTabKampf();P.scrollTop=y;}
   const tc=$('tCap');if(tc)tc.textContent=fmt(S.caps||0);},700);
-function tabGo(t){
+function tabGo(t){if(t==='kampf')t='ausr';
   curTab=t;document.querySelectorAll('#tPanel>.tab').forEach(x=>x.hidden=x.dataset.t!==t);
   document.querySelectorAll('#tabBar [data-tab2]').forEach(b=>b.classList.toggle('on',b.dataset.tab2===t));
   if(t==='kampf')renderTabKampf();if(t==='begl')renderDrones();if(t==='gart')renderGarden();$('tPanel').scrollTop=0;}
@@ -5807,6 +5807,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn111',date:'2026-11-15',title:'Kampf-Reiter vorerst entfernt',hero:['🧹 Aufgeräumt','Der Reiter „Kampf“ mit Kaktus, Fähigkeiten, Relikten, Meister und Merkmalen ist vorerst weg. Das Spiel startet jetzt direkt bei der Ausrüstung.'],items:()=>[['Warum:','Diese Bereiche werden neu aufgebaut und kommen später zurück.'],['Dein Fortschritt:','Bleibt komplett erhalten.']],
+  en:{title:'Battle tab removed for now',hero:['🧹 Tidied up','The “Battle” tab with Cactus, Skills, Relics, Mastery and Traits is gone for now. The game now starts right at your gear.'],items:()=>[['Why:','These parts are being rebuilt and will come back later.'],['Your progress:','Stays fully intact.']]}},
   {id:'pn110',date:'2026-11-14',title:'Neu: Kapitel',hero:['🎮 Steuere deinen Kaktus selbst','Unter dem Kampffeld wartet jetzt das Kapitel: Du läufst per Finger durch die Arena, dein Kaktus schießt von allein, sobald du stehen bleibst.'],items:()=>[['Ablauf:','5 Wellen und am Ende der Gebiets-Boss. Nach jeder Welle wählst du eine von drei Fähigkeiten für diesen Lauf.'],['Fortschritt:','Ein neues Gebiet öffnet sich nur, wenn du sein Kapitel schaffst. Dein Kaktus kämpft im freien Gebiet wie gewohnt weiter.'],['Beute:','Münzen, Samenkapseln und Kakteen – auch wenn du unterwegs scheiterst. Kapitel kannst du so oft spielen, wie du willst.'],['Arenen:','Jede Welt hat ihre eigene Arena mit Hindernissen, hinter denen du dich vor Fernkämpfern verstecken kannst.']],
   en:{title:'New: Chapters',hero:['🎮 Control your cactus yourself','Below the battlefield the chapter is waiting: move through the arena with your finger, your cactus shoots by itself as soon as you stand still.'],items:()=>[['How it works:','5 waves and the area boss at the end. After each wave you pick one of three skills for this run.'],['Progress:','A new area only opens once you clear its chapter. Your cactus keeps fighting in the unlocked area as usual.'],['Loot:','Coins, seed capsules and cacti – even if you fail along the way. Play chapters as often as you like.'],['Arenas:','Every world has its own arena with obstacles you can hide behind from ranged enemies.']]}},
   {id:'pn109',date:'2026-11-14',title:'12 neue Bosse',hero:['👑 Jedes Gebiet hat seinen eigenen Boss','Alle Gebiets-Bosse wurden neu gezeichnet – jeder mit eigener Körperform statt immer wieder Würmer.'],items:()=>[['Die Neuen:','Dornenkoloss, Salzkrebs-König, Lavagolem, Kristallspinne, Sternenrochen, Pilzkönigin, Frostyeti, Donnergreif, Knochendrache, Flammenphönix, Kraken der Tiefe und der Kaktuskaiser mit Zepter und Umhang.'],['Lebendig:','Lava glüht, Sporen schweben, Flügel schlagen, Tentakel wiegen sich.']],
