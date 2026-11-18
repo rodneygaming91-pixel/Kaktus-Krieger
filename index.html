@@ -1252,6 +1252,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .elstrip .er small{font-size:.5rem}.elstrip .er b{font-size:.7rem}.elstrip .elbox{min-width:0;overflow:hidden}
 @media (max-width:420px){.elstrip{gap:4px;margin:5px 4px 0}.elstrip .elbox{padding:3px 5px;gap:3px}.elstrip .er{gap:3px}.elstrip .er small{font-size:.42rem}.elstrip .er b{font-size:.6rem}.elstrip .eb{width:14px;height:14px;font-size:.5rem}}
 /* Kapitel-Knopf */
+.chapbtn.xpbtn{border-color:#4fb8ff;background:linear-gradient(#1e3a5a,#14263e)}.chapbtn.xpbtn em{background:linear-gradient(#5fc8ff,#2a8ac8)!important}
 .chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
 .chapbtn>i{font-style:normal;font-size:22px}.chapbtn>span{flex:1;display:flex;flex-direction:column;line-height:1.15}.chapbtn b{font-size:15px}.chapbtn small{font-size:11px;opacity:.8}
 .chapbtn em{font-style:normal;font-weight:900;font-size:13px;background:#63c74d;color:#10300a;padding:6px 10px;border-radius:10px}
@@ -1338,6 +1339,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
+  <button type="button" class="chapbtn xpbtn" id="xpBtn" hidden><i>🧭</i><span><b>Expedition</b><small id="xpS">4 Gebiete · Leben bleibt</small></span><em>Los ▶</em></button>
   </div>
   
   <div class="tpanel" id="tPanel">
@@ -1618,7 +1620,8 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🌀 Stachelfächer':'🌀 Spike Fan','☄️ Meteorregen':'☄️ Meteor Rain','🛡 Schutzschild':'🛡 Shield','💥 Dreifachschuss':'💥 Triple Shot','🌊 Schockwelle':'🌊 Shockwave','⚡ Blitzstrahl':'⚡ Lightning Beam','🦇 Diener':'🦇 Minions','🌪 Sandsturm':'🌪 Sandstorm',
+'Opa Stachel':'Grandpa Spike','Expedition':'Expedition','Los ▶':'Go ▶','Neue Expedition':'New expedition','Expedition geschafft! 🎉':'Expedition complete! 🎉','Wüstensplitter':'Desert shards','🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!':'🚪 The gate is open – walk up into the next area!',
+'Expedition! Hier gibt es keine Pause: Dein Leben bleibt von Gebiet zu Gebiet gleich. Räum ein Gebiet frei, dann öffnet sich oben ein Tor – lauf hindurch ins nächste. Im letzten Gebiet wartet ein Boss.':'Expedition! No breaks here: your life carries over from area to area. Clear an area and a gate opens at the top – walk through into the next one. A boss waits in the last area.','🌀 Stachelfächer':'🌀 Spike Fan','☄️ Meteorregen':'☄️ Meteor Rain','🛡 Schutzschild':'🛡 Shield','💥 Dreifachschuss':'💥 Triple Shot','🌊 Schockwelle':'🌊 Shockwave','⚡ Blitzstrahl':'⚡ Lightning Beam','🦇 Diener':'🦇 Minions','🌪 Sandsturm':'🌪 Sandstorm',
 'ein Fächer aus Stacheln':'a fan of spikes','Meteore schlagen auf deiner Seite ein – raus aus den roten Kreisen':'meteors hit your side – get out of the red circles','Schüsse prallen kurz ab':'shots bounce off for a moment','drei schnelle Schüsse':'three quick shots',
 'eine Welle rollt über deine Seite – lauf durch die Lücke':'a wave rolls over your side – run through the gap','Blitze in markierten Bahnen':'lightning in marked lanes','fliegende Diener jagen dich':'flying minions chase you','ein Sturm schiebt dich zur Seite':'a storm pushes you sideways',
 'Kampf vorbei!':'Fight over!','30 Sekunden über der Schlucht – weich aus!':'30 seconds across the chasm – dodge!',
@@ -1882,6 +1885,9 @@ const RX=[
   [/^⚔ Im Kampf alle (\d+) s von allein: (\d+) % auf alle Gegner$/,(m)=>'⚔ In battle every '+m[1]+' s automatically: '+m[2]+' % on all enemies'],
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
+  [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
+  [/^Besiegt in Gebiet (\d+)!$/,(m)=>'Defeated in area '+m[1]+'!'],[/^Geschafft: (\d+) von (\d+) Gebieten\.$/,(m)=>'Cleared: '+m[1]+' of '+m[2]+' areas.'],[/^Alle (\d+) Gebiete und der Boss sind besiegt\.$/,(m)=>'All '+m[1]+' areas and the boss are defeated.'],
+  [/^4 Gebiete · Leben bleibt(.*)$/,(m)=>'4 areas · life carries over'+m[1].replace(' · Rekord ',' · best ')],
   [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
   [/^Tippe eine Pflanze an, um sie für (.+) zu (gießen|düngen)\. Dünger nimmst du aus deinem eigenen Vorrat\. Das erste Mal am Tag bekommt (.+) ein Dankeschön per Post\.$/,(m)=>'Tap a plant to '+(m[2]==='gießen'?'water':'fertilise')+' it for '+m[1]+'. Fertiliser comes from your own stock. The first time each day '+m[3]+' gets a thank-you by mail.'],
   [/^🌱 (.+) hat sich um dein Beet gekümmert$/,(m)=>'🌱 '+m[1]+' looked after your bed'],
@@ -1948,7 +1954,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -5866,6 +5872,7 @@ const OPA={
   pets:'Das sind deine Haustiere! Tippe eines an und nimm es mit. Neue Haustiere schlüpfen aus 🥚 Haustier-Samen in der Gärtnerei.',
   train:'Auf dem Trainingsplatz lernt dein Kaktus Fähigkeiten. Rüste zwei aus – im Kapitel setzt du sie mit den runden Knöpfen unten rechts ein.',
   gart:'In der Gärtnerei pflanzt du Samenkapseln. Reife Kakteen erntest du per Hand – mit ihnen baust du dein Dorf aus.',
+  ex:'Expedition! Hier gibt es keine Pause: Dein Leben bleibt von Gebiet zu Gebiet gleich. Räum ein Gebiet frei, dann öffnet sich oben ein Tor – lauf hindurch ins nächste. Im letzten Gebiet wartet ein Boss.',
   wb2:'Zwischen dir und dem Weltboss liegt eine Schlucht! Lauf mit dem Finger auf deiner Seite herum – dein Kaktus schießt von allein. Weich den Fähigkeiten des Bosses aus, du hast 30 Sekunden.',
   gart2:'Dein Beet! Pflanze Samenkapseln und gieß sie mit 💧 – trockene Erde lässt nichts wachsen. 🧪 Dünger vom Händler macht sie schneller. Reife Kakteen erntest du per Hand.',
   forge:'In der Schmiede zerlegst du alte Teile zu Eisenerz und machst deine Ausrüstung mit ⭐ stärker.'};
@@ -6272,6 +6279,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn156',date:'2026-11-18',title:'Neu: Die Expedition',hero:['🧭 Von Gebiet zu Gebiet','Wer alle 48 Kapitel geschafft hat, kann auf Expedition gehen: 4 Gebiete hintereinander, jedes in einer anderen Welt. Räum ein Gebiet frei, dann öffnet sich oben ein Tor – lauf hindurch ins nächste.'],
+   items:()=>[['Anspruchsvoll:','Dein Leben bleibt von Gebiet zu Gebiet gleich – es gibt kein volles Auffüllen. Im letzten Gebiet wartet ein Boss.'],['✨ Wüstensplitter:','Die neue Belohnung der Expedition. Wofür man sie ausgibt, kommt bald.']],
+  en:{title:'New: The Expedition',hero:['🧭 From area to area','Once you have beaten all 48 chapters you can go on an expedition: 4 areas in a row, each in a different world. Clear an area and a gate opens at the top – walk through it into the next one.'],
+   items:()=>[['Challenging:','Your life carries over from area to area – no full refill. A boss waits in the last area.'],['✨ Desert shards:','The new expedition reward. What you can spend them on is coming soon.']]}},
   {id:'pn155',date:'2026-11-18',title:'Neuer Weltboss-Kampf',hero:['👹 Duell über der Schlucht','Der Weltboss-Kampf ist jetzt eine echte Arena: Du stehst auf der einen Seite einer Schlucht, der Boss auf der anderen. Lauf mit dem Finger herum und weich aus – dein Kaktus schießt von allein. Höchstens 30 Sekunden.'],
    items:()=>[['Jeder Boss ist anders:','Jeder Weltboss hat drei eigene Fähigkeiten – zum Beispiel Meteorregen, Blitzstrahlen, Schockwellen, Diener, Sandsturm oder einen Schutzschild. Welche, siehst du vor dem Kampf.'],['Wut:','Alle 10 Sekunden wird der Boss wütender und greift schneller und härter an.']],
   en:{title:'New world boss fight',hero:['👹 Duel across the chasm','The world boss fight is now a real arena: you stand on one side of a chasm, the boss on the other. Move with your finger and dodge – your cactus shoots on its own. 30 seconds at most.'],
@@ -7165,6 +7176,15 @@ setInterval(()=>{const was=vDone();if(curTab!=='dorf')return;if(was){renderDorf(
 // Dein Kaktus läuft per Joystick durch eine Arena. Steht er still, schießt er automatisch Stacheln auf den nächsten Gegner.
 // Gegner kommen in Wellen aus dem aktuellen Gebiet. Werte kommen aus deiner Ausrüstung (heroStats).
 const AX={open:false};
+// 18.11.2026 Expedition: mehrere Gebiete hintereinander – nach dem Freiräumen öffnet sich oben ein Tor, durch das du ins nächste Gebiet läufst. Leben bleibt erhalten.
+const axWorld=()=>AX.ex?WORLDS[AX.ex.wi[AX.ex.area-1]]:WORLDS[worldIdx(AX.st)];
+const XP_UNLOCK=48;
+function xpNew(){const n=WORLDS.length,pool=[...Array(n).keys()].sort(()=>Math.random()-.5);return{area:1,areas:4,wpa:2,wi:pool.slice(0,4),done:0};}
+const xpSt=a=>(XP_UNLOCK-1)*20+10+a*12;   // etwas stärker als das letzte Kapitel, jedes Gebiet ein Stück mehr
+function axGate(){const A=AX;A.gate={x:A.W/2,y:104,t:0};axSay('🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!',2.4);}
+function axExNext(){const A=AX,h=A.hero,E=A.ex;E.done=E.area;E.area++;A.wave=0;A.waves=E.wpa;A.st=xpSt(E.area);A.en=[];A.sh=[];A.es=[];A.hz=[];A.pk=[];A.pt=[];A.gate=null;
+  axBuild();h.x=A.W/2;h.y=A.H-70;if(A.pet){A.pet.x=h.x-40;A.pet.y=h.y+10;}
+  const Wd=axWorld();axSay((E.area===E.areas?'👑 Letztes Gebiet: ':'🧭 Gebiet '+E.area+' / '+E.areas+': ')+Wd.n,2.2);setTimeout(()=>{if(AX.open&&AX.ex===E&&!A.en.length)axWave();},900);}
 // Fähigkeiten für einen Lauf: nach jeder Welle 1 aus 3 (stapelbar)
 const AXS=[
   {id:'multi', ico:'➰',n:'Doppelstachel', d:'+1 Stachel hintereinander'},
@@ -7181,7 +7201,7 @@ const AXS=[
 const axHas=id=>(AX.sk&&AX.sk[id])||0;
 // Arena passend zum Gebiet: Boden einmal vorzeichnen, dazu Hindernisse, die Laufen und Stacheln blockieren
 const AXOB=['kaktus','salz','fels','kristall','fels','pilz','eis','fels','knochen','lava','muschel','kaktus'];
-function axBuild(){const A=AX,Wd=WORLDS[worldIdx(A.st)],wi=WORLDS.indexOf(Wd),[g0,g1,g2]=Wd.ground,W=A.W,H=A.H;
+function axBuild(){const A=AX,Wd=axWorld(),wi=WORLDS.indexOf(Wd),[g0,g1,g2]=Wd.ground,W=A.W,H=A.H;
   const bg=document.createElement('canvas');bg.width=W*A.dpr;bg.height=H*A.dpr;const b=bg.getContext('2d');b.scale(A.dpr,A.dpr);
   let seed=wi*977+13;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
   b.fillStyle=g0;b.fillRect(0,0,W,H);
@@ -7233,14 +7253,14 @@ function axDrawOb(g,o){const k=AX.obKind,W0=AX.wcol;g.save();g.translate(o.x,o.y
   else{const col=shade(W0.mesa,.25);g.fillStyle=col;g.beginPath();g.moveTo(-o.r,0);g.lineTo(-o.r*.85,-o.r*.9);g.lineTo(-o.r*.2,-o.r*1.3);g.lineTo(o.r*.6,-o.r*1.05);g.lineTo(o.r,0);g.closePath();g.fill();line();
     g.fillStyle=shade(col,.3);g.beginPath();g.moveTo(-o.r*.7,-o.r*.8);g.lineTo(-o.r*.2,-o.r*1.15);g.lineTo(0,-o.r*.6);g.closePath();g.fill();}
   g.restore();}
-function axOpen(pvp,chg){if(AX.open)return;const d=document.createElement('div');d.id='axWrap';
+function axOpen(pvp,chg,ex){if(AX.open)return;const d=document.createElement('div');d.id='axWrap';
   d.innerHTML=`<canvas id="axCv"></canvas><div class="axhud"><button type="button" id="axX">✕</button><b id="axInfo"></b><span id="axHp"><i></i></span></div>
     <div class="axmsg" id="axMsg" hidden></div><div class="axsk" id="axSk"></div><div class="axact" id="axAct"></div><div class="axpick" id="axPick" hidden></div>`;
   document.body.appendChild(d);
   const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
-  const cg=chg||Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
+  const cg=chg||Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{ex:ex||null,gate:null,tr:null,exNext:0,t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):ex?xpSt(1):(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:ex?ex.wpa:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
   const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
-  axBuild();axActInit();if(!pvp)setTimeout(()=>opa('chap'),400);
+  axBuild();axActInit();if(ex)setTimeout(()=>opa('ex'),400);else if(!pvp)setTimeout(()=>opa('chap'),400);
   const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
   {petInit();const pid=(S.petEq||[])[0],po=pid&&S.pets[pid];A.pet=po?{id:pid,lv:po.lv,x:A.W/2-40,y:A.H*.72+10,cd:1,f:1}:null;}
   // Joystick: irgendwo auf dem Bildschirm drücken und ziehen
@@ -7266,11 +7286,11 @@ function axPick(){const A=AX;A.state='pick';A.sh=[];A.es=[];
   P.querySelectorAll('.axreel').forEach(b=>b.onclick=()=>{if(b.disabled||!b.dataset.ax)return;const id=b.dataset.ax,h=A.hero;A.sk[id]=(A.sk[id]||0)+1;
     if(id==='heal')h.hp=Math.min(h.max,h.hp+h.max*.4);if(id==='maxhp'){const add=h.max*.25;h.max+=add;h.hp+=add;}
     P.hidden=true;$('axSk').innerHTML=Object.entries(A.sk).filter(([k])=>k!=='heal').map(([k,n])=>`<span>${AXS.find(x=>x.id===k).ico}${n>1?'<em>'+n+'</em>':''}</span>`).join('');
-    A.state='go';axWave();});}
+    A.state='go';if(A.exNext){A.exNext=0;axGate();}else axWave();});}
 // Belohnungen: jede geschaffte Welle bringt etwas, der Boss deutlich mehr. Bei einer Niederlage bleibt das bisher Verdiente.
 function axGain(boss){const A=AX,gb=A.pvp?Math.max(1,Math.ceil((A.pvp.best||1)/20)):A.chg,c=Math.round(6*cPow(A.st)*(boss?300:30));A.rew=A.rew||{caps:0,kak:0,coins:0};
   A.rew.caps+=boss?20+2*gb:3+Math.floor(gb/2);A.rew.coins+=c;if(boss)A.rew.kak+=3+Math.floor(gb/4);}
-function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);let st=null;if(won){axGain(true);qInc('chap',1);st=chStars(A);A.rew.ps=1;}
+function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);if(A.ex)return xpEnd(won);let st=null;if(won){axGain(true);qInc('chap',1);st=chStars(A);A.rew.ps=1;}
   if(A.pet&&A.pet.id==='kafer'&&A.rew){const m=1+.1+.04*A.pet.lv,R=A.rew;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}const newG=won&&A.chg>(S.chap||0);if(newG){S.chap=A.chg;save();lastHud='';}const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
   const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Kapitel '+A.chg+' geschafft! 🎉':'Besiegt!'}</h3>${st?st.html:''}${newG?`<p class="axunl">🔓 Gebiet ${A.chg+1} ist jetzt frei – dein Kaktus kämpft dort weiter.</p>`:''}
     <small>${won?'Alle '+A.waves+' Wellen und der Boss sind besiegt.':'Geschafft: '+(A.wave-1)+' von '+A.waves+' Wellen.'}</small>
@@ -7278,6 +7298,16 @@ function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);let st=null;if(won){ax
     <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">${newG?'Nächstes Kapitel':'Nochmal'}</button></div></div>`;P.hidden=false;
   const take=()=>{if(R.ps)S.pseed=(S.pseed||0)+R.ps;S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
   $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,newG?null:A.chg);};}
+function xpEnd(won){const A=AX,E=A.ex;if(won){axGain(true);E.done=E.areas;}
+  const R=A.rew=A.rew||{caps:0,kak:0,coins:0};R.spl=(R.spl||0)+(won?12:0)+E.done*2;
+  if(A.pet&&A.pet.id==='kafer'){const m=1+.1+.04*A.pet.lv;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}
+  S.exBest=Math.max(S.exBest||0,E.done);
+  const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Expedition geschafft! 🎉':'Besiegt in Gebiet '+E.area+'!'}</h3>
+    <small>${won?'Alle '+E.areas+' Gebiete und der Boss sind besiegt.':'Geschafft: '+E.done+' von '+E.areas+' Gebieten.'}</small>
+    <div class="axrew">${R.spl?`<span><i>✨</i><b>+${R.spl}</b><small>Wüstensplitter</small></span>`:''}${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}</div>
+    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">Neue Expedition</button></div></div>`;P.hidden=false;
+  const take=()=>{S.spl=(S.spl||0)+(R.spl||0);S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
+  $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,XP_UNLOCK,xpNew());};}
 // ---- Haustiere (15.11.2026, Schritt 1): ansehen, mitnehmen, Start-Haustier ----
 const PETS=[
   {id:'igel', n:'Mini-Igel',          c:'#b07a4a',d:'Schießt kleine Stacheln auf Gegner.'},
@@ -7526,7 +7556,7 @@ function axTower(g,o){const W=(AX.pvp&&AX.pvp.wall)||1,stone=W>=4;g.save();g.tra
   for(let k=0;k<4;k++){g.beginPath();g.rect(-16+k*9,-54,6,8);g.fill();g.stroke();}g.fillStyle='#2a1a12';g.beginPath();g.roundRect(-5,-34,10,12,[5,5,0,0]);g.fill();g.restore();
   g.fillStyle='#0008';g.fillRect(o.x-18,o.y-64,36,5);g.fillStyle='#ff5a5a';g.fillRect(o.x-18,o.y-64,36*Math.max(0,o.hp/o.max),5);}
 function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
-function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=WORLDS[worldIdx(A.st)],p=pow(A.st),n=3+A.wave,boss=A.wave>A.waves;
+function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=axWorld(),p=pow(A.st),n=3+A.wave+(A.ex?1:0),boss=A.wave>A.waves;
   if(A.pvp){const T=A.pvp,wm=1+.08*(T.wall||0),pp=p*wm;
     if(A.wave===1&&T.wall>0){const nt=Math.min(4,1+Math.floor(T.wall/3));for(let i=0;i<nt;i++){const x=A.W*(i+1)/(nt+1);
       A.en.push({ty:W0.e[0],tower:true,x,y:118,hp:24*pp*3,max:24*pp*3,atk:6*pp*.45,sp:0,r:18,hit:0,cd:9,rng:true,fire:rnd(1.5,3)});}}
@@ -7542,7 +7572,18 @@ function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=WORLDS
   // 15.11.2026 Elite-Gegner: ab Welle 2 mit 35 % Chance ein leuchtender Gegner – zäher, aber mit Extra-Beute
   if(A.wave>=2&&Math.random()<.35&&A.en.length){const e=A.en[Math.floor(Math.random()*A.en.length)];e.elite=1;e.hp*=4;e.max*=4;e.atk*=1.3;e.r*=1.25;axSay('⭐ Elite-Gegner!',1.4);return;}
   axSay('Welle '+A.wave+' / '+A.waves,1.2);}
-function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;if(!document.querySelector('.opah')){axUpdate(dt);A.t0+=0;}else A.t0+=dt*1000;axDraw();requestAnimationFrame(axStep);}
+function axGateTick(dt){const A=AX,h=A.hero,G=A.gate;
+  if(A.tr){A.tr.t+=dt;if(!A.tr.sw&&A.tr.t>=.45){A.tr.sw=1;axExNext();}if(A.tr.t>=.9)A.tr=null;return;}
+  if(!G)return;G.t+=dt;if(h.y<G.y+46&&Math.abs(h.x-G.x)<34){A.tr={t:0};}}
+function axDrawGate(g){const A=AX,G=A.gate;if(!G)return;const t=performance.now()/1000,x=G.x,y=G.y,Wd=axWorld(),stone=shade(Wd.mesa,.1);
+  g.save();const gl=g.createRadialGradient(x,y+6,4,x,y+6,60);gl.addColorStop(0,'rgba(255,240,170,.75)');gl.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gl;g.fillRect(x-60,y-50,120,110);
+  g.fillStyle='#1c120c';g.beginPath();g.moveTo(x-26,y+12);g.lineTo(x-26,y-16);g.quadraticCurveTo(x,y-42,x+26,y-16);g.lineTo(x+26,y+12);g.closePath();g.fill();
+  const li=g.createLinearGradient(0,y-36,0,y+12);li.addColorStop(0,'#fff6c8');li.addColorStop(1,'#ffd27a');g.fillStyle=li;g.globalAlpha=.55+.25*Math.sin(t*4);g.beginPath();g.moveTo(x-20,y+12);g.lineTo(x-20,y-14);g.quadraticCurveTo(x,y-34,x+20,y-14);g.lineTo(x+20,y+12);g.closePath();g.fill();g.globalAlpha=1;
+  for(const s2 of[-1,1]){g.fillStyle=stone;g.beginPath();g.roundRect(x+s2*30-8,y-30,16,44,4);g.fill();g.strokeStyle=OL;g.lineWidth=2.4;g.stroke();g.fillStyle=shade(stone,.25);g.fillRect(x+s2*30-6,y-28,4,40);}
+  g.fillStyle=stone;g.beginPath();g.moveTo(x-40,y-28);g.quadraticCurveTo(x,y-56,x+40,y-28);g.lineTo(x+40,y-20);g.quadraticCurveTo(x,y-48,x-40,y-20);g.closePath();g.fill();g.strokeStyle=OL;g.lineWidth=2.4;g.stroke();
+  const by=y+40+Math.sin(t*5)*5;g.fillStyle='#ffe58a';g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.moveTo(x,by-12);g.lineTo(x+11,by);g.lineTo(x+4,by);g.lineTo(x+4,by+10);g.lineTo(x-4,by+10);g.lineTo(x-4,by);g.lineTo(x-11,by);g.closePath();g.fill();g.stroke();g.restore();}
+function axDrawTr(g){const A=AX;if(!A.tr)return;const p=A.tr.t<.45?A.tr.t/.45:1-(A.tr.t-.45)/.45;g.fillStyle=`rgba(10,6,4,${Math.max(0,Math.min(1,p))})`;g.fillRect(0,0,A.W,A.H);}
+function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;if(!document.querySelector('.opah')){axUpdate(dt);A.t0+=0;}else A.t0+=dt*1000;axDraw();axDrawTr(A.g);requestAnimationFrame(axStep);}
 // 15.11.2026: sichtbare Körpermitte und Größe eines Gegners – darauf wird gezielt und damit getroffen
 function axC(e){return e.tower?{y:e.y-26,r:18}:e.cactus?{y:e.y-34,r:30}:e.boss?{y:e.y-e.r*1.15,r:e.r*1.25}:{y:e.y-e.r,r:e.r};}
 // 15.11.2026: Treffer-Gefühl – Münzen springen aus besiegten Gegnern, beim Boss mit Bildschirm-Wackler
@@ -7599,11 +7640,12 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
   for(const f of A.fx){if(f.jx==null&&!f.boom){f.jx=1;f.x+=rnd(-16,16);f.y+=rnd(-8,4);}f.t-=dt;f.y-=34*dt;}A.fx=A.fx.filter(f=>f.t>0);   // Zahlen leicht versetzt, damit sie sich nicht überlappen
   if(A.hp0!=null&&h.hp<A.hp0){const lost=A.hp0-h.hp;if(A.sprint>0)h.hp+=lost;else if(A.shield>0)h.hp+=lost*.8;}A.hp0=h.hp;
   if(h.hp<=0&&A.winT==null){A.state='lost';axEnd(false);return;}
-  if(!A.en.some(e=>e.hp>0)){if(A.wave>A.waves){A.es=[];A.hz=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);axPick();}}   // Sieg: kurz den Münzregen zeigen
-  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
+  if(A.ex&&(A.gate||A.tr)){axGateTick(dt);}
+  else if(!A.en.some(e=>e.hp>0)&&!(A.ex&&A.wave===0)){if(A.wave>A.waves){A.es=[];A.hz=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);if(A.ex&&A.wave>=A.waves&&A.ex.area<A.ex.areas)A.exNext=1;axPick();}}   // Sieg: kurz den Münzregen zeigen
+  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.ex?'🧭 Gebiet '+A.ex.area+'/'+A.ex.areas+(A.gate?' · Tor offen':A.wave>A.waves?' · Boss':' · Welle '+Math.max(1,Math.min(A.wave,A.waves))+'/'+A.waves):A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
 function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);if(A.shake>0&&A.flash>-1&&!A.en.some(e=>e.boss&&e.hp>0))g.translate((Math.random()-.5)*10*A.shake,(Math.random()-.5)*10*A.shake);
   // Boden: Wüstenarena mit Kacheln
-  if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);
+  if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);axDrawGate(g);
   for(const q of A.pk||[]){const b=Math.sin(q.t*4)*3,sc=Math.min(1,q.t*4);g.save();g.translate(q.x,q.y+b);g.scale(sc,sc);g.fillStyle='#0004';g.beginPath();g.ellipse(0,14-b,10,3,0,0,7);g.fill();
     g.globalAlpha=.35+.2*Math.sin(q.t*6);g.fillStyle='#ff6fae';g.beginPath();g.arc(0,0,17,0,7);g.fill();g.globalAlpha=1;
     g.fillStyle='#ff3d6e';g.strokeStyle='#5a0a1e';g.lineWidth=2;g.beginPath();g.moveTo(0,9);g.bezierCurveTo(-14,-2,-9,-14,0,-6);g.bezierCurveTo(9,-14,14,-2,0,9);g.fill();g.stroke();
@@ -7635,8 +7677,9 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
 // 14.11.2026: Kapitel-Knopf unter dem Kampffeld – das nächste Kapitel schaltet das nächste Gebiet frei
-function chapHud(){const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
+function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='4 Gebiete · Leben bleibt'+(S.spl?' · ✨ '+fmt(S.spl):'')+(S.exBest?' · Rekord '+S.exBest+'/4':'');}}}const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
   $('chapT').textContent='Kapitel '+g+(chStarSum()?'  ·  ⭐ '+chStarSum():'');$('chapS').textContent=Wd.n+' · '+DIFFS[diffIdx(st)].n;b.classList.toggle('need',need);b.hidden=!S.char;}
+$('xpBtn').onclick=()=>{if(!$('modal').hidden||editing||!S.char)return;axOpen(null,XP_UNLOCK,xpNew());};
 $('chapBtn').onclick=e=>{if(!$('modal').hidden||editing||!S.char)return;if(e.target.closest('em'))axOpen();else chPick();};
 chapHud();setInterval(chapHud,1000);
 })();
