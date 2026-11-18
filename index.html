@@ -1923,7 +1923,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3120,7 +3120,7 @@ function drawHero(){
   const rc=id=>S.gear[id]?RAR[S.gear[id].r].c:null;
   drawCactus(c,S.char||DEFAULT_CH,{x:HX,y:GROUND,walk,bob:walk?Math.abs(Math.sin(t*12))*-2:Math.sin(t*3),squash:hero.squash,hit:hero.hit>0,
     gear:S.gear});
-  {const pid=S.petEq&&S.petEq[0];if(pid&&S.pets&&S.pets[pid]){c.save();c.translate(HX-44,GROUND);c.scale(-1,1);drawPet(c,pid,0,0,1.3,walk?t:0);c.restore();}}
+  {const pid=S.petEq&&S.petEq[0];if(pid&&S.pets&&S.pets[pid]){c.save();c.translate(HX-46,GROUND+2);drawPet(c,pid,0,0,1.25,walk?t:0);c.restore();}}   // links neben dem Kaktus, Blick nach rechts zu den Gegnern
   bar(HX-22,GROUND-94,44,5,hero.hp/hero.max,'#63c74d');
 }
 // ---------- Gegner im Chibi-Stil: dicke Umrisse, Schattierung, böse Augen ----------
@@ -6061,6 +6061,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn150',date:'2026-11-18',title:'Haustiere laufen schöner mit',hero:['🐾 Blick nach vorn','Dein Haustier schaut jetzt immer zu den Gegnern, statt in die falsche Richtung. Es läuft etwas weiter neben deinem Kaktus und trippelt bei kleinen Schritten nicht mehr ständig hin und her.'],items:()=>[],
+  en:{title:'Pets follow more nicely',hero:['🐾 Eyes forward','Your pet now always looks towards the enemies instead of the wrong way. It walks a little further beside your cactus and no longer shuffles back and forth on tiny steps.'],items:()=>[]}},
   {id:'pn149',date:'2026-11-18',title:'Favoriten für Ausrüstung',hero:['⭐ Lieblingsteile schützen','Tippe ein Teil an und dann oben rechts auf den Stern. Favoriten bekommen einen ⭐ im Inventar – die Schmiede zerlegt sie nicht und „Schlechtere markieren“ lässt sie aus.'],items:()=>[['Achtung:','Alte Favoriten bleiben liegen, bis du den Stern wieder wegnimmst – räum ab und zu selbst auf.']],
   en:{title:'Favourite gear',hero:['⭐ Protect your favourite items','Tap an item, then the star in the top right. Favourites get a ⭐ in the inventory – the forge will not break them down and “Mark worse” skips them.'],items:()=>[['Note:','Old favourites stay until you remove the star – tidy up now and then.']]}},
   {id:'pn148',date:'2026-11-15',title:'Gebäude direkt antippen',hero:['👆 Einfacher im Dorf','Du kannst jetzt auch direkt auf ein Gebäude tippen – nicht nur auf den Namen darunter.'],items:()=>[],
@@ -7222,10 +7224,11 @@ function axDrawAct(g){const A=AX,h=A.hero,t=performance.now()/1000;
 // ---- Haustiere im Kapitel (15.11.2026) ----
 function axPet(dt){const A=AX,P=A.pet,h=A.hero;if(!P||A.winT!=null)return;const L=P.lv,alive=A.en.filter(e=>e.hp>0);
   const near=(x,y,max)=>alive.reduce((a,e)=>{const d=Math.hypot(e.x-x,e.y-y);return d<max&&(!a||d<a.d)?{e,d}:a;},null);
-  let tx=h.x-34*h.face,ty=h.y+12;
+  let tx=h.x-50*h.face,ty=h.y+14;
   if(P.id==='hund'){const n=near(h.x,h.y,150);if(n){tx=n.e.x-14;ty=n.e.y+4;}}
   if(P.id==='eule'&&A.pk&&A.pk.length&&h.hp<h.max*.95){const q=A.pk[0];tx=q.x;ty=q.y;if(Math.hypot(P.x-q.x,P.y-q.y)<14){q.got=1;const heal=Math.round(h.max*.2);h.hp=Math.min(h.max,h.hp+heal);A.fx.push({x:h.x,y:h.y-70,txt:'+'+fmt(heal)+' ❤',col:'#7fe08a',t:.9});}}
-  const dx=tx-P.x,dy=ty-P.y,l=Math.hypot(dx,dy),sp=(P.id==='eule'?230:190)*dt;if(l>2){P.x+=dx/l*Math.min(l,sp);P.y+=dy/l*Math.min(l,sp);P.f=dx<0?-1:1;P.mv=1;}else P.mv=0;
+  const dx=tx-P.x,dy=ty-P.y,l=Math.hypot(dx,dy),sp=(P.id==='eule'?230:190)*dt;if(l>(P.mv?3:16)){P.x+=dx/l*Math.min(l,sp);P.y+=dy/l*Math.min(l,sp);P.mv=1;}else P.mv=0;   // kleine Abstände nicht nachtrippeln
+  {const n=near(P.x,P.y,9999);const fx=n?n.e.x-P.x:(P.mv?dx:h.face);if(Math.abs(fx)>6)P.f=fx<0?-1:1;}   // 18.11.2026: schaut zum nächsten Gegner, sonst in Laufrichtung
   P.cd-=dt;if(P.cd>0)return;
   if(P.id==='igel'){const n=near(P.x,P.y,420);if(n){const c=axC(n.e),a=Math.atan2(c.y-(P.y-10),n.e.x-P.x);A.sh.push({x:P.x,y:P.y-10,vx:Math.cos(a)*380,vy:Math.sin(a)*380,t:1.4,b:0,hitIds:[],wait:0,pet:h.atk*(.2+.04*L)});}P.cd=1.1;}
   else if(P.id==='hund'){const n=near(P.x,P.y,40);if(n){const d=h.atk*(.35+.07*L);n.e.hp-=d;n.e.hit=.12;A.fx.push({x:n.e.x,y:axC(n.e).y-10,txt:'🐾'+fmt(d),col:'#9be07a',t:.6});if(n.e.hp<=0)axDie(n.e);}P.cd=.9;}
