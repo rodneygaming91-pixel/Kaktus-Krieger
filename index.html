@@ -1252,6 +1252,8 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .elstrip .er small{font-size:.5rem}.elstrip .er b{font-size:.7rem}.elstrip .elbox{min-width:0;overflow:hidden}
 @media (max-width:420px){.elstrip{gap:4px;margin:5px 4px 0}.elstrip .elbox{padding:3px 5px;gap:3px}.elstrip .er{gap:3px}.elstrip .er small{font-size:.42rem}.elstrip .er b{font-size:.6rem}.elstrip .eb{width:14px;height:14px;font-size:.5rem}}
 /* Kapitel-Knopf */
+.klbox{background:#2a1e16;border:2px solid #8a6a3a;border-radius:12px;padding:8px 10px;margin:6px 0;display:grid;gap:6px}.klhead{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.klhead b{color:#ffd447;font-size:1rem;white-space:nowrap}.klhead span{text-align:right}.klhead b small{color:var(--sand);font-size:.7rem}.klhead span{font-size:.7rem;color:#7fe08a;font-weight:800}
+.kltal{background:#1c140e;border-radius:8px;padding:5px 8px}.kltal b{display:block;font-size:.78rem;color:#ff9ad8}.kltal small{font-size:.68rem;color:var(--sand)}.klbox .btn small{display:block;font-size:.65rem;opacity:.85}.klhint{text-align:center;color:var(--sand);font-size:.68rem}
 .xplv{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center;text-align:center;margin:6px 0}.xplv b{display:block;font-size:1.3rem;color:#ffd447}.xplv small{color:var(--sand);font-size:.72rem}
 .xpmut{display:grid;gap:5px;margin:6px 0}.xpmut span{background:#2a1e16;border:2px solid #7a3a2a;border-radius:10px;padding:5px 8px}.xpmut b{display:block;font-size:.8rem;color:#ff9a6a}.xpmut small{font-size:.68rem;color:var(--sand)}.xpmut em{font-size:.75rem;color:var(--sand);text-align:center}
 .xpshop{display:grid;gap:6px;margin:8px 0}.xpshop .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}.xpshop .btn small{font-size:.7rem;opacity:.85}
@@ -1623,7 +1625,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
+'Opa Stachel':'Grandpa Spike','Höchstes Level!':'Max level!','⬆ Leveln':'⬆ Level up','✨ Wüstensplitter gibt es auf der 🧭 Expedition.':'✨ Desert shards come from the 🧭 Expedition.','Scharfschütze':'Sharpshooter','Dickhaut':'Thick skin','Wirbelwind':'Whirlwind','Blütenzauber':'Bloom magic','Volltreffer':'Bullseye','Wüstenhaut':'Desert skin','Mondkraft':'Moon power','Goldregen':'Gold rain','Glutherz':'Ember heart','Uralte Kraft':'Ancient power','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
 '🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
 '👑 Das Tor zum Boss ist offen!':'👑 The gate to the boss is open!','🚪 Zwei Tore! Wähle deinen Weg – lies die Schilder.':'🚪 Two gates! Choose your path – read the signs.','💧 Eine Heilquelle! Lauf hinein.':'💧 A healing spring! Walk into it.','💧 Du bist erfrischt! +50 % Leben':'💧 You feel refreshed! +50 % life',
@@ -1893,7 +1895,7 @@ const RX=[
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
   [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^💀 Elite-Lager: (\d+) Elite-Gegner!$/,(m)=>'💀 Elite camp: '+m[1]+' elite enemies!'],[/^Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: (.+)$/,(m)=>'You pay with the coins collected on this expedition: '+m[1]],[/^([\d.,]+(?: Tsd\.| Mio\.| Mrd\.)?) Münzen$/,(m)=>m[1]+' coins'],[/^Wildnis-Stufe (\d+)(.*)$/,(m)=>'Wild level '+m[1]+m[2]],[/^leichter als deine höchste Stufe (\d+)$/,(m)=>'easier than your highest level '+m[1]],[/^🔓 Wildnis-Stufe (\d+) ist jetzt frei(.*)$/,(m)=>'🔓 Wild level '+m[1]+' is unlocked'+m[2].replace(' – neu: ',' – new: ')],[/^Stufe (\d+) ▶$/,(m)=>'Level '+m[1]+' ▶'],[/^🧭 S(\d+) · Gebiet (.+)$/,(m)=>'🧭 L'+m[1]+' · Area '+m[2].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ').replace(' · Heilquelle',' · Healing spring').replace(' · Händler',' · Trader')],
-  [/^4 Gebiete · dein Leben bleibt · Gegner (.+) · Beute (.+)$/,(m)=>'4 areas · your life carries over · enemies '+m[1].replace('Stärke-Stufen','power levels').replace('normal','normal')+' · loot '+m[2]],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
+  [/^4 Gebiete · dein Leben bleibt · Gegner (.+) · Beute (.+)$/,(m)=>'4 areas · your life carries over · enemies '+m[1].replace('Stärke-Stufen','power levels').replace('normal','normal')+' · loot '+m[2]],[/^⭐ Kaktus-Level (\d+)(.*)$/,(m)=>'⭐ Cactus level '+m[1]+m[2].replace(' 🎖 Neuer Talent-Rang!',' 🎖 New talent rank!')],[/^\+(\d+) % Angriff und Leben$/,(m)=>'+'+m[1]+' % attack and life'],[/^🎖 (.+) · Rang (\d+)$/,(m)=>'🎖 '+m[1]+' · rank '+m[2]],[/^⬆ (\d+× )?Max$/,(m)=>'⬆ '+(m[1]||'')+'Max'],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
   [/^Besiegt in Gebiet (\d+)!$/,(m)=>'Defeated in area '+m[1]+'!'],[/^Geschafft: (\d+) von (\d+) Gebieten\.$/,(m)=>'Cleared: '+m[1]+' of '+m[2]+' areas.'],[/^Alle (\d+) Gebiete und der Boss sind besiegt\.$/,(m)=>'All '+m[1]+' areas and the boss are defeated.'],
   [/^4 Gebiete · Leben bleibt(.*)$/,(m)=>'4 areas · life carries over'+m[1].replace(' · Rekord ',' · best ')],
   [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
@@ -1962,7 +1964,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2093,6 +2095,20 @@ const ktLvM=lv=>1;   // 14.11.2026: Kaktus-Level gibt keine Werte mehr (nur Ausr
 const curKt=()=>ktDef(S.char&&S.char.cls);
 const clsM=()=>{const K=curKt(),f=ktLvM(ktLv(K.id));return Object.assign({},K.m,{atk:K.m.atk*f,hp:K.m.hp*f});};
 const ktX=k=>{const x=curKt().x;return(x&&x[k])||0;};
+// 18.11.2026 Kaktus-Level (Schritt 4b): mit ✨ Wüstensplitter aus der Expedition leveln. Jedes Level +2 % Angriff und Leben, alle 10 Level ein Talent-Rang der eigenen Klasse.
+const KL_MAX=50;
+const klLv=()=>Math.max(1,Math.min(KL_MAX,S.kl||1));
+const klCost=L=>3+L;
+const klM=()=>1+.02*(klLv()-1);
+const klRank=()=>1+Math.floor(klLv()/10);
+const klNight=()=>{const h=new Date().getHours();return h>=20||h<6;};
+const KL_TAL={schuetze:{n:'Scharfschütze',d:r=>'+'+3*r+' % Krit-Chance'},fass:{n:'Dickhaut',d:r=>'+'+5*r+' % Leben'},flink:{n:'Wirbelwind',d:r=>'+'+3*r+' % Tempo'},
+  bluete:{n:'Blütenzauber',d:r=>'+'+5*r+' % Heilung'},igel:{n:'Volltreffer',d:r=>'+'+10*r+' % Krit-Schaden'},saguaro:{n:'Wüstenhaut',d:r=>'+'+2*r+' % Ausweichen'},
+  mond:{n:'Mondkraft',d:r=>'nachts +'+6*r+' % Angriff, tagsüber +'+2*r+' %'},gold:{n:'Goldregen',d:r=>'+'+6*r+' % Münzen'},feuer:{n:'Glutherz',d:r=>'+'+4*r+' % Angriff'},ur:{n:'Uralte Kraft',d:r=>'+'+2*r+' % Angriff und Leben'}};
+function klTal(){const id=curKt().id,r=klRank(),o={atk:1,hp:1,spd:1,reg:1,crit:0,critd:0,dodge:0,coin:1};
+  if(id==='schuetze')o.crit=3*r;else if(id==='fass')o.hp=1+.05*r;else if(id==='flink')o.spd=1+.03*r;else if(id==='bluete')o.reg=1+.05*r;else if(id==='igel')o.critd=10*r;
+  else if(id==='saguaro')o.dodge=2*r;else if(id==='mond')o.atk=1+(klNight()?.06:.02)*r;else if(id==='gold')o.coin=1+.06*r;else if(id==='feuer')o.atk=1+.04*r;else if(id==='ur'){o.atk=1+.02*r;o.hp=1+.02*r;}
+  return o;}
 // Drohnen: Helfer, die mitkämpfen und einen Dauerbonus geben (wie DRONES in Scrap Star)
 // ===== Begleiter aus Beschwörungen (11.11.2026): 30 Tiere in 6 Seltenheiten, Leveln mit Doppelten, 5 Plätze =====
 // act: shot (beißen), heal (heilen), steal (Lebensraub), stun (beißen + kurz betäuben). air: fliegt auf Kopfhöhe. em: Emoji-Bild (die 6 alten Tiere sind gezeichnet)
@@ -2187,15 +2203,16 @@ const GUPG=[
 const GUPG_MAX=20;
 const gUp=id=>(S.gUpg&&+S.gUpg[id])||0;
 const gUpCost=(U,lv)=>Math.round(U.base*Math.pow(2.5,lv));
-const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1);
+const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1)*klTal().coin;
 function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
 function heroStats(){
   // 14.11.2026: nur noch die Ausrüstung (plus Schmiede-Level des Platzes) bestimmt die Werte; die Kaktus-Klasse gibt ihre festen Eigenschaften
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=sl.pct?g[sl.id].v:itemV(g[sl.id]);return s;};
   const MB=(modeOf()||{b:{}}).b;const SPR=((S.skEq2||[]).includes('sk_sprint')&&S.vil&&S.vil.b&&S.vil.b.sk_sprint)?1/(1.06+.014*(S.vil.b.sk_sprint-1)):1;
-  return{atk:(25+v('atk'))*m.atk*(1+.01*albPages())*(1+(MB.atk||0)),hp:Math.round((300+v('hp'))*m.hp*(1+(MB.hp||0))),
-    armor:0,spd:0.9/(1+Math.min(150,v('spd'))/100)/m.spd*SPR,reg:(1+v('reg'))*m.reg,block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+ktX('crit')),res:resSum(),
-    critM:2+ktX('critd')/100,dodge:Math.min(60,ktX('dodge')),stun:0,steal:ktX('steal')};
+  const KL=klM(),T=klTal();
+  return{atk:(25+v('atk'))*m.atk*(1+.01*albPages())*(1+(MB.atk||0))*KL*T.atk,hp:Math.round((300+v('hp'))*m.hp*(1+(MB.hp||0))*KL*T.hp),
+    armor:0,spd:0.9/(1+Math.min(150,v('spd'))/100)/m.spd*SPR/T.spd,reg:(1+v('reg'))*m.reg*T.reg,block:Math.min(60,v('block')),crit:Math.min(60,v('crit')+ktX('crit')+T.crit),res:resSum(),
+    critM:2+(ktX('critd')+T.critd)/100,dodge:Math.min(60,ktX('dodge')+T.dodge),stun:0,steal:ktX('steal')};
 }
 function heroStatsOld(){
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=g[sl.id].v;return s;};
@@ -3941,22 +3958,31 @@ function statRows(){const st=heroStats(),el=world().atkEl;
     [ELEM[el].ico,'Resistenz '+ELEM[el].n,pc(st.res[el]||0)]];}
 const gearMini=id=>{const it=S.gear[id],sl=slotOf(id);return`<div class="ovgear" style="--rc:${it?RAR[it.r].c:'#4a3a2c'}" title="${sl.n}">${it?`<canvas width="80" height="80" data-ovg="${id}"></canvas>`:`<i>${sl.n}</i>`}</div>`;};
 function ovDraw(){$('card').querySelectorAll('canvas[data-ovg]').forEach(cv2=>{const it=S.gear[cv2.dataset.ovg];if(it)drawItemIcon(cv2.getContext('2d'),it,cv2.width);});ktDraw($('card'));drawDroneIcons($('card'));}
+function klBox(){const L=klLv(),c=klCost(L),sp=S.spl||0,T=KL_TAL[curKt().id]||KL_TAL.schuetze,r=klRank(),nx=L<KL_MAX?Math.min(KL_MAX,(Math.floor(L/10)+1)*10):0;
+  let n=0,cs=0;for(let l=L;l<KL_MAX&&cs+klCost(l)<=sp;l++){cs+=klCost(l);n++;}
+  return`<div class="klbox"><div class="klhead"><b>⭐ Kaktus-Level ${L}<small> / ${KL_MAX}</small></b><span>+${Math.round((klM()-1)*100)} % Angriff und Leben</span></div>
+    <div class="skbar big"><span style="width:${L>=KL_MAX?100:Math.min(100,sp/c*100)}%"></span><em>${L>=KL_MAX?'Höchstes Level!':'✨ '+fmt(sp)+' / '+c}</em></div>
+    <div class="kltal"><b>🎖 ${T.n} · Rang ${r}</b><small>${T.d(r)}${nx?' · Rang '+(r+1)+' ab Level '+nx:''}</small></div>
+    ${L<KL_MAX?`<div class="row"><button class="btn go" type="button" id="klUp" ${sp<c?'disabled':''}>⬆ Leveln<small>${c} ✨</small></button><button class="btn" type="button" id="klMax" ${n<2?'disabled':''}>⬆ ${n>1?n+'× ':''}Max<small>${n>1?fmt(cs)+' ✨':'–'}</small></button></div>`:''}
+    ${sp<c&&L<KL_MAX?'<small class="klhint">✨ Wüstensplitter gibt es auf der 🧭 Expedition.</small>':''}</div>`;}
+function klBind(re){const up=k=>{let L=klLv(),n=0;while(n<k&&L<KL_MAX&&(S.spl||0)>=klCost(L)){S.spl-=klCost(L);L++;n++;}if(!n)return;S.kl=L;resetHero&&0;save();lastHud='';banner={txt:'⭐ Kaktus-Level '+L+'!'+(Math.floor(L/10)>Math.floor((L-n)/10)?' 🎖 Neuer Talent-Rang!':''),t:2};re();};
+  const a=$('klUp'),b=$('klMax');if(a)a.onclick=()=>up(1);if(b)b.onclick=()=>up(99);}
 function ktOverview(re){const K=curKt(),lv=ktLv(K.id),rc=RAR[K.r].c,o=S.kt[K.id],need=ktNeed(lv);
   $('card').innerHTML=`<div class="ovw"><h2>🌵 ${esc2((S.char||DEFAULT_CH).name)}</h2>
     <div class="ovtop"><div class="ovpic" style="--rc:${rc}"><span class="ovr" style="color:${rc}">${RAR[K.r].n}</span><canvas width="200" height="200" data-kt="${K.id}"></canvas><b>${K.n}</b></div>
       <div class="ovgears">${SLOTS.map(sl=>gearMini(sl.id)).join('')}</div></div>
-    <div class="ovlv"><span>Lv ${lv}</span><div class="skbar big"><span style="width:${lv>=KT_MAX?100:0}%"></span><em>${lv>=KT_MAX?'Höchstes Level':'Neues Level-System kommt bald'}</em></div></div>
+    ${klBox()}
     <div class="ovstats">${statRows().map(([i,n,v])=>`<div><span><i>${i}</i>${n}</span><b>${v}</b></div>`).join('')}</div>
 
     <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
-  $('modal').hidden=false;ovDraw();
+  $('modal').hidden=false;ovDraw();klBind(()=>ktOverview(re));
   $('ovX').onclick=()=>{$('modal').hidden=true;re&&re();};}
 function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=KAKTI.some(k=>{const o=S.kt[k.id];return o&&o.lv<KT_MAX&&o.n>=ktNeed(o.lv);});
   const sk=Array.from({length:SK_ON},(_,i)=>{const m=on[i]&&skDef(on[i]);return m?`<div class="ovico" style="--rc:${RAR[m.r].c};--ic:${m.c}"><i>${m.ico}</i><span>Lv ${skLv(m.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
   const dr=Array.from({length:DR_SLOTS},(_,i)=>{const id=S.drEq[i],D=id&&DRONES.find(d=>d.id===id);return D?`<div class="ovico" style="--rc:${RAR[D.r].c}"><canvas width="96" height="96" data-dr="${D.id}"></canvas><span>Lv ${drLv(D.id)}</span></div>`:'<div class="ovico empty"></div>';}).join('');
   $('card').innerHTML=`<div class="ovw"><h2>Mein Profil</h2>
     <div class="ovhead"><button class="ovpic sm" type="button" id="ovPic" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas><em>📋 Werte</em></button>
-      <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · Lv ${ktLv(K.id)}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
+      <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · ⭐ Lv ${klLv()}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
         <small>Beste Stage ${S.best||0} · Kapitel ${S.chap||0} · ⭐ ${chStarSum()}</small></div></div>
     <div class="ovsec"><b>📊 Erfolge & Sammlung</b><div class="ovstats"><span><i>🏆</i><b>${achCount()} / ${ACH.length*3}</b><small>Erfolge</small></span><span><i>📖</i><b>+${albPages()} %</b><small>Album-Angriff</small></span>
       <span><i>✨</i><b>${modeOf()?modeOf().ico+' '+modeOf().n:'–'}</b><small>Mode</small></span><span><i>🏛</i><b>Lv ${vLv('rat')}</b><small>Rathaus</small></span></div></div>
@@ -6287,6 +6313,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn160',date:'2026-11-18',title:'Neu: Kaktus-Level',hero:['⭐ Dein Kaktus wird stärker','Mit ✨ Wüstensplittern aus der Expedition levelst du jetzt deinen Kaktus – bis Level 50. Jedes Level gibt +2 % Angriff und Leben.'],
+   items:()=>[['🎖 Klassen-Talent:','Jede Kaktus-Klasse hat ein eigenes Talent, das alle 10 Level einen Rang stärker wird – der Mondkaktus wird nachts stärker, der Goldkaktus bringt mehr Münzen, der Stachelschütze trifft öfter kritisch …'],['Wo?','Profil → 📋 Werte.']],
+  en:{title:'New: Cactus levels',hero:['⭐ Your cactus gets stronger','Use ✨ desert shards from the expedition to level up your cactus – up to level 50. Every level gives +2 % attack and life.'],
+   items:()=>[['🎖 Class talent:','Every cactus class has its own talent that gets one rank stronger every 10 levels – the Moon Cactus grows stronger at night, the Gold Cactus brings more coins, the Spike Shooter crits more often …'],['Where?','Profile → 📋 Stats.']]}},
   {id:'pn159',date:'2026-11-18',title:'Expedition: Wildnis-Stufen',hero:['🔥 Es wird härter','Jede geschaffte Expedition schaltet die nächste Wildnis-Stufe frei. Die Gegner werden stärker, und ab Stufe 2 kommt mit jeder Stufe eine Erschwernis dazu – dafür gibt es pro Stufe 25 % mehr ✨.'],
    items:()=>[['Erschwernisse:','🔥 Hitzewelle (Stehenbleiben kostet Leben), 🦂 Rudel (mehr Gegner), 🌪 Sandsturm (du siehst nur einen Kreis um dich), 🛡 Gepanzert (zähere Gegner), 💔 Keine Herzen.'],['Auswahl:','Vor dem Start wählst du die Stufe – auch eine leichtere, wenn du einfach Splitter sammeln willst.']],
   en:{title:'Expedition: wild levels',hero:['🔥 It gets harder','Every expedition you complete unlocks the next wild level. Enemies get stronger, and from level 2 every level adds a handicap – in return each level gives 25 % more ✨.'],
