@@ -1284,6 +1284,9 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .chip2.mode{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1}.chip2.mode small{font-size:.58rem;opacity:.85;font-weight:700}.chip2.mode.lock{opacity:.5}
 .achbtn.ready{border-color:#ffd447;animation:chapPulse 1.4s ease-in-out infinite}.ach .achm{font-style:normal;font-size:.7rem}
 .axunl{margin:6px 0 0;font-weight:800;color:#7fe08a}
+#wbWrap{position:fixed;inset:0;z-index:70;background:#2a1a12;touch-action:none;user-select:none;-webkit-user-select:none}#wbWrap canvas{display:block;touch-action:none}#wbWrap~.opah{bottom:auto;top:calc(110px + env(safe-area-inset-top,0px));z-index:90}
+#wbWrap .axpick{position:absolute;inset:0;display:grid;place-items:center;background:#0008}#wbWrap .axpick[hidden]{display:none}
+.wbab{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:6px 0}.wbab span{background:#2a1e16;border:2px solid #5a4030;border-radius:10px;padding:4px 6px}.wbab b{display:block;font-size:.72rem;color:#ffd447}.wbab small{font-size:.6rem;color:var(--sand)}
 #axWrap{position:fixed;inset:0;z-index:60;background:#2a1a12;touch-action:none;user-select:none;-webkit-user-select:none}
 #axCv{display:block;touch-action:none}
 .axhud{position:absolute;left:0;right:0;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:8px;padding:0 10px;pointer-events:none}
@@ -1615,7 +1618,11 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🌱 Beet':'🌱 Bed','leer':'empty','Reif':'Ripe','Schon gedüngt':'Already fertilised','Gerade erst gegossen':'Just watered','Diese Pflanze gibt es nicht mehr':'This plant is gone','💧 Gegossen – danke!':'💧 Watered – thanks!','🧪 Gedüngt – danke!':'🧪 Fertilised – thanks!','Pflanzen':'Plant','Gießen':'Water','Düngen':'Fertilise','Ernten':'Harvest','💧 Alle gießen':'💧 Water all','🧪 Alle düngen':'🧪 Fertilise all','✂️ Alle ernten':'✂️ Harvest all','🌱 Alle leeren Beete bepflanzen':'🌱 Plant all empty beds',
+'Opa Stachel':'Grandpa Spike','🌀 Stachelfächer':'🌀 Spike Fan','☄️ Meteorregen':'☄️ Meteor Rain','🛡 Schutzschild':'🛡 Shield','💥 Dreifachschuss':'💥 Triple Shot','🌊 Schockwelle':'🌊 Shockwave','⚡ Blitzstrahl':'⚡ Lightning Beam','🦇 Diener':'🦇 Minions','🌪 Sandsturm':'🌪 Sandstorm',
+'ein Fächer aus Stacheln':'a fan of spikes','Meteore schlagen auf deiner Seite ein – raus aus den roten Kreisen':'meteors hit your side – get out of the red circles','Schüsse prallen kurz ab':'shots bounce off for a moment','drei schnelle Schüsse':'three quick shots',
+'eine Welle rollt über deine Seite – lauf durch die Lücke':'a wave rolls over your side – run through the gap','Blitze in markierten Bahnen':'lightning in marked lanes','fliegende Diener jagen dich':'flying minions chase you','ein Sturm schiebt dich zur Seite':'a storm pushes you sideways',
+'Kampf vorbei!':'Fight over!','30 Sekunden über der Schlucht – weich aus!':'30 seconds across the chasm – dodge!',
+'Zwischen dir und dem Weltboss liegt eine Schlucht! Lauf mit dem Finger auf deiner Seite herum – dein Kaktus schießt von allein. Weich den Fähigkeiten des Bosses aus, du hast 30 Sekunden.':'A chasm lies between you and the world boss! Move around your side with your finger – your cactus shoots on its own. Dodge the boss’s abilities, you have 30 seconds.','🌱 Beet':'🌱 Bed','leer':'empty','Reif':'Ripe','Schon gedüngt':'Already fertilised','Gerade erst gegossen':'Just watered','Diese Pflanze gibt es nicht mehr':'This plant is gone','💧 Gegossen – danke!':'💧 Watered – thanks!','🧪 Gedüngt – danke!':'🧪 Fertilised – thanks!','Pflanzen':'Plant','Gießen':'Water','Düngen':'Fertilise','Ernten':'Harvest','💧 Alle gießen':'💧 Water all','🧪 Alle düngen':'🧪 Fertilise all','✂️ Alle ernten':'✂️ Harvest all','🌱 Alle leeren Beete bepflanzen':'🌱 Plant all empty beds',
 'wächst nicht':'not growing','wächst nicht – gießen!':'not growing – water it!','Antippen zum Ernten':'Tap to harvest','💧 Durstig!':'💧 Thirsty!','🧪 gedüngt':'🧪 fertilised','💧 wächst':'💧 growing','hält 1 Std.':'lasts 1 h',
 'Wasser für 1 Stunde auffüllen':'Refill water for 1 hour','3 Dünger':'3 fertiliser','Ein Ei braucht keinen Dünger':'An egg needs no fertiliser','Kein Dünger – gibt es beim Händler':'No fertiliser – the trader sells it','Wähle 💧 Gießen oder 🧪 Düngen':'Choose 💧 Water or 🧪 Fertilise',
 'Werkzeug wählen, dann Beete oder Karten antippen. Gegossene Erde bleibt 1 Stunde nass – trockene Pflanzen wachsen nicht weiter. 🧪 Dünger lässt sie 50 % schneller wachsen und öfter blühen 🌸. Dünger gibt es beim Händler.':'Pick a tool, then tap beds or cards. Watered soil stays wet for 1 hour – dry plants stop growing. 🧪 Fertiliser makes them grow 50 % faster and bloom more often 🌸. The trader sells fertiliser.',
@@ -1941,7 +1948,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -4247,7 +4254,7 @@ let friend=null,friendErr='',restoreMsg='',friendBack=null;
 // ---------- Weltboss: jede Woche ein gemeinsamer Boss für alle Spieler ----------
 let wb={st:null,err:'',busy:false,res:null,anim:null};
 function wbBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS[n%WORLDS.length],W1=WORLDS[(n*2+1)%WORLDS.length];
-  return{n:'Welt-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak};}
+  return{n:'Welt-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak,wi:n%WORLDS.length};}
 const wbHp=l=>Math.round(200000*Math.pow(3,l-1));
 function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp(l);l++;}return{l,rest,hp:wbHp(l)};}
 function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
@@ -4291,6 +4298,7 @@ function wbBody(X=wb){
     <div class="wbhp inf"><div style="width:100%"></div><span>∞ unbesiegbar · mach so viel Schaden wie möglich</span></div>
     <div class="wbel"><span>Greift an mit ${elTag(B.atkEl)}</span><span>Schwach gegen ${elTag(B.weak)}</span>
       <span>Deine Waffe: ${S.gear.waffe&&S.gear.waffe.el?elTag(S.gear.waffe.el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
+    <div class="wbab">${wbAbil(B).map(a=>`<span><b>${WB_ABN[a]}</b><small>${WB_ABD[a]}</small></span>`).join('')}</div>
     ${X.res?`<div class="wbres">${X.res}</div>`:''}
     <div class="eqdb"><button class="sbtn red" type="button" id="${X.go}" ${left<=0||X.busy||!ON.code?'disabled':''}>${X.busy?'Kampf läuft …':left>0?'Angreifen ('+left+'/3 heute)':'Morgen wieder'}</button></div>
     <p class="hint">${X.info()}</p>
@@ -4311,7 +4319,7 @@ function drawWb(X=wb){const cv2=$(X.cv);if(!cv2||!X.st)return;const g=cv2.getCon
   // Boss
   g.save();if(bossDead){g.globalAlpha=Math.max(0,1-A.endT*1.5);g.translate(265,166);g.rotate(A.endT*.6);g.translate(-265,-166);}
   drawEnemy({ty:B.ty,boss:true,x:265+shake-(A?A.lunge*12:0),y:166,hp:1,max:1,hit:A&&A.bhit>0?1:0,dying:0,stun:0,lunge:0},g);g.restore();
-  if(!A){g.font='800 11px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#d8c8a8';g.fillText('30 Sekunden: so viel Schaden wie möglich!',180,30);return;}
+  if(!A){g.font='800 11px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#d8c8a8';g.fillText('30 Sekunden über der Schlucht – weich aus!',180,30);return;}
   // Lebensleisten
   bar2(40,76,60,6,A.php/A.pmax,'#63c74d');bar2(225,58,90,7,1,'#e0283a');
   g.font='800 9px Nunito, system-ui, sans-serif';g.textAlign='center';g.fillStyle='#f4e6cc';g.fillText('∞',270,55);
@@ -4330,46 +4338,177 @@ function drawWb(X=wb){const cv2=$(X.cv);if(!cv2||!X.st)return;const g=cv2.getCon
     g.textAlign='center';g.font='26px "Lilita One","Arial Black",sans-serif';g.fillStyle='#1c120c';g.fillText(txt,182,112);
     g.fillStyle=A.end==='boss'?'#ffe08a':A.end==='dead'?'#ff8a7a':'#f4e6cc';g.fillText(txt,180,110);}
 }
-// Echter 30-Sekunden-Kampf: endet bei Zeitablauf, besiegtem Boss oder wenn der Kaktus fällt
-function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0)return;
-  const B=X.boss(X.st.period),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30;
-  // Der Boss hat unendlich Leben und wird alle 10 s wütender (schlägt härter zu)
-  const res=(st.res[B.atkEl]||0)/100,blk=st.block/100,bossHit=st.hp*0.09*(1-blk)*(1-(st.armor||0)/100)*(1-res);
-  X.busy=true;X.res=null;
-  X.anim={left:30,dmg:0,php:st.hp,pmax:st.hp,bhp:1,bmax:1,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,
-    throwT:0,bossT:1.2,reg:st.hp*st.reg/100};
-  renderOnline();
-  let last=performance.now();
-  const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=X.anim;if(!A)return;
-    if(!A.end){
-      A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
-      // Kaktus wirft: Schaden pro Wurf aus der Gesamtleistung (Angriff, Krit, Drohnen, Module, Element)
-      A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
-      A.sq=Math.max(0,A.sq-dt*6);
-      for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=dps*.25*rnd(.85,1.15)*(cr?st.critM:1);
-        A.dmg+=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[B.weak].c:'#fff',t:.7});}}
-      A.sp=A.sp.filter(s2=>!s2.done);
-      // Boss greift an
-      A.bossT-=dt;if(A.bossT<=0){A.bossT=1.5;A.lunge=1;A.orbs.push({x:240,y:140});}
-      A.lunge=Math.max(0,A.lunge-dt*3);
-      simSk(A,dt);for(const o of A.orbs){o.x-=300*dt;if(o.x<95&&!o.done){o.done=true;if(A.dgOn>0){A.fl.push({x:70,y:70,txt:'Ausgewichen!',c:'#9ad0ff',t:.7});continue;}const v=bossHit*(1+Math.floor((30-A.left)/10)*.5)*rnd(.9,1.1);A.php-=v;A.phit=.15;
-        A.fl.push({x:70,y:70,txt:'-'+fmt(v),c:'#ff8a7a',t:.7});}}
-      A.orbs=A.orbs.filter(o=>!o.done);
-      if(A.php<=0){A.end='dead';A.php=0;}else if(A.left<=0){A.end='time';A.left=0;}
-    }else A.endT+=dt;
-    A.bhit=Math.max(0,A.bhit-dt);A.phit=Math.max(0,A.phit-dt);for(const f of A.fl){f.y-=30*dt;f.t-=dt;}A.fl=A.fl.filter(f=>f.t>0);
-    drawWb(X);
-    const alive=X.alive()&&$(X.cv);
-    if(alive&&!(A.end&&A.endT>1.6))requestAnimationFrame(step);else finish(A);};
-  const finish=async A=>{const total=Math.round(A.dmg),why=A.end==='boss'?'Boss besiegt!':A.end==='dead'?'Du bist gefallen.':A.end==='time'?'Zeit abgelaufen.':'Kampf abgebrochen.';
-    try{const r=await rpc(X.hitRpc,{p_code:ON.code,p_key:ON.key,p_dmg:total});
-      if(r&&r.ok){const bonus=A.end==='boss'?3:0,caps=3*Math.min(10,2+bonus+Math.floor(Math.log10(r.added+1)/2)),coins=Math.round(r.added*.25*(A.end==='boss'?1.5:1));
-        S.caps+=caps;S.coins+=coins;save();lastHud='';
-        X.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen.</small>':''}`;}
-      else X.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
-    catch(e){X.res='<span class="down">Keine Verbindung, Angriff nicht gezählt.</span>';}
-    X.busy=false;X.anim=null;if(olOpen)renderOnline();await X.load();};
-  requestAnimationFrame(step);}
+// 18.11.2026: Weltboss-Arena – du und der Boss steht euch über einer Schlucht gegenüber. Jeder bewegt sich nur auf seiner Seite.
+// Dein Kaktus schießt von allein über die Schlucht, du weichst den Fähigkeiten des Bosses aus. Höchstens 30 Sekunden.
+const WB_AB={thorn:['fan','rain','shield'],saltcrab:['volley','wave','shield'],golem:['rain','wave','beam'],spider:['minion','fan','beam'],ray:['beam','wind','volley'],
+  shroom:['rain','minion','fan'],yeti:['wave','rain','wind'],griffin:['wind','beam','fan'],bdragon:['beam','rain','minion'],phoenix:['rain','fan','shield'],kraken:['minion','wave','beam'],kaiser:['fan','beam','shield']};
+const WB_ABN={fan:'🌀 Stachelfächer',rain:'☄️ Meteorregen',shield:'🛡 Schutzschild',volley:'💥 Dreifachschuss',wave:'🌊 Schockwelle',beam:'⚡ Blitzstrahl',minion:'🦇 Diener',wind:'🌪 Sandsturm'};
+const WB_ABD={fan:'ein Fächer aus Stacheln',rain:'Meteore schlagen auf deiner Seite ein – raus aus den roten Kreisen',shield:'Schüsse prallen kurz ab',volley:'drei schnelle Schüsse',
+  wave:'eine Welle rollt über deine Seite – lauf durch die Lücke',beam:'Blitze in markierten Bahnen',minion:'fliegende Diener jagen dich',wind:'ein Sturm schiebt dich zur Seite'};
+function wbAbil(B){const k=B.ty&&B.ty.kind;if(WB_AB[k])return WB_AB[k];const P=Object.keys(WB_ABN);let h=7;for(const ch of String(B.n))h=(h*31+ch.charCodeAt(0))>>>0;
+  const out=[];for(let i=0;out.length<3&&i<20;i++){const v=P[(h>>(i*2))%P.length];if(!out.includes(v))out.push(v);}while(out.length<3)out.push(['fan','rain','beam'][out.length]);return out;}
+let WBX=null;
+// Kulisse wie in der Kapitel-Arena: Boden, Kiesel, Risse und Gras der Boss-Welt, oben Himmel und Tafelberge, dazwischen die Schlucht
+function wbxBuild(A){const wi=A.B.wi||0,Wd=WORLDS[wi]||WORLDS[0],[g0,g1,g2]=Wd.ground,W=A.W,H=A.H,ZC=A.zc();A.Wd=Wd;A.obKind=AXOB[wi%AXOB.length]||'fels';
+  const bg=document.createElement('canvas');bg.width=W*A.dpr;bg.height=H*A.dpr;const b=bg.getContext('2d');b.scale(A.dpr,A.dpr);
+  let seed=wi*977+29;const R=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+  const top=H*.2;
+  const ground=(y0,y1,dark)=>{b.fillStyle=dark?shade(g0,-.12):g0;b.fillRect(0,y0,W,y1-y0);
+    for(let i=0;i<40;i++){b.fillStyle=R()<.5?g1:g2;b.globalAlpha=.18+R()*.18;b.beginPath();b.ellipse(R()*W,y0+R()*(y1-y0),20+R()*50,8+R()*20,R()*3,0,7);b.fill();}b.globalAlpha=1;
+    for(let i=0;i<70;i++){b.fillStyle=R()<.5?shade(g1,-.15):g2;b.beginPath();b.arc(R()*W,y0+R()*(y1-y0),1+R()*2.2,0,7);b.fill();}
+    b.strokeStyle=shade(g1,-.2);b.lineWidth=1.5;b.globalAlpha=.5;for(let i=0;i<6;i++){let x=R()*W,y=y0+10+R()*(y1-y0-30);b.beginPath();b.moveTo(x,y);for(let k=0;k<4;k++){x+=R()*24-12;y+=R()*12;b.lineTo(x,y);}b.stroke();}b.globalAlpha=1;
+    for(let i=0;i<16;i++){const x=R()*W,y=y0+10+R()*(y1-y0-10);b.strokeStyle=Wd.flora;b.lineWidth=2;b.lineCap='round';for(let k=-1;k<=1;k++){b.beginPath();b.moveTo(x+k*3,y);b.lineTo(x+k*5,y-6-R()*5);b.stroke();}}};
+  // Himmel und Tafelberge hinter dem Boss
+  {const sk=b.createLinearGradient(0,0,0,top);sk.addColorStop(0,Wd.sky[0]);sk.addColorStop(1,Wd.sky[1]);b.fillStyle=sk;b.fillRect(0,0,W,top);
+   b.fillStyle='#fff';for(let i=0;i<26;i++){b.globalAlpha=.3+R()*.6;b.fillRect(R()*W,R()*top*.6,1.5,1.5);}b.globalAlpha=1;
+   b.fillStyle=Wd.moon||'#ffe7b8';b.globalAlpha=.9;b.beginPath();b.arc(W*.78,top*.42,13,0,7);b.fill();b.globalAlpha=.15;b.beginPath();b.arc(W*.78,top*.42,24,0,7);b.fill();b.globalAlpha=1;
+   const mesa=(y0,col,hMin,hMax)=>{b.fillStyle=col;b.beginPath();b.moveTo(0,top+4);let x=0;b.lineTo(0,y0);while(x<W){const w=40+R()*70,h=hMin+R()*(hMax-hMin);b.lineTo(x+w*.15,y0-h);b.lineTo(x+w*.85,y0-h);b.lineTo(x+w,y0);x+=w+R()*20;b.lineTo(x,y0);}b.lineTo(W,top+4);b.closePath();b.fill();};
+   mesa(top*.78,shade(Wd.mesa,-.15),12,34);mesa(top*.95,Wd.mesa,8,22);}
+  ground(top,ZC.y0+8,true);
+  b.fillStyle=shade(g0,-.3);b.beginPath();b.moveTo(0,top+4);for(let x=0;x<=W;x+=14)b.lineTo(x,top-2+R()*7);b.lineTo(W,top+6);b.closePath();b.fill();b.fillStyle='rgba(0,0,0,.22)';b.fillRect(0,top+4,W,5);
+  // Schlucht: dunkle Tiefe mit Glut in der Farbe des Boss-Elements, Felskanten mit Schatten
+  {const el=ELEM[A.B.atkEl]||{c:'#ff6a3a'},gr=b.createLinearGradient(0,ZC.y0,0,ZC.y1);gr.addColorStop(0,shade(g0,-.55));gr.addColorStop(.45,'#070305');gr.addColorStop(1,shade(g0,-.6));b.fillStyle=gr;b.fillRect(0,ZC.y0,W,ZC.y1-ZC.y0);
+   const gl=b.createLinearGradient(0,ZC.y0,0,ZC.y1);gl.addColorStop(0,'#0000');gl.addColorStop(.55,el.c+'55');gl.addColorStop(1,'#0000');b.fillStyle=gl;b.fillRect(0,ZC.y0,W,ZC.y1-ZC.y0);
+   b.strokeStyle=shade(g0,-.45);b.lineWidth=2;b.globalAlpha=.7;for(let i=0;i<9;i++){const x=R()*W;b.beginPath();b.moveTo(x,ZC.y0+6);b.lineTo(x+R()*16-8,ZC.y0+(ZC.y1-ZC.y0)*(.3+R()*.3));b.stroke();}b.globalAlpha=1;
+   const edge=(y,dir,col)=>{b.fillStyle=col;b.beginPath();b.moveTo(0,y-dir*10);for(let x=0;x<=W;x+=12)b.lineTo(x,y+dir*(4+R()*9));b.lineTo(W,y-dir*10);b.closePath();b.fill();b.strokeStyle=OL;b.lineWidth=2.5;b.beginPath();for(let x=0;x<=W;x+=12)b.lineTo(x,y+dir*(4+R()*9));b.stroke();
+     const sh=b.createLinearGradient(0,y,0,y+dir*24);sh.addColorStop(0,'rgba(0,0,0,.45)');sh.addColorStop(1,'rgba(0,0,0,0)');b.fillStyle=sh;b.fillRect(0,Math.min(y,y+dir*24),W,24);};
+   edge(ZC.y0,1,shade(g0,-.12));edge(ZC.y1,-1,g0);
+   for(let i=0;i<6;i++){const x=R()*W;b.fillStyle=shade(g0,-.35);b.beginPath();b.moveTo(x-6,ZC.y1-4);b.lineTo(x,ZC.y1-14-R()*10);b.lineTo(x+7,ZC.y1-4);b.closePath();b.fill();b.strokeStyle=OL;b.lineWidth=1.5;b.stroke();}}
+  ground(ZC.y1,H,false);
+  const side=b.createLinearGradient(0,0,22,0);side.addColorStop(0,'rgba(0,0,0,.45)');side.addColorStop(1,'rgba(0,0,0,0)');b.fillStyle=side;b.fillRect(0,0,22,H);
+  b.save();b.translate(W,0);b.scale(-1,1);b.fillStyle=side;b.fillRect(0,0,22,H);b.restore();
+  const bot=b.createLinearGradient(0,H-30,0,H);bot.addColorStop(0,'rgba(0,0,0,0)');bot.addColorStop(1,'rgba(0,0,0,.4)');b.fillStyle=bot;b.fillRect(0,H-30,W,30);
+  A.bg=bg;
+  // Hindernisse auf deiner Seite (Deckung gegen Schüsse und Schockwellen) und ein paar als Kulisse auf der Boss-Seite
+  if(!A.obs){const ZH=A.zh(),ZB=A.zb();A.obs=[];let tries=0;
+    while(A.obs.length<5&&tries++<300){const o={x:50+Math.random()*(W-100),y:ZH.y0+20+Math.random()*(ZH.y1-ZH.y0-20),r:17+Math.random()*7};
+      if(Math.hypot(o.x-W/2,o.y-H*.76)<80)continue;if(A.obs.some(q=>Math.hypot(q.x-o.x,q.y-o.y)<q.r+o.r+55))continue;A.obs.push(o);}
+    A.deco=[];for(const x of[W*.1,W*.9])A.deco.push({x:x+rnd(-10,10),y:ZB.y0-rnd(0,14),r:15+Math.random()*5});}}
+function wbxPush(A,o,rad){for(const q of A.obs||[]){const dx=o.x-q.x,dy=o.y-q.y,d=Math.hypot(dx,dy)||1,m=q.r+rad;if(d<m){o.x=q.x+dx/d*m;o.y=q.y+dy/d*m;}}}
+function wbxOb(A,g,o){const k0=AX.obKind,w0=AX.wcol;AX.obKind=A.obKind;AX.wcol=A.Wd;try{axDrawOb(g,o);}finally{AX.obKind=k0;AX.wcol=w0;}}
+function wbAttack(X=wb){if(X.busy||!X.st||X.st.day_left<=0||WBX)return;
+  const B=X.boss(X.st.period),st=heroStats(),em=wbElMul(B),dps=wbDamage(B)/30,AB=wbAbil(B);
+  const res=(st.res[B.atkEl]||0)/100,blk=st.block/100,base=st.hp*0.09*(1-blk)*(1-(st.armor||0)/100)*(1-res);
+  X.busy=true;X.res=null;renderOnline();
+  const d=document.createElement('div');d.id='wbWrap';
+  d.innerHTML=`<canvas id="wbxCv"></canvas><div class="axhud"><button type="button" id="wbxX">✕</button><b>${B.n}</b><span id="wbxHp"><i></i></span></div><div class="axpick" id="wbxEnd" hidden></div>`;
+  document.body.appendChild(d);
+  const cv2=$('wbxCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
+  const A=WBX={X,B,AB,dps,em,base,st,cv:cv2,g,dpr,W:0,H:0,left:30,dmg:0,sh:[],es:[],zn:[],mn:[],fl:[],fx:[],joy:null,end:null,endT:0,shotT:.4,orbT:1.4,abT:2.2,abQ:[],cast:null,wind:null,flash:0,shake:0,t:0};
+  const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';if(A.zh)wbxBuild(A);};size();addEventListener('resize',size);A.size=size;
+  // Bereiche: Boss oben, Schlucht in der Mitte, Kaktus unten
+  A.zb=()=>({y0:A.H*.29,y1:A.H*.35,x0:70,x1:A.W-70});A.zc=()=>({y0:A.H*.39,y1:A.H*.53});A.zh=()=>({y0:A.H*.60,y1:A.H*.86,x0:26,x1:A.W-26});
+  wbxBuild(A);
+  A.hero={x:A.W/2,y:A.H*.76,hp:st.hp,max:st.hp,hit:0,face:1,moving:false,inv:0,reg:st.hp*st.reg/100};
+  A.boss={x:A.W/2,y:A.H*.32,tx:A.W/2,ty:A.H*.32,r:(B.ty.r||34)*1.1,hit:0,shield:0,mvT:0,vx:0,vy:0,face:-1};
+  cv2.addEventListener('pointerdown',e=>{e.preventDefault();cv2.setPointerCapture(e.pointerId);A.joy={id:e.pointerId,x0:e.clientX,y0:e.clientY,dx:0,dy:0};});
+  cv2.addEventListener('pointermove',e=>{if(!A.joy||A.joy.id!==e.pointerId)return;A.joy.dx=e.clientX-A.joy.x0;A.joy.dy=e.clientY-A.joy.y0;});
+  const up=e=>{if(A.joy&&A.joy.id===e.pointerId)A.joy=null;};cv2.addEventListener('pointerup',up);cv2.addEventListener('pointercancel',up);
+  $('wbxX').onclick=()=>{if(!A.end){A.end='quit';A.endT=0;}else wbxClose();};
+  setTimeout(()=>opa('wb2'),300);
+  A.last=performance.now();requestAnimationFrame(wbxStep);}
+function wbxClose(){const A=WBX;if(!A)return;removeEventListener('resize',A.size);const d=$('wbWrap');if(d)d.remove();WBX=null;const X=A.X;X.busy=false;if(olOpen)renderOnline();X.load();}
+function wbxHurt(A,v,txt){const h=A.hero;if(h.inv>0||A.end)return;const rage=1+Math.floor((30-A.left)/10)*.5;v*=rage*rnd(.9,1.1);h.hp-=v;h.hit=.18;h.inv=.35;A.shake=.25;
+  A.fl.push({x:h.x,y:h.y-70,txt:'-'+fmt(v),c:'#ff8a7a',t:.8});if(txt)A.fl.push({x:h.x,y:h.y-92,txt,c:'#ffd447',t:.8});}
+function wbxCast(A,id){const b=A.boss,h=A.hero,ZH=A.zh(),rage=Math.floor((30-A.left)/10);A.cast={id,t:1.1};
+  const aim=(spd,ang,dmg,r)=>{const a=Math.atan2(h.y-40-b.y,h.x-b.x)+ang;A.es.push({x:b.x,y:b.y-b.r*.6,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,r:r||7,dmg});};
+  if(id==='fan'){const n=7+rage*2;for(let i=0;i<n;i++)aim(230,(i-(n-1)/2)*.17,A.base*.8);}
+  else if(id==='volley'){for(let k=0;k<3+rage;k++)setTimeout(()=>{if(WBX===A&&!A.end)aim(320,rnd(-.06,.06),A.base*.9);},k*170);}
+  else if(id==='rain'){const n=5+rage*2;for(let i=0;i<n;i++){const x=i===0?h.x:rnd(ZH.x0,ZH.x1),y=i===0?h.y:rnd(ZH.y0,ZH.y1);A.zn.push({k:'rain',x,y,r:36,t:0,warn:1.1,dmg:A.base*1.6});}}
+  else if(id==='beam'){const n=2+(rage>1?1:0);for(let i=0;i<n;i++)A.zn.push({k:'beam',x:i===0?h.x:rnd(ZH.x0+30,ZH.x1-30),w:52,t:0,warn:.9,dur:.35,dmg:A.base*2});}
+  else if(id==='wave'){A.zn.push({k:'wave',y:ZH.y0-30,gap:rnd(ZH.x0+70,ZH.x1-70),gw:96-rage*10,t:0,warn:.6,vy:180+rage*30,dmg:A.base*1.8,done:false});}
+  else if(id==='shield'){b.shield=2.5+rage*.5;}
+  else if(id==='minion'){for(let i=0;i<2+rage;i++)A.mn.push({x:b.x+rnd(-30,30),y:b.y,hp:A.dps*.25*2.5,max:A.dps*.25*2.5,life:8,hit:0,ph:Math.random()*6});}
+  else if(id==='wind'){A.wind={t:2.6,vx:(Math.random()<.5?-1:1)*(150+rage*30)};}}
+function wbxStep(now){const A=WBX;if(!A)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;
+  const paused=!!document.querySelector('.opah');
+  if(!paused)wbxUpdate(A,dt);wbxDraw(A);
+  if(A.end&&A.endT>1.2&&!A.fin){A.fin=true;wbxFinish(A);}
+  if(WBX===A)requestAnimationFrame(wbxStep);}
+function wbxUpdate(A,dt){const h=A.hero,b=A.boss,ZB=A.zb(),ZH=A.zh();A.t+=dt;
+  for(const f of A.fl){f.y-=30*dt;f.t-=dt;}A.fl=A.fl.filter(f=>f.t>0);for(const f of A.fx)f.t-=dt;A.fx=A.fx.filter(f=>f.t>0);
+  b.hit=Math.max(0,b.hit-dt);h.hit=Math.max(0,h.hit-dt);h.inv=Math.max(0,h.inv-dt);A.shake=Math.max(0,A.shake-dt);A.flash=Math.max(0,A.flash-dt);
+  if(A.end){A.endT+=dt;return;}
+  A.left-=dt;const rage=Math.floor((30-A.left)/10);
+  // Kaktus bewegen – nur auf der eigenen Seite
+  h.moving=false;if(A.joy){const l=Math.hypot(A.joy.dx,A.joy.dy);if(l>8){const sp=Math.min(1,l/50)*190;h.x+=A.joy.dx/l*sp*dt;h.y+=A.joy.dy/l*sp*dt;h.moving=true;if(Math.abs(A.joy.dx)>3)h.face=A.joy.dx>0?1:-1;}}
+  if(A.wind){A.wind.t-=dt;h.x+=A.wind.vx*dt;if(A.wind.t<=0)A.wind=null;}
+  wbxPush(A,h,14);h.x=Math.max(ZH.x0,Math.min(ZH.x1,h.x));h.y=Math.max(ZH.y0,Math.min(ZH.y1,h.y));h.hp=Math.min(h.max,h.hp+h.reg*dt);
+  // Boss läuft auf seiner Seite herum
+  b.mvT-=dt;if(b.mvT<=0){b.mvT=rnd(1.2,2.4);b.tx=rnd(ZB.x0,ZB.x1);b.ty=rnd(ZB.y0,ZB.y1);}
+  if(!A.cast){const dx=b.tx-b.x,dy=b.ty-b.y,l=Math.hypot(dx,dy),sp=(80+rage*30)*dt;if(l>2){b.vx=dx/l*(80+rage*30);b.vy=dy/l*(80+rage*30);b.x+=dx/l*Math.min(l,sp);b.y+=dy/l*Math.min(l,sp);b.face=dx<0?-1:1;}else{b.vx=b.vy=0;}}else{b.vx=b.vy=0;}
+  b.shield=Math.max(0,b.shield-dt);
+  // Kaktus schießt von allein: zuerst auf Diener, sonst auf den Boss (mit Vorhalt)
+  A.shotT-=dt;if(A.shotT<=0){A.shotT=.25;const m=A.mn.slice().sort((p,q)=>Math.hypot(p.x-h.x,p.y-h.y)-Math.hypot(q.x-h.x,q.y-h.y))[0];
+    const sx=h.x,sy=h.y-44;let tx,ty;if(m&&Math.hypot(m.x-h.x,m.y-h.y)<A.H*.5){tx=m.x;ty=m.y;}else{const cy=b.y-b.r*.9,tt=Math.hypot(b.x-sx,cy-sy)/650;tx=b.x+b.vx*tt;ty=cy+b.vy*tt;}
+    const l=Math.hypot(tx-sx,ty-sy)||1;A.sh.push({x:sx,y:sy,vx:(tx-sx)/l*650,vy:(ty-sy)/l*650,life:1.4});}
+  for(const s2 of A.sh){s2.x+=s2.vx*dt;s2.y+=s2.vy*dt;s2.life-=dt;
+    for(const m of A.mn)if(!s2.done&&Math.hypot(s2.x-m.x,s2.y-m.y)<18){s2.done=1;m.hp-=A.dps*.25;m.hit=.1;if(m.hp<=0){m.dead=1;A.fx.push({k:'pop',x:m.x,y:m.y,t:.4});}}
+    if(!s2.done&&Math.hypot(s2.x-b.x,s2.y-(b.y-b.r*.9))<b.r*1.15){s2.done=1;
+      if(b.shield>0){A.fl.push({x:b.x+rnd(-20,20),y:b.y-b.r*2,txt:'abgeprallt',c:'#9ad0ff',t:.5});}
+      else{const cr=Math.random()<A.st.crit/100,v=A.dps*.25*rnd(.85,1.15)*(cr?A.st.critM:1);A.dmg+=v;b.hit=.1;A.fl.push({x:b.x+rnd(-26,26),y:b.y-b.r*1.8+rnd(-10,10),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':A.em>1?ELEM[A.B.weak].c:'#fff',t:.7});}}}
+  A.sh=A.sh.filter(s2=>!s2.done&&s2.life>0);A.mn=A.mn.filter(m=>!m.dead);
+  // Boss-Grundangriff und Fähigkeiten
+  A.orbT-=dt;if(A.orbT<=0){A.orbT=[1.5,1.2,.9][Math.min(2,rage)];const a=Math.atan2(h.y-40-b.y,h.x-b.x);A.es.push({x:b.x,y:b.y-b.r*.6,vx:Math.cos(a)*260,vy:Math.sin(a)*260,r:8,dmg:A.base});}
+  if(A.cast){A.cast.t-=dt;if(A.cast.t<=0)A.cast=null;}
+  A.abT-=dt;if(A.abT<=0&&!A.cast){A.abT=[3.4,2.8,2.2][Math.min(2,rage)];if(!A.abQ.length)A.abQ=A.AB.slice().sort(()=>Math.random()-.5);wbxCast(A,A.abQ.shift());}
+  for(const o of A.es){o.x+=o.vx*dt;o.y+=o.vy*dt;for(const q of A.obs)if(Math.hypot(o.x-q.x,o.y-(q.y-q.r*.7))<q.r+o.r*.5){o.done=1;A.fx.push({k:'pop',x:o.x,y:o.y,t:.3});break;}if(o.done)continue;if(Math.hypot(o.x-h.x,o.y-(h.y-30))<o.r+20){o.done=1;wbxHurt(A,o.dmg);}if(o.y>A.H+20||o.x<-20||o.x>A.W+20)o.done=1;}
+  A.es=A.es.filter(o=>!o.done);
+  for(const z of A.zn){z.t+=dt;
+    if(z.k==='rain'&&z.t>=z.warn&&!z.done){z.done=1;A.fx.push({k:'boom',x:z.x,y:z.y,r:z.r,t:.45});A.shake=.2;if(Math.hypot(h.x-z.x,(h.y-10-z.y)*1.4)<z.r+10)wbxHurt(A,z.dmg);}
+    else if(z.k==='beam'&&z.t>=z.warn&&!z.hitDone&&Math.abs(h.x-z.x)<z.w/2+10){z.hitDone=1;wbxHurt(A,z.dmg,'⚡');}
+    else if(z.k==='wave'&&z.t>=z.warn){z.y+=z.vy*dt;if(!z.done&&Math.abs(h.y-15-z.y)<16&&Math.abs(h.x-z.gap)>z.gw/2-8){z.done=1;if(A.obs.some(q=>Math.abs(q.x-h.x)<q.r+6&&q.y<h.y&&h.y-q.y<70))A.fl.push({x:h.x,y:h.y-80,txt:'Deckung!',c:'#9ad0ff',t:.7});else wbxHurt(A,z.dmg);}}}
+  A.zn=A.zn.filter(z=>z.k==='rain'?z.t<z.warn+.05:z.k==='beam'?z.t<z.warn+z.dur:z.y<ZH.y1+60);
+  for(const m of A.mn){m.life-=dt;m.ph+=dt*8;m.hit=Math.max(0,m.hit-dt);const dx=h.x-m.x,dy=h.y-30-m.y,l=Math.hypot(dx,dy)||1;m.x+=dx/l*130*dt;m.y+=dy/l*130*dt;
+    if(l<24){m.dead=1;wbxHurt(A,A.base*.8);A.fx.push({k:'pop',x:m.x,y:m.y,t:.4});}if(m.life<=0)m.dead=1;}
+  A.mn=A.mn.filter(m=>!m.dead);
+  if(h.hp<=0){h.hp=0;A.end='dead';}else if(A.left<=0){A.left=0;A.end='time';}
+  {const hb=$('wbxHp');if(hb)hb.firstChild.style.width=(Math.max(0,h.hp/h.max)*100)+'%';}}
+function wbxDraw(A){const g=A.g,W=A.W,H=A.H,h=A.hero,b=A.boss,ZC=A.zc(),ZH=A.zh(),el=ELEM[A.B.atkEl]||{c:'#ff6a3a'},t=A.t;
+  g.setTransform(A.dpr,0,0,A.dpr,0,0);if(A.shake>0)g.translate((Math.random()-.5)*8,(Math.random()-.5)*6);
+  if(A.bg)g.drawImage(A.bg,0,0,W,H);
+  {const el2=ELEM[A.B.atkEl]||{c:'#ff6a3a'};g.fillStyle=el2.c;for(let i=0;i<12;i++){const yy=ZC.y1-((i*37+t*30)%(ZC.y1-ZC.y0));g.globalAlpha=.25+.25*Math.sin(t*3+i);g.fillRect((i*83+Math.sin(t+i)*6)%W,yy,2,2);}g.globalAlpha=1;}
+  for(const o of A.deco||[])wbxOb(A,g,o);
+  g.fillStyle='#ffffff18';g.font='900 11px system-ui';g.textAlign='center';
+  // Warnungen und Fähigkeiten auf der Kaktus-Seite
+  for(const z of A.zn){const p=Math.min(1,z.t/(z.warn||1));
+    if(z.k==='rain'){g.save();g.strokeStyle='#ff3a3a';g.fillStyle=`rgba(255,60,40,${.12+.2*p})`;g.lineWidth=2.5;g.beginPath();g.ellipse(z.x,z.y,z.r,z.r*.6,0,0,7);g.fill();g.stroke();
+      g.beginPath();g.ellipse(z.x,z.y,z.r*p,z.r*.6*p,0,0,7);g.fillStyle='#ff3a3a55';g.fill();const my=z.y-(1-p)*H*.6;g.fillStyle='#ffb04a';g.beginPath();g.arc(z.x,my,9,0,7);g.fill();g.strokeStyle='#7a2a10';g.lineWidth=2;g.stroke();g.restore();}
+    else if(z.k==='beam'){const on=z.t>=z.warn;g.save();g.fillStyle=on?'#fff6a0':'#ff3a3a33';g.globalAlpha=on?.85:1;g.fillRect(z.x-z.w/2,on?ZC.y0:ZC.y1,z.w,H);if(on){g.fillStyle='#fff';g.fillRect(z.x-z.w/6,ZC.y0,z.w/3,H);}
+      else{g.strokeStyle='#ff3a3a';g.setLineDash([8,6]);g.lineWidth=2;g.strokeRect(z.x-z.w/2,ZC.y1,z.w,H);}g.restore();}
+    else if(z.k==='wave'){g.save();if(z.t<z.warn){g.fillStyle='#ff3a3a';g.font='900 16px system-ui';g.fillText('⬇ Welle! ⬇',W/2,ZH.y0-6);}
+      g.fillStyle=el.c;g.globalAlpha=.85;g.fillRect(0,z.y-8,z.gap-z.gw/2,16);g.fillRect(z.gap+z.gw/2,z.y-8,W,16);g.globalAlpha=1;g.strokeStyle='#1c0e08';g.lineWidth=2;g.strokeRect(-2,z.y-8,z.gap-z.gw/2+2,16);g.strokeRect(z.gap+z.gw/2,z.y-8,W,16);g.restore();}}
+  // Boss
+  {const c2=b.y-b.r*.9;if(A.end==='time'||A.end==='quit'){}g.save();g.translate(b.x,b.y);g.scale(b.face<0?-1:1,1);g.scale(1.05,1.05);try{drawEnemy({ty:A.B.ty,boss:true,x:0,y:0,hit:b.hit>0?1:0,dying:0,lunge:0},g);}catch(e){}g.restore();
+    if(b.shield>0){g.save();g.globalAlpha=.35+.15*Math.sin(t*10);g.fillStyle='#9ad0ff';g.beginPath();g.arc(b.x,c2,b.r*1.5,0,7);g.fill();g.globalAlpha=1;g.strokeStyle='#cfeaff';g.lineWidth=3;g.stroke();g.restore();}
+    const rage=Math.floor((30-A.left)/10);if(rage&&!A.end){g.font='900 13px system-ui';g.textAlign='left';g.lineWidth=3;g.strokeStyle='#1c0e08';const rt=rage===1?'😠 WÜTEND':'🔥 RASEND';g.strokeText(rt,14,H*.12+20);g.fillStyle='#ff8a5a';g.fillText(rt,14,H*.12+20);g.textAlign='center';}
+    if(A.cast){g.font='900 16px system-ui';g.lineWidth=4;g.strokeStyle='#1c0e08';g.strokeText(WB_ABN[A.cast.id],b.x,c2-b.r*1.3);g.fillStyle='#ffd447';g.fillText(WB_ABN[A.cast.id],b.x,c2-b.r*1.3);}}
+  // Kaktus und Hindernisse nach Tiefe sortiert (wer weiter unten steht, wird später gezeichnet)
+  for(const [k,o] of [...A.obs.map(o=>['o',o]),['h',h]].sort((p,q)=>p[1].y-q[1].y)){if(k==='o'){wbxOb(A,g,o);continue;}
+    g.save();g.translate(h.x,h.y);if(h.inv>0&&Math.floor(t*20)%2)g.globalAlpha=.5;if(A.end==='dead')g.globalAlpha=.4;g.scale(h.face*.8,.8);drawCactus(g,S.char||DEFAULT_CH,{x:0,y:0,walk:h.moving,bob:h.moving?Math.abs(Math.sin(t*12))*-2:Math.sin(t*3),squash:0,hit:h.hit>0,gear:S.gear});g.restore();}
+  // Diener
+  for(const m of A.mn){g.save();g.translate(m.x,m.y);g.fillStyle=m.hit>0?'#fff':'#4a2a5a';const fl=Math.sin(m.ph)*6;g.beginPath();g.moveTo(0,0);g.quadraticCurveTo(-12,-8-fl,-20,2);g.quadraticCurveTo(-10,0,0,6);g.quadraticCurveTo(10,0,20,2);g.quadraticCurveTo(12,-8-fl,0,0);g.fill();g.strokeStyle='#1c0e08';g.lineWidth=1.5;g.stroke();
+    g.beginPath();g.arc(0,2,6,0,7);g.fill();g.stroke();g.fillStyle='#ffd447';g.fillRect(-3,0,2,2);g.fillRect(1,0,2,2);g.restore();}
+  if(A.wind){g.save();g.strokeStyle='#f0d49a90';g.lineWidth=2;for(let i=0;i<16;i++){const yy=ZH.y0+(i*41)%(ZH.y1-ZH.y0+60),xx=((i*97+t*A.wind.vx*2)%W+W)%W;g.beginPath();g.moveTo(xx,yy);g.lineTo(xx+Math.sign(A.wind.vx)*26,yy);g.stroke();}g.restore();}
+  // Schüsse
+  g.fillStyle='#fff6d8';g.strokeStyle='#2a1a12';g.lineWidth=1.5;for(const s2 of A.sh){g.save();g.translate(s2.x,s2.y);g.rotate(Math.atan2(s2.vy,s2.vx));g.beginPath();g.moveTo(9,0);g.lineTo(-7,-3);g.lineTo(-7,3);g.closePath();g.fill();g.stroke();g.restore();}
+  for(const o of A.es){g.fillStyle=el.c;g.globalAlpha=.35;g.beginPath();g.arc(o.x,o.y,o.r+4,0,7);g.fill();g.globalAlpha=1;g.beginPath();g.arc(o.x,o.y,o.r,0,7);g.fill();g.strokeStyle='#1c0e08';g.lineWidth=1.5;g.stroke();}
+  for(const f of A.fx){if(f.k==='boom'){g.save();g.globalAlpha=f.t/.45;g.fillStyle='#ffb04a';g.beginPath();g.ellipse(f.x,f.y,f.r*(1.4-f.t),f.r*.6*(1.4-f.t),0,0,7);g.fill();g.restore();}
+    else{g.save();g.globalAlpha=f.t/.4;g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.arc(f.x,f.y,20*(1-f.t),0,7);g.stroke();g.restore();}}
+  g.font='900 14px system-ui';g.textAlign='center';for(const f of A.fl){g.globalAlpha=Math.min(1,f.t*2);g.lineWidth=3;g.strokeStyle='#1c120c';g.strokeText(f.txt,f.x,f.y);g.fillStyle=f.c;g.fillText(f.txt,f.x,f.y);}g.globalAlpha=1;
+  // Zeit und Schaden
+  const tl=Math.max(0,Math.ceil(A.left)),ty0=H*.12;g.font='28px "Lilita One","Arial Black",sans-serif';g.textAlign='left';g.lineWidth=5;g.strokeStyle='#1c0e08';
+  g.strokeText('0:'+String(tl).padStart(2,'0'),14,ty0);g.fillStyle=tl<=5?'#ff6a5a':'#fff6e8';g.fillText('0:'+String(tl).padStart(2,'0'),14,ty0);
+  g.textAlign='right';g.strokeText(fmt(A.dmg),W-14,ty0);g.fillStyle='#ffe08a';g.fillText(fmt(A.dmg),W-14,ty0);g.font='900 10px system-ui';g.fillStyle='#f0d8b0';g.fillText('SCHADEN',W-14,ty0+13);
+  if(A.end){const txt=A.end==='dead'?'Du bist gefallen':A.end==='quit'?'Kampf beendet':'Zeit abgelaufen!';g.textAlign='center';g.font='32px "Lilita One","Arial Black",sans-serif';g.lineWidth=6;g.strokeText(txt,W/2,H*.47);g.fillStyle=A.end==='dead'?'#ff8a7a':'#ffe08a';g.fillText(txt,W/2,H*.47);}}
+async function wbxFinish(A){const X=A.X,B=A.B,total=Math.round(A.dmg),why=A.end==='dead'?'Du bist gefallen.':A.end==='time'?'Zeit abgelaufen.':'Kampf beendet.';
+  try{const r=await rpc(X.hitRpc,{p_code:ON.code,p_key:ON.key,p_dmg:total});
+    if(r&&r.ok){const caps=3*Math.min(10,2+Math.floor(Math.log10(r.added+1)/2)),coins=Math.round(r.added*.25);S.caps+=caps;S.coins+=coins;save();lastHud='';
+      X.res=`<b>${why}</b> ${fmt(r.added)} Schaden · Belohnung: <em class="up">+${caps} Kapseln</em> · <em class="up">+${fmt(coins)} Münzen</em>${A.end==='dead'?'<br><small>Tipp: Mehr Leben, Schild oder '+ELEM[B.atkEl].n+'-Resistenz helfen – und den roten Kreisen ausweichen.</small>':''}`;}
+    else X.res=`<span class="down">${(r&&r.reason)||'Angriff nicht gezählt'}</span>`;}
+  catch(e){X.res='<span class="down">Keine Verbindung, Angriff nicht gezählt.</span>';}
+  if(WBX!==A)return;const P=$('wbxEnd');P.innerHTML=`<div class="axend ${A.end==='dead'?'lost':'won'}"><h3>${A.end==='dead'?'Besiegt!':'Kampf vorbei!'}</h3><div class="wbres">${X.res}</div><button class="btn go" type="button" id="wbxOk">Weiter</button></div>`;P.hidden=false;
+  $('wbxOk').onclick=wbxClose;}
 
 // Weltboss und Allianz-Boss teilen sich Kampf und Anzeige; hier steht, was sich unterscheidet
 Object.assign(wb,{hitRpc:'kk_wb_hit',cv:'wbcv',go:'wbGo',loading:'Lade Weltboss …',boss:p=>wbBoss(p),prize:()=>wbPrizeHtml(),load:()=>loadWb(),
@@ -5727,6 +5866,7 @@ const OPA={
   pets:'Das sind deine Haustiere! Tippe eines an und nimm es mit. Neue Haustiere schlüpfen aus 🥚 Haustier-Samen in der Gärtnerei.',
   train:'Auf dem Trainingsplatz lernt dein Kaktus Fähigkeiten. Rüste zwei aus – im Kapitel setzt du sie mit den runden Knöpfen unten rechts ein.',
   gart:'In der Gärtnerei pflanzt du Samenkapseln. Reife Kakteen erntest du per Hand – mit ihnen baust du dein Dorf aus.',
+  wb2:'Zwischen dir und dem Weltboss liegt eine Schlucht! Lauf mit dem Finger auf deiner Seite herum – dein Kaktus schießt von allein. Weich den Fähigkeiten des Bosses aus, du hast 30 Sekunden.',
   gart2:'Dein Beet! Pflanze Samenkapseln und gieß sie mit 💧 – trockene Erde lässt nichts wachsen. 🧪 Dünger vom Händler macht sie schneller. Reife Kakteen erntest du per Hand.',
   forge:'In der Schmiede zerlegst du alte Teile zu Eisenerz und machst deine Ausrüstung mit ⭐ stärker.'};
 function opa(k){if(!S||!S.char||tut.on||(S.opa&&S.opa[k])||document.querySelector('.opah'))return;S.opa=S.opa||{};S.opa[k]=1;save();
@@ -6132,6 +6272,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn155',date:'2026-11-18',title:'Neuer Weltboss-Kampf',hero:['👹 Duell über der Schlucht','Der Weltboss-Kampf ist jetzt eine echte Arena: Du stehst auf der einen Seite einer Schlucht, der Boss auf der anderen. Lauf mit dem Finger herum und weich aus – dein Kaktus schießt von allein. Höchstens 30 Sekunden.'],
+   items:()=>[['Jeder Boss ist anders:','Jeder Weltboss hat drei eigene Fähigkeiten – zum Beispiel Meteorregen, Blitzstrahlen, Schockwellen, Diener, Sandsturm oder einen Schutzschild. Welche, siehst du vor dem Kampf.'],['Wut:','Alle 10 Sekunden wird der Boss wütender und greift schneller und härter an.']],
+  en:{title:'New world boss fight',hero:['👹 Duel across the chasm','The world boss fight is now a real arena: you stand on one side of a chasm, the boss on the other. Move with your finger and dodge – your cactus shoots on its own. 30 seconds at most.'],
+   items:()=>[['Every boss is different:','Each world boss has three abilities of its own – like meteor rain, lightning beams, shockwaves, minions, sandstorms or a shield. You can see which ones before the fight.'],['Rage:','Every 10 seconds the boss gets angrier and attacks faster and harder.']]}},
   {id:'pn154',date:'2026-11-18',title:'Beete von Freunden pflegen',hero:['🌱 Hilf beim Gießen','Wenn du ein anderes Dorf besuchst, tippst du auf die Gärtnerei und siehst das echte Beet. Du kannst einzelne Pflanzen gießen 💧 oder mit deinem eigenen Dünger düngen 🧪.'],
    items:()=>[['Für den anderen:','Die Hilfe kommt beim nächsten Speichern in seinem Beet an – mit einer Meldung, wer geholfen hat.'],['Dankeschön:','Das erste Mal am Tag gibt es wie bisher eine kleine Belohnung per Post.']],
   en:{title:'Look after friends’ beds',hero:['🌱 Help with watering','When you visit another village, tap the garden to see the real bed. You can water single plants 💧 or fertilise them with your own fertiliser 🧪.'],
