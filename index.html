@@ -1252,6 +1252,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .elstrip .er small{font-size:.5rem}.elstrip .er b{font-size:.7rem}.elstrip .elbox{min-width:0;overflow:hidden}
 @media (max-width:420px){.elstrip{gap:4px;margin:5px 4px 0}.elstrip .elbox{padding:3px 5px;gap:3px}.elstrip .er{gap:3px}.elstrip .er small{font-size:.42rem}.elstrip .er b{font-size:.6rem}.elstrip .eb{width:14px;height:14px;font-size:.5rem}}
 /* Kapitel-Knopf */
+.xpshop{display:grid;gap:6px;margin:8px 0}.xpshop .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}.xpshop .btn small{font-size:.7rem;opacity:.85}
 .chapbtn.xpbtn{border-color:#4fb8ff;background:linear-gradient(#1e3a5a,#14263e)}.chapbtn.xpbtn em{background:linear-gradient(#5fc8ff,#2a8ac8)!important}
 .chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
 .chapbtn>i{font-style:normal;font-size:22px}.chapbtn>span{flex:1;display:flex;flex-direction:column;line-height:1.15}.chapbtn b{font-size:15px}.chapbtn small{font-size:11px;opacity:.8}
@@ -1620,7 +1621,10 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🏜 Treibsand':'🏜 Quicksand','🌋 Lava-Spalten':'🌋 Lava cracks','⛰ Enge Schlucht':'⛰ Narrow canyon','💧 Oase':'💧 Oasis','🏛 Ruinen':'🏛 Ruins','Expedition':'Expedition','Los ▶':'Go ▶','Neue Expedition':'New expedition','Expedition geschafft! 🎉':'Expedition complete! 🎉','Wüstensplitter':'Desert shards','🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!':'🚪 The gate is open – walk up into the next area!',
+'Opa Stachel':'Grandpa Spike','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
+'🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
+'👑 Das Tor zum Boss ist offen!':'👑 The gate to the boss is open!','🚪 Zwei Tore! Wähle deinen Weg – lies die Schilder.':'🚪 Two gates! Choose your path – read the signs.','💧 Eine Heilquelle! Lauf hinein.':'💧 A healing spring! Walk into it.','💧 Du bist erfrischt! +50 % Leben':'💧 You feel refreshed! +50 % life',
+'🗝 Schatztruhe: +5 ✨ · +40 🌱 · +3 🌵':'🗝 Treasure chest: +5 ✨ · +40 🌱 · +3 🌵','💀 Elite-Beute: +3 ✨':'💀 Elite loot: +3 ✨','🏜 Treibsand':'🏜 Quicksand','🌋 Lava-Spalten':'🌋 Lava cracks','⛰ Enge Schlucht':'⛰ Narrow canyon','💧 Oase':'💧 Oasis','🏛 Ruinen':'🏛 Ruins','Expedition':'Expedition','Los ▶':'Go ▶','Neue Expedition':'New expedition','Expedition geschafft! 🎉':'Expedition complete! 🎉','Wüstensplitter':'Desert shards','🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!':'🚪 The gate is open – walk up into the next area!',
 'Expedition! Hier gibt es keine Pause: Dein Leben bleibt von Gebiet zu Gebiet gleich. Räum ein Gebiet frei, dann öffnet sich oben ein Tor – lauf hindurch ins nächste. Im letzten Gebiet wartet ein Boss.':'Expedition! No breaks here: your life carries over from area to area. Clear an area and a gate opens at the top – walk through into the next one. A boss waits in the last area.','🌀 Stachelfächer':'🌀 Spike Fan','☄️ Meteorregen':'☄️ Meteor Rain','🛡 Schutzschild':'🛡 Shield','💥 Dreifachschuss':'💥 Triple Shot','🌊 Schockwelle':'🌊 Shockwave','⚡ Blitzstrahl':'⚡ Lightning Beam','🦇 Diener':'🦇 Minions','🌪 Sandsturm':'🌪 Sandstorm',
 'ein Fächer aus Stacheln':'a fan of spikes','Meteore schlagen auf deiner Seite ein – raus aus den roten Kreisen':'meteors hit your side – get out of the red circles','Schüsse prallen kurz ab':'shots bounce off for a moment','drei schnelle Schüsse':'three quick shots',
 'eine Welle rollt über deine Seite – lauf durch die Lücke':'a wave rolls over your side – run through the gap','Blitze in markierten Bahnen':'lightning in marked lanes','fliegende Diener jagen dich':'flying minions chase you','ein Sturm schiebt dich zur Seite':'a storm pushes you sideways',
@@ -1885,7 +1889,7 @@ const RX=[
   [/^⚔ Im Kampf alle (\d+) s von allein: (\d+) % auf alle Gegner$/,(m)=>'⚔ In battle every '+m[1]+' s automatically: '+m[2]+' % on all enemies'],
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
-  [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
+  [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^💀 Elite-Lager: (\d+) Elite-Gegner!$/,(m)=>'💀 Elite camp: '+m[1]+' elite enemies!'],[/^Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: (.+)$/,(m)=>'You pay with the coins collected on this expedition: '+m[1]],[/^([\d.,]+(?: Tsd\.| Mio\.| Mrd\.)?) Münzen$/,(m)=>m[1]+' coins'],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
   [/^Besiegt in Gebiet (\d+)!$/,(m)=>'Defeated in area '+m[1]+'!'],[/^Geschafft: (\d+) von (\d+) Gebieten\.$/,(m)=>'Cleared: '+m[1]+' of '+m[2]+' areas.'],[/^Alle (\d+) Gebiete und der Boss sind besiegt\.$/,(m)=>'All '+m[1]+' areas and the boss are defeated.'],
   [/^4 Gebiete · Leben bleibt(.*)$/,(m)=>'4 areas · life carries over'+m[1].replace(' · Rekord ',' · best ')],
   [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
@@ -1954,7 +1958,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -6279,6 +6283,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn158',date:'2026-11-18',title:'Expedition: Weggabelungen',hero:['🚪 Du wählst den Weg','Nach jedem Gebiet stehen jetzt zwei Tore mit Schildern bereit. Du entscheidest, was als Nächstes kommt.'],
+   items:()=>[['💀 Elite-Lager:','viele Elite-Gegner, dafür +3 ✨ und mehr Münzen.'],['💧 Heilquelle:','kein Kampf – bringt dir 50 % Leben zurück.'],['🧳 Händler:','Stärkungen für diesen Lauf, bezahlt mit den gesammelten Münzen.'],['🗝 Schatzkammer:','Kampf mit einer Truhe am Ende.'],['❓ Unbekannt:','eins davon – Überraschung!']],
+  en:{title:'Expedition: forks in the road',hero:['🚪 You choose the path','After every area there are now two gates with signs. You decide what comes next.'],
+   items:()=>[['💀 Elite camp:','lots of elite enemies, but +3 ✨ and more coins.'],['💧 Healing spring:','no fight – gives you back 50 % life.'],['🧳 Trader:','boosts for this run, paid with the coins you collected.'],['🗝 Treasure room:','a fight with a chest at the end.'],['❓ Unknown:','one of these – surprise!']]}},
   {id:'pn157',date:'2026-11-18',title:'Expedition: jedes Gebiet ist anders',hero:['🗺 Neues Gelände','Jedes Gebiet der Expedition hat jetzt sein eigenes Gelände, das den Kampf verändert.'],
    items:()=>[['🏜 Treibsand:','bremst dich stark.'],['🌋 Lava-Spalten:','brennen, solange du drinstehst.'],['⛰ Enge Schlucht:','Felswände links und rechts – wenig Platz.'],['💧 Oase:','Wasser bremst, heilt dich aber langsam.'],['🏛 Ruinen:','viele Säulen als Deckung.']],
   en:{title:'Expedition: every area is different',hero:['🗺 New terrain','Every expedition area now has its own terrain that changes the fight.'],
@@ -7196,11 +7204,16 @@ function xpTerrain(A){const k=A.ex.ter[A.ex.area-1],W=A.W,H=A.H;A.ter=k;A.tz=[];
     if(Math.hypot(o.x-W/2,o.y-(H-70))<90||Math.hypot(o.x-W/2,o.y-104)<80)continue;if(A.obs.some(q=>Math.hypot(q.x-o.x,q.y-o.y)<q.r+o.r+40))continue;A.obs.push(o);}}
   for(const z of A.tz)A.obs=A.obs.filter(o=>Math.hypot((o.x-z.x)/z.rx,(o.y-z.y)/z.ry)>1.25);}
 const xpIn=(A,h)=>(A.tz||[]).some(z=>((h.x-z.x)/z.rx)**2+((h.y-z.y)/z.ry)**2<1);
-function axTerTick(dt){const A=AX,h=A.hero;A.tsl=1;if(!A.ex||!A.ter)return;const k=A.ter,inz=xpIn(A,h);
+function axTerTick(dt){const A=AX,h=A.hero;A.tsl=1;
+  if(A.spring&&!A.spring.used&&Math.hypot(h.x-A.spring.x,(h.y-A.spring.y)*1.6)<60){A.spring.used=1;const a=h.max*.5;h.hp=Math.min(h.max,h.hp+a);A.fx.push({x:h.x,y:h.y-70,txt:'+'+fmt(a),col:'#7fe08a',t:1});axSay('💧 Du bist erfrischt! +50 % Leben',1.8);setTimeout(()=>{if(AX.open&&AX.spring)axGate();},900);}if(!A.ex||!A.ter)return;const k=A.ter,inz=xpIn(A,h);
   if(inz&&k==='sand')A.tsl=.45;
   if(inz&&k==='oase'){A.tsl=.6;h.hp=Math.min(h.max,h.hp+h.max*.015*dt);}
   if(inz&&k==='lava'&&A.winT==null){h.hp-=h.max*.06*dt;A.lvT=(A.lvT||0)-dt;if(A.lvT<=0){A.lvT=.45;A.fx.push({x:h.x+rnd(-8,8),y:h.y-60,txt:'🔥',col:'#ff8a3a',t:.5});}}}
-function axDrawTer(g){const A=AX;if(!A.ex||!A.ter)return;const t=performance.now()/1000,k=A.ter,W=A.W,H=A.H,Wd=axWorld();
+function axDrawTer(g){const A=AX;if(A.spring){const S2=A.spring,t=performance.now()/1000;g.save();g.translate(S2.x,S2.y);g.fillStyle='#6cc04a';g.beginPath();g.ellipse(0,2,74,40,0,0,7);g.fill();g.strokeStyle=OL;g.lineWidth=2.5;g.stroke();
+    const gr=g.createLinearGradient(0,-34,0,34);gr.addColorStop(0,S2.used?'#7ab8d8':'#8ae8ff');gr.addColorStop(1,'#2a8ad0');g.fillStyle=gr;g.beginPath();g.ellipse(0,0,62,32,0,0,7);g.fill();g.stroke();
+    if(!S2.used){g.fillStyle='#fff';for(let i=0;i<6;i++){const a=t*1.5+i,rr=20+(i%3)*12;g.globalAlpha=.5+.5*Math.sin(t*4+i);g.beginPath();g.arc(Math.cos(a)*rr,Math.sin(a)*rr*.5-6,2.2,0,7);g.fill();}g.globalAlpha=1;}
+    for(const sx of[-1,1]){g.strokeStyle='#2f7a3a';g.lineWidth=2;for(let i=0;i<4;i++){const x=sx*(58+i*3);g.beginPath();g.moveTo(x,6);g.quadraticCurveTo(x+1,-10,x+(i%2?3:-1),-22);g.stroke();}}g.restore();}
+  if(!A.ex||!A.ter)return;const t=performance.now()/1000,k=A.ter,W=A.W,H=A.H,Wd=axWorld();
   for(const z of A.tz||[]){g.save();g.translate(z.x,z.y);
     if(k==='sand'){const gr=g.createRadialGradient(0,0,4,0,0,z.rx);gr.addColorStop(0,'#c89a5a');gr.addColorStop(1,'#e8c08a00');g.fillStyle=gr;g.beginPath();g.ellipse(0,0,z.rx,z.ry,0,0,7);g.fill();
       g.strokeStyle='#8a6438';g.lineWidth=1.6;for(let i=1;i<=3;i++){g.globalAlpha=.55;g.beginPath();g.ellipse(0,0,z.rx*i/3.4,z.ry*i/3.4,t*.6*(i%2?1:-1)+i,0,4.4);g.stroke();}g.globalAlpha=1;
@@ -7227,10 +7240,28 @@ function axDrawTer(g){const A=AX;if(!A.ex||!A.ter)return;const t=performance.now
 function xpTerSay(){const A=AX;if(!A.ex)return'';const T=XP_TER[A.ex.ter[A.ex.area-1]];return T?' · '+T.n:'';}
 function xpTerHint(){const A=AX;const T=A.ex&&XP_TER[A.ex.ter[A.ex.area-1]];if(T)setTimeout(()=>{if(AX.open&&AX.ex===A.ex)axSay(T.n+': '+T.d,2.2);},2400);}
 const xpSt=a=>(XP_UNLOCK-1)*20+10+a*12;   // etwas stärker als das letzte Kapitel, jedes Gebiet ein Stück mehr
-function axGate(){const A=AX;A.gate={x:A.W/2,y:104,t:0};axSay('🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!',2.4);}
-function axExNext(){const A=AX,h=A.hero,E=A.ex;E.done=E.area;E.area++;A.wave=0;A.waves=E.wpa;A.st=xpSt(E.area);A.en=[];A.sh=[];A.es=[];A.hz=[];A.pk=[];A.pt=[];A.gate=null;
+// Schritt 3: Weggabelungen – zwei Tore mit Schildern, du entscheidest, was als Nächstes kommt
+const XP_ROOM={kampf:{i:'⚔',n:'Kampf',d:'normale Gegner'},elite:{i:'💀',n:'Elite-Lager',d:'schwer – mehr Beute'},quelle:{i:'💧',n:'Heilquelle',d:'kein Kampf – heilt dich'},
+  haendler:{i:'🧳',n:'Händler',d:'Stärkungen kaufen'},schatz:{i:'🗝',n:'Schatzkammer',d:'Kampf + Truhe'},'?':{i:'❓',n:'Unbekannt',d:'Überraschung!'},boss:{i:'👑',n:'Boss',d:'letztes Gebiet'}};
+function axGate(){const A=AX,E=A.ex,last=E.area+1>=E.areas;let list;
+  if(last)list=[{x:A.W/2,k:'boss'}];
+  else{const P=['kampf','elite','quelle','haendler','schatz','?'].sort(()=>Math.random()-.5);if(P[0]!=='kampf'&&P[1]!=='kampf'&&Math.random()<.5)P[1]='kampf';list=[{x:A.W*.28,k:P[0]},{x:A.W*.72,k:P[1]}];}
+  A.gate={y:104,t:0,list};axSay(last?'👑 Das Tor zum Boss ist offen!':'🚪 Zwei Tore! Wähle deinen Weg – lies die Schilder.',2.4);}
+function xpRoomStart(){const A=AX,E=A.ex,k=E.room,W=A.W,H=A.H;
+  if(k==='quelle'){A.spring={x:W/2,y:H*.5,used:0};A.obs=A.obs.filter(o=>Math.hypot(o.x-W/2,(o.y-H*.5)*1.4)>110);A.tz=(A.tz||[]).filter(z=>Math.hypot(z.x-W/2,z.y-H*.5)>z.rx+80);axSay('💧 Eine Heilquelle! Lauf hinein.',2);}
+  else if(k==='haendler')setTimeout(()=>{if(AX.open&&AX.ex===E)xpShop();},700);
+  else setTimeout(()=>{if(AX.open&&AX.ex===E&&!A.en.length)axWave();},900);}
+function xpShop(){const A=AX,h=A.hero,R=A.rew=A.rew||{caps:0,kak:0,coins:0},P=$('axPick');A.state='pick';
+  const O=[{i:'⚔',n:'+20 % Angriff',f:()=>{h.atk*=1.2;}},{i:'❤',n:'+25 % max. Leben',f:()=>{const a=h.max*.25;h.max+=a;h.hp+=a;}},{i:'💧',n:'40 % Leben heilen',f:()=>{h.hp=Math.min(h.max,h.hp+h.max*.4);}},{i:'⚡',n:'+15 % Angriffstempo',f:()=>{h.spd/=1.15;}}].sort(()=>Math.random()-.5).slice(0,3);
+  const cost=Math.max(1,Math.round(Math.max(R.coins,6*cPow(A.st)*60)*.3));A.shopC=cost;
+  const draw=()=>{P.innerHTML=`<div class="axend won"><h3>🧳 Wandernder Händler</h3><small>Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: <b>${fmt(R.coins)}</b></small>
+    <div class="xpshop">${O.map((o,i)=>`<button type="button" class="btn${o.got?'':' go'}" data-xo="${i}" ${o.got||R.coins<cost?'disabled':''}><b>${o.i} ${o.n}</b><small>${o.got?'✓ gekauft':fmt(cost)+' Münzen'}</small></button>`).join('')}</div>
+    <div class="axbtns"><button type="button" class="btn go" id="xoOk">Weiter</button></div></div>`;P.hidden=false;
+    P.querySelectorAll('[data-xo]').forEach(b=>b.onclick=()=>{const o=O[+b.dataset.xo];if(o.got||R.coins<cost)return;R.coins-=cost;o.got=1;o.f();draw();});
+    $('xoOk').onclick=()=>{P.hidden=true;A.state='go';axGate();};};draw();}
+function axExNext(){const A=AX,h=A.hero,E=A.ex;E.done=E.area;E.area++;A.wave=0;A.waves=E.wpa;A.st=xpSt(E.area);A.en=[];A.sh=[];A.es=[];A.hz=[];A.pk=[];A.pt=[];A.gate=null;A.spring=null;
   axBuild();h.x=A.W/2;h.y=A.H-70;if(A.pet){A.pet.x=h.x-40;A.pet.y=h.y+10;}
-  const Wd=axWorld();axSay((E.area===E.areas?'👑 Letztes Gebiet: ':'🧭 Gebiet '+E.area+' / '+E.areas+': ')+Wd.n+xpTerSay(),2.2);xpTerHint();setTimeout(()=>{if(AX.open&&AX.ex===E&&!A.en.length)axWave();},900);}
+  const Wd=axWorld();axSay((E.area===E.areas?'👑 Letztes Gebiet: ':'🧭 Gebiet '+E.area+' / '+E.areas+': ')+Wd.n+xpTerSay(),2.2);if(E.room!=='quelle'&&E.room!=='haendler')xpTerHint();xpRoomStart();}
 // Fähigkeiten für einen Lauf: nach jeder Welle 1 aus 3 (stapelbar)
 const AXS=[
   {id:'multi', ico:'➰',n:'Doppelstachel', d:'+1 Stachel hintereinander'},
@@ -7617,18 +7648,23 @@ function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=axWorl
     const x=side<.5?rnd(30,A.W-30):(side<.75?20:A.W-20),y=side<.5?rnd(60,A.H*.35):rnd(60,A.H*.5);
     const rng=ty.kind==='scorp'||ty.kind==='bird';A.en.push({ty,x,y,hp:24*ty.hp*p,max:24*ty.hp*p,atk:6*ty.atk*p*.4,sp:ty.sp*.9,r:ty.r,hit:0,cd:rnd(.3,1),rng,fire:rnd(1,2.2)});}
   // 15.11.2026 Elite-Gegner: ab Welle 2 mit 35 % Chance ein leuchtender Gegner – zäher, aber mit Extra-Beute
+  if(A.ex&&A.ex.room==='elite'&&A.en.length){let n=0;for(const e of A.en)if(Math.random()<.45){e.elite=1;e.hp*=4;e.max*=4;e.atk*=1.3;e.r*=1.25;n++;}if(n){axSay('💀 Elite-Lager: '+n+' Elite-Gegner!',1.6);return;}}
   if(A.wave>=2&&Math.random()<.35&&A.en.length){const e=A.en[Math.floor(Math.random()*A.en.length)];e.elite=1;e.hp*=4;e.max*=4;e.atk*=1.3;e.r*=1.25;axSay('⭐ Elite-Gegner!',1.4);return;}
   axSay('Welle '+A.wave+' / '+A.waves,1.2);}
 function axGateTick(dt){const A=AX,h=A.hero,G=A.gate;
   if(A.tr){A.tr.t+=dt;if(!A.tr.sw&&A.tr.t>=.45){A.tr.sw=1;axExNext();}if(A.tr.t>=.9)A.tr=null;return;}
-  if(!G)return;G.t+=dt;if(h.y<G.y+46&&Math.abs(h.x-G.x)<34){A.tr={t:0};}}
-function axDrawGate(g){const A=AX,G=A.gate;if(!G)return;const t=performance.now()/1000,x=G.x,y=G.y,Wd=axWorld(),stone=shade(Wd.mesa,.1);
+  if(!G)return;G.t+=dt;for(const q of G.list||[])if(h.y<G.y+46&&Math.abs(h.x-q.x)<34){let k=q.k;if(k==='?')k=['kampf','elite','quelle','haendler','schatz'][Math.floor(Math.random()*5)];A.ex.room=k==='boss'?'kampf':k;A.tr={t:0};break;}}
+function axDrawGate(g){const A=AX,G=A.gate;if(!G)return;for(const q of G.list||[])axDrawGate1(g,q.x,G.y,q.k);}
+function axDrawGate1(g,x,y,kind){const A=AX,t=performance.now()/1000,Wd=axWorld(),stone=shade(Wd.mesa,.1),RM=XP_ROOM[kind]||XP_ROOM.kampf;
   g.save();const gl=g.createRadialGradient(x,y+6,4,x,y+6,60);gl.addColorStop(0,'rgba(255,240,170,.75)');gl.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gl;g.fillRect(x-60,y-50,120,110);
   g.fillStyle='#1c120c';g.beginPath();g.moveTo(x-26,y+12);g.lineTo(x-26,y-16);g.quadraticCurveTo(x,y-42,x+26,y-16);g.lineTo(x+26,y+12);g.closePath();g.fill();
   const li=g.createLinearGradient(0,y-36,0,y+12);li.addColorStop(0,'#fff6c8');li.addColorStop(1,'#ffd27a');g.fillStyle=li;g.globalAlpha=.55+.25*Math.sin(t*4);g.beginPath();g.moveTo(x-20,y+12);g.lineTo(x-20,y-14);g.quadraticCurveTo(x,y-34,x+20,y-14);g.lineTo(x+20,y+12);g.closePath();g.fill();g.globalAlpha=1;
   for(const s2 of[-1,1]){g.fillStyle=stone;g.beginPath();g.roundRect(x+s2*30-8,y-30,16,44,4);g.fill();g.strokeStyle=OL;g.lineWidth=2.4;g.stroke();g.fillStyle=shade(stone,.25);g.fillRect(x+s2*30-6,y-28,4,40);}
   g.fillStyle=stone;g.beginPath();g.moveTo(x-40,y-28);g.quadraticCurveTo(x,y-56,x+40,y-28);g.lineTo(x+40,y-20);g.quadraticCurveTo(x,y-48,x-40,y-20);g.closePath();g.fill();g.strokeStyle=OL;g.lineWidth=2.4;g.stroke();
-  const by=y+40+Math.sin(t*5)*5;g.fillStyle='#ffe58a';g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.moveTo(x,by-12);g.lineTo(x+11,by);g.lineTo(x+4,by);g.lineTo(x+4,by+10);g.lineTo(x-4,by+10);g.lineTo(x-4,by);g.lineTo(x-11,by);g.closePath();g.fill();g.stroke();g.restore();}
+  const by=y+40+Math.sin(t*5)*5;g.fillStyle='#ffe58a';g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.moveTo(x,by-12);g.lineTo(x+11,by);g.lineTo(x+4,by);g.lineTo(x+4,by+10);g.lineTo(x-4,by+10);g.lineTo(x-4,by);g.lineTo(x-11,by);g.closePath();g.fill();g.stroke();g.restore();
+  g.save();const sy=y+70,sw=Math.max(92,g.measureText?0:0);g.font='900 12px system-ui';const tw=Math.max(g.measureText(RM.n).width,g.measureText(RM.d).width*.85)+22;
+  g.fillStyle='#7a4a26';g.fillRect(x-2,sy-4,4,10);g.fillStyle='#e8c88a';g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.roundRect(x-tw/2,sy,tw,34,6);g.fill();g.stroke();
+  g.fillStyle='#3a2414';g.textAlign='center';g.fillText(RM.i+' '+RM.n,x,sy+15);g.font='800 10px system-ui';g.fillStyle='#6a4a2a';g.fillText(RM.d,x,sy+28);g.restore();}
 function axDrawTr(g){const A=AX;if(!A.tr)return;const p=A.tr.t<.45?A.tr.t/.45:1-(A.tr.t-.45)/.45;g.fillStyle=`rgba(10,6,4,${Math.max(0,Math.min(1,p))})`;g.fillRect(0,0,A.W,A.H);}
 function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;if(!document.querySelector('.opah')){axUpdate(dt);A.t0+=0;}else A.t0+=dt*1000;axDraw();axDrawTr(A.g);requestAnimationFrame(axStep);}
 // 15.11.2026: sichtbare Körpermitte und Größe eines Gegners – darauf wird gezielt und damit getroffen
@@ -7688,8 +7724,8 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
   if(A.hp0!=null&&h.hp<A.hp0){const lost=A.hp0-h.hp;if(A.sprint>0)h.hp+=lost;else if(A.shield>0)h.hp+=lost*.8;}A.hp0=h.hp;
   if(h.hp<=0&&A.winT==null){A.state='lost';axEnd(false);return;}
   if(A.ex&&(A.gate||A.tr)){axGateTick(dt);}
-  else if(!A.en.some(e=>e.hp>0)&&!(A.ex&&A.wave===0)){if(A.wave>A.waves){A.es=[];A.hz=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);if(A.ex&&A.wave>=A.waves&&A.ex.area<A.ex.areas)A.exNext=1;axPick();}}   // Sieg: kurz den Münzregen zeigen
-  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.ex?'🧭 Gebiet '+A.ex.area+'/'+A.ex.areas+(A.gate?' · Tor offen':A.wave>A.waves?' · Boss':' · Welle '+Math.max(1,Math.min(A.wave,A.waves))+'/'+A.waves):A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
+  else if(!A.en.some(e=>e.hp>0)&&!(A.ex&&A.wave===0)){if(A.wave>A.waves){A.es=[];A.hz=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);if(A.ex&&A.wave>=A.waves&&A.ex.area<A.ex.areas){A.exNext=1;const R=A.rew;if(A.ex.room==='schatz'){R.spl=(R.spl||0)+5;R.caps+=40;R.kak+=3;axSay('🗝 Schatztruhe: +5 ✨ · +40 🌱 · +3 🌵',2.2);}else if(A.ex.room==='elite'){R.spl=(R.spl||0)+3;R.coins=Math.round(R.coins*1.25);axSay('💀 Elite-Beute: +3 ✨',2);}}axPick();}}   // Sieg: kurz den Münzregen zeigen
+  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.ex?'🧭 Gebiet '+A.ex.area+'/'+A.ex.areas+(A.ex.room&&A.ex.area>1?' '+(XP_ROOM[A.ex.room]||{}).i:'')+(A.gate?' · Tor offen':A.ex.room==='quelle'&&A.wave===0?' · Heilquelle':A.ex.room==='haendler'&&A.wave===0?' · Händler':A.wave>A.waves?' · Boss':' · Welle '+Math.max(1,Math.min(A.wave,A.waves))+'/'+A.waves):A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
 function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);if(A.shake>0&&A.flash>-1&&!A.en.some(e=>e.boss&&e.hp>0))g.translate((Math.random()-.5)*10*A.shake,(Math.random()-.5)*10*A.shake);
   // Boden: Wüstenarena mit Kacheln
   if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);axDrawTer(g);axDrawGate(g);
