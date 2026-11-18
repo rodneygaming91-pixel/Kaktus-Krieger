@@ -217,6 +217,7 @@ h1 span{color:var(--bloom)}
 .inv .hint{grid-column:1/-1}
 .eqfoot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .gold{display:flex;align-items:center;margin-right:auto;font-family:var(--display);font-size:1.25rem;color:#ffd447;text-shadow:0 2px 0 #000}
+.gc{display:inline-block;width:.95em;height:.95em;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff2a8,#e0a800 55%,#8a6200);border:1.5px solid #5a3e00;box-sizing:border-box;vertical-align:-.14em;flex:none}
 .gold i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff2a8,#e0a800 55%,#8a6200);border:1.5px solid #5a3e00;margin-right:-6px}
 .gold b{font-weight:400;margin-left:12px;font-variant-numeric:tabular-nums}
 .sbtn{flex:1;border:2px solid #2a1a0e;border-radius:8px;padding:9px 10px;font-family:var(--display);font-size:.95rem;letter-spacing:.03em;cursor:pointer;color:#fff6e0;
@@ -1378,6 +1379,8 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 <div class="modal" id="modal" hidden><div class="card" id="card"></div></div>
 
 <script>
+const GC='<kk-c class="gc" role="img" aria-label="Münzen"></kk-c>';   // 18.11.2026: überall dieselbe Goldmünze wie oben links
+
 // ---------- Sprache / Language (14.11.2026) ----------
 // Deutsch ist die Grundsprache. Auf Englisch werden alle Texte im Bild automatisch übersetzt:
 // Textknoten, title/aria-label/placeholder und alles, was auf das Spielfeld (Canvas) geschrieben wird.
@@ -1923,7 +1926,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -5310,7 +5313,7 @@ function renderDaily(msg){const st=dailyState(),cur=st.ready?st.day:st.day;
     <p style="margin:0;color:var(--muted)">Komm jeden Tag vorbei! Tag 7 bringt die große Belohnung. Lässt du einen Tag aus, geht es wieder bei Tag 1 los.</p>
     <div class="dgrid">${DAILY.map((R,i)=>{const d=i+1,done=st.ready?d<cur:d<=cur,now=st.ready&&d===cur;
       return`<div class="dday${done?' done':''}${now?' now':''}${d===7?' big':''}"><small>Tag ${d}</small>
-        <span class="dico">${R.item?'🎁':R.kak&&!R.caps?'🌵':R.coins?'🪙':'🌱'}</span><b>${dailyTxt(R)}</b>${done?'<i>✓</i>':''}</div>`;}).join('')}</div>
+        <span class="dico">${R.item?'🎁':R.kak&&!R.caps?'🌵':R.coins?GC:'🌱'}</span><b>${dailyTxt(R)}</b>${done?'<i>✓</i>':''}</div>`;}).join('')}</div>
     ${msg?`<p class="hint" style="margin:0">${msg}</p>`:''}
     <div class="row">${st.ready?`<button class="btn" id="dlLater" type="button">Später</button><button class="btn go" id="dlGo" type="button">Tag ${cur} abholen</button>`
       :`<button class="btn go" id="dlLater" type="button">Morgen wieder!</button>`}</div>`;
@@ -5446,7 +5449,7 @@ function dgFight(){const T=dgT(),cp=dg.type==='caps',D=dgState();if(dg.anim||dgK
   requestAnimationFrame(step);}
 function renderDg(){
   if(dg.view==='list'){$('card').innerHTML=`<h2>🏰 Dungeons</h2>
-    ${Object.entries(DGT).map(([id,T])=>`<button class="dgcard${id==='caps'?' cap':''}" type="button" data-dg="${id}"><span class="dgi">${T.ico}</span><div><b>${T.n}</b><small>${T.desc} Stufe ${dgState(T).max}</small></div><span class="dgk">🗝 ${dgKeys(T)}</span></button>`).join('')}
+    ${Object.entries(DGT).map(([id,T])=>`<button class="dgcard${id==='caps'?' cap':''}" type="button" data-dg="${id}"><span class="dgi">${T.ico==='🪙'?GC:T.ico}</span><div><b>${T.n}</b><small>${T.desc} Stufe ${dgState(T).max}</small></div><span class="dgk">🗝 ${dgKeys(T)}</span></button>`).join('')}
     <div class="dgcard soon"><span class="dgi">🔒</span><div><b>Weitere Dungeons</b><small>Kommen bald …</small></div></div>
     <div class="row"><button class="btn" id="dgX" type="button">Schließen</button></div>`;
     $('card').querySelectorAll('[data-dg]').forEach(b=>b.onclick=()=>{dg.type=b.dataset.dg;dg.view='fight';dg.res=null;renderDg();});
@@ -5617,7 +5620,7 @@ function renderMail(){
   $('card').innerHTML=`<h2>✉ Poststelle</h2>
     ${!mail.loaded?'<p class="hint">Die Post wird geladen … Briefe gibt es nur mit Internet.</p>':!L.length&&!mail.prz.length?'<p class="hint">Keine Briefe da. Schau später wieder vorbei!</p>':''}
     <div class="mlist">${mail.prz.map(x=>`<div class="mletter prz"><h3>📬 ${x.ico} ${x.title}</h3><p>${x.body}</p>
-      <div class="mrew">${x.rew.map(y=>`<span>${y}</span>`).join('')}</div><button class="btn go" type="button" data-prz="${x.kind}">Abholen</button></div>`).join('')}${L.map(m=>{const rw=mailRewTxt(m.reward||{});return`<div class="mletter${m.claimed?' done':''}">
+      <div class="mrew">${x.rew.map(y=>`<span>${y.replace('🪙',GC)}</span>`).join('')}</div><button class="btn go" type="button" data-prz="${x.kind}">Abholen</button></div>`).join('')}${L.map(m=>{const rw=mailRewTxt(m.reward||{});return`<div class="mletter${m.claimed?' done':''}">
       <h3>${m.claimed?'📭':'📬'} ${m.title}</h3><time>${d(m.at)}</time>${m.body?`<p>${m.body}</p>`:''}
       ${rw.length?`<div class="mrew">${rw.map(x=>`<span>${x}</span>`).join('')}</div>
       ${m.claimed?'<button class="btn" type="button" disabled>✓ Abgeholt</button>':`<button class="btn go" type="button" data-mid="${m.id}">Abholen</button>`}`:''}</div>`;}).join('')}</div>
@@ -6061,6 +6064,8 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn151',date:'2026-11-18',title:'Eine Münze für alles',hero:['🟡 Überall dieselbe Goldmünze','Im Dorf, in der Schmiede, beim Händler, auf dem Trainingsplatz und in der Taverne steht jetzt dieselbe Goldmünze wie oben links. Es war schon immer dasselbe Geld – jetzt sieht man es auch.'],items:()=>[],
+  en:{title:'One coin for everything',hero:['🟡 The same gold coin everywhere','The village, forge, trader, training ground and tavern now show the same gold coin as the top left. It was always the same money – now it looks the same too.'],items:()=>[]}},
   {id:'pn150',date:'2026-11-18',title:'Haustiere laufen schöner mit',hero:['🐾 Blick nach vorn','Dein Haustier schaut jetzt immer zu den Gegnern, statt in die falsche Richtung. Es läuft etwas weiter neben deinem Kaktus und trippelt bei kleinen Schritten nicht mehr ständig hin und her.'],items:()=>[],
   en:{title:'Pets follow more nicely',hero:['🐾 Eyes forward','Your pet now always looks towards the enemies instead of the wrong way. It walks a little further beside your cactus and no longer shuffles back and forth on tiny steps.'],items:()=>[]}},
   {id:'pn149',date:'2026-11-18',title:'Favoriten für Ausrüstung',hero:['⭐ Lieblingsteile schützen','Tippe ein Teil an und dann oben rechts auf den Stern. Favoriten bekommen einen ⭐ im Inventar – die Schmiede zerlegt sie nicht und „Schlechtere markieren“ lässt sie aus.'],items:()=>[['Achtung:','Alte Favoriten bleiben liegen, bis du den Stern wieder wegnimmst – räum ab und zu selbst auf.']],
@@ -6342,7 +6347,7 @@ function renderDorf(){const H=$('tabDorf');if(!H)return;const V=vInit();vDone();
     drawDorf();return;}
   const labs=VB.map(B=>{const lv=vLv(B.id),lock=vLv('rat')<B.need;return`<button type="button" class="vlab${vSel===B.id?' on':''}${lock||B.soon?' lock':''}" data-vb="${B.id}" style="left:${(B.lx||B.x)*100}%;top:calc(${(B.ly||B.y)*100}% + ${B.ly?0:8}px)">${B.ico} ${B.n}${lock?' 🔒':B.soon?'':lv===0?' 🚧':` <em>Lv ${lv}</em>`}${B.id==='gart'&&farmRipe()?` <em class="vripe">${farmRipe()} reif</em>`:''}</button>`;}).join('');
   const j=V.job,JB=j&&VB.find(x=>x.id===j.id);
-  H.innerHTML=`<div class="vfull"><div class="vtop"><b>🏘 Dein Dorf</b><span class="vres"><i>🪙 ${fmt(S.coins||0)}</i><i>🌵 ${fmt(S.kak||0)}</i>${vLv('schm')?`<i>🪨 ${fmt(S.ore||0)}</i>`:''}</span>
+  H.innerHTML=`<div class="vfull"><div class="vtop"><b>🏘 Dein Dorf</b><span class="vres"><i>${GC} ${fmt(S.coins||0)}</i><i>🌵 ${fmt(S.kak||0)}</i>${vLv('schm')?`<i>🪨 ${fmt(S.ore||0)}</i>`:''}</span>
       <button type="button" class="sbtn go" id="vlBtn">🏘 Andere Dörfer</button></div>
     <div class="vjob${j?'':' idle'}">${j?`🔨 ${vName(j.id)} → Stufe ${j.to} · <b id="vJobT">${fmtT((j.end-Date.now())/1000)}</b>`:'🔨 Bauarbeiter hat frei – tippe ein Gebäude an'}</div>
     <div class="vscene"><canvas id="vCv"></canvas>${labs}</div>
@@ -6358,15 +6363,15 @@ function vPanel(){const P=$('vPanel');if(!P||!vSel)return;if(vSel==='train'&&vLv
     h+=`<ul><li>Andere Gebäude bis Stufe ${lv}</li>${nx.length&&lv<B.max?`<li>Nächste Stufe schaltet frei: ${nx.join(', ')}</li>`:''}</ul>`;}
   if(B.id==='schm'&&lv>0){const w=vWorse(),o=w.reduce((a,it)=>a+oreFor(it,lv),0),c=w.reduce((a,it)=>a+sellValue(it),0);
     h+=`<div class="vsub"><b>🪨 Eisenerz: ${fmt(S.ore||0)}</b><small>${lv>1?'+'+(lv*10-10)+' % Erz durch die Schmiede-Stufe · ':''}Jedes zerstörte Teil gibt jetzt auch Erz – auch im Inventar und beim Beschwören. ⭐ Favoriten werden nie zerlegt.</small></div>
-      <button type="button" class="btn go" id="vScrap" ${w.length?'':'disabled'}>⚒ ${w.length} schlechtere Teile zerlegen<small>${w.length?'+'+fmt(o)+' 🪨 · +'+fmt(c)+' 🪙':'Nichts zu zerlegen'}</small></button>
+      <button type="button" class="btn go" id="vScrap" ${w.length?'':'disabled'}>⚒ ${w.length} schlechtere Teile zerlegen<small>${w.length?'+'+fmt(o)+' 🪨 · +'+fmt(c)+' '+GC:'Nichts zu zerlegen'}</small></button>
       <div class="vsub"><b>✨ Verbessern</b><small>Max. ⭐${lv} (Schmiede-Stufe) · jeder ⭐ +5 % · ⭐ gehören zum Teil – zerlegst du es, gibt es 70 % des Erzes zurück.</small></div>
       <div class="vups">${SLOTS.filter(sl=>!sl.pct).map(sl=>{const it=S.gear[sl.id];if(!it)return'';const u=it.up||0,mx=u>=lv,c=upCost(it),ok=!mx&&(S.ore||0)>=c.ore&&(S.coins||0)>=c.coins;
         return`<div class="vup" style="--rc:${RAR[it.r].c}"><span><b>${sl.n} ${u?'⭐'+u:''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))} ${sl.unit}</em>${mx?'':' → <em class="up">+'+fmtV(sl,it.v*(1+UPS*(u+1)))+'</em>'}</small></span>
-          <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} 🪙</small>`}</button></div>`;}).join('')}</div>`;}
+          <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} ${GC}</small>`}</button></div>`;}).join('')}</div>`;}
   if(B.id==='hand'&&lv>0)h+=shopHtml(lv);
   if(B.id==='tav'&&lv>0)h+=questHtml(lv);
   if(B.id==='train'&&lv>0){const eq=S.skEq2||[];h+=`<div class="vsub"><b>🎯 Fähigkeiten · ${eq.length} / 2 ausgerüstet</b><small>Ausgerüstete Fähigkeiten setzt du im Kapitel mit den runden Knöpfen ein. Lernen und Ausbauen braucht deinen Bauarbeiter.</small></div><div class="vups">${SK2.map(K=>{const L=vLv(K.id),lock=lv<K.need,mx=L>=lv,c=vCost({id:K.id},L+1),busy=!!j,ok=!lock&&!mx&&!busy&&(S.coins||0)>=c.coins&&(S.kak||0)>=c.kak,on=eq.includes(K.id);
-    return`<div class="vup skrow" style="--rc:${on?'#ffd447':L?'#b07a3a':'#4a3a2c'}"><span><b>${K.ico} ${K.n} ${L?'· Lv '+L:''}</b><small>${lock?'🔒 ab Trainingsplatz Stufe '+K.need:K.d(Math.max(1,L))}</small>${lock?'':`<small class="skidle">⚔ ${K.idle(Math.max(1,L))}</small>`}${!lock&&!mx?`<small>${L?'Ausbau':'Lernen'}: 🪙 ${fmt(c.coins)} · 🌵 ${fmt(c.kak)} · ⏱ ${fmtT(c.sec)}</small>`:''}</span>
+    return`<div class="vup skrow" style="--rc:${on?'#ffd447':L?'#b07a3a':'#4a3a2c'}"><span><b>${K.ico} ${K.n} ${L?'· Lv '+L:''}</b><small>${lock?'🔒 ab Trainingsplatz Stufe '+K.need:K.d(Math.max(1,L))}</small>${lock?'':`<small class="skidle">⚔ ${K.idle(Math.max(1,L))}</small>`}${!lock&&!mx?`<small>${L?'Ausbau':'Lernen'}: ${GC} ${fmt(c.coins)} · 🌵 ${fmt(c.kak)} · ⏱ ${fmtT(c.sec)}</small>`:''}</span>
       <span class="skbtns">${L?`<button type="button" class="sbtn${on?' go':''}" data-skeq="${K.id}">${on?'✓ Dabei':'Ausrüsten'}</button>`:''}<button type="button" class="sbtn${ok?' go':''}" data-skup="${K.id}" ${ok?'':'disabled'}>${lock?'🔒':mx?'Max':busy?'🔨':L?'⬆ '+(L+1):'Lernen'}</button></span></div>`;}).join('')}</div>`;}
   if(B.id==='mauer'&&lv>0)h+=`<div class="vsub"><b>🛡 Verteidigung: Stufe ${lv}</b><small>+${lv*8} % Leben für Verteidiger · ${Math.min(4,1+Math.floor(lv/3))} Türme</small></div>`;
   if(B.id==='lag')h+=`<ul><li>Offline-Zeit jetzt: <b>${8+lv} Stunden</b></li>${lv<B.max?`<li>Nächste Stufe: ${9+lv} Stunden</li>`:''}</ul>`;
@@ -6375,7 +6380,7 @@ function vPanel(){const P=$('vPanel');if(!P||!vSel)return;if(vSel==='train'&&vLv
   if(j&&j.id===B.id){const left=Math.max(0,j.end-Date.now()),pc=100-left/j.dur*100;
     h+=`<div class="vbar"><i id="vBarI" style="width:${pc}%"></i><b id="vBarT">Baut Stufe ${j.to} · noch ${fmtT(left/1000)}</b></div>`;}
   else if(!lock&&!B.soon&&lv<B.max){const c=vCost(B,lv+1),okC=(S.coins||0)>=c.coins,okK=(S.kak||0)>=c.kak,cap=B.id!=='rat'&&lv+1>rat,busy=!!j;
-    h+=`${lv===0?'<p><b>Noch nicht gebaut.</b></p>':''}<div class="vcost"><span class="${okC?'':'no'}">🪙 ${fmt(c.coins)}</span><span class="${okK?'':'no'}">🌵 ${fmt(c.kak)}</span><span>⏱ ${fmtT(c.sec)}</span></div>
+    h+=`${lv===0?'<p><b>Noch nicht gebaut.</b></p>':''}<div class="vcost"><span class="${okC?'':'no'}">${GC} ${fmt(c.coins)}</span><span class="${okK?'':'no'}">🌵 ${fmt(c.kak)}</span><span>⏱ ${fmtT(c.sec)}</span></div>
       <button type="button" class="btn go" id="vGo" ${okC&&okK&&!cap&&!busy?'':'disabled'}>${busy?'🔨 Bauarbeiter ist beschäftigt':cap?'Erst Rathaus ausbauen':lv===0?'🔨 '+B.n+' bauen':'🔨 Auf Stufe '+(lv+1)+' ausbauen'}</button>`;}
   P.innerHTML=h;const g=$('vGo');if(g)g.onclick=vBuild;
   P.querySelectorAll('[data-vup]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vup],lv=vLv('schm');if(!it||(it.up||0)>=lv)return;const c=upCost(it);
@@ -6400,7 +6405,7 @@ function vlEnd(won){const A=AX,T=A.pvp,w=T.wall||0;vlReport(won);qInc('vl',1);A.
   const any=R.caps||R.kak||R.coins||R.ore,P=$('axPick');
   P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Dorf von '+esc2(T.name)+' erobert! 🏴':'Abgewehrt!'}</h3>
     <small>${won?esc2(T.name)+' verliert dabei nichts – bekommt aber Post von dir.':esc2(T.name)+'s Dorf hat standgehalten. Mach deine Ausrüstung stärker und versuch es morgen wieder.'}</small>
-    <div class="axrew">${any?`${R.coins?`<span><i>🪙</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ore?`<span><i>🪨</i><b>+${fmt(R.ore)}</b><small>Eisenerz</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
+    <div class="axrew">${any?`${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ore?`<span><i>🪨</i><b>+${fmt(R.ore)}</b><small>Eisenerz</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
     <div class="axbtns"><button type="button" class="btn go" id="axHome">Einsammeln</button></div></div>`;P.hidden=false;
   $('axHome').onclick=()=>{if(R.ps)S.pseed=(S.pseed||0)+R.ps;S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;if(R.ore)S.ore=(S.ore||0)+R.ore;A.rew=null;save();lastHud='';axClose();vlShow();};}
 async function vlVisit(code){vl.open=false;$('modal').hidden=true;try{const r=await rpc('kk_vl_visit',{p_code:ON.code,p_target:code});if(!r)throw 0;VIS=r;vWalk=null;tabGo('dorf');renderDorf();}catch(e){banner={txt:'Dorf konnte nicht geladen werden',t:2};}}
@@ -6450,13 +6455,13 @@ function qToday(lv){const d=todayStr();let h=7;for(const ch of 'q'+d+(S.char&&S.
   const pool=QUESTS.filter(o=>!o.need||o.need()),out=[];while(pool.length&&out.length<qN(lv)){h=(h*1103515245+12345)>>>0;const o=pool.splice(h%pool.length,1)[0];out.push(Object.assign({},o,{goal:o.g[(h>>>8)&1]}));}return out;}
 const qProg=o=>Math.max(0,((S.cnt||{})[o.k]||0)-(qDay().base[o.k]||0));
 const qRew=o=>o.r[0]==='coins'?['coins',cMin(o.r[1])]:o.r;
-const RICO={caps:'🌱',kak:'🌵',ore:'🪨',coins:'🪙'};
+const RICO={caps:'🌱',kak:'🌵',ore:'🪨',coins:'🪙'};   // nur für Banner-Texte; in Fenstern die gezeichnete Goldmünze GC
 function questHtml(lv){const D=qDay(),Q=qToday(lv),all=Q.every(o=>D.got[o.id]),now=new Date(),mid=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
   return`<div class="vsub"><b>📜 Aufträge heute</b><small>Neue Aufträge in ${fmtT((mid-now)/1000)} · ${Q.length} Aufträge${lv<5?' (mehr ab Taverne Stufe '+(lv<3?3:5)+')':''}</small></div>
     <div class="vups">${Q.map(o=>{const p=Math.min(o.goal,qProg(o)),done=p>=o.goal,got=D.got[o.id],[rk,rv]=qRew(o);
       return`<div class="vup${got?' qgot':''}" style="--rc:${done?'#63c74d':'#6b5644'}"><span><b>${o.n.replace('{n}',o.goal)}</b>
         <span class="vbar sm"><i style="width:${p/o.goal*100}%"></i><b>${fmt(p)} / ${fmt(o.goal)}</b></span></span>
-        <button type="button" class="sbtn${done&&!got?' go':''}" data-qget="${o.id}" ${done&&!got?'':'disabled'}>${got?'✓ Erledigt':'Abholen'}<small>+${fmt(rv)} ${RICO[rk]}</small></button></div>`;}).join('')}
+        <button type="button" class="sbtn${done&&!got?' go':''}" data-qget="${o.id}" ${done&&!got?'':'disabled'}>${got?'✓ Erledigt':'Abholen'}<small>+${fmt(rv)} ${rk==='coins'?GC:RICO[rk]}</small></button></div>`;}).join('')}
       <div class="vup" style="--rc:#ffd447"><span><b>🎁 Alle Aufträge erledigt</b><small>Bonus: +20 🌱 · +5 🌵 · +1 🥚</small></span>
         <button type="button" class="sbtn${all&&!D.got.all?' go':''}" data-qget="all" ${all&&!D.got.all?'':'disabled'}>${D.got.all?'✓ Erledigt':'Abholen'}</button></div></div>`;}
 function questGet(id){const lv=vLv('tav'),D=qDay();if(D.got[id])return;
@@ -6481,7 +6486,7 @@ function shopHtml(lv){const D=shopDay(),now=new Date(),mid=new Date(now.getFullY
   return`<div class="vsub"><b>🛒 Angebote heute</b><small>Neue Waren in ${fmtT((mid-now)/1000)} · ${shopN(lv)} Angebote${lv<5?' (mehr ab Händler Stufe '+(lv<3?3:5)+')':''}</small></div>
     <div class="vups">${shopToday(lv).map(o=>{const c=o.pay(),left=o.lim-(D.b[o.id]||0),ok=left>0&&(!c.coins||(S.coins||0)>=c.coins)&&(!c.kak||(S.kak||0)>=c.kak)&&(!o.can||o.can());
       return`<div class="vup" style="--rc:#b07a3a"><span><b>${o.ico} ${o.n}</b><small>${left>0?'Noch '+left+'× heute':'Heute ausverkauft'}${o.can&&!o.can()?' · nur während gebaut wird':''}</small></span>
-        <button type="button" class="sbtn${ok?' go':''}" data-shop="${o.id}" ${ok?'':'disabled'}>${left>0?'Kaufen':'—'}<small>${c.coins?fmt(c.coins)+' 🪙':fmt(c.kak)+' 🌵'}</small></button></div>`;}).join('')}</div>`;}
+        <button type="button" class="sbtn${ok?' go':''}" data-shop="${o.id}" ${ok?'':'disabled'}>${left>0?'Kaufen':'—'}<small>${c.coins?fmt(c.coins)+' '+GC:fmt(c.kak)+' 🌵'}</small></button></div>`;}).join('')}</div>`;}
 function shopBuy(id){const lv=vLv('hand'),o=shopToday(lv).find(x=>x.id===id),D=shopDay();if(!o)return;const c=o.pay();
   if((D.b[id]||0)>=o.lim||(c.coins&&(S.coins||0)<c.coins)||(c.kak&&(S.kak||0)<c.kak)||(o.can&&!o.can()))return;
   if(c.coins)S.coins-=c.coins;if(c.kak)S.kak-=c.kak;o.give();D.b[id]=(D.b[id]||0)+1;save();lastHud='';banner={txt:'Gekauft: '+o.n,t:1.6};vDone();renderDorf();}
@@ -7013,7 +7018,7 @@ function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);let st=null;if(won){ax
   if(A.pet&&A.pet.id==='kafer'&&A.rew){const m=1+.1+.04*A.pet.lv,R=A.rew;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}const newG=won&&A.chg>(S.chap||0);if(newG){S.chap=A.chg;save();lastHud='';}const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
   const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Kapitel '+A.chg+' geschafft! 🎉':'Besiegt!'}</h3>${st?st.html:''}${newG?`<p class="axunl">🔓 Gebiet ${A.chg+1} ist jetzt frei – dein Kaktus kämpft dort weiter.</p>`:''}
     <small>${won?'Alle '+A.waves+' Wellen und der Boss sind besiegt.':'Geschafft: '+(A.wave-1)+' von '+A.waves+' Wellen.'}</small>
-    <div class="axrew">${any?`${R.coins?`<span><i>🪙</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ps?`<span><i>🥚</i><b>+${R.ps}</b><small>Haustier-Samen</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
+    <div class="axrew">${any?`${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ps?`<span><i>🥚</i><b>+${R.ps}</b><small>Haustier-Samen</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
     <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">${newG?'Nächstes Kapitel':'Nochmal'}</button></div></div>`;P.hidden=false;
   const take=()=>{if(R.ps)S.pseed=(S.pseed||0)+R.ps;S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
   $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,newG?null:A.chg);};}
