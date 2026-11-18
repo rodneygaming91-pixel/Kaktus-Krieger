@@ -1252,6 +1252,8 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .elstrip .er small{font-size:.5rem}.elstrip .er b{font-size:.7rem}.elstrip .elbox{min-width:0;overflow:hidden}
 @media (max-width:420px){.elstrip{gap:4px;margin:5px 4px 0}.elstrip .elbox{padding:3px 5px;gap:3px}.elstrip .er{gap:3px}.elstrip .er small{font-size:.42rem}.elstrip .er b{font-size:.6rem}.elstrip .eb{width:14px;height:14px;font-size:.5rem}}
 /* Kapitel-Knopf */
+.xplv{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center;text-align:center;margin:6px 0}.xplv b{display:block;font-size:1.3rem;color:#ffd447}.xplv small{color:var(--sand);font-size:.72rem}
+.xpmut{display:grid;gap:5px;margin:6px 0}.xpmut span{background:#2a1e16;border:2px solid #7a3a2a;border-radius:10px;padding:5px 8px}.xpmut b{display:block;font-size:.8rem;color:#ff9a6a}.xpmut small{font-size:.68rem;color:var(--sand)}.xpmut em{font-size:.75rem;color:var(--sand);text-align:center}
 .xpshop{display:grid;gap:6px;margin:8px 0}.xpshop .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}.xpshop .btn small{font-size:.7rem;opacity:.85}
 .chapbtn.xpbtn{border-color:#4fb8ff;background:linear-gradient(#1e3a5a,#14263e)}.chapbtn.xpbtn em{background:linear-gradient(#5fc8ff,#2a8ac8)!important}
 .chapbtn{display:flex;align-items:center;gap:10px;width:calc(100% - 16px);margin:6px 8px 2px;padding:8px 12px;border-radius:14px;border:2px solid #b07a3a;background:linear-gradient(#5a3a1e,#3e2712);color:#ffe7b8;font:inherit;cursor:pointer;text-align:left;box-shadow:0 3px 0 #2a1a0b}
@@ -1340,7 +1342,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
-  <button type="button" class="chapbtn xpbtn" id="xpBtn" hidden><i>🧭</i><span><b>Expedition</b><small id="xpS">4 Gebiete · Leben bleibt</small></span><em>Los ▶</em></button>
+  <button type="button" class="chapbtn xpbtn" id="xpBtn" hidden><i>🧭</i><span><b>Expedition</b><small id="xpS">Wildnis-Stufe 1</small></span><em>Los ▶</em></button>
   </div>
   
   <div class="tpanel" id="tPanel">
@@ -1621,7 +1623,8 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
+'Opa Stachel':'Grandpa Spike','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
+'🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
 '👑 Das Tor zum Boss ist offen!':'👑 The gate to the boss is open!','🚪 Zwei Tore! Wähle deinen Weg – lies die Schilder.':'🚪 Two gates! Choose your path – read the signs.','💧 Eine Heilquelle! Lauf hinein.':'💧 A healing spring! Walk into it.','💧 Du bist erfrischt! +50 % Leben':'💧 You feel refreshed! +50 % life',
 '🗝 Schatztruhe: +5 ✨ · +40 🌱 · +3 🌵':'🗝 Treasure chest: +5 ✨ · +40 🌱 · +3 🌵','💀 Elite-Beute: +3 ✨':'💀 Elite loot: +3 ✨','🏜 Treibsand':'🏜 Quicksand','🌋 Lava-Spalten':'🌋 Lava cracks','⛰ Enge Schlucht':'⛰ Narrow canyon','💧 Oase':'💧 Oasis','🏛 Ruinen':'🏛 Ruins','Expedition':'Expedition','Los ▶':'Go ▶','Neue Expedition':'New expedition','Expedition geschafft! 🎉':'Expedition complete! 🎉','Wüstensplitter':'Desert shards','🚪 Das Tor ist offen – lauf nach oben ins nächste Gebiet!':'🚪 The gate is open – walk up into the next area!',
@@ -1889,7 +1892,8 @@ const RX=[
   [/^⚔ Im Kampf alle (\d+) s von allein: (\d+) % auf alle Gegner$/,(m)=>'⚔ In battle every '+m[1]+' s automatically: '+m[2]+' % on all enemies'],
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
-  [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^💀 Elite-Lager: (\d+) Elite-Gegner!$/,(m)=>'💀 Elite camp: '+m[1]+' elite enemies!'],[/^Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: (.+)$/,(m)=>'You pay with the coins collected on this expedition: '+m[1]],[/^([\d.,]+(?: Tsd\.| Mio\.| Mrd\.)?) Münzen$/,(m)=>m[1]+' coins'],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
+  [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^💀 Elite-Lager: (\d+) Elite-Gegner!$/,(m)=>'💀 Elite camp: '+m[1]+' elite enemies!'],[/^Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: (.+)$/,(m)=>'You pay with the coins collected on this expedition: '+m[1]],[/^([\d.,]+(?: Tsd\.| Mio\.| Mrd\.)?) Münzen$/,(m)=>m[1]+' coins'],[/^Wildnis-Stufe (\d+)(.*)$/,(m)=>'Wild level '+m[1]+m[2]],[/^leichter als deine höchste Stufe (\d+)$/,(m)=>'easier than your highest level '+m[1]],[/^🔓 Wildnis-Stufe (\d+) ist jetzt frei(.*)$/,(m)=>'🔓 Wild level '+m[1]+' is unlocked'+m[2].replace(' – neu: ',' – new: ')],[/^Stufe (\d+) ▶$/,(m)=>'Level '+m[1]+' ▶'],[/^🧭 S(\d+) · Gebiet (.+)$/,(m)=>'🧭 L'+m[1]+' · Area '+m[2].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ').replace(' · Heilquelle',' · Healing spring').replace(' · Händler',' · Trader')],
+  [/^4 Gebiete · dein Leben bleibt · Gegner (.+) · Beute (.+)$/,(m)=>'4 areas · your life carries over · enemies '+m[1].replace('Stärke-Stufen','power levels').replace('normal','normal')+' · loot '+m[2]],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
   [/^Besiegt in Gebiet (\d+)!$/,(m)=>'Defeated in area '+m[1]+'!'],[/^Geschafft: (\d+) von (\d+) Gebieten\.$/,(m)=>'Cleared: '+m[1]+' of '+m[2]+' areas.'],[/^Alle (\d+) Gebiete und der Boss sind besiegt\.$/,(m)=>'All '+m[1]+' areas and the boss are defeated.'],
   [/^4 Gebiete · Leben bleibt(.*)$/,(m)=>'4 areas · life carries over'+m[1].replace(' · Rekord ',' · best ')],
   [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
@@ -1958,7 +1962,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -6283,6 +6287,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn159',date:'2026-11-18',title:'Expedition: Wildnis-Stufen',hero:['🔥 Es wird härter','Jede geschaffte Expedition schaltet die nächste Wildnis-Stufe frei. Die Gegner werden stärker, und ab Stufe 2 kommt mit jeder Stufe eine Erschwernis dazu – dafür gibt es pro Stufe 25 % mehr ✨.'],
+   items:()=>[['Erschwernisse:','🔥 Hitzewelle (Stehenbleiben kostet Leben), 🦂 Rudel (mehr Gegner), 🌪 Sandsturm (du siehst nur einen Kreis um dich), 🛡 Gepanzert (zähere Gegner), 💔 Keine Herzen.'],['Auswahl:','Vor dem Start wählst du die Stufe – auch eine leichtere, wenn du einfach Splitter sammeln willst.']],
+  en:{title:'Expedition: wild levels',hero:['🔥 It gets harder','Every expedition you complete unlocks the next wild level. Enemies get stronger, and from level 2 every level adds a handicap – in return each level gives 25 % more ✨.'],
+   items:()=>[['Handicaps:','🔥 Heatwave (standing still costs life), 🦂 Pack (more enemies), 🌪 Sandstorm (you only see a circle around you), 🛡 Armoured (tougher enemies), 💔 No hearts.'],['Choose:','Before you start you pick the level – an easier one too, if you just want to collect shards.']]}},
   {id:'pn158',date:'2026-11-18',title:'Expedition: Weggabelungen',hero:['🚪 Du wählst den Weg','Nach jedem Gebiet stehen jetzt zwei Tore mit Schildern bereit. Du entscheidest, was als Nächstes kommt.'],
    items:()=>[['💀 Elite-Lager:','viele Elite-Gegner, dafür +3 ✨ und mehr Münzen.'],['💧 Heilquelle:','kein Kampf – bringt dir 50 % Leben zurück.'],['🧳 Händler:','Stärkungen für diesen Lauf, bezahlt mit den gesammelten Münzen.'],['🗝 Schatzkammer:','Kampf mit einer Truhe am Ende.'],['❓ Unbekannt:','eins davon – Überraschung!']],
   en:{title:'Expedition: forks in the road',hero:['🚪 You choose the path','After every area there are now two gates with signs. You decide what comes next.'],
@@ -7194,7 +7202,26 @@ const XP_UNLOCK=48;
 // Schritt 2: jedes Gebiet hat eigenes Gelände
 const XP_TER={sand:{n:'🏜 Treibsand',d:'Treibsand bremst dich stark'},lava:{n:'🌋 Lava-Spalten',d:'Glut brennt – nicht drin stehen bleiben'},schlucht:{n:'⛰ Enge Schlucht',d:'Wenig Platz zum Ausweichen'},
   oase:{n:'💧 Oase',d:'Wasser bremst, heilt dich aber langsam'},ruinen:{n:'🏛 Ruinen',d:'Viele Säulen als Deckung'}};
-function xpNew(){const n=WORLDS.length,pool=[...Array(n).keys()].sort(()=>Math.random()-.5),T=Object.keys(XP_TER).sort(()=>Math.random()-.5);return{area:1,areas:4,wpa:2,wi:pool.slice(0,4),ter:T.slice(0,4),done:0};}
+function xpNew(lv){const n=WORLDS.length,pool=[...Array(n).keys()].sort(()=>Math.random()-.5),T=Object.keys(XP_TER).sort(()=>Math.random()-.5);lv=Math.max(1,lv||S.xpLv||1);return{area:1,areas:4,wpa:2,wi:pool.slice(0,4),ter:T.slice(0,4),done:0,lv};}
+// Schritt 4a: Wildnis-Stufen – jede geschaffte Stufe schaltet die nächste frei. Gegner werden stärker, ab Stufe 2 kommt pro Stufe eine Erschwernis dazu.
+const XP_MUT=[{id:'heat',i:'🔥',n:'Hitzewelle',d:'Stehenbleiben kostet Leben'},{id:'pack',i:'🦂',n:'Rudel',d:'2 Gegner mehr pro Welle'},{id:'storm',i:'🌪',n:'Sandsturm',d:'Du siehst nur einen Kreis um dich'},
+  {id:'armor',i:'🛡',n:'Gepanzert',d:'Gegner haben 30 % mehr Leben'},{id:'noheart',i:'💔',n:'Keine Herzen',d:'Es erscheinen keine Herzen'}];
+const xpMuts=lv=>XP_MUT.slice(0,Math.max(0,Math.min(XP_MUT.length,(lv||1)-1)));
+const xpMut=id=>!!(AX.ex&&xpMuts(AX.ex.lv).some(m=>m.id===id));
+const xpRewM=lv=>1+.25*((lv||1)-1);
+function xpPick(){if(!$('modal').hidden||editing||!S.char)return;const max=Math.max(1,S.xpLv||1);let lv=max;
+  const draw=()=>{const M=xpMuts(lv);$('card').innerHTML=`<div class="sumres xppick"><h2>🧭 Expedition</h2>
+    <div class="xplv"><button type="button" class="btn" id="xpL" ${lv<=1?'disabled':''}>◀</button><div><b>Wildnis-Stufe ${lv}</b><small>${lv===max?'deine höchste Stufe':'leichter als deine höchste Stufe '+max}</small></div><button type="button" class="btn" id="xpR" ${lv>=max?'disabled':''}>▶</button></div>
+    <p class="hint" style="margin:0">4 Gebiete · dein Leben bleibt · Gegner ${lv>1?'+'+((lv-1)*25)+' Stärke-Stufen':'normal'} · Beute ×${xpRewM(lv).toFixed(2).replace('.',',')}</p>
+    <div class="xpmut">${M.length?M.map(m=>`<span><b>${m.i} ${m.n}</b><small>${m.d}</small></span>`).join(''):'<em>Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.</em>'}</div>
+    ${S.exBest?`<small style="display:block;text-align:center;color:var(--sand)">✨ ${fmt(S.spl||0)} Wüstensplitter</small>`:''}
+    <div class="row"><button class="btn" id="xpX" type="button">Zurück</button><button class="btn go" id="xpGo" type="button">Los ▶</button></div></div>`;
+    $('xpL').onclick=()=>{lv=Math.max(1,lv-1);draw();};$('xpR').onclick=()=>{lv=Math.min(max,lv+1);draw();};$('xpX').onclick=()=>{$('modal').hidden=true;};
+    $('xpGo').onclick=()=>{$('modal').hidden=true;axOpen(null,XP_UNLOCK,xpNew(lv));};};
+  draw();$('modal').hidden=false;}
+function axDrawStorm(g){const A=AX;if(!A.ex||!xpMut('storm')||!A.hero)return;const h=A.hero,t=performance.now()/1000,r=150+Math.sin(t*1.3)*8;
+  const gr=g.createRadialGradient(h.x,h.y-30,r*.55,h.x,h.y-30,r);gr.addColorStop(0,'rgba(120,80,40,0)');gr.addColorStop(1,'rgba(120,80,40,.93)');g.fillStyle=gr;g.fillRect(0,0,A.W,A.H);
+  g.strokeStyle='rgba(240,212,154,.35)';g.lineWidth=2;for(let i=0;i<22;i++){const y=(i*53)%A.H,x=((i*97+t*220)%(A.W+80))-40;g.beginPath();g.moveTo(x,y);g.lineTo(x+30,y+3);g.stroke();}}
 function xpTerrain(A){const k=A.ex.ter[A.ex.area-1],W=A.W,H=A.H;A.ter=k;A.tz=[];A.cor=null;
   const free=(x,y,r)=>Math.hypot(x-W/2,y-(H-70))>r+70&&Math.hypot(x-W/2,y-104)>r+60&&!A.tz.some(z=>Math.hypot(z.x-x,z.y-y)<z.rx+r+20);
   const add=(n,rx0,rx1)=>{let tries=0;while(A.tz.length<n&&tries++<200){const rx=rnd(rx0,rx1),x=rnd(rx,W-rx),y=rnd(170,H-140);if(free(x,y,rx))A.tz.push({x,y,rx,ry:rx*.55,ph:Math.random()*6});}};
@@ -7205,6 +7232,7 @@ function xpTerrain(A){const k=A.ex.ter[A.ex.area-1],W=A.W,H=A.H;A.ter=k;A.tz=[];
   for(const z of A.tz)A.obs=A.obs.filter(o=>Math.hypot((o.x-z.x)/z.rx,(o.y-z.y)/z.ry)>1.25);}
 const xpIn=(A,h)=>(A.tz||[]).some(z=>((h.x-z.x)/z.rx)**2+((h.y-z.y)/z.ry)**2<1);
 function axTerTick(dt){const A=AX,h=A.hero;A.tsl=1;
+  if(xpMut('heat')&&!h.moving&&!A.gate&&A.winT==null&&A.en.some(e=>e.hp>0)){h.still=(h.still||0)+dt;if(h.still>.6){h.hp-=h.max*.025*dt;A.htT=(A.htT||0)-dt;if(A.htT<=0){A.htT=.5;A.fx.push({x:h.x,y:h.y-64,txt:'🔥',col:'#ff8a3a',t:.5});}}}else h.still=0;
   if(A.spring&&!A.spring.used&&Math.hypot(h.x-A.spring.x,(h.y-A.spring.y)*1.6)<60){A.spring.used=1;const a=h.max*.5;h.hp=Math.min(h.max,h.hp+a);A.fx.push({x:h.x,y:h.y-70,txt:'+'+fmt(a),col:'#7fe08a',t:1});axSay('💧 Du bist erfrischt! +50 % Leben',1.8);setTimeout(()=>{if(AX.open&&AX.spring)axGate();},900);}if(!A.ex||!A.ter)return;const k=A.ter,inz=xpIn(A,h);
   if(inz&&k==='sand')A.tsl=.45;
   if(inz&&k==='oase'){A.tsl=.6;h.hp=Math.min(h.max,h.hp+h.max*.015*dt);}
@@ -7239,7 +7267,7 @@ function axDrawTer(g){const A=AX;if(A.spring){const S2=A.spring,t=performance.no
       const sh=g.createLinearGradient(ex,0,ex+sd*26,0);sh.addColorStop(0,'rgba(0,0,0,.38)');sh.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=sh;g.fillRect(Math.min(ex,ex+sd*26),96,26,H-96);}}}
 function xpTerSay(){const A=AX;if(!A.ex)return'';const T=XP_TER[A.ex.ter[A.ex.area-1]];return T?' · '+T.n:'';}
 function xpTerHint(){const A=AX;const T=A.ex&&XP_TER[A.ex.ter[A.ex.area-1]];if(T)setTimeout(()=>{if(AX.open&&AX.ex===A.ex)axSay(T.n+': '+T.d,2.2);},2400);}
-const xpSt=a=>(XP_UNLOCK-1)*20+10+a*12;   // etwas stärker als das letzte Kapitel, jedes Gebiet ein Stück mehr
+const xpSt=a=>(XP_UNLOCK-1)*20+10+a*12+((AX.ex&&AX.ex.lv)||1)*25-25;   // etwas stärker als das letzte Kapitel, jedes Gebiet ein Stück mehr
 // Schritt 3: Weggabelungen – zwei Tore mit Schildern, du entscheidest, was als Nächstes kommt
 const XP_ROOM={kampf:{i:'⚔',n:'Kampf',d:'normale Gegner'},elite:{i:'💀',n:'Elite-Lager',d:'schwer – mehr Beute'},quelle:{i:'💧',n:'Heilquelle',d:'kein Kampf – heilt dich'},
   haendler:{i:'🧳',n:'Händler',d:'Stärkungen kaufen'},schatz:{i:'🗝',n:'Schatzkammer',d:'Kampf + Truhe'},'?':{i:'❓',n:'Unbekannt',d:'Überraschung!'},boss:{i:'👑',n:'Boss',d:'letztes Gebiet'}};
@@ -7336,7 +7364,7 @@ function axOpen(pvp,chg,ex){if(AX.open)return;const d=document.createElement('di
     <div class="axmsg" id="axMsg" hidden></div><div class="axsk" id="axSk"></div><div class="axact" id="axAct"></div><div class="axpick" id="axPick" hidden></div>`;
   document.body.appendChild(d);
   const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
-  const cg=chg||Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{ex:ex||null,gate:null,tr:null,exNext:0,t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):ex?xpSt(1):(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:ex?ex.wpa:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
+  const cg=chg||Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{ex:ex||null,gate:null,tr:null,exNext:0,t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):ex?(XP_UNLOCK-1)*20+22+(ex.lv-1)*25:(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:ex?ex.wpa:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
   const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
   axBuild();axActInit();if(ex){setTimeout(()=>opa('ex'),400);xpTerHint();}else if(!pvp)setTimeout(()=>opa('chap'),400);
   const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
@@ -7377,15 +7405,15 @@ function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);if(A.ex)return xpEnd(w
   const take=()=>{if(R.ps)S.pseed=(S.pseed||0)+R.ps;S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
   $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,newG?null:A.chg);};}
 function xpEnd(won){const A=AX,E=A.ex;if(won){axGain(true);E.done=E.areas;}
-  const R=A.rew=A.rew||{caps:0,kak:0,coins:0};R.spl=(R.spl||0)+(won?12:0)+E.done*2;
+  const R=A.rew=A.rew||{caps:0,kak:0,coins:0};R.spl=Math.round(((R.spl||0)+(won?12:0)+E.done*2)*xpRewM(E.lv));const up=won&&E.lv>=(S.xpLv||1);if(up)S.xpLv=E.lv+1;
   if(A.pet&&A.pet.id==='kafer'){const m=1+.1+.04*A.pet.lv;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}
   S.exBest=Math.max(S.exBest||0,E.done);
-  const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Expedition geschafft! 🎉':'Besiegt in Gebiet '+E.area+'!'}</h3>
+  S.exBest=S.exBest||0;const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Expedition geschafft! 🎉':'Besiegt in Gebiet '+E.area+'!'}</h3><small>Wildnis-Stufe ${E.lv}</small>${up?`<p class="axunl">🔓 Wildnis-Stufe ${E.lv+1} ist jetzt frei${xpMuts(E.lv+1).length>xpMuts(E.lv).length?' – neu: '+xpMuts(E.lv+1).slice(-1)[0].i+' '+xpMuts(E.lv+1).slice(-1)[0].n:''}!</p>`:''}
     <small>${won?'Alle '+E.areas+' Gebiete und der Boss sind besiegt.':'Geschafft: '+E.done+' von '+E.areas+' Gebieten.'}</small>
     <div class="axrew">${R.spl?`<span><i>✨</i><b>+${R.spl}</b><small>Wüstensplitter</small></span>`:''}${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}</div>
-    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">Neue Expedition</button></div></div>`;P.hidden=false;
+    <div class="axbtns"><button type="button" class="btn" id="axHome">Einsammeln</button><button type="button" class="btn go" id="axAgain">${up?'Stufe '+(E.lv+1)+' ▶':'Neue Expedition'}</button></div></div>`;P.hidden=false;
   const take=()=>{S.spl=(S.spl||0)+(R.spl||0);S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;A.rew=null;save();lastHud='';};
-  $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,XP_UNLOCK,xpNew());};}
+  $('axHome').onclick=()=>{take();axClose();};$('axAgain').onclick=()=>{take();axClose();axOpen(null,XP_UNLOCK,xpNew(up?E.lv+1:E.lv));};}
 // ---- Haustiere (15.11.2026, Schritt 1): ansehen, mitnehmen, Start-Haustier ----
 const PETS=[
   {id:'igel', n:'Mini-Igel',          c:'#b07a4a',d:'Schießt kleine Stacheln auf Gegner.'},
@@ -7634,7 +7662,7 @@ function axTower(g,o){const W=(AX.pvp&&AX.pvp.wall)||1,stone=W>=4;g.save();g.tra
   for(let k=0;k<4;k++){g.beginPath();g.rect(-16+k*9,-54,6,8);g.fill();g.stroke();}g.fillStyle='#2a1a12';g.beginPath();g.roundRect(-5,-34,10,12,[5,5,0,0]);g.fill();g.restore();
   g.fillStyle='#0008';g.fillRect(o.x-18,o.y-64,36,5);g.fillStyle='#ff5a5a';g.fillRect(o.x-18,o.y-64,36*Math.max(0,o.hp/o.max),5);}
 function axSay(txt,sec){const m=$('axMsg');if(!m)return;m.innerHTML=txt;m.hidden=false;AX.msgT=sec||1.6;}
-function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=axWorld(),p=pow(A.st),n=3+A.wave+(A.ex?1:0),boss=A.wave>A.waves;
+function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=axWorld(),p=pow(A.st),n=3+A.wave+(A.ex?1:0)+(xpMut('pack')?2:0),boss=A.wave>A.waves;
   if(A.pvp){const T=A.pvp,wm=1+.08*(T.wall||0),pp=p*wm;
     if(A.wave===1&&T.wall>0){const nt=Math.min(4,1+Math.floor(T.wall/3));for(let i=0;i<nt;i++){const x=A.W*(i+1)/(nt+1);
       A.en.push({ty:W0.e[0],tower:true,x,y:118,hp:24*pp*3,max:24*pp*3,atk:6*pp*.45,sp:0,r:18,hit:0,cd:9,rng:true,fire:rnd(1.5,3)});}}
@@ -7648,6 +7676,7 @@ function axWave(){const A=AX;if(A.wave>0)qInc('wave',1);A.wave++;const W0=axWorl
     const x=side<.5?rnd(30,A.W-30):(side<.75?20:A.W-20),y=side<.5?rnd(60,A.H*.35):rnd(60,A.H*.5);
     const rng=ty.kind==='scorp'||ty.kind==='bird';A.en.push({ty,x,y,hp:24*ty.hp*p,max:24*ty.hp*p,atk:6*ty.atk*p*.4,sp:ty.sp*.9,r:ty.r,hit:0,cd:rnd(.3,1),rng,fire:rnd(1,2.2)});}
   // 15.11.2026 Elite-Gegner: ab Welle 2 mit 35 % Chance ein leuchtender Gegner – zäher, aber mit Extra-Beute
+  if(xpMut('armor'))for(const e of A.en)if(!e.ma){e.ma=1;e.hp*=1.3;e.max*=1.3;}
   if(A.ex&&A.ex.room==='elite'&&A.en.length){let n=0;for(const e of A.en)if(Math.random()<.45){e.elite=1;e.hp*=4;e.max*=4;e.atk*=1.3;e.r*=1.25;n++;}if(n){axSay('💀 Elite-Lager: '+n+' Elite-Gegner!',1.6);return;}}
   if(A.wave>=2&&Math.random()<.35&&A.en.length){const e=A.en[Math.floor(Math.random()*A.en.length)];e.elite=1;e.hp*=4;e.max*=4;e.atk*=1.3;e.r*=1.25;axSay('⭐ Elite-Gegner!',1.4);return;}
   axSay('Welle '+A.wave+' / '+A.waves,1.2);}
@@ -7666,7 +7695,7 @@ function axDrawGate1(g,x,y,kind){const A=AX,t=performance.now()/1000,Wd=axWorld(
   g.fillStyle='#7a4a26';g.fillRect(x-2,sy-4,4,10);g.fillStyle='#e8c88a';g.strokeStyle=OL;g.lineWidth=2;g.beginPath();g.roundRect(x-tw/2,sy,tw,34,6);g.fill();g.stroke();
   g.fillStyle='#3a2414';g.textAlign='center';g.fillText(RM.i+' '+RM.n,x,sy+15);g.font='800 10px system-ui';g.fillStyle='#6a4a2a';g.fillText(RM.d,x,sy+28);g.restore();}
 function axDrawTr(g){const A=AX;if(!A.tr)return;const p=A.tr.t<.45?A.tr.t/.45:1-(A.tr.t-.45)/.45;g.fillStyle=`rgba(10,6,4,${Math.max(0,Math.min(1,p))})`;g.fillRect(0,0,A.W,A.H);}
-function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;if(!document.querySelector('.opah')){axUpdate(dt);A.t0+=0;}else A.t0+=dt*1000;axDraw();axDrawTr(A.g);requestAnimationFrame(axStep);}
+function axStep(now){const A=AX;if(!A.open)return;const dt=Math.min(.05,(now-A.last)/1000);A.last=now;if(!document.querySelector('.opah')){axUpdate(dt);A.t0+=0;}else A.t0+=dt*1000;axDraw();axDrawStorm(A.g);axDrawTr(A.g);requestAnimationFrame(axStep);}
 // 15.11.2026: sichtbare Körpermitte und Größe eines Gegners – darauf wird gezielt und damit getroffen
 function axC(e){return e.tower?{y:e.y-26,r:18}:e.cactus?{y:e.y-34,r:30}:e.boss?{y:e.y-e.r*1.15,r:e.r*1.25}:{y:e.y-e.r,r:e.r};}
 // 15.11.2026: Treffer-Gefühl – Münzen springen aus besiegten Gegnern, beim Boss mit Bildschirm-Wackler
@@ -7688,6 +7717,7 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
     A.cd=h.spd/(1+.25*axHas('rate'));if(!h.moving)h.face=tg.x>h.x?1:-1;}
   // 15.11.2026: Herzen erscheinen zufällig in der Arena – drüberlaufen heilt 10 % Leben (18.11.2026: vorher 20 %)
   A.pk=A.pk||[];A.pkT=(A.pkT==null?rnd(6,9):A.pkT)-dt;
+  if(A.pkT<=0&&xpMut('noheart'))A.pkT=99;
   if(A.pkT<=0){A.pkT=rnd(8,12);if(A.pk.length<2){let x=0,y=0;for(let k=0;k<8;k++){x=rnd(40,A.W-40);y=rnd(150,A.H-60);if(!(A.obs||[]).some(q=>Math.hypot(q.x-x,q.y-y)<q.r+24))break;}A.pk.push({x,y,t:0});}}
   for(const q of A.pk){q.t+=dt;if(Math.hypot(q.x-h.x,q.y-(h.y-20))<30){q.got=1;const heal=Math.round(h.max*.1);h.hp=Math.min(h.max,h.hp+heal);A.fx.push({x:h.x,y:h.y-70,txt:'+'+fmt(heal)+' ❤',col:'#7fe08a',t:.9});}}
   A.pk=A.pk.filter(q=>!q.got);
@@ -7725,7 +7755,7 @@ const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,
   if(h.hp<=0&&A.winT==null){A.state='lost';axEnd(false);return;}
   if(A.ex&&(A.gate||A.tr)){axGateTick(dt);}
   else if(!A.en.some(e=>e.hp>0)&&!(A.ex&&A.wave===0)){if(A.wave>A.waves){A.es=[];A.hz=[];if(A.winT==null)A.winT=1.4;A.winT-=dt;if(A.winT<=0){A.en=[];A.state='won';axEnd(true);}}else{A.en=[];axGain(false);if(A.ex&&A.wave>=A.waves&&A.ex.area<A.ex.areas){A.exNext=1;const R=A.rew;if(A.ex.room==='schatz'){R.spl=(R.spl||0)+5;R.caps+=40;R.kak+=3;axSay('🗝 Schatztruhe: +5 ✨ · +40 🌱 · +3 🌵',2.2);}else if(A.ex.room==='elite'){R.spl=(R.spl||0)+3;R.coins=Math.round(R.coins*1.25);axSay('💀 Elite-Beute: +3 ✨',2);}}axPick();}}   // Sieg: kurz den Münzregen zeigen
-  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.ex?'🧭 Gebiet '+A.ex.area+'/'+A.ex.areas+(A.ex.room&&A.ex.area>1?' '+(XP_ROOM[A.ex.room]||{}).i:'')+(A.gate?' · Tor offen':A.ex.room==='quelle'&&A.wave===0?' · Heilquelle':A.ex.room==='haendler'&&A.wave===0?' · Händler':A.wave>A.waves?' · Boss':' · Welle '+Math.max(1,Math.min(A.wave,A.waves))+'/'+A.waves):A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
+  const ho=$('axHp');if(ho)ho.firstChild.style.width=Math.max(0,h.hp/h.max*100)+'%';const inf=$('axInfo');if(inf)inf.textContent=A.ex?'🧭 S'+A.ex.lv+' · Gebiet '+A.ex.area+'/'+A.ex.areas+(A.ex.room&&A.ex.area>1?' '+(XP_ROOM[A.ex.room]||{}).i:'')+(A.gate?' · Tor offen':A.ex.room==='quelle'&&A.wave===0?' · Heilquelle':A.ex.room==='haendler'&&A.wave===0?' · Händler':A.wave>A.waves?' · Boss':' · Welle '+Math.max(1,Math.min(A.wave,A.waves))+'/'+A.waves):A.pvp?'⚔ '+A.pvp.name+' · '+(A.wave>A.waves?'Boss':'Wachen '+A.wave+'/'+A.waves):'Kapitel '+A.chg+' · Welle '+Math.min(A.wave,A.waves)+'/'+A.waves+(A.wave>A.waves?' · Boss':'');}
 function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);if(A.shake>0&&A.flash>-1&&!A.en.some(e=>e.boss&&e.hp>0))g.translate((Math.random()-.5)*10*A.shake,(Math.random()-.5)*10*A.shake);
   // Boden: Wüstenarena mit Kacheln
   if(A.bg)g.drawImage(A.bg,0,0,A.W,A.H);axDrawTer(g);axDrawGate(g);
@@ -7760,9 +7790,9 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
 // 14.11.2026: Kapitel-Knopf unter dem Kampffeld – das nächste Kapitel schaltet das nächste Gebiet frei
-function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='4 Gebiete · Leben bleibt'+(S.spl?' · ✨ '+fmt(S.spl):'')+(S.exBest?' · Rekord '+S.exBest+'/4':'');}}}const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
+function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='Wildnis-Stufe '+(S.xpLv||1)+(S.spl?' · ✨ '+fmt(S.spl):'');}}}const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
   $('chapT').textContent='Kapitel '+g+(chStarSum()?'  ·  ⭐ '+chStarSum():'');$('chapS').textContent=Wd.n+' · '+DIFFS[diffIdx(st)].n;b.classList.toggle('need',need);b.hidden=!S.char;}
-$('xpBtn').onclick=()=>{if(!$('modal').hidden||editing||!S.char)return;axOpen(null,XP_UNLOCK,xpNew());};
+$('xpBtn').onclick=()=>xpPick();
 $('chapBtn').onclick=e=>{if(!$('modal').hidden||editing||!S.char)return;if(e.target.closest('em'))axOpen();else chPick();};
 chapHud();setInterval(chapHud,1000);
 })();
