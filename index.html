@@ -1615,7 +1615,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','Pflanzen':'Plant','Gießen':'Water','Düngen':'Fertilise','Ernten':'Harvest','💧 Alle gießen':'💧 Water all','🧪 Alle düngen':'🧪 Fertilise all','✂️ Alle ernten':'✂️ Harvest all','🌱 Alle leeren Beete bepflanzen':'🌱 Plant all empty beds',
+'Opa Stachel':'Grandpa Spike','🌱 Beet':'🌱 Bed','leer':'empty','Reif':'Ripe','Schon gedüngt':'Already fertilised','Gerade erst gegossen':'Just watered','Diese Pflanze gibt es nicht mehr':'This plant is gone','💧 Gegossen – danke!':'💧 Watered – thanks!','🧪 Gedüngt – danke!':'🧪 Fertilised – thanks!','Pflanzen':'Plant','Gießen':'Water','Düngen':'Fertilise','Ernten':'Harvest','💧 Alle gießen':'💧 Water all','🧪 Alle düngen':'🧪 Fertilise all','✂️ Alle ernten':'✂️ Harvest all','🌱 Alle leeren Beete bepflanzen':'🌱 Plant all empty beds',
 'wächst nicht':'not growing','wächst nicht – gießen!':'not growing – water it!','Antippen zum Ernten':'Tap to harvest','💧 Durstig!':'💧 Thirsty!','🧪 gedüngt':'🧪 fertilised','💧 wächst':'💧 growing','hält 1 Std.':'lasts 1 h',
 'Wasser für 1 Stunde auffüllen':'Refill water for 1 hour','3 Dünger':'3 fertiliser','Ein Ei braucht keinen Dünger':'An egg needs no fertiliser','Kein Dünger – gibt es beim Händler':'No fertiliser – the trader sells it','Wähle 💧 Gießen oder 🧪 Düngen':'Choose 💧 Water or 🧪 Fertilise',
 'Werkzeug wählen, dann Beete oder Karten antippen. Gegossene Erde bleibt 1 Stunde nass – trockene Pflanzen wachsen nicht weiter. 🧪 Dünger lässt sie 50 % schneller wachsen und öfter blühen 🌸. Dünger gibt es beim Händler.':'Pick a tool, then tap beds or cards. Watered soil stays wet for 1 hour – dry plants stop growing. 🧪 Fertiliser makes them grow 50 % faster and bloom more often 🌸. The trader sells fertiliser.',
@@ -1875,6 +1875,9 @@ const RX=[
   [/^⚔ Im Kampf alle (\d+) s von allein: (\d+) % auf alle Gegner$/,(m)=>'⚔ In battle every '+m[1]+' s automatically: '+m[2]+' % on all enemies'],
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
+  [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
+  [/^Tippe eine Pflanze an, um sie für (.+) zu (gießen|düngen)\. Dünger nimmst du aus deinem eigenen Vorrat\. Das erste Mal am Tag bekommt (.+) ein Dankeschön per Post\.$/,(m)=>'Tap a plant to '+(m[2]==='gießen'?'water':'fertilise')+' it for '+m[1]+'. Fertiliser comes from your own stock. The first time each day '+m[3]+' gets a thank-you by mail.'],
+  [/^🌱 (.+) hat sich um dein Beet gekümmert$/,(m)=>'🌱 '+m[1]+' looked after your bed'],
   [/^(\d+) durstig$/,(m)=>m[1]+' thirsty'],[/^(\d+) Dünger$/,(m)=>m[1]+' fertiliser'],[/^([\d.,]+(?: Tsd\.| Mio\.)?) Samen$/,(m)=>m[1]+' seeds'],[/^(\d+) reif$/,(m)=>m[1]+' ripe'],[/^💧 noch (.+)$/,(m)=>'💧 '+m[1]+' left'],
   [/^(\d+) Dünger · (\d+) ungedüngt$/,(m)=>m[1]+' fertiliser · '+m[2]+' unfertilised'],[/^(\d+) gepflanzt – jetzt gießen 💧$/,(m)=>m[1]+' planted – now water them 💧'],
   [/^Kapitel (\d+)$/,(m)=>'Chapter '+m[1]],
@@ -1938,7 +1941,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -4220,6 +4223,7 @@ async function onSave(){
     {const rn=await rpc('kk_reset_check',{p_code:ON.code,p_key:ON.key});if(rn&&rn>(S.rsN||0)){playerReset(rn);return;}}
     // 13.11.2026: vom Admin geänderter Name wird übernommen
     try{const nf=await rpc('kk_name_check',{p_code:ON.code,p_key:ON.key});if(nf&&S.char&&S.char.name!==nf){S.char.name=String(nf).slice(0,14);save();lastHud='';banner={txt:'Dein Name ist jetzt „'+S.char.name+'“',t:2.6};}}catch(e){}
+    try{const hl=await rpc('kk_garden_help_take',{p_code:ON.code,p_key:ON.key});if(Array.isArray(hl)&&hl.length)farmHelpApply(hl);}catch(e){}   // 18.11.2026: Gießen/Düngen von Besuchern
     const ok=await rpc('kk_save',{p_code:ON.code,p_key:ON.key,p_name:S.char.name,p_cls:CLASSES[S.char.cls].n,
       p_stage:S.stage,p_best:S.best,p_power:powerNow(),p_card:cardNow(),p_save:S});
     if(ok===false){onState='err';onMsg='Dein Konto wurde auf einem anderen Gerät geladen. Melde dich unten mit Freundescode und PIN wieder an.';}else{onState='ok';onLast=Date.now();onMsg='';}
@@ -6128,6 +6132,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn154',date:'2026-11-18',title:'Beete von Freunden pflegen',hero:['🌱 Hilf beim Gießen','Wenn du ein anderes Dorf besuchst, tippst du auf die Gärtnerei und siehst das echte Beet. Du kannst einzelne Pflanzen gießen 💧 oder mit deinem eigenen Dünger düngen 🧪.'],
+   items:()=>[['Für den anderen:','Die Hilfe kommt beim nächsten Speichern in seinem Beet an – mit einer Meldung, wer geholfen hat.'],['Dankeschön:','Das erste Mal am Tag gibt es wie bisher eine kleine Belohnung per Post.']],
+  en:{title:'Look after friends’ beds',hero:['🌱 Help with watering','When you visit another village, tap the garden to see the real bed. You can water single plants 💧 or fertilise them with your own fertiliser 🧪.'],
+   items:()=>[['For them:','Your help reaches their bed the next time their game saves – with a message saying who helped.'],['Thank-you:','The first time each day there is still a small reward by mail.']]}},
   {id:'pn153',date:'2026-11-18',title:'Herzen heilen weniger',hero:['❤ Kapitel werden etwas schwerer','Ein Herz im Kapitel heilt jetzt 10 % deines Lebens statt 20 %. Das gilt auch für Herzen, die deine Sand-Eule einsammelt.'],items:()=>[],
   en:{title:'Hearts heal less',hero:['❤ Chapters get a little harder','A heart in a chapter now heals 10 % of your life instead of 20 %. This also applies to hearts your Sand Owl collects.'],items:()=>[]}},
   {id:'pn152',date:'2026-11-18',title:'Die Gärtnerei wird ein echtes Beet',hero:['🌱 Gießen und Düngen','Statt Töpfen im Regal hast du jetzt ein Hochbeet aus Holz. Deine Kakteen wachsen nur, solange die Erde nass ist – also regelmäßig gießen!'],
@@ -6409,12 +6417,12 @@ function vHit(e){const cv=$('vCv');if(!cv)return null;const r=cv.getBoundingClie
 function renderDorf(){const H=$('tabDorf');if(!H)return;const V=vInit();vDone();if(!VIS)setTimeout(()=>opa('dorf'),300);
   if(VIS){const labs2=VB.map(B=>{const lv=vLv(B.id);return lv>0||B.id==='gart'?`<span class="vlab" style="left:${(B.lx||B.x)*100}%;top:calc(${(B.ly||B.y)*100}% + ${B.ly?0:8}px)">${B.ico} ${B.n} <em>Lv ${lv}</em></span>`:'';}).join('');
     H.innerHTML=`<div class="vfull"><div class="vtop"><button type="button" class="sbtn" id="visBack">← Zurück</button><b>👀 ${esc2(VIS.name)}</b>
-      <button type="button" class="sbtn${VIS.watered?'':' go'}" id="visWater" ${VIS.watered?'disabled':''}>${VIS.watered?'✓ Gegossen':'💧 Gießen'}</button></div>
-      <div class="vjob idle">${VIS.watered?'Danke! '+esc2(VIS.name)+' bekommt eine Belohnung per Post.':'Gieße einmal am Tag – ihr bekommt beide eine kleine Belohnung.'}</div>
+      <button type="button" class="sbtn go" id="visGart">🌱 Beet</button></div>
+      <div class="vjob idle">${VIS.watered?'Danke! '+esc2(VIS.name)+' bekommt eine Belohnung per Post.':'Tippe auf die Gärtnerei, um '+esc2(VIS.name)+'s Beet zu gießen oder zu düngen.'}</div>
       <div class="vscene"><canvas id="vCv"></canvas>${labs2}</div></div>`;
     $('visBack').onclick=()=>{VIS=null;vWalk=null;renderDorf();vlShow();};
-    $('visWater').onclick=async()=>{if(VIS.watered)return;const b=$('visWater');b.disabled=true;try{const r=await rpc('kk_vl_water_do',{p_code:ON.code,p_key:ON.key,p_target:VIS.code});
-      if(r&&r.ok){VIS.watered=true;S.caps=(S.caps||0)+10;S.kak=(S.kak||0)+1;save();lastHud='';banner={txt:'💧 Gegossen! +10 🌱 · +1 🌵',t:2};}else banner={txt:(r&&r.reason)||'Hat nicht geklappt',t:2};}catch(e){banner={txt:'Keine Verbindung',t:2};}renderDorf();};
+    $('visGart').onclick=()=>visGarden();
+    $('vCv').onclick=e=>{if(vHit(e)==='gart')visGarden();};
     drawDorf();return;}
   const labs=VB.map(B=>{const lv=vLv(B.id),lock=vLv('rat')<B.need;return`<button type="button" class="vlab${vSel===B.id?' on':''}${lock||B.soon?' lock':''}" data-vb="${B.id}" style="left:${(B.lx||B.x)*100}%;top:calc(${(B.ly||B.y)*100}% + ${B.ly?0:8}px)">${B.ico} ${B.n}${lock?' 🔒':B.soon?'':lv===0?' 🚧':` <em>Lv ${lv}</em>`}${B.id==='gart'&&farmRipe()?` <em class="vripe">${farmRipe()} reif</em>`:''}</button>`;}).join('');
   const j=V.job,JB=j&&VB.find(x=>x.id===j.id);
@@ -6479,6 +6487,38 @@ function vlEnd(won){const A=AX,T=A.pvp,w=T.wall||0;vlReport(won);qInc('vl',1);A.
     <div class="axrew">${any?`${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ore?`<span><i>🪨</i><b>+${fmt(R.ore)}</b><small>Eisenerz</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
     <div class="axbtns"><button type="button" class="btn go" id="axHome">Einsammeln</button></div></div>`;P.hidden=false;
   $('axHome').onclick=()=>{if(R.ps)S.pseed=(S.pseed||0)+R.ps;S.coins=(S.coins||0)+R.coins;S.caps=(S.caps||0)+R.caps;S.kak=(S.kak||0)+R.kak;if(R.ore)S.ore=(S.ore||0)+R.ore;A.rew=null;save();lastHud='';axClose();vlShow();};}
+// 18.11.2026: fremdes Beet – Besucher gießt oder düngt einzelne Pflanzen. Der Besitzer bekommt die Hilfe beim nächsten Speichern.
+let vgTool='water';
+function visBeds(){const now=Date.now();return(VIS.beds||[]).map((b,i)=>{if(!b||typeof b!=='object')return null;const c=Object.assign({},b);
+  for(const h of VIS.help||[]){if(h.bed!==i||+h.t!==+b.t)continue;if(h.kind==='water'){if(h.at>=(c.lt||0)){fbTick(c,h.at);}c.w=Math.max(c.w||0,h.at+F_WATER);}else c.f=1;}return c;});}
+function visGarden(){if(!VIS||editing)return;const now=Date.now(),B=visBeds(),nDry=B.filter(b=>b&&!fbRipe(b,now)&&!fbWet(b,now)).length,nF=B.filter(b=>b&&!b.f&&!fbRipe(b,now)&&!fbSd(b).pet).length;
+  const cell=(b,i)=>{if(!b)return`<div class="fbed empty"><canvas width="120" height="110" data-vg="${i}"></canvas><span class="fbt">leer</span></div>`;const ripe=fbRipe(b,now),wet=fbWet(b,now),p=Math.min(1,fbProg(b,now));
+    return`<button type="button" class="fbed${ripe?' ripe':''}${!ripe&&!wet?' dry':''}" data-vgb="${i}"><canvas width="120" height="110" data-vg="${i}"></canvas>
+      ${ripe?'<span class="fbt">Reif</span>':`<span class="fbbar"><i style="width:${p*100}%"></i><em>${wet?fmtT(fbLeft(b,now)/1000):'wächst nicht'}</em></span>${wet?'':'<span class="fbub">💧!</span>'}`}${b.f&&!ripe?'<span class="fsp">✨</span>':''}</button>`;};
+  $('card').innerHTML=`<div class="sumres"><h2>🌱 ${esc2(VIS.name)}s Beet</h2>
+    <div class="fgreen"><div class="fgrid">${B.map(cell).join('')}</div></div>
+    <div class="ftools" style="grid-template-columns:1fr 1fr"><button type="button" class="ftool" data-vgt="water" aria-pressed="${vgTool==='water'}"><i>💧</i>Gießen<small>${nDry} durstig</small></button>
+      <button type="button" class="ftool fe" data-vgt="fert" aria-pressed="${vgTool==='fert'}"><i>🧪</i>Düngen<small>dein Dünger: ${S.fert||0}</small></button></div>
+    <p class="hint" style="margin:0;text-align:center">Tippe eine Pflanze an, um sie für ${esc2(VIS.name)} zu ${vgTool==='water'?'gießen':'düngen'}. Dünger nimmst du aus deinem eigenen Vorrat. Das erste Mal am Tag bekommt ${esc2(VIS.name)} ein Dankeschön per Post.</p>
+    <div class="row"><button class="btn" id="vgX" type="button">Schließen</button></div></div>`;
+  $('modal').hidden=false;
+  $('card').querySelectorAll('canvas[data-vg]').forEach(cv2=>{const b=B[+cv2.dataset.vg],g=cv2.getContext('2d');if(!b){drawPlant(g,null,0,0,120,110,{wet:0});return;}drawPlant(g,fbSd(b),fbProg(b,now),b.b,120,110,{wet:fbWet(b,now)||fbRipe(b,now),fert:b.f});});
+  $('vgX').onclick=()=>{$('modal').hidden=true;};
+  $('card').querySelectorAll('[data-vgt]').forEach(b=>b.onclick=()=>{vgTool=b.dataset.vgt;visGarden();});
+  $('card').querySelectorAll('[data-vgb]').forEach(el=>el.onclick=async()=>{const i=+el.dataset.vgb,b=B[i];if(!b||fbRipe(b))return;
+    if(vgTool==='fert'){if(b.f){banner={txt:'Schon gedüngt',t:1.4};return;}if(fbSd(b).pet){banner={txt:'Ein Ei braucht keinen Dünger',t:1.4};return;}if((S.fert||0)<1){banner={txt:'Kein Dünger – gibt es beim Händler',t:1.6};return;}}
+    el.disabled=true;try{const r=await rpc('kk_garden_help_do',{p_code:ON.code,p_key:ON.key,p_target:VIS.code,p_bed:i,p_kind:vgTool,p_t:+b.t});
+      if(r&&r.ok){VIS.help=VIS.help||[];VIS.help.push({bed:i,t:+b.t,kind:vgTool,at:Date.now()});if(vgTool==='fert'){S.fert--;save();lastHud='';}if(r.first)VIS.watered=true;
+        banner={txt:(vgTool==='water'?'💧 Gegossen':'🧪 Gedüngt')+' – danke!',t:1.4};}else banner={txt:(r&&r.reason)||'Hat nicht geklappt',t:1.8};}
+    catch(e){banner={txt:'Keine Verbindung',t:2};}
+    if(!$('modal').hidden)visGarden();});}
+// Besitzer: Hilfe von Besuchern auf das eigene Beet übertragen
+function farmHelpApply(list){if(!list||!list.length||!S.farm)return;farmInit();const now=Date.now(),who=new Set();let n=0;
+  for(const h of list){const b=S.farm.beds[h.bed];if(!b||+b.t!==+h.t||fbRipe(b,now))continue;
+    if(h.kind==='water'){if(h.at>=(b.lt||0))fbTick(b,Math.min(h.at,now));b.w=Math.max(b.w||0,h.at+F_WATER);}
+    else if(!b.f){fbTick(b,now);b.f=1;if(!b.b&&Math.random()<.35)b.b=1;}
+    n++;if(h.name)who.add(h.name);}
+  if(n){save();lastHud='';banner={txt:'🌱 '+[...who].join(', ')+' hat sich um dein Beet gekümmert',t:2.6};if(curTab==='gart')renderGarden();}}
 async function vlVisit(code){vl.open=false;$('modal').hidden=true;try{const r=await rpc('kk_vl_visit',{p_code:ON.code,p_target:code});if(!r)throw 0;VIS=r;vWalk=null;tabGo('dorf');renderDorf();}catch(e){banner={txt:'Dorf konnte nicht geladen werden',t:2};}}
 async function vlLoad(){vl.list=null;vl.msg='';renderVl();try{const [L,st]=await Promise.all([rpc('kk_vl_targets',{p_code:ON.code}),rpc('kk_vl_status',{p_code:ON.code})]);vl.list=L||[];vl.used=(st&&st.used)||0;}
   catch(e){vl.list=[];vl.msg='Keine Verbindung – versuch es gleich nochmal.';}renderVl();}
@@ -6963,14 +7003,14 @@ const vDraw={
   lag(g,x,y,lv,t){g.save();g.translate(x,y);lagS1(g,lv,t);g.restore();},
   tav(g,x,y,lv,t){g.save();g.translate(x,y);tavS1(g,lv,t);g.restore();
     const D=VIS?null:S.qd,Q=D?qToday(lv):[];if(Q.some(o=>!D.got[o.id]&&qProg(o)>=o.goal)){g.font='12px system-ui';g.textAlign='center';g.fillText('❗',x,y-60+Math.sin(t*4)*2);}},
-  gart(g,x,y,lv,t){const F=VIS?{beds:[]}:(S.farm||{beds:[]}),now=Date.now();g.lineWidth=2;g.strokeStyle=vOL;
+  gart(g,x,y,lv,t){const F=VIS?{beds:visBeds()}:(S.farm||{beds:[]}),now=Date.now();g.lineWidth=2;g.strokeStyle=vOL;
     g.save();g.translate(x,y);gartFrame(g,vOL);g.restore();
     for(let k=0;k<6;k++){const b=F.beds[k],cx=x-30+k*12,cy=y-4;if(!b){g.fillStyle='#2a1a0e';g.beginPath();g.ellipse(cx,cy,3,1.5,0,0,7);g.fill();continue;}
       const sd=fbSd(b),p=Math.min(1,fbProg(b,now)),h=4+p*10;g.fillStyle=sd.c;g.strokeStyle=vOL;g.lineWidth=1.5;
       g.beginPath();sd.shape==='kugel'?g.ellipse(cx,cy-h*.45,3+p*2,h*.5,0,0,7):g.roundRect(cx-2.5,cy-h,5,h,2.5);g.fill();g.stroke();
       if(p>=1&&b.b){g.fillStyle='#ff7ad0';g.beginPath();g.arc(cx,cy-h-1,2.2,0,7);g.fill();}}
     g.save();g.translate(x,y);gartDeco(g,vOL,t);g.restore();
-    const r=farmRipe();if(r){g.globalAlpha=.6+.4*Math.sin(t*4);g.font='12px system-ui';g.fillText('✨',x-40,y-22);g.globalAlpha=1;}},
+    const r=VIS?0:farmRipe();if(r){g.globalAlpha=.6+.4*Math.sin(t*4);g.font='12px system-ui';g.fillText('✨',x-40,y-22);g.globalAlpha=1;}},
   hand(g,x,y,lv,t){g.save();g.translate(x,y);handS1(g,lv,t);g.restore();},
   schm(g,x,y,lv,t){g.save();g.translate(x,y);schmS1(g,lv,t);g.restore();},
   rat(g,x,y,lv,t){const sc=.72+Math.min(lv,10)*.01;g.save();g.translate(x,y);g.scale(sc,sc);ratS1(g,lv,t);g.restore();}
