@@ -1254,9 +1254,26 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 /* Kapitel-Knopf */
 .klbox{background:#2a1e16;border:2px solid #8a6a3a;border-radius:12px;padding:8px 10px;margin:6px 0;display:grid;gap:6px}.klhead{display:flex;justify-content:space-between;align-items:baseline;gap:6px}.klhead b{color:#ffd447;font-size:1rem;white-space:nowrap}.klhead span{text-align:right}.klhead b small{color:var(--sand);font-size:.7rem}.klhead span{font-size:.7rem;color:#7fe08a;font-weight:800}
 .kltal{background:#1c140e;border-radius:8px;padding:5px 8px}.kltal b{display:block;font-size:.78rem;color:#ff9ad8}.kltal small{font-size:.68rem;color:var(--sand)}.klbox .btn small{display:block;font-size:.65rem;opacity:.85}.klhint{text-align:center;color:var(--sand);font-size:.68rem}
-.relp .rell{display:grid;gap:6px;max-height:58vh;overflow:auto;padding-right:2px}.relc{background:#1c140e;border:2px solid #4a3a2a;border-radius:12px;padding:7px 9px;display:grid;gap:4px}
-.relc.own{border-color:#3fe8d0;background:linear-gradient(135deg,#123a36,#1c140e 60%)}.relc.on{box-shadow:0 0 10px #3fe8d088}.relh{display:flex;gap:8px;align-items:center}.relh i{font-style:normal;font-size:1.6rem}.relh b{display:block;font-size:.86rem;color:#ffe58a}.relh small{font-size:.66rem;color:var(--sand)}
-.relc p{margin:0;font-size:.72rem;color:#d8f8f0}.relc .row{margin:0}.relc .btn{padding:6px 8px;font-size:.78rem}.relbtn{background:linear-gradient(#3fe8d0,#1f9a8a)!important;color:#05201c!important}
+.relp{gap:8px}.relsub{margin:-4px 0 0;text-align:center;font-size:.74rem;color:#9fe8dc}
+.reldet{display:grid;grid-template-columns:120px 1fr;gap:8px 10px;align-items:center;padding:10px;border-radius:14px;background:radial-gradient(circle at 20% 30%,#1d4a44,#1c140e 70%);border:2px solid #4a3a2a}
+.reldet.own{border-color:#3fe8d0;box-shadow:0 0 14px #3fe8d055,inset 0 0 20px #3fe8d022}
+.relbig{position:relative;width:120px;height:120px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#0f3a36,#2a1e16 55%,#3a2a10);box-shadow:0 0 0 2px #3fe8d0,0 0 16px #3fe8d0aa}
+.relbig canvas{width:120px;height:120px}.relbig.dim{box-shadow:0 0 0 2px #4a3a2a;background:#20160f}.relbig.dim canvas{filter:grayscale(.9) brightness(.45)}
+.relinfo b{display:block;font-size:1rem;color:#ffe58a;line-height:1.15}.relinfo small{display:block;font-size:.68rem;color:var(--sand);margin:2px 0 3px}
+.relinfo p{margin:4px 0 0;font-size:.74rem;color:#e6fff9;line-height:1.3}.relinfo .relnx{color:#9fe8dc;font-size:.68rem;opacity:.85}
+.relfrag,.reldet .row{grid-column:1/-1}.reldet .row{margin:0}.reldet .btn{padding:8px 8px;font-size:.8rem;white-space:nowrap}
+.relpips{display:flex;gap:3px;justify-content:center}.relpips i{width:7px;height:7px;transform:rotate(45deg);background:#3a2a1c;border:1px solid #6b5644}.relpips i.on{background:#ffd447;border-color:#fff2a0;box-shadow:0 0 4px #ffd447}
+.relpips.big{justify-content:flex-start;gap:5px}.relpips.big i{width:9px;height:9px}
+.relbar{display:block;height:6px;border-radius:4px;background:#120c08;overflow:hidden;position:relative;border:1px solid #3a2a1c}.relbar>span{display:block;height:100%;background:linear-gradient(90deg,#1f9a8a,#3fe8d0);border-radius:4px}
+.relbar.big{height:18px;border-radius:9px}.relbar.big em{position:absolute;inset:0;display:grid;place-items:center;font-style:normal;font-size:.7rem;font-weight:700;color:#fff;text-shadow:0 1px 2px #000}
+.relg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.relt{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px 7px;border-radius:12px;background:#1c140e;border:2px solid #3a2a1c;cursor:pointer;color:inherit;font:inherit}
+.relt.own{border-color:#2a7a70}.relt.sel{border-color:#ffd447;box-shadow:0 0 10px #ffd44766;background:#2a2014}.relt .relbar{width:80%}
+.relpic{position:relative;width:64px;height:64px;border-radius:12px;display:grid;place-items:center;background:#20160f;box-shadow:0 0 0 2px #3a2a1c}
+.relt.own .relpic{background:linear-gradient(135deg,#0f3a36,#2a1e16 55%,#3a2a10);box-shadow:0 0 0 2px #3fe8d0,0 0 8px #3fe8d088}
+.relpic canvas{width:64px;height:64px}.relt:not(.own) .relpic canvas{filter:grayscale(.9) brightness(.45)}
+.rellock{position:absolute;right:-4px;bottom:-4px;font-size:.8rem}.relnew{position:absolute;right:-6px;top:-6px;width:18px;height:18px;border-radius:50%;background:#ff4a5a;color:#fff;font-size:.72rem;display:grid;place-items:center;box-shadow:0 0 6px #ff4a5a;animation:relp 1s ease-in-out infinite alternate}
+@keyframes relp{to{transform:scale(1.15)}}.relbtn{background:linear-gradient(#3fe8d0,#1f9a8a)!important;color:#05201c!important}
 [data-rel]{background:linear-gradient(135deg,#0f3a36,#2a1e16 55%,#3a2a10)!important;box-shadow:0 0 0 2px #3fe8d0,0 0 12px #3fe8d0aa!important;position:relative;overflow:visible!important}
 .relb{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);background:#3fe8d0;color:#05201c;font-weight:800;font-size:.52rem;line-height:1.3;padding:0 4px;border-radius:5px;letter-spacing:.3px;z-index:2;pointer-events:none}
 .relfr b{color:#3fe8d0!important}.reld{display:block;font-size:.7rem;color:#bff5ea;margin:2px 0}
@@ -1631,7 +1648,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
+'Opa Stachel':'Grandpa Spike','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
 'Sandsturmklinge':'Sandstorm Blade','Krone des Wüstenkönigs':'Crown of the Desert King','Dornenpanzer':'Thorn Armour','Spiegelschild':'Mirror Shield','Glutfäuste':'Ember Fists','Fata-Morgana-Stiefel':'Mirage Boots','Oasenmantel':'Oasis Cloak','Sonnenamulett':'Sun Amulet','Kettenring':'Chain Ring','👑 Unverwundbar!':'👑 Invulnerable!','Höchstes Level!':'Max level!','⬆ Leveln':'⬆ Level up','✨ Wüstensplitter gibt es auf der 🧭 Expedition.':'✨ Desert shards come from the 🧭 Expedition.','Scharfschütze':'Sharpshooter','Dickhaut':'Thick skin','Wirbelwind':'Whirlwind','Blütenzauber':'Bloom magic','Volltreffer':'Bullseye','Wüstenhaut':'Desert skin','Mondkraft':'Moon power','Goldregen':'Gold rain','Glutherz':'Ember heart','Uralte Kraft':'Ancient power','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
 '🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
@@ -1971,7 +1988,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -6399,6 +6416,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn162',date:'2026-11-18',title:'Relikte in neuem Glanz',hero:['🏺 Neues Relikte-Fenster','Alle 9 Relikte sind jetzt mit ihrem eigenen Bild zu sehen – das ausgewählte groß und bewegt, darunter deine ganze Sammlung.'],
+   items:()=>[['Auf einen Blick:','Stufen-Rauten, Fragment-Balken und ein rotes ! zeigen, wo du beschwören oder aufwerten kannst.'],['Vorschau:','Du siehst schon, was die nächste Stufe bringt.']],
+  en:{title:'Relics in a new shine',hero:['🏺 New relics window','All 9 relics now show their own picture – the selected one large and animated, your whole collection below.'],
+   items:()=>[['At a glance:','Level diamonds, fragment bars and a red ! show where you can summon or upgrade.'],['Preview:','You can already see what the next level brings.']]}},
   {id:'pn161',date:'2026-11-18',title:'Neu: Relikte',hero:['🏺 Einzigartige Ausrüstung','Auf der Expedition findest du jetzt 🧩 Relikt-Fragmente. Mit 10 Fragmenten beschwörst du ein Relikt, mit weiteren wertest du es bis Stufe 5 auf. Relikte gibt es nirgendwo sonst.'],
    items:()=>[['Spezial-Effekte:','Jedes der 9 Relikte hat einen eigenen Effekt – z. B. Sandwirbel, die durch alles fliegen, Unverwundbarkeit bei wenig Leben, Stacheln zurück, Kugeln spiegeln, Brand, Trugbilder, Heilung pro Besiegtem, Sonnenstrahlen oder Kettenblitze.'],['Immer stark:','Relikte wachsen mit deinem Fortschritt mit, leuchten türkis-golden und werden nie zerlegt oder verkauft.'],['Wo?','🧭 Expedition → 🏺 Relikte.']],
   en:{title:'New: Relics',hero:['🏺 Unique gear','On the expedition you now find 🧩 relic fragments. With 10 fragments you summon a relic, more fragments upgrade it up to level 5. Relics exist nowhere else.'],
@@ -7352,15 +7373,34 @@ function relSync(){for(const k in S.gear||{}){const it=S.gear[k];if(it&&it.rel)r
 function relFind(id){for(const k in S.gear||{})if(S.gear[k]&&S.gear[k].rel===id)return{src:'gear',slot:k};const i=(S.inv||[]).findIndex(it=>it&&it.rel===id);return i>=0?{src:'inv',i}:null;}
 function relEquip(id){const R=relDef(id),f=relFind(id);if(f&&f.src==='gear')return;let it;if(f){it=S.inv.splice(f.i,1)[0];}else it=relMake(id);relStat(it);const old=S.gear[R.slot];S.gear[R.slot]=it;if(old)S.inv.push(old);save();lastHud='';}
 function relDrop(n){const out={};S.rf=S.rf||{};for(let i=0;i<n;i++){const R=RELICS[Math.floor(Math.random()*RELICS.length)];out[R.id]=(out[R.id]||0)+1;}return out;}
+let relSelId=null;
 function relPanel(back){relSync();S.rf=S.rf||{};S.rel=S.rel||{};
-  const card=R=>{const L=relOwn(R.id),fr=relFr(R.id),on=relOn(R.id),need=L?relUpC(L):REL_SUM,can=L<REL_MAX&&fr>=need;
-    return`<div class="relc${L?' own':''}${on?' on':''}"><div class="relh"><i>${R.ico}</i><span><b>${R.n}</b><small>${SLOTS.find(x=>x.id===R.slot).n}${L?' · Stufe '+L+'/'+REL_MAX:''}${on?' · angelegt':''}</small></span></div>
-      <p>${R.d(Math.max(1,L))}</p>
-      <div class="skbar"><span style="width:${L>=REL_MAX?100:Math.min(100,fr/need*100)}%"></span><em>${L>=REL_MAX?'Höchste Stufe':'🧩 '+fr+' / '+need}</em></div>
-      <div class="row">${!L?`<button type="button" class="btn go" data-rs="${R.id}" ${can?'':'disabled'}>✨ Beschwören</button>`:`<button type="button" class="btn go" data-ru="${R.id}" ${can?'':'disabled'}>⬆ Aufwerten</button><button type="button" class="btn" data-re="${R.id}" ${on?'disabled':''}>${on?'✓ Angelegt':'Anlegen'}</button>`}</div></div>`;};
-  $('card').innerHTML=`<div class="sumres relp"><h2>🏺 Relikte</h2><p class="hint" style="margin:0;text-align:center">Einzigartige Ausrüstung, die es nur auf der 🧭 Expedition gibt. Sammle 🧩 Fragmente: Mit ${REL_SUM} beschwörst du ein Relikt, mit weiteren wertest du es auf. Relikte wachsen mit deinem Fortschritt mit und werden nie zerlegt.</p>
-    <div class="rell">${RELICS.map(card).join('')}</div><div class="row"><button class="btn" id="relX" type="button">Zurück</button></div></div>`;$('modal').hidden=false;
+  const st=R=>{const L=relOwn(R.id),fr=relFr(R.id),need=L?relUpC(L):REL_SUM;return{L,fr,need,on:relOn(R.id),can:L<REL_MAX&&fr>=need};};
+  if(!relSelId||!relDef(relSelId))relSelId=(RELICS.find(R=>st(R).can)||RELICS.find(R=>relOwn(R.id))||RELICS[0]).id;
+  const pips=L=>Array.from({length:REL_MAX},(_,i)=>`<i class="${i<L?'on':''}"></i>`).join('');
+  const own=RELICS.filter(R=>relOwn(R.id)).length;
+  const tile=R=>{const x=st(R);return`<button type="button" class="relt${x.L?' own':''}${R.id===relSelId?' sel':''}" data-rt="${R.id}">
+      <span class="relpic"><canvas width="128" height="128" data-rart="${R.id}"></canvas>${x.can?'<b class="relnew">!</b>':''}${!x.L?'<b class="rellock">🔒</b>':''}</span>
+      <span class="relpips">${pips(x.L)}</span>
+      <span class="relbar"><span style="width:${x.L>=REL_MAX?100:Math.min(100,x.fr/x.need*100)}%"></span></span></button>`;};
+  const R=relDef(relSelId),x=st(R),sl=SLOTS.find(q=>q.id===R.slot).n;
+  const nxt=x.L&&x.L<REL_MAX?`<p class="relnx">Stufe ${x.L+1}: ${R.d(x.L+1)}</p>`:'';
+  const btns=!x.L?`<button type="button" class="btn go" data-rs="${R.id}" ${x.can?'':'disabled'}>✨ Beschwören · 🧩 ${REL_SUM}</button>`
+    :`${x.L<REL_MAX?`<button type="button" class="btn go" data-ru="${R.id}" ${x.can?'':'disabled'}>⬆ Aufwerten · 🧩 ${x.need}</button>`:''}<button type="button" class="btn" data-re="${R.id}" ${x.on?'disabled':''}>${x.on?'✓ Angelegt':'Anlegen'}</button>`;
+  $('card').innerHTML=`<div class="sumres relp"><h2>🏺 Relikte</h2><p class="relsub">${own} / ${RELICS.length} beschworen · nur auf der 🧭 Expedition</p>
+    <div class="reldet${x.L?' own':''}">
+      <span class="relbig${x.L?'':' dim'}"><canvas width="240" height="240" id="relBig"></canvas>${x.L?'<b class="relb">RELIKT</b>':''}</span>
+      <div class="relinfo"><b>${R.n}</b><small>${sl} · ${x.L?'Stufe '+x.L+' / '+REL_MAX:'noch nicht beschworen'}</small><span class="relpips big">${pips(x.L)}</span>
+        <p>${R.d(Math.max(1,x.L))}</p>${nxt}</div>
+      <div class="relfrag"><span class="relbar big"><span style="width:${x.L>=REL_MAX?100:Math.min(100,x.fr/x.need*100)}%"></span><em>${x.L>=REL_MAX?'✦ Höchste Stufe ✦':'🧩 '+x.fr+' / '+x.need+' Fragmente'}</em></span></div>
+      <div class="row">${btns}</div></div>
+    <div class="relg">${RELICS.map(tile).join('')}</div>
+    <p class="hint" style="margin:0;text-align:center">Mit ${REL_SUM} 🧩 beschwörst du ein Relikt, mit weiteren wertest du es auf. Relikte wachsen mit deinem Fortschritt mit und werden nie zerlegt.</p>
+    <div class="row"><button class="btn" id="relX" type="button">Zurück</button></div></div>`;$('modal').hidden=false;
+  $('card').querySelectorAll('[data-rart]').forEach(c=>{const g=c.getContext('2d');g.save();g.translate(64,64);g.scale(1.45,1.45);RART[c.dataset.rart](g,1.3);g.restore();});
+  {const c=$('relBig'),g=c.getContext('2d'),t0=performance.now(),id=R.id;const loop=()=>{if(!c.isConnected)return;const T=1.3+(performance.now()-t0)/1000;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,240,240);g.translate(120,120+Math.sin(T*2)*3);g.scale(2.9,2.9);RART[id](g,T);requestAnimationFrame(loop);};loop();}
   const re=()=>relPanel(back);
+  $('card').querySelectorAll('[data-rt]').forEach(b=>b.onclick=()=>{relSelId=b.dataset.rt;re();});
   $('card').querySelectorAll('[data-rs]').forEach(b=>b.onclick=()=>{const id=b.dataset.rs;if(relFr(id)<REL_SUM)return;S.rf[id]-=REL_SUM;S.rel[id]={lv:1};relEquip(id);banner={txt:'✨ '+relDef(id).n+' beschworen und angelegt!',t:2.2};re();});
   $('card').querySelectorAll('[data-ru]').forEach(b=>b.onclick=()=>{const id=b.dataset.ru,L=relOwn(id);if(L>=REL_MAX||relFr(id)<relUpC(L))return;S.rf[id]-=relUpC(L);S.rel[id].lv=L+1;relSync();save();lastHud='';banner={txt:'⬆ '+relDef(id).n+' Stufe '+(L+1)+'!',t:2};re();});
   $('card').querySelectorAll('[data-re]').forEach(b=>b.onclick=()=>{relEquip(b.dataset.re);re();});
