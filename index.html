@@ -1261,7 +1261,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .relbig canvas{width:120px;height:120px}.relbig.dim{box-shadow:0 0 0 2px #4a3a2a;background:#20160f}.relbig.dim canvas{filter:grayscale(.9) brightness(.45)}
 .relinfo b{display:block;font-size:1rem;color:#ffe58a;line-height:1.15}.relinfo small{display:block;font-size:.68rem;color:var(--sand);margin:2px 0 3px}
 .relinfo p{margin:4px 0 0;font-size:.74rem;color:#e6fff9;line-height:1.3}.relinfo .relnx{color:#9fe8dc;font-size:.68rem;opacity:.85}
-.relfrag,.reldet .row{grid-column:1/-1}.reldet .row{margin:0}.reldet .btn{padding:8px 8px;font-size:.8rem;white-space:nowrap}
+.relfrag,.reldet .row,.relels{grid-column:1/-1}.relels{display:grid;gap:3px}.relel{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:.72rem}.relel small{color:var(--sand);font-size:.64rem}.relel em{font-style:normal;font-weight:800}.reldet .row{margin:0}.reldet .btn{padding:8px 8px;font-size:.8rem;white-space:nowrap}
 .relpips{display:flex;gap:3px;justify-content:center}.relpips i{width:7px;height:7px;transform:rotate(45deg);background:#3a2a1c;border:1px solid #6b5644}.relpips i.on{background:#ffd447;border-color:#fff2a0;box-shadow:0 0 4px #ffd447}
 .relpips.big{justify-content:flex-start;gap:5px}.relpips.big i{width:9px;height:9px}
 .relbar{display:block;height:6px;border-radius:4px;background:#120c08;overflow:hidden;position:relative;border:1px solid #3a2a1c}.relbar>span{display:block;height:100%;background:linear-gradient(90deg,#1f9a8a,#3fe8d0);border-radius:4px}
@@ -1650,7 +1650,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
+'Opa Stachel':'Grandpa Spike','Stark:':'Strong:','Schwach:':'Weak:','Waffe (Relikt)':'Weapon (relic)','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
 'Sandsturmklinge':'Sandstorm Blade','Krone des Wüstenkönigs':'Crown of the Desert King','Dornenpanzer':'Thorn Armour','Spiegelschild':'Mirror Shield','Glutfäuste':'Ember Fists','Fata-Morgana-Stiefel':'Mirage Boots','Oasenmantel':'Oasis Cloak','Sonnenamulett':'Sun Amulet','Kettenring':'Chain Ring','👑 Unverwundbar!':'👑 Invulnerable!','Höchstes Level!':'Max level!','⬆ Leveln':'⬆ Level up','✨ Wüstensplitter gibt es auf der 🧭 Expedition.':'✨ Desert shards come from the 🧭 Expedition.','Scharfschütze':'Sharpshooter','Dickhaut':'Thick skin','Wirbelwind':'Whirlwind','Blütenzauber':'Bloom magic','Volltreffer':'Bullseye','Wüstenhaut':'Desert skin','Mondkraft':'Moon power','Goldregen':'Gold rain','Glutherz':'Ember heart','Uralte Kraft':'Ancient power','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
 '🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
@@ -1990,7 +1990,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2230,7 +2230,15 @@ const GUPG_MAX=20;
 const gUp=id=>(S.gUpg&&+S.gUpg[id])||0;
 const gUpCost=(U,lv)=>Math.round(U.base*Math.pow(2.5,lv));
 const coinMul=()=>(1+((S.gBonus||0)+gUp('coin')*3)/100)*(ktX('coin')||1)*klTal().coin;
-function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(it&&it.res)o[it.res.el]=Math.min(75,(o[it.res.el]||0)+it.res.v);}return o;}
+// 18.11.2026 Relikte: je 2 feste Stärken und 2 feste Schwächen in den Elementen
+const REL_EL={sand:[['blitz','gift'],['eis','schatten']],krone:[['feuer','schatten'],['eis','gift']],dorn:[['gift','blitz'],['feuer','eis']],spiegel:[['schatten','blitz'],['gift','feuer']],
+  glut:[['feuer','gift'],['eis','blitz']],mirage:[['schatten','feuer'],['blitz','eis']],oase:[['eis','gift'],['feuer','schatten']],sonne:[['feuer','blitz'],['schatten','eis']],kette:[['blitz','eis'],['gift','schatten']]};
+function relEl(id,L){const E=REL_EL[id];L=Math.max(1,L||1);return{s:E[0],w:E[1],sv:10+5*L,wv:Math.round(22.5-2.5*L)};}
+function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(!it)continue;if(it.res)o[it.res.el]=(o[it.res.el]||0)+it.res.v;
+    if(it.rel&&it.slot!=='waffe'&&REL_EL[it.rel]){const L=(S.rel&&S.rel[it.rel]&&S.rel[it.rel].lv)||1,E=relEl(it.rel,L);for(const e of E.s)o[e]=(o[e]||0)+E.sv;for(const e of E.w)o[e]=(o[e]||0)-E.wv;}}
+  for(const e in o)o[e]=Math.min(75,o[e]);return o;}
+// Waffen-Multiplikator gegen eine Welt (Schwäche ×1,5, gleiches Element wie die Gegner ×0,6); die Sandsturmklinge hat 2 Stärken und 2 Schwächen
+function weMul(weak,atk,w){if(w===undefined)w=S.gear.waffe;if(!w)return 1;if(w.rel&&REL_EL[w.rel]){const E=REL_EL[w.rel];return E[0].includes(weak)?1.5:E[1].includes(atk)?.6:1;}const el=w.el;return !el?1:el===weak?1.5:el===atk?.6:1;}
 function heroStats(){
   // 14.11.2026: nur noch die Ausrüstung (plus Schmiede-Level des Platzes) bestimmt die Werte; die Kaktus-Klasse gibt ihre festen Eigenschaften
   const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=sl.pct?g[sl.id].v:itemV(g[sl.id]);return s;};
@@ -2556,7 +2564,7 @@ const ELEM={
 };
 const ATK_ELS=['gift','eis','feuer','blitz','schatten'];
 const elMulFor=el=>{const Wd=world();return !el?1:el===Wd.weak?1.5:el===Wd.atkEl?0.6:1;};
-const elMul=()=>elMulFor(S.gear.waffe&&S.gear.waffe.el);
+const elMul=()=>{const Wd=world();return weMul(Wd.weak,Wd.atkEl);};
 // „Besser“ heißt: höherer Wert. Element und Resistenz sind nur Zusatzinfos und entscheiden höchstens bei exakt gleichem Wert.
 // Waffen zählen mit ihrem Element in der aktuellen Welt (Schwäche ×1,5, gleiches Element wie die Gegner ×0,6) – 09.11.2026
 const itemScore=it=>it.rel?1e300:itemV(it)*(it.slot==='waffe'?elMulFor(it.el):1)+((it.res&&it.res.el===world().atkEl)?1e-6:0);
@@ -2564,7 +2572,8 @@ const itemScore=it=>it.rel?1e300:itemV(it)*(it.slot==='waffe'?elMulFor(it.el):1)
 function effBadges(it){if(!it.el&&!it.res)return'';const E=ELEM[it.el||it.res.el];
   return`<b class="eld" style="--ec:${E.c}" title="${it.el?'Element: '+E.n:it.res.v+' % '+E.n+'-Resistenz'}">${E.ico}</b>`;}
 const elTag=el=>el?`<span class="elt" style="--ec:${ELEM[el].c}">${ELEM[el].ico} ${ELEM[el].n}</span>`:'';
-function itemExtra(it){let h='';if(it.el)h+=`<span class="ex">${elTag(it.el)}${it.el===world().weak?' <em class="up">trifft Schwäche +50 %</em>':it.el===world().atkEl?' <em class="down">Gegner resistent −40 %</em>':''}</span>`;
+function relElHtml(id,L,wpn){const E=relEl(id,L),tg=e=>elTag(e);return`<span class="ex relel"><em class="up">Stark:</em> ${E.s.map(tg).join(' ')} ${wpn?'<small>trifft Schwäche +50 %</small>':'<small>+'+E.sv+' % Resistenz</small>'}</span><span class="ex relel"><em class="down">Schwach:</em> ${E.w.map(tg).join(' ')} ${wpn?'<small>Gegner resistent −40 %</small>':'<small>−'+E.wv+' % Resistenz</small>'}</span>`;}
+function itemExtra(it){if(it.rel&&REL_EL[it.rel])return relElHtml(it.rel,relOwn(it.rel),it.slot==='waffe');let h='';if(it.el)h+=`<span class="ex">${elTag(it.el)}${it.el===world().weak?' <em class="up">trifft Schwäche +50 %</em>':it.el===world().atkEl?' <em class="down">Gegner resistent −40 %</em>':''}</span>`;
   if(it.res)h+=`<span class="ex">+${it.res.v} % ${elTag(it.res.el)}-Resistenz${it.res.el===world().atkEl?' <em class="up">hilft hier</em>':''}</span>`;return h;}
 const worldIdx=st=>Math.min(WORLDS.length-1,Math.floor((inDiff(st)-1)/STAGES_PER_WORLD));
 // 15.11.2026 Sammelalbum: bisher erreichte Welten zählen als gesehen
@@ -3580,7 +3589,8 @@ function hud(){
    const eb=el=>el?`<i class="eb" style="--ec:${ELEM[el].c}">${ELEM[el].ico}</i>`:'<i class="eb off">–</i>';
    const row=(el,lab,val)=>`<div class="er">${eb(el)}<span><small>${lab}</small><b>${val}</b></span></div>`;
    $('elEnemy').innerHTML=row(Wd.atkEl,'Gegner',ELEM[Wd.atkEl].n)+row(Wd.weak,'Schwäche',ELEM[Wd.weak].n);
-   $('elYou').innerHTML=row(w&&w.el,'Waffe',w&&w.el?ELEM[w.el].n+(w.el===Wd.weak?' <em class="pill up">+50%</em>':w.el===Wd.atkEl?' <em class="pill down">−40%</em>':''):'<em class="dim">ohne</em>')+
+   const wm=weMul(Wd.weak,Wd.atkEl);
+   $('elYou').innerHTML=w&&w.rel?row(REL_EL[w.rel][0].includes(Wd.weak)?Wd.weak:REL_EL[w.rel][0][0],'Waffe (Relikt)',(wm>1?'<em class="pill up">+50%</em>':wm<1?'<em class="pill down">−40%</em>':'normal'))+row(Wd.atkEl,'Resistenz','<em class="pill '+(rs>0?'up':'down')+'">'+rs+'%</em>'):row(w&&w.el,'Waffe',w&&w.el?ELEM[w.el].n+(w.el===Wd.weak?' <em class="pill up">+50%</em>':w.el===Wd.atkEl?' <em class="pill down">−40%</em>':''):'<em class="dim">ohne</em>')+
      row(Wd.atkEl,'Resistenz','<em class="pill '+(rs?'up':'down')+'">'+rs+'%</em>');}
   const bReady=!boss&&S.kills>=KILL_GOAL;
   const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
@@ -4402,7 +4412,7 @@ function wbBoss(period){const n=+(String(period||'').split('-')[1])||0,W0=WORLDS
   return{n:'Welt-'+W0.boss.n,ty:Object.assign({},W0.boss,{r:34}),atkEl:W1.atkEl,weak:W1.weak,wi:n%WORLDS.length};}
 const wbHp=l=>Math.round(200000*Math.pow(3,l-1));
 function wbLevel(total){let l=1,rest=total;while(rest>=wbHp(l)&&l<60){rest-=wbHp(l);l++;}return{l,rest,hp:wbHp(l)};}
-function wbElMul(B){const el=S.gear.waffe&&S.gear.waffe.el;return !el?1:el===B.weak?1.5:el===B.atkEl?.6:1;}
+function wbElMul(B){return weMul(B.weak,B.atkEl);}
 function wbDamage(B){const st=heroStats(),cm=clsM(),em=wbElMul(B);let dps=st.atk*em*(1+st.crit/100*(st.critM-1))/st.spd;
   for(const id of S.drEq){const D=DRONES.find(d=>d.id===id),o=S.dr[id];if(D&&o&&D.dmg)dps+=st.atk*D.dmg*drScale(o.lv)/D.every;}
   dps+=st.atk*cm.mod*skDpsMul()/cm.cd;return Math.round(dps*30*rnd(.95,1.05));}
@@ -4442,7 +4452,7 @@ function wbBody(X=wb){
     <canvas id="${X.cv}" width="720" height="420"></canvas>
     <div class="wbhp inf"><div style="width:100%"></div><span>∞ unbesiegbar · mach so viel Schaden wie möglich</span></div>
     <div class="wbel"><span>Greift an mit ${elTag(B.atkEl)}</span><span>Schwach gegen ${elTag(B.weak)}</span>
-      <span>Deine Waffe: ${S.gear.waffe&&S.gear.waffe.el?elTag(S.gear.waffe.el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
+      <span>Deine Waffe: ${S.gear.waffe&&S.gear.waffe.rel?REL_EL[S.gear.waffe.rel][0].map(elTag).join(' '):S.gear.waffe&&S.gear.waffe.el?elTag(S.gear.waffe.el):'ohne Element'} <em class="${em>1?'up':em<1?'down':''}">${em>1?'+50 %':em<1?'−40 %':''}</em></span></div>
     <div class="wbab">${wbAbil(B).map(a=>`<span><b>${WB_ABN[a]}</b><small>${WB_ABD[a]}</small></span>`).join('')}</div>
     ${X.res?`<div class="wbres">${X.res}</div>`:''}
     <div class="eqdb"><button class="sbtn red" type="button" id="${X.go}" ${left<=0||X.busy||!ON.code?'disabled':''}>${X.busy?'Kampf läuft …':left>0?'Angreifen ('+left+'/3 heute)':'Morgen wieder'}</button></div>
@@ -5442,7 +5452,7 @@ const keepSafe=it=>{const cur=S.gear[it.slot];return !cur||it.r>=cur.r;};
 function twGive(it){if(S.inv.length<invMax()||keepSafe(it)){S.inv.push(it);return`<span style="color:${RAR[it.r].c}">${it.name}</span> (${RAR[it.r].n}) liegt im Inventar${S.inv.length>invMax()?' (Inventar übervoll – bitte Platz machen)':''}`;}
   const c=scrap(it);S.coins+=c;return`<span style="color:${RAR[it.r].c}">${it.name}</span> – Inventar voll, für +${fmt(c)} Münzen zerstört`;}
 // Ohne Animation durchrechnen, ob eine Etage zu schaffen ist (für den Schnellaufstieg)
-function twSim(f){const G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
+function twSim(f){const G=twGuard(f),st=heroStats(),em=weMul(G.Wd.weak,G.Wd.atkEl);
   const dps=st.atk*em*(1+st.crit/100*(st.critM-1))/st.spd,ttk=G.hp/dps;
   const hit=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100),net=hit/1.3-st.hp*st.reg/100,ttd=net>0?st.hp/net:1e9;
   return ttk<=30&&ttk<ttd;}
@@ -5468,7 +5478,7 @@ function twBoardHtml(){
 function renderTower(){
   // Wartet gerade ein Teil aus dem Turm auf deine Entscheidung, bleibt das Ausrüstungsfenster stehen
   if(pending&&pending.tw)return;
-  const f=twFloor(),G=twGuard(f),R=twReward(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
+  const f=twFloor(),G=twGuard(f),R=twReward(f),st=heroStats(),em=weMul(G.Wd.weak,G.Wd.atkEl);
   $('card').innerHTML=`<div class="twhead"><b>🗼 Turm · Etage ${f}</b><span>Rekord: ${S.twRec}</span><button class="twx2${S.twX2?' on':''}" id="twX2" type="button" aria-pressed="${!!S.twX2}" title="Doppelte Geschwindigkeit">⏩ ×2</button></div>
     <canvas id="twview" width="720" height="380"></canvas>
     <canvas id="twcv" width="720" height="420"></canvas>
@@ -5581,7 +5591,7 @@ function drawTower(){const cv2=$('twcv');if(!cv2)return;const g=cv2.getContext('
     g.fillStyle=A.end==='boss'?'#ffe08a':A.end==='dead'?'#ff8a7a':'#f4e6cc';g.fillText(txt,180,110);}
 }
 function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)return;
-  const f=twFloor(),G=twGuard(f),st=heroStats(),el=S.gear.waffe&&S.gear.waffe.el,em=!el?1:el===G.Wd.weak?1.5:el===G.Wd.atkEl?.6:1;
+  const f=twFloor(),G=twGuard(f),st=heroStats(),em=weMul(G.Wd.weak,G.Wd.atkEl);
   const hitTaken=G.atk*(1-st.block/100)*(1-(st.armor||0)/100)*(1-(st.res[G.Wd.atkEl]||0)/100);
   tw.res=null;tw.anim={left:30,php:st.hp,pmax:st.hp,bhp:G.hp,bmax:G.hp,sp:[],orbs:[],fl:[],bhit:0,phit:0,sq:0,lunge:0,end:null,endT:0,throwT:.3,bossT:1.3,reg:st.hp*st.reg/100};
   renderTower();
@@ -6418,6 +6428,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn164',date:'2026-11-18',title:'Relikte mit Elementen',hero:['⚖ 2 Stärken, 2 Schwächen','Jedes Relikt hat jetzt zwei feste Element-Stärken und zwei Schwächen. Je nach Welt lohnt sich ein anderes Relikt.'],
+   items:()=>[['Rüstungsteile:','Stärken geben Resistenz (+15 bis +35 %), Schwächen kosten Resistenz (−20 bis −10 %). Mit jeder Relikt-Stufe wird es besser.'],['Sandsturmklinge:','Trifft mit Blitz und Gift die Schwäche der Gegner (+50 %), gegen Eis- und Schatten-Gegner macht sie −40 %.'],['Wo sehen?','In der Relikt-Ansicht und im 🏺 Relikte-Fenster.']],
+  en:{title:'Relics with elements',hero:['⚖ 2 strengths, 2 weaknesses','Every relic now has two fixed element strengths and two weaknesses. Different worlds favour different relics.'],
+   items:()=>[['Armour pieces:','Strengths give resistance (+15 to +35 %), weaknesses cost resistance (−20 to −10 %). It improves with every relic level.'],['Sandstorm Blade:','Hits the enemies\' weakness with lightning and poison (+50 %), deals −40 % against ice and shadow enemies.'],['Where?','In the relic view and the 🏺 Relics window.']]}},
   {id:'pn163',date:'2026-11-18',title:'Relikt-Fragmente angepasst',hero:['🧩 1 Fragment pro Sieg','Jede gewonnene Expedition gibt jetzt genau 1 Relikt-Fragment. Relikte sind damit ein echtes Langzeit-Ziel.'],
    items:()=>[['Verloren?','Eine verlorene Expedition gibt kein Fragment.'],['Gleich zu sehen:','Das Fragment zeigt sofort das Bild des Relikts, zu dem es gehört.']],
   en:{title:'Relic fragments adjusted',hero:['🧩 1 fragment per win','Every won expedition now gives exactly 1 relic fragment. Relics are a true long-term goal.'],
@@ -7398,6 +7412,7 @@ function relPanel(back){relSync();S.rf=S.rf||{};S.rel=S.rel||{};
       <span class="relbig${x.L?'':' dim'}"><canvas width="240" height="240" id="relBig"></canvas>${x.L?'<b class="relb">RELIKT</b>':''}</span>
       <div class="relinfo"><b>${R.n}</b><small>${sl} · ${x.L?'Stufe '+x.L+' / '+REL_MAX:'noch nicht beschworen'}</small><span class="relpips big">${pips(x.L)}</span>
         <p>${R.d(Math.max(1,x.L))}</p>${nxt}</div>
+      <div class="relels">${relElHtml(R.id,x.L,R.slot==='waffe')}</div>
       <div class="relfrag"><span class="relbar big"><span style="width:${x.L>=REL_MAX?100:Math.min(100,x.fr/x.need*100)}%"></span><em>${x.L>=REL_MAX?'✦ Höchste Stufe ✦':'🧩 '+x.fr+' / '+x.need+' Fragmente'}</em></span></div>
       <div class="row">${btns}</div></div>
     <div class="relg">${RELICS.map(tile).join('')}</div>
