@@ -1991,7 +1991,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -3044,7 +3044,7 @@ function kpNeck(g,sh,it,fy){const {hw,top}=sh,M=MAT[it.r],r=it.rel?4:Math.min(it
   else if(it.rel==='sonne'){g.save();g.translate(hw*.4,y+4);g.scale(.3,.3);g.translate(0,-12);g.save();g.translate(0,12);g.rotate(t*.5);for(let i=0;i<10;i++){g.rotate(Math.PI/5);g.beginPath();g.moveTo(-4,-12);g.lineTo(0,-21);g.lineTo(4,-12);g.closePath();olFill(g,'#ffb03a',3);}g.restore();g.beginPath();g.arc(0,12,12,0,7);olFill(g,'#ffd447',3.4);g.restore();}
   else{g.beginPath();g.arc(hw*.4,y+5,4.2,0,7);olFill(g,r>=4?MAT[4].m:M.m,1.6);gemAt(g,hw*.4,y+5,2.7,RAR[it.r].c);}}
 function kpBoot(g,x,lift,it,far,sh,hex){const {bot}=sh;if(!it){kpFoot(g,x,lift,hex,far,sh);return;}const RM=it.rel&&KP_RELM[it.rel],M=RM||MAT[it.r],r=RM?2:Math.min(it.r,5),c=far?shade(M.m,-.2):M.m;
-  g.save();g.translate(x,-lift);g.beginPath();g.roundRect(-4.5,bot-4,9,12,4);olFill(g,shade(hex,far?-.25:-.08),2.2);
+  g.save();g.translate(x,-lift);if(!sh.noLeg){g.beginPath();g.roundRect(-4.5,bot-4,9,12,4);olFill(g,shade(hex,far?-.25:-.08),2.2);}
   g.beginPath();g.moveTo(-6.5,-4.5);g.quadraticCurveTo(-6.5,-9,-2,-9);g.lineTo(3,-9);g.quadraticCurveTo(10.5,-7.5,11.5,-1);g.lineTo(-6.5,-1);g.closePath();olFill(g,c,2.2);
   if(r>=2){g.beginPath();g.roundRect(-7,-12,10,4.5,2);olFill(g,far?shade(M.d,-.2):M.d,1.6);}
   if(r>=4){g.beginPath();g.moveTo(10,-3);g.lineTo(15,-2);g.lineTo(10,-5);olFill(g,MAT[4].m,1.2);}
@@ -4305,18 +4305,34 @@ function wireBuilds(){
 
 const ICON_SH={hw:17,top:-68,bot:-12};
 // Zeichnet ein einzelnes Teil als Symbol (gleiche Zeichenfunktionen wie am Kaktus)
+
+// Inventar-Bild für den Panzer: ganzer Brustpanzer von vorne, im neuen Stil
+function kpArmorIcon(g,it){const RM=it.rel&&KP_RELM[it.rel],M=RM||MAT[it.r],r=RM?3:Math.min(it.r,5);
+  const body=()=>{g.beginPath();g.moveTo(-15,-17);g.quadraticCurveTo(-8,-20,-6,-17);g.quadraticCurveTo(0,-10,6,-17);g.quadraticCurveTo(8,-20,15,-17);g.lineTo(17,-8);g.quadraticCurveTo(13,-4,13,2);g.lineTo(14,16);g.quadraticCurveTo(0,21,-14,16);g.lineTo(-13,2);g.quadraticCurveTo(-13,-4,-17,-8);g.closePath();};
+  const gr=g.createLinearGradient(-16,-18,16,18);gr.addColorStop(0,M.l);gr.addColorStop(.5,M.m);gr.addColorStop(1,M.d);
+  if(r>=2)for(const s of[-1,1]){g.beginPath();g.ellipse(s*15,-13,7,5.5,s*.4,0,7);olFill(g,r>=4?MAT[4].m:M.d,2);}
+  body();olFill(g,r===0?M.m:gr,2.4);
+  g.save();body();g.clip();
+  if(r===0){g.strokeStyle=M.d;g.lineWidth=3;g.beginPath();g.moveTo(-14,-14);g.lineTo(12,12);g.stroke();g.fillStyle=M.d;for(let x=-14;x<14;x+=5){g.beginPath();g.moveTo(x,17);g.lineTo(x+2.5,13);g.lineTo(x+5,17);g.fill();}}
+  else if(r===1){g.strokeStyle=M.d;g.lineWidth=1.4;g.setLineDash([2,2]);g.beginPath();g.moveTo(-10,-12);g.lineTo(-10,12);g.moveTo(10,-12);g.lineTo(10,12);g.stroke();g.setLineDash([]);}
+  else{g.strokeStyle=M.d;g.lineWidth=2;g.beginPath();g.moveTo(0,-11);g.lineTo(0,9);g.stroke();g.strokeStyle='#ffffff88';g.lineWidth=2;g.beginPath();g.moveTo(-9,-8);g.quadraticCurveTo(-11,0,-8,7);g.stroke();
+    g.strokeStyle=M.d;g.lineWidth=1.6;for(const y of[-2,4]){g.beginPath();g.moveTo(-12,y);g.quadraticCurveTo(0,y+3,12,y);g.stroke();}}
+  g.restore();
+  g.fillStyle=r>=4?MAT[4].d:'#4a2c18';g.beginPath();g.roundRect(-14.5,9,29,5,2);g.fill();g.strokeStyle=OL;g.lineWidth=1.6;g.stroke();
+  g.beginPath();g.roundRect(-3,8.5,6,6,1.5);olFill(g,r>=4?'#ffd447':'#c2c6d4',1.3);
+  if(r>=3||RM)gemAt(g,0,-6,3.4,M.a);
+  if(it.rel==='dorn')for(const [x,y,a] of[[-17,-6,Math.PI],[17,-6,0],[-15,6,Math.PI],[15,6,0]]){g.save();g.translate(x,y);g.rotate(a);g.beginPath();g.moveTo(0,-2.4);g.lineTo(7,0);g.lineTo(0,2.4);g.closePath();olFill(g,'#f2e6c0',1.2);g.restore();}}
 function drawItemIcon(g,it,S2){g.save();g.clearRect(0,0,S2,S2);g.translate(S2/2,S2/2);const k=S2/56;g.scale(k,k);const sh=ICON_SH;
   if(it&&it.rel&&RART[it.rel]){g.scale(.78,.78);RART[it.rel](g,1.3);g.restore();return;}
-  switch(it.slot){
-    case'waffe':g.scale(1.05,1.05);g.translate(-10,20);g.rotate(.6);g.translate(-1,-15);drawWeapon(g,it);break;
-    case'helm':g.translate(0,62);drawHelm(g,sh,it);break;
-    case'ruestung':g.scale(1.12,1.12);g.translate(0,26);drawArmor(g,sh,it);break;
-    case'schild':g.scale(1.45,1.45);g.translate(20,0);drawShield(g,sh,it,-14);break;
+  switch(it.slot){   // 19.11.2026: Bilder im Stil der Seitenansicht
+    case'waffe':g.scale(1.12,1.12);g.rotate(-Math.PI*.75);g.translate(0,-17);kpWeapon(g,it);break;
+    case'helm':g.scale(1.25,1.25);kpHelm(g,sh,it,22);break;
+    case'ruestung':g.scale(1.2,1.2);kpArmorIcon(g,it);break;
+    case'schild':g.scale(1.75,1.75);g.translate(-10.5,0);kpShield(g,sh,it,-9,0);break;
     case'handschuhe':g.scale(2.6,2.6);g.translate(0,-15);drawGlove(g,it,null);break;
-    case'schuhe':{const M=MAT[it.r];g.scale(1.9,1.9);for(const s of[-1,1]){g.save();g.translate(s*7,4);g.beginPath();g.roundRect(-5,-14,10,12,3);olFill(g,it.r>=2?M.d:M.m,1.6);
-      g.beginPath();g.ellipse(1,0,7.5,4.5,0,0,7);olFill(g,M.m,1.6);g.fillStyle=M.l;g.fillRect(-3,-3,5,1.5);g.restore();}break;}
-    case'umhang':g.scale(.85,.85);g.translate(-4,24);drawCape(g,sh,it,0);break;
-    case'halskette':g.scale(2.1,2.1);g.translate(0,-(sh.top+sh.hw+21));drawNecklace(g,sh,it);break;
+    case'schuhe':{const s2={hw:17,top:-68,bot:-14,noLeg:1};g.scale(1.6,1.6);g.translate(-2.5,6);kpBoot(g,-6,0,it,true,s2,'#7a6a5a');kpBoot(g,6,0,it,false,s2,'#8a7a6a');break;}
+    case'umhang':g.scale(1,1);g.translate(12,27);kpCape(g,sh,it,0);break;
+    case'halskette':g.scale(2.6,2.6);g.translate(-5,-3);kpNeck(g,sh,it,-15);break;
     case'ring':g.scale(4.2,4.2);g.translate(3.5,-11.5);drawGlove(g,null,it);break;
   }
   g.restore();}
@@ -6478,6 +6494,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn168',date:'2026-11-19',title:'Neue Ausrüstungs-Bilder',hero:['🎒 Inventar im neuen Stil','Die Bilder deiner Ausrüstung im Inventar passen jetzt zum neuen Kaktus: Helme, Panzer, Stiefel, Umhänge, Schilde, Ketten und Waffen sind neu gezeichnet.'],
+   items:()=>[],
+  en:{title:'New gear pictures',hero:['🎒 Inventory in the new style','The pictures of your gear in the inventory now match the new cactus: helmets, armour, boots, capes, shields, necklaces and weapons are redrawn.'],
+   items:()=>[]}},
   {id:'pn167',date:'2026-11-19',title:'Dein Kaktus in neuem Look',hero:['⚔ Seitenansicht mit Schwert','Dein Kaktus ist komplett neu gezeichnet: Er läuft jetzt seitlich, hält sein Schwert richtig und schlägt bei jedem Angriff zu – die Stacheln fliegen weiterhin.'],
    items:()=>[['Neue Ausrüstung:','Helm, Panzer, Umhang, Stiefel, Schild und alle Relikte sind im neuen Stil gezeichnet. Der Helm lässt das Gesicht frei, der Umhang weht hinter dir.'],['Drei Formen:','Es gibt jetzt Kugel, Feige und Schlank. Säule, Saguaro und Igel werden zu Schlank.'],['Roher Kaktus:','Hüte, Blüten und Mode-Hüte gibt es nicht mehr – damit fallen auch die kleinen Mode-Boni weg.']],
   en:{title:'Your cactus has a new look',hero:['⚔ Side view with sword','Your cactus is completely redrawn: it now walks sideways, holds its sword properly and swings it with every attack – the spikes still fly.'],
