@@ -1651,7 +1651,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🧭 Expedition':'🧭 Expedition','🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'🏆 All areas cleared – carry on in the 🧭 Expedition','Stark:':'Strong:','Schwach:':'Weak:','Waffe (Relikt)':'Weapon (relic)','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
+'Opa Stachel':'Grandpa Spike','Holzrohr':'Wooden Tube','Stachelrohr':'Spiked Tube','Eisen-Bazooka':'Iron Bazooka','Kristallkanone':'Crystal Cannon','Sonnenkanone':'Sun Cannon','Blutmondkanone':'Blood Moon Cannon','Urzeitkanone':'Primeval Cannon','Sternenwerfer':'Star Launcher','Götterkanone':'God Cannon','Ätherkanone':'Aether Cannon','Ewigkeitskanone':'Eternity Cannon','Urknallkanone':'Big Bang Cannon','Astralkanone':'Astral Cannon','Prismakanone':'Prism Cannon','Polarlichtkanone':'Aurora Cannon','Sonnenkernkanone':'Suncore Cannon','Allmachtskanone':'Omnipotence Cannon','Sandsturmkanone':'Sandstorm Cannon','🧭 Expedition':'🧭 Expedition','🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'🏆 All areas cleared – carry on in the 🧭 Expedition','Stark:':'Strong:','Schwach:':'Weak:','Waffe (Relikt)':'Weapon (relic)','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
 'Sandsturmklinge':'Sandstorm Blade','Krone des Wüstenkönigs':'Crown of the Desert King','Dornenpanzer':'Thorn Armour','Spiegelschild':'Mirror Shield','Glutfäuste':'Ember Fists','Fata-Morgana-Stiefel':'Mirage Boots','Oasenmantel':'Oasis Cloak','Sonnenamulett':'Sun Amulet','Kettenring':'Chain Ring','👑 Unverwundbar!':'👑 Invulnerable!','Höchstes Level!':'Max level!','⬆ Leveln':'⬆ Level up','✨ Wüstensplitter gibt es auf der 🧭 Expedition.':'✨ Desert shards come from the 🧭 Expedition.','Scharfschütze':'Sharpshooter','Dickhaut':'Thick skin','Wirbelwind':'Whirlwind','Blütenzauber':'Bloom magic','Volltreffer':'Bullseye','Wüstenhaut':'Desert skin','Mondkraft':'Moon power','Goldregen':'Gold rain','Glutherz':'Ember heart','Uralte Kraft':'Ancient power','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
 '🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
@@ -1991,7 +1991,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2074,7 +2074,7 @@ const RAR=[
 ];
 // Neun Slots wie in Rogers Konzept. pct = Prozentwert (wächst langsamer), cap = Obergrenze
 const SLOTS=[
-  {id:'waffe',     n:'Waffe',      stat:'atk',  unit:'Angriff',      base:4,  names:['Holzkeule','Stachelkeule','Eisenschwert','Kristallklinge','Sonnenschwert','Blutmondklinge','Urzeitklinge','Sternenschneide','Götterschwert','Ätherklinge','Ewigkeitsklinge','Urknallschwert','Astralklinge','Prismaklinge','Polarlichtklinge','Sonnenkernklinge','Allmachtsklinge']},
+  {id:'waffe',     n:'Waffe',      stat:'atk',  unit:'Angriff',      base:4,  names:['Holzrohr','Stachelrohr','Eisen-Bazooka','Kristallkanone','Sonnenkanone','Blutmondkanone','Urzeitkanone','Sternenwerfer','Götterkanone','Ätherkanone','Ewigkeitskanone','Urknallkanone','Astralkanone','Prismakanone','Polarlichtkanone','Sonnenkernkanone','Allmachtskanone']},
   {id:'helm',      n:'Helm',       stat:'hp',   unit:'Leben',        base:20, names:['Lederkappe','Stachelkappe','Eisenhelm','Hörnerhelm','Sonnenkrone','Drachenhelm','Urzeithelm','Nebelkrone','Götterkrone','Ätherkrone','Ewige Krone','Urknallhelm','Astralkrone','Prismakrone','Polarlichtkrone','Sonnenkernkrone','Allmachtskrone']},
   {id:'ruestung',  n:'Rüstung',    stat:'hp',   unit:'Leben',        base:35, names:['Stoffweste','Lederharnisch','Eisenpanzer','Runenpanzer','Goldrüstung','Glutpanzer','Jadepanzer','Sternenrüstung','Götterharnisch','Ätherpanzer','Ewiger Panzer','Urknallrüstung','Astralpanzer','Prismapanzer','Polarlichtpanzer','Sonnenkernpanzer','Allmachtspanzer']},
   {id:'schild',    n:'Schild',     stat:'block',unit:'% Schutz',     base:3,  pct:true,cap:60,names:['Holzbrett','Rundschild','Eisenschild','Kaktuswappen','Sonnenschild','Mythenschild','Urzeitschild','Galaxieschild','Götterschild','Ätherschild','Ewiger Schild','Urknallschild','Astralschild','Prismaschild','Polarlichtschild','Sonnenkernschild','Allmachtsschild']},
@@ -2355,6 +2355,7 @@ function ktInit(){if(!S.kt||typeof S.kt!=='object')S.kt={};if(!S.ktSum)S.ktSum={
 function ktLook(ch){const K=ktDef(ch.cls);ch.shape=K.shape;ch.color=K.color;}
 let haste=0,dodgeT=0;skInit();drInit();ktInit();
 // 19.11.2026: nur noch Kugel, Feige, Schlank – kein Hut, keine Mode
+{const O=['Holzkeule', 'Stachelkeule', 'Eisenschwert', 'Kristallklinge', 'Sonnenschwert', 'Blutmondklinge', 'Urzeitklinge', 'Sternenschneide', 'Götterschwert', 'Ätherklinge', 'Ewigkeitsklinge', 'Urknallschwert', 'Astralklinge', 'Prismaklinge', 'Polarlichtklinge', 'Sonnenkernklinge', 'Allmachtsklinge'],N=['Holzrohr', 'Stachelrohr', 'Eisen-Bazooka', 'Kristallkanone', 'Sonnenkanone', 'Blutmondkanone', 'Urzeitkanone', 'Sternenwerfer', 'Götterkanone', 'Ätherkanone', 'Ewigkeitskanone', 'Urknallkanone', 'Astralkanone', 'Prismakanone', 'Polarlichtkanone', 'Sonnenkernkanone', 'Allmachtskanone'];const fx=it=>{if(it&&it.slot==='waffe'){const i=O.indexOf(it.name);if(i>=0)it.name=N[i];}};for(const k in S.gear||{})fx(S.gear[k]);(S.inv||[]).forEach(fx);}
 if(S.char){if(!['kugel','feige','schlank'].includes(S.char.shape))S.char.shape='schlank';S.char.hat='ohne';delete S.char.mode;}if(typeof farmInit==='function')farmInit();
 // Stützpunkte: auf diesen Levels gelten genau diese Chancen (in %), dazwischen wird übergeblendet
 const GL=[1,3,6,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85], MAX_G=85;
@@ -2607,7 +2608,7 @@ function update(dt){
   hero.cd-=dt;
   if(f&&f.x<W-10&&hero.cd<=0){
     const s=heroStats();hero.cd=s.spd/(haste>0?1.3:1);hero.squash=1;hero.atkAt=performance.now();hero.atkD=Math.min(480,hero.cd*900);
-    spines.push({x:HX+18,y:GROUND-34,tx:f,v:420});
+    {const mz=kpMuzzle();spines.push({x:HX+mz.x,y:GROUND+mz.y,tx:f,v:420});}
   }
   for(const p of spines){
     const e=p.tx;if(e.dying){p.dead=true;continue;}
@@ -2805,12 +2806,7 @@ const RART=(()=>{const O='#2a1a12';
 function ol(g,f,w){g.fillStyle=f;g.fill();g.lineWidth=w||2.4;g.strokeStyle=O;g.lineJoin='round';g.lineCap='round';g.stroke();}
 function gem(g,x,y,r,c){g.beginPath();g.arc(x,y,r,0,7);ol(g,c||'#3fe8d0',1.6);g.fillStyle='#e8fffb';g.beginPath();g.arc(x-r*.35,y-r*.35,r*.3,0,7);g.fill();}
 const A={
-sand(g,t,hand){g.save();if(!hand){g.translate(5,-3);g.rotate(.7);}
- g.beginPath();g.moveTo(-4,10);g.quadraticCurveTo(-12,-14,2,-40);g.quadraticCurveTo(10,-16,5,10);g.closePath();ol(g,'#f2d79a');
- g.beginPath();g.moveTo(-1,6);g.quadraticCurveTo(-6,-14,2,-32);g.lineWidth=1.6;g.strokeStyle='#c8a060';g.stroke();
- g.strokeStyle='#3fe8d0';g.lineWidth=2;for(let i=0;i<2;i++){g.beginPath();g.arc(0,-12-i*12,3.5+i,t*3,4+t*3);g.stroke();}
- g.beginPath();g.moveTo(-15,10);g.quadraticCurveTo(0,4,15,10);g.lineTo(13,15);g.quadraticCurveTo(0,10,-13,15);g.closePath();ol(g,'#ffd447');
- g.beginPath();g.roundRect(-3,15,6,13,2);ol(g,'#1f6a62');g.beginPath();g.moveTo(0,28);g.lineTo(5,33);g.lineTo(0,38);g.lineTo(-5,33);g.closePath();ol(g,'#3fe8d0',2);g.restore();},
+sand(g,t,hand){g.save();g.rotate(-.5);g.scale(1.2,1.2);g.translate(-11,2);kpBazooka(g,{rel:'sand',r:3,slot:'waffe'},0);g.restore();},
 krone(g,t){g.save();g.translate(0,-4);g.rotate(t*.3);for(let i=0;i<12;i++){g.rotate(Math.PI/6);g.beginPath();g.moveTo(-3,-22);g.lineTo(0,-34);g.lineTo(3,-22);g.closePath();g.fillStyle='#ffd44799';g.fill();}g.restore();
  g.beginPath();g.moveTo(-26,16);g.lineTo(-28,-14);g.lineTo(-15,-2);g.lineTo(-8,-22);g.lineTo(0,-6);g.lineTo(8,-22);g.lineTo(15,-2);g.lineTo(28,-14);g.lineTo(26,16);g.closePath();ol(g,'#ffd447');
  g.beginPath();g.roundRect(-27,8,54,10,4);ol(g,'#e9b23a');
@@ -3076,7 +3072,32 @@ function kpWeapon(g,it){const M=MAT[it.r],r=Math.min(it.r,5);
 const KP_ATK=[[0,-.67,-.4,0,0,0],[.28,-3.4,-2.6,-.15,.4,0],[.42,-2.4,-.8,.12,-.3,.9],[.58,-1.0,.6,.18,-.2,.85],[.75,-.4,1.2,.1,.1,.35],[1,-.67,-.4,0,0,0]];
 function kpPose(a){if(a==null||a<0||a>=1)return null;let i=0;while(i<KP_ATK.length-2&&KP_ATK[i+1][0]<=a)i++;const A=KP_ATK[i],B=KP_ATK[i+1],k=(a-A[0])/(B[0]-A[0]),e=k*k*(3-2*k),L=j=>A[j]+(B[j]-A[j])*e;return{arm:L(1),B:L(2),lean:L(3),sq:L(4),sl:L(5)};}
 const KP_SHAPES=['kugel','feige','schlank'];
+function kpMuzzle(){const c=S.char||DEFAULT_CH,sh=SHAPES[['kugel','feige','schlank'].includes(c.shape)?c.shape:'schlank'];return{x:sh.hw*.05+44,y:sh.top+sh.hw+24};}
 function kpAtk(h){if(!h||!h.atkAt)return null;const a=.22+(performance.now()-h.atkAt)/(h.atkD||450)*.78;return a<1?a:null;}
+// Stachel-Bazooka: Ursprung = Griff, Rohr zeigt nach +x
+function kpBazooka(g,it,rec){const SD=it.rel==='sand',M=SD?{m:'#e9c98a',d:'#b0884a',l:'#f6e3b8',a:'#3fe8d0'}:MAT[it.r],r=SD?3:Math.min(it.r,5),body=r<=1?(r?'#9a6a3a':'#8a5a32'):M.m,dk=r<=1?'#5e3a1e':M.d,lt=r<=1?'#c08a52':M.l;
+  g.save();g.translate(-rec*5,0);g.rotate(-rec*.12);
+  // hintere Trichteröffnung
+  g.beginPath();g.moveTo(-22,-9);g.lineTo(-14,-6);g.lineTo(-14,4);g.lineTo(-22,7);g.closePath();olFill(g,dk,2.2);
+  // Rohr
+  g.beginPath();g.roundRect(-15,-6.5,48,11,5);const gr=g.createLinearGradient(0,-7,0,5);gr.addColorStop(0,lt);gr.addColorStop(.45,body);gr.addColorStop(1,dk);olFill(g,gr,2.4);
+  g.fillStyle='#ffffff66';g.fillRect(-10,-4.5,38,1.6);
+  // Bänder / Verzierung
+  const band=r>=4?MAT[4].m:r>=2?dk:'#4a2c18';for(const x of[-9,10,25]){g.beginPath();g.roundRect(x,-7.5,3.5,13,1.5);olFill(g,band,1.4);}
+  if(r===3&&!SD){g.strokeStyle=M.a;g.lineWidth=1.4;g.beginPath();g.moveTo(-4,-1);g.lineTo(0,-3);g.lineTo(4,-1);g.lineTo(8,-3);g.stroke();}
+  if(SD){g.strokeStyle='#3fe8d0';g.lineWidth=1.8;for(const x of[0,16]){g.beginPath();g.arc(x+3,-.5,3.2,t*4,t*4+4.2);g.stroke();}}
+  // Mündung mit Stachel
+  g.beginPath();g.roundRect(32,-8.5,6,15,2.5);olFill(g,r>=4?MAT[4].m:dk,2);
+  if(rec<.05){g.beginPath();g.moveTo(37,-2.5);g.lineTo(45,-1);g.lineTo(37,.5);g.closePath();olFill(g,'#fff4d0',1.3);}
+  // Visier, Griff, Abzug
+  g.beginPath();g.roundRect(4,-12,7,5,1.5);olFill(g,dk,1.6);if(r>=2){g.fillStyle=M.a;g.beginPath();g.arc(7.5,-9.5,1.4,0,7);g.fill();}
+  g.beginPath();g.roundRect(-2,3,5,9,2);olFill(g,'#4a2c18',1.6);g.beginPath();g.roundRect(14,3,4,7,1.5);olFill(g,'#4a2c18',1.4);
+  if(r>=2)gemAt(g,20,-1,2.6,M.a);
+  if(r>=4){g.globalAlpha=.3+.2*Math.sin(t*6);g.strokeStyle=it.r>5?M.a:r===5?'#ff3d4e':'#fff2a8';g.lineWidth=4;g.beginPath();g.moveTo(-12,0);g.lineTo(31,0);g.stroke();g.globalAlpha=1;}
+  // Mündungsfeuer
+  if(rec>.05){const f=rec;g.save();g.translate(40,-1);g.globalAlpha=Math.min(1,f*1.6);for(const [c,s] of[['#ffb03a',1],['#fff2a8',.6]]){g.fillStyle=c;g.beginPath();g.moveTo(0,-7*s*f-2);g.lineTo(14*s*f+4,0);g.lineTo(0,7*s*f+2);g.lineTo(4*s,0);g.closePath();g.fill();}g.restore();}
+  g.restore();}
+
 function drawCactus(g,ch,o){const G=o.gear||{},shp=KP_SHAPES.includes(ch.shape)?ch.shape:'schlank',sh=SHAPES[shp],{hw,top,bot}=sh;ch=Object.assign({},ch,{shape:shp});
   if(o.atk==null&&o.squash>0)o=Object.assign({},o,{atk:.25+(1-o.squash)*.75});
   const base=o.hit?'#ffffff':ch.color,dark=shade(ch.color,-0.3),light=shade(ch.color,0.32);
@@ -3087,7 +3108,7 @@ function drawCactus(g,ch,o){const G=o.gear||{},shp=KP_SHAPES.includes(ch.shape)?
   drawAura(g,sh,G);
   if(G.umhang){g.save();g.translate(0,o.bob||0);kpCape(g,sh,G.umhang,ph);g.restore();}
   kpBoot(g,-5-st,l1,G.schuhe,true,sh,ch.color);
-  const PS=kpPose(o.atk);g.translate(0,o.bob||0);const sq=PS?PS.sq:0;g.rotate((o.walk?.06:0)+(PS?PS.lean:0));g.scale(1+sq*.08,1-sq*.08);
+  const PS=null;g.translate(0,o.bob||0);const sq=PS?PS.sq:0;g.rotate((o.walk?.06:0)+(PS?PS.lean:0));g.scale(1+sq*.08,1-sq*.08);
   // Saguaro: hinterer Seitenarm
   if(ch.shape==='saguaro'){const y=top+hw+8;g.beginPath();g.roundRect(-hw-7,y-4.5,12,10,5);olFill(g,shade(base,-.15));g.beginPath();g.roundRect(-hw-12,y-22,10,26,5);olFill(g,shade(base,-.15));}
   // Stacheln (Rücken und Kopf)
@@ -3096,6 +3117,8 @@ function drawCactus(g,ch,o){const G=o.gear||{},shp=KP_SHAPES.includes(ch.shape)?
   for(const [x,y,a] of sp){const L=6*sl,W=2.3;g.beginPath();g.moveTo(x+Math.cos(a+1.57)*W,y+Math.sin(a+1.57)*W);g.lineTo(x+Math.cos(a)*L,y+Math.sin(a)*L);g.lineTo(x+Math.cos(a-1.57)*W,y+Math.sin(a-1.57)*W);g.closePath();olFill(g,'#fff4d0',1.4);}
   // Feige: hinteres Ohr
   if(ch.shape==='feige'&&!HL){g.beginPath();g.ellipse(-6,top+1,8,11,-.35,0,7);olFill(g,shade(base,-.12));}
+  // Schild auf dem Rücken (die Bazooka braucht beide Hände)
+  if(G.schild){g.save();g.translate(-hw*1.67,-6);g.rotate(-.12);kpShield(g,sh,G.schild,ay,0);g.restore();}
   // hinterer Arm
   g.save();g.translate(hw*.05,ay);g.rotate(-.7+walk*.3);kpArm(g,ch.color,17,.15);drawGlove(g,G.handschuhe,G.ring);g.restore();
   // Körper
@@ -3109,13 +3132,10 @@ function drawCactus(g,ch,o){const G=o.gear||{},shp=KP_SHAPES.includes(ch.shape)?
   kpFace(g,ch,sh,fy);if(G.halskette)kpNeck(g,sh,G.halskette,fy);if(G.helm)kpHelm(g,sh,G.helm,fy);
   if(ch.shape==='saguaro'){const y=top+hw+14;g.beginPath();g.roundRect(hw-5,y-4.5,13,10,5);olFill(g,base);g.beginPath();g.roundRect(hw+3,y-22,10,26,5);olFill(g,base);g.fillStyle=light;g.fillRect(hw+5,y-18,2,14);}
   kpBoot(g,6+st,l2,G.schuhe,false,sh,ch.color);
-  // vorderer Arm mit Waffe (Klinge zeigt in Richtung B, Bildschirm-Winkel)
-  {const arm=PS?PS.arm:-.67-walk*.12,B=PS?PS.B:-.4+walk*.08,sx=hw*.3,sy=ay+1,lean=(o.walk?.06:0)+(PS?PS.lean:0);
-   if(PS&&PS.sl>.02&&G.waffe){g.save();g.globalAlpha=PS.sl;const R=46,s0=-2.6,s1=B,rg=g.createRadialGradient(sx,sy,R*.45,sx,sy,R*1.12);rg.addColorStop(0,'#fff0');rg.addColorStop(.75,'#fff4d8ee');rg.addColorStop(1,'#ffd0a000');g.fillStyle=rg;g.beginPath();g.arc(sx,sy,R*1.12,s0-lean,s1-lean);g.arc(sx,sy,R*.45,s1-lean,s0-lean,true);g.closePath();g.fill();g.restore();}
-   g.save();g.translate(sx,sy);g.rotate(arm);
-   if(G.waffe){g.save();g.translate(.5,15);g.rotate(B-lean-arm-Math.PI/2);kpWeapon(g,G.waffe);g.restore();}
-   kpArm(g,ch.color,18);if(G.handschuhe)drawGlove(g,G.handschuhe,null);else{g.beginPath();g.arc(.5,15,5.5,0,7);olFill(g,base,2);}g.restore();}
-  if(G.schild)kpShield(g,sh,G.schild,ay,walk*2);
+  // vorderer Arm mit Stachel-Bazooka (beidhändig, Rückstoß beim Schuss)
+  {const rec=o.atk!=null&&o.atk<1?Math.max(0,1-o.atk*2.2):0,sx=hw*.3,sy=ay+1,bx=hw*.05,by=ay+1;
+   if(G.waffe){g.save();g.translate(bx,by);g.rotate(-.06);kpBazooka(g,G.waffe,rec);g.restore();}
+   g.save();g.translate(sx,sy);g.rotate(-1.25+rec*.2);kpArm(g,ch.color,15);if(G.handschuhe)drawGlove(g,G.handschuhe,null);else{g.beginPath();g.arc(.5,15,5.5,0,7);olFill(g,base,2);}g.restore();}
   g.restore();}
 const COLORS=[['Wüstengrün','#63c74d'],['Salbei','#8fbf7a'],['Blaugrün','#3fb59a'],['Nachtblau','#5b8fd9'],['Abendrot','#d9705b'],
   ['Moosgrün','#3f8f3a'],['Minze','#7fe0b0'],['Sonnengelb','#e8c84a'],['Kürbis','#e8903a'],['Rosa','#ee8ab8'],['Lavendel','#a98ad9'],['Steingrau','#9aa3ad']];
@@ -4325,7 +4345,7 @@ function kpArmorIcon(g,it){const RM=it.rel&&KP_RELM[it.rel],M=RM||MAT[it.r],r=RM
 function drawItemIcon(g,it,S2){g.save();g.clearRect(0,0,S2,S2);g.translate(S2/2,S2/2);const k=S2/56;g.scale(k,k);const sh=ICON_SH;
   if(it&&it.rel&&RART[it.rel]){g.scale(.78,.78);RART[it.rel](g,1.3);g.restore();return;}
   switch(it.slot){   // 19.11.2026: Bilder im Stil der Seitenansicht
-    case'waffe':g.scale(1.12,1.12);g.rotate(-Math.PI*.75);g.translate(0,-17);kpWeapon(g,it);break;
+    case'waffe':g.scale(.9,.9);g.rotate(-.42);g.translate(-11,2);kpBazooka(g,it,0);break;
     case'helm':g.scale(1.25,1.25);kpHelm(g,sh,it,22);break;
     case'ruestung':g.scale(1.2,1.2);kpArmorIcon(g,it);break;
     case'schild':g.scale(1.75,1.75);g.translate(-10.5,0);kpShield(g,sh,it,-9,0);break;
@@ -4663,7 +4683,7 @@ function wbxUpdate(A,dt){const h=A.hero,b=A.boss,ZB=A.zb(),ZH=A.zh();A.t+=dt;
   b.shield=Math.max(0,b.shield-dt);
   // Kaktus schießt von allein: zuerst auf Diener, sonst auf den Boss (mit Vorhalt)
   A.shotT-=dt;if(A.shotT<=0){A.shotT=.25;h.atkAt=performance.now();h.atkD=230;const m=A.mn.slice().sort((p,q)=>Math.hypot(p.x-h.x,p.y-h.y)-Math.hypot(q.x-h.x,q.y-h.y))[0];
-    const sx=h.x,sy=h.y-44;let tx,ty;if(m&&Math.hypot(m.x-h.x,m.y-h.y)<A.H*.5){tx=m.x;ty=m.y;}else{const cy=b.y-b.r*.9,tt=Math.hypot(b.x-sx,cy-sy)/650;tx=b.x+b.vx*tt;ty=cy+b.vy*tt;}
+    const mz=kpMuzzle(),sx=h.x+(h.face||1)*mz.x*.8,sy=h.y+mz.y*.8;let tx,ty;if(m&&Math.hypot(m.x-h.x,m.y-h.y)<A.H*.5){tx=m.x;ty=m.y;}else{const cy=b.y-b.r*.9,tt=Math.hypot(b.x-sx,cy-sy)/650;tx=b.x+b.vx*tt;ty=cy+b.vy*tt;}
     const l=Math.hypot(tx-sx,ty-sy)||1;A.sh.push({x:sx,y:sy,vx:(tx-sx)/l*650,vy:(ty-sy)/l*650,life:1.4});}
   for(const s2 of A.sh){s2.x+=s2.vx*dt;s2.y+=s2.vy*dt;s2.life-=dt;
     for(const m of A.mn)if(!s2.done&&Math.hypot(s2.x-m.x,s2.y-m.y)<18){s2.done=1;m.hp-=A.dps*.25;m.hit=.1;if(m.hp<=0){m.dead=1;A.fx.push({k:'pop',x:m.x,y:m.y,t:.4});}}
@@ -5665,7 +5685,7 @@ function twFight(){if(pending&&pending.tw){reveal();return;}if(tw.anim||pending)
   // ×2: pro Bild wird der Kampf zweimal weitergerechnet, alles läuft doppelt so schnell
   const tick=(A,dt)=>{
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
-      A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}
+      A.throwT-=dt;if(A.throwT<=0){A.throwT=st.spd;A.sq=1;{const mz=kpMuzzle();A.sp.push({x:70+mz.x,y:166+mz.y+rnd(-3,3)});}}
       A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=st.atk*em*rnd(.9,1.1)*(cr?st.critM:1);
         A.bhp-=v;A.bhit=.1;A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':em>1?ELEM[G.Wd.weak].c:'#fff',t:.7});}}
@@ -5856,7 +5876,7 @@ function dgFight(){const T=dgT(),cp=dg.type==='caps',D=dgState();if(dg.anim||dgK
   renderDg();let last=performance.now();
   const step=now=>{const dt=Math.min(.05,(now-last)/1000);last=now;const A=dg.anim;if(!A)return;
     if(!A.end){A.left-=dt;A.php=Math.min(A.pmax,A.php+A.reg*dt);
-      A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;A.sp.push({x:92,y:130+rnd(-8,8)});}A.sq=Math.max(0,A.sq-dt*6);
+      A.throwT-=dt;if(A.throwT<=0){A.throwT=.25;A.sq=1;{const mz=kpMuzzle();A.sp.push({x:70+mz.x,y:166+mz.y+rnd(-3,3)});}}A.sq=Math.max(0,A.sq-dt*6);
       for(const s2 of A.sp){s2.x+=520*dt;if(s2.x>240&&!s2.done){s2.done=true;const cr=Math.random()<st.crit/100,v=Math.min(A.bhp,dps*.25*rnd(.85,1.15)*(cr?st.critM:1));
         A.dmg+=v;A.bhp-=v;A.bhit=.1;A.coins=Math.floor(B.full*.6*A.dmg/B.hp);A.fl.push({x:265+rnd(-22,22),y:105+rnd(-18,8),txt:fmt(v)+(cr?'!':''),c:cr?'#ffd447':'#fff',t:.7});}}
       A.sp=A.sp.filter(s2=>!s2.done);
@@ -6494,6 +6514,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn169',date:'2026-11-19',title:'Stachel-Bazooka',hero:['💥 Bazooka statt Schwert','Dein Kaktus kämpft jetzt mit einer Stachel-Bazooka: Sie ruckt beim Schuss zurück, vorne blitzt das Mündungsfeuer und der Stachel fliegt aus dem Rohr.'],
+   items:()=>[['Neue Namen:','Aus Keulen, Schwertern und Klingen werden Rohre, Bazookas und Kanonen – z. B. Eisen-Bazooka oder Allmachtskanone. Deine Waffen behalten ihre Werte.'],['Schild auf dem Rücken:','Die Bazooka braucht beide Hände, deshalb trägt dein Kaktus den Schild jetzt auf dem Rücken.'],['Relikt:','Aus der Sandsturmklinge wird die Sandsturmkanone – der Effekt bleibt gleich.']],
+  en:{title:'Spike Bazooka',hero:['💥 Bazooka instead of sword','Your cactus now fights with a spike bazooka: it recoils on every shot, the muzzle flashes and the spike flies out of the barrel.'],
+   items:()=>[['New names:','Clubs, swords and blades become tubes, bazookas and cannons – e.g. Iron Bazooka or Omnipotence Cannon. Your weapons keep their stats.'],['Shield on the back:','The bazooka needs both hands, so your cactus now carries its shield on its back.'],['Relic:','The Sandstorm Blade becomes the Sandstorm Cannon – the effect stays the same.']]}},
   {id:'pn168',date:'2026-11-19',title:'Neue Ausrüstungs-Bilder',hero:['🎒 Inventar im neuen Stil','Die Bilder deiner Ausrüstung im Inventar passen jetzt zum neuen Kaktus: Helme, Panzer, Stiefel, Umhänge, Schilde, Ketten und Waffen sind neu gezeichnet.'],
    items:()=>[],
   en:{title:'New gear pictures',hero:['🎒 Inventory in the new style','The pictures of your gear in the inventory now match the new cactus: helmets, armour, boots, capes, shields, necklaces and weapons are redrawn.'],
@@ -7455,7 +7479,7 @@ const xpRewM=lv=>1+.25*((lv||1)-1);
 // 18.11.2026 Relikte: einzigartige Ausrüstung nur aus der Expedition. 10 Fragmente = beschwören, weitere Fragmente = aufwerten (Stufe 1–5).
 const REL_MAX=5,REL_SUM=10,REL_UP=[0,30,60,100,160],relUpC=L=>REL_UP[L]||999;   // Aufwerten: 30 / 60 / 100 / 160 Fragmente (~300 Expeditionen für alles)
 const RELICS=[
-  {id:'sand',slot:'waffe',n:'Sandsturmklinge',ico:'🌪',d:L=>'Jeder 5. Schuss wird ein Sandwirbel: fliegt durch alle Gegner und Hindernisse, '+(2+.5*L).toString().replace('.',',')+'× Schaden'},
+  {id:'sand',slot:'waffe',n:'Sandsturmkanone',ico:'🌪',d:L=>'Jeder 5. Schuss wird ein Sandwirbel: fliegt durch alle Gegner und Hindernisse, '+(2+.5*L).toString().replace('.',',')+'× Schaden'},
   {id:'krone',slot:'helm',n:'Krone des Wüstenkönigs',ico:'👑',d:L=>'Unter 30 % Leben '+(2+.5*L).toString().replace('.',',')+' s unverwundbar (alle 30 s)'},
   {id:'dorn',slot:'ruestung',n:'Dornenpanzer',ico:'🌵',d:L=>(15+5*L)+' % des Schadens, den du bekommst, fliegt als Stacheln zurück'},
   {id:'spiegel',slot:'schild',n:'Spiegelschild',ico:'🪞',d:L=>(10+4*L)+' % Chance, gegnerische Kugeln zurückzuwerfen'},
@@ -8027,7 +8051,7 @@ function axUpdate(dt){const A=AX,h=A.hero;if(A.msgT>0){A.msgT-=dt;if(A.msgT<=0&&
   A.cd-=dt;const alive=A.en.filter(e=>e.hp>0);
   if(alive.length&&A.cd<=0){   // 15.11.2026: schießt immer, auch beim Laufen
 const tg=alive.reduce((a,e)=>!a||Math.hypot(e.x-h.x,e.y-h.y)<Math.hypot(a.x-h.x,a.y-h.y)?e:a,null);
-    h.atkAt=performance.now();const tc=axC(tg),an=Math.atan2(tc.y-(h.y-30),tg.x-h.x),shot=(a,dl)=>{const o={x:h.x,y:h.y-30,vx:Math.cos(a)*420,vy:Math.sin(a)*420,t:1.6,b:axHas('bounce'),hitIds:[],wait:dl||0};if(relOn('sand')&&!dl){A.rSc=(A.rSc||0)+1;if(A.rSc%5===0){o.sand=relOn('sand');o.t=2.2;}}A.sh.push(o);};
+    h.atkAt=performance.now();const tc=axC(tg),mz0=kpMuzzle(),an=Math.atan2(tc.y-(h.y+mz0.y*.8),tg.x-(h.x+(tg.x>h.x?1:-1)*mz0.x*.8)),shot=(a,dl)=>{const mz=kpMuzzle(),o={x:h.x+(h.face||1)*mz.x*.8,y:h.y+mz.y*.8,vx:Math.cos(a)*420,vy:Math.sin(a)*420,t:1.6,b:axHas('bounce'),hitIds:[],wait:dl||0};if(relOn('sand')&&!dl){A.rSc=(A.rSc||0)+1;if(A.rSc%5===0){o.sand=relOn('sand');o.t=2.2;}}A.sh.push(o);};
     for(let k=0;k<=axHas('multi');k++){shot(an,k*.09);for(let f=1;f<=axHas('fan');f++){shot(an+.35*f,k*.09);shot(an-.35*f,k*.09);}}
     A.cd=h.spd/(1+.25*axHas('rate'));h.atkD=Math.min(480,Math.max(160,A.cd*900));if(!h.moving)h.face=tg.x>h.x?1:-1;}
   // 15.11.2026: Herzen erscheinen zufällig in der Arena – drüberlaufen heilt 10 % Leben (18.11.2026: vorher 20 %)
