@@ -1281,6 +1281,7 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 @keyframes relfrIn{from{transform:scale(.2) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}.reld{display:block;font-size:.7rem;color:#bff5ea;margin:2px 0}
 .dtag.endg{background:linear-gradient(90deg,#1a4a8a,#3a9ae0,#1a4a8a);color:#fff;border-color:#9ad8ff;box-shadow:0 0 10px #5ab8ff88}
 .xpmut .xpbl{border-color:#7fe08a!important;background:#1f3a24!important}.xpmut .xpbl b{color:#9fffb0}
+.vsub.ref{border-color:#9adfff}.refs{font-style:normal;color:#9adfff;font-weight:800;text-shadow:0 0 4px #3fb6d8}
 .xplv{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center;text-align:center;margin:6px 0}.xplv b{display:block;font-size:1.3rem;color:#ffd447}.xplv small{color:var(--sand);font-size:.72rem}
 .xpmut{display:grid;gap:5px;margin:6px 0}.xpmut span{background:#2a1e16;border:2px solid #7a3a2a;border-radius:10px;padding:5px 8px}.xpmut b{display:block;font-size:.8rem;color:#ff9a6a}.xpmut small{font-size:.68rem;color:var(--sand)}.xpmut em{font-size:.75rem;color:var(--sand);text-align:center}
 .xpshop{display:grid;gap:6px;margin:8px 0}.xpshop .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left}.xpshop .btn small{font-size:.7rem;opacity:.85}
@@ -1992,7 +1993,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2243,7 +2244,7 @@ function resSum(){const o={};for(const k in S.gear){const it=S.gear[k];if(!it)co
 function weMul(weak,atk,w){if(w===undefined)w=S.gear.waffe;if(!w)return 1;if(w.rel&&REL_EL[w.rel]){const E=REL_EL[w.rel];return E[0].includes(weak)?1.5:E[1].includes(atk)?.6:1;}const el=w.el;return !el?1:el===weak?1.5:el===atk?.6:1;}
 function heroStats(){
   // 14.11.2026: nur noch die Ausrüstung (plus Schmiede-Level des Platzes) bestimmt die Werte; die Kaktus-Klasse gibt ihre festen Eigenschaften
-  const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=sl.pct?g[sl.id].v:itemV(g[sl.id]);return s;};
+  const g=S.gear,m=clsM(),v=k=>{let s=0;for(const sl of SLOTS)if(sl.stat===k&&g[sl.id])s+=sl.pct?g[sl.id].v*refM(g[sl.id]):itemV(g[sl.id]);return s;};
   const MB=(modeOf()||{b:{}}).b;const SPR=((S.skEq2||[]).includes('sk_sprint')&&S.vil&&S.vil.b&&S.vil.b.sk_sprint)?1/(1.06+.014*(S.vil.b.sk_sprint-1)):1;
   const KL=klM(),T=klTal();
   return{atk:(25+v('atk'))*m.atk*(1+.01*albPages())*(1+(MB.atk||0))*KL*T.atk,hp:Math.round((300+v('hp'))*m.hp*(1+(MB.hp||0))*KL*T.hp),
@@ -2421,11 +2422,12 @@ function rollItem(){
 }
 const sellValue=it=>Math.ceil(5*cPow(it.lvl)*RAR[it.r].pm);
 // ⭐ aus der Schmiede gehören zum Teil selbst (Angriff/Leben-Teile); Prozent-Teile werden nicht verbessert
-const itemV=it=>it.v*(1+UPS*(it.up||0));
+const REF_MAX=25,REF_P=.02,refCost=L=>400*(L+1),refM=it=>1+REF_P*(it.ref||0);   // 20.11.2026: Veredeln mit Samenkapseln (Endgame): je Stufe +2 %, max. 25
+const itemV=it=>it.v*(1+UPS*(it.up||0))*refM(it);
 const upOk=it=>{const sl=SLOTS.find(x=>x.id===it.slot);return !!sl&&!sl.pct;};
 // 15.11.2026: Mit gebauter Schmiede gibt jedes zerstörte Teil zusätzlich Eisenerz (Stufe der Schmiede: +10 % je Stufe)
 function oreFor(it,L){L=L==null?((S.vil&&S.vil.b&&S.vil.b.schm)||0):L;return L>0?Math.round(Math.pow(1+it.r,1.5)*(1+.1*(L-1))):0;}
-function scrap(it){if(it&&it.rel){if(!S.inv.includes(it))S.inv.push(it);return 0;}qInc('scrap',1);const o=oreFor(it)+Math.floor(.7*(it.oreIn||0));if(o)S.ore=(S.ore||0)+o;return sellValue(it);}   // verbesserte Teile: 70 % des Erzes zurück
+function scrap(it){if(it&&it.rel){if(!S.inv.includes(it))S.inv.push(it);return 0;}qInc('scrap',1);const o=oreFor(it)+Math.floor(.7*(it.oreIn||0));if(o)S.ore=(S.ore||0)+o;if(it.capIn)S.caps=(S.caps||0)+Math.floor(.7*it.capIn);return sellValue(it);}   // verbesserte Teile: 70 % des Erzes zurück
 function itemValue(sl,r,lvl,f){const v=sl.pct?sl.base*RAR[r].pm*pctScale(lvl)*f:sl.base*RAR[r].m*itemScale(lvl)*f;return sl.pct?Math.round(v*10)/10:Math.round(v);}
 const fmtV=(sl,v)=>sl.pct?v.toFixed(1):fmt(v);
 
@@ -4408,7 +4410,7 @@ function renderEq(){
   if(selIt){const sl=slotOf(selIt.slot),R=RAR[selIt.r],cur=S.gear[selIt.slot],inInv=eqSel.src==='inv',diff=inInv&&cur?itemV(selIt)-itemV(cur):null;
     detail=`<div class="eqd" style="--rc:${R.c}"><button type="button" class="favbtn${selIt.fav?' on':''}" id="eqFav" aria-pressed="${!!selIt.fav}" title="Favorit – wird nicht zerlegt">${selIt.fav?'★':'☆'}</button><canvas width="112" height="112" data-icon="sel"></canvas><div>
       <span class="rar" style="color:${selIt.rel?'#3fe8d0':R.c}">${selIt.rel?'🏺 Relikt · Stufe '+relOwn(selIt.rel)+' · '+sl.n:R.n+' · '+sl.n}</span><b>${selIt.name}</b>${selIt.rel?`<span class="reld">${relDef(selIt.rel).ico} ${relDef(selIt.rel).d(relOwn(selIt.rel)||1)}</span>`:''}
-      <span>+${fmtV(sl,itemV(selIt))} ${sl.unit}${selIt.up?' ⭐'+selIt.up:''}${diff!=null?` <em class="${diff>=0?'up':'down'}">${diff>=0?'▲':'▼'} ${fmtV(sl,Math.abs(diff))}</em>`:inInv&&!cur?' <em class="up">Slot leer</em>':''}</span>${itemExtra(selIt)}</div>
+      <span>+${fmtV(sl,itemV(selIt))} ${sl.unit}${selIt.up?' ⭐'+selIt.up:''}${selIt.ref?' <i class="refs">✦'+selIt.ref+'</i>':''}${diff!=null?` <em class="${diff>=0?'up':'down'}">${diff>=0?'▲':'▼'} ${fmtV(sl,Math.abs(diff))}</em>`:inInv&&!cur?' <em class="up">Slot leer</em>':''}</span>${itemExtra(selIt)}</div>
       <div class="eqdb">${inInv?`<button class="sbtn go" type="button" id="eqEquip">Ausrüsten</button>`:`<button class="sbtn" type="button" id="eqUnequip" ${S.inv.length>=invMax()?'disabled':''}>Ablegen</button>`}
       ${selIt.rel?'':`<button class="sbtn red" type="button" id="eqSell">Verkaufen +${fmt(sellValue(selIt))}</button>`}</div>${selIt.rel?'<p class="hint" style="grid-column:1/-1;margin:0">🏺 Relikt – wird nie verkauft oder zerlegt. Aufwerten: 🧭 Expedition → 🏺 Relikte.</p>':selIt.fav?'<p class="hint" style="grid-column:1/-1;margin:0">⭐ Favorit – die Schmiede und „Schlechtere markieren“ lassen dieses Teil in Ruhe.</p>':''}${inBuild(selIt.id)?'<p class="hint warn" style="grid-column:1/-1">★ Dieses Teil gehört zu einem Build.</p>':''}</div>`;}
   const tabs=`<div class="eqtabs" role="tablist"><button type="button" role="tab" aria-selected="${eqTab==='gear'}" data-tab="gear">Ausrüstung</button><button type="button" role="tab" aria-selected="${eqTab==='builds'}" data-tab="builds">Builds</button></div>`;
@@ -4447,7 +4449,7 @@ function renderEq(){
     eqSel={src:'inv',i};renderEq();});
   {const pb=$('invPick');if(pb)pb.onclick=()=>{invPick=!invPick;invMarks.clear();eqSel=null;renderEq();};}
   {const b=$('invMarkWorse');if(b)b.onclick=()=>{for(const i of invOrder()){const it=S.inv[i],cur=S.gear[it.slot];
-      if(cur&&itemScore(it)<=itemScore(cur)&&!inBuild(it.id)&&!it.fav)invMarks.add(it.id);}renderEq();};}
+      if(cur&&itemScore(it)<=itemScore(cur)&&!inBuild(it.id)&&!it.fav&&!it.ref)invMarks.add(it.id);}renderEq();};}
   {const b=$('invMarkNone');if(b)b.onclick=()=>{invMarks.clear();renderEq();};}
   {const b=$('invDestroy');if(b)b.onclick=()=>{let n=0,sum=0;
       S.inv=S.inv.filter(it=>{if(!invMarks.has(it.id))return true;n++;sum+=scrap(it);return false;});
@@ -6555,6 +6557,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn177',date:'2026-11-20',title:'Veredeln',hero:['💎 Kapseln haben wieder einen Sinn','Ab Kapitel 48 kannst du in der Schmiede deine angelegten Teile mit Samenkapseln veredeln: jede Stufe +2 %, bis ✦25 (+50 %).'],
+   items:()=>[['Für alles:','Gilt für alle 9 Plätze, auch für Relikte – ganz ohne Zufall, jede Stufe kostet etwas mehr.'],['Sicher:','Veredelte Teile werden nicht als „schlechter“ zerlegt. Zerlegst du eins selbst, gibt es 70 % der Kapseln zurück.']],
+  en:{title:'Refining',hero:['💎 Capsules are useful again','From chapter 48 you can refine your equipped items with seed capsules in the forge: each level +2 %, up to ✦25 (+50 %).'],
+   items:()=>[['For everything:','Works for all 9 slots, relics included – no luck involved, every level costs a bit more.'],['Safe:','Refined items are not broken down as "worse". If you break one down yourself, you get 70 % of the capsules back.']]}},
   {id:'pn176',date:'2026-11-20',title:'Build-Zeichen',hero:['🏷 Neues Build-Schild','Teile, die in einem Build stecken, zeigen jetzt oben links ein goldenes Schild mit der Build-Nummer, z. B. „B 2“ oder „B 1·3“ – so verwechselst du es nicht mehr mit dem Favoriten-⭐ und das Element-Zeichen unten rechts bleibt frei.'],
    items:()=>[],
   en:{title:'Build marker',hero:['🏷 New build badge','Items that are part of a build now show a golden badge with the build number in the top left, e.g. „B 2“ or „B 1·3“ – no more mix-up with the favourite ⭐, and the element icon in the bottom right stays visible.'],
@@ -6958,6 +6964,11 @@ function vPanel(){const P=$('vPanel');if(!P||!vSel)return;if(vSel==='train'&&vLv
       <div class="vups">${SLOTS.filter(sl=>!sl.pct).map(sl=>{const it=S.gear[sl.id];if(!it)return'';const u=it.up||0,mx=u>=lv,c=upCost(it),ok=!mx&&(S.ore||0)>=c.ore&&(S.coins||0)>=c.coins;
         return`<div class="vup" style="--rc:${RAR[it.r].c}"><span><b>${sl.n} ${u?'⭐'+u:''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))} ${sl.unit}</em>${mx?'':' → <em class="up">+'+fmtV(sl,it.v*(1+UPS*(u+1)))+'</em>'}</small></span>
           <button type="button" class="sbtn${ok?' go':''}" data-vup="${sl.id}" ${ok?'':'disabled'}>${mx?(u>=10?'Max':'Max ⭐'+lv):`⭐${u+1}<small>${fmt(c.ore)} 🪨 · ${fmt(c.coins)} ${GC}</small>`}</button></div>`;}).join('')}</div>`;}
+  if(B.id==='schm'&&lv>0){const end=(S.chap||0)>=XP_UNLOCK;
+    h+=`<div class="vsub ref"><b>💎 Veredeln mit Samenkapseln</b><small>${end?'Kapseln: <b>'+fmt(S.caps||0)+'</b> · jede Stufe +2 % auf das Teil, bis ✦'+REF_MAX+' (+50 %) · gilt für alle 9 Plätze, auch Relikte. Zerlegst du ein veredeltes Teil, gibt es 70 % der Kapseln zurück.':'🔒 Ab Kapitel '+XP_UNLOCK+' – dann werden deine Samenkapseln zum Veredeln gebraucht.'}</small></div>`;
+    if(end)h+=`<div class="vups">${SLOTS.map(sl=>{const it=S.gear[sl.id];if(!it)return'';const L=it.ref||0,mx=L>=REF_MAX,c=refCost(L),ok=!mx&&(S.caps||0)>=c,nv=it.v*(1+UPS*(it.up||0))*(1+REF_P*(L+1));
+      return`<div class="vup" style="--rc:${it.rel?'#3fe8d0':RAR[it.r].c}"><span><b>${sl.n} ${L?'<i class="refs">✦'+L+'</i>':''}</b><small>${it.name}</small><small><em>+${fmtV(sl,itemV(it))}</em>${mx?'':' → <em class="up">+'+fmtV(sl,nv)+'</em>'}</small></span>
+        <button type="button" class="sbtn${ok?' go':''}" data-vref="${sl.id}" ${ok?'':'disabled'}>${mx?'Max ✦'+REF_MAX:`✦${L+1}<small>${fmt(c)} Kapseln</small>`}</button></div>`;}).join('')}</div>`;}
   if(B.id==='hand'&&lv>0)h+=shopHtml(lv);
   if(B.id==='tav'&&lv>0)h+=questHtml(lv);
   if(B.id==='train'&&lv>0){const eq=S.skEq2||[];h+=`<div class="vsub"><b>🎯 Fähigkeiten · ${eq.length} / 2 ausgerüstet</b><small>Ausgerüstete Fähigkeiten setzt du im Kapitel mit den runden Knöpfen ein. Lernen und Ausbauen braucht deinen Bauarbeiter.</small></div><div class="vups">${SK2.map(K=>{const L=vLv(K.id),lock=lv<K.need,mx=L>=lv,c=vCost({id:K.id},L+1),busy=!!j,ok=!lock&&!mx&&!busy&&(S.coins||0)>=c.coins&&(S.kak||0)>=c.kak,on=eq.includes(K.id);
@@ -6976,6 +6987,8 @@ function vPanel(){const P=$('vPanel');if(!P||!vSel)return;if(vSel==='train'&&vLv
   P.querySelectorAll('[data-vup]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vup],lv=vLv('schm');if(!it||(it.up||0)>=lv)return;const c=upCost(it);
     if((S.ore||0)<c.ore||(S.coins||0)<c.coins)return;S.ore-=c.ore;S.coins-=c.coins;it.up=(it.up||0)+1;it.oreIn=(it.oreIn||0)+c.ore;qInc('star',1);save();lastHud='';
     banner={txt:slotOf(it.slot).n+' ⭐'+it.up+'!',t:1.6};renderDorf();});
+  P.querySelectorAll('[data-vref]').forEach(b=>b.onclick=()=>{const it=S.gear[b.dataset.vref];if(!it||(S.chap||0)<XP_UNLOCK)return;const L=it.ref||0,c=refCost(L);if(L>=REF_MAX||(S.caps||0)<c)return;
+    S.caps-=c;it.ref=L+1;it.capIn=(it.capIn||0)+c;save();lastHud='';banner={txt:'💎 '+slotOf(it.slot).n+' ✦'+it.ref+' veredelt!',t:1.6};renderDorf();});
   {const gb=$('vGart');if(gb)gb.onclick=()=>tabGo('gart');}
   P.querySelectorAll('[data-skup]').forEach(b=>b.onclick=()=>{const K=SK2.find(x=>x.id===b.dataset.skup),V=vInit(),L=vLv(K.id),c=vCost({id:K.id},L+1);
     if(V.job||vLv('train')<K.need||L>=vLv('train')||(S.coins||0)<c.coins||(S.kak||0)<c.kak)return;S.coins-=c.coins;S.kak-=c.kak;V.job={id:K.id,to:L+1,end:Date.now()+c.sec*1000,dur:c.sec*1000};
@@ -7116,7 +7129,7 @@ function shopBuy(id){const lv=vLv('hand'),o=shopToday(lv).find(x=>x.id===id),D=s
 // Kosten für den nächsten ⭐: Erz steigt mit Seltenheit und ⭐, Münzen ≈ ein paar Minuten Kampf
 function upCost(it){const n=(it.up||0)+1;return{ore:Math.round(3*Math.pow(1+it.r,1.5)*Math.pow(n,1.6)),coins:Math.round(240*cPow(Math.max(1,S.best||1))*10*n)};}
 // Teile im Inventar, die nicht besser sind als das angelegte (ohne ★ Build-Teile)
-function vWorse(){ensureIds();return S.inv.filter(it=>{const cur=S.gear[it.slot];return cur&&itemScore(it)<=itemScore(cur)&&!inBuild(it.id)&&!it.fav;});}
+function vWorse(){ensureIds();return S.inv.filter(it=>{const cur=S.gear[it.slot];return cur&&itemScore(it)<=itemScore(cur)&&!inBuild(it.id)&&!it.fav&&!it.ref;});}
 // Dorf zeichnen
 // ---- Dorf-Boden im neuen Stil (15.11.2026): Tafelberge, Sand mit Rillen, Oase, Pflasterwege, Büsche ----
 const vH=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);};
