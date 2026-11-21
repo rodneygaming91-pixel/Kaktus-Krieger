@@ -82,7 +82,7 @@ h1 span{color:var(--bloom)}
 .ovstats{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;background:#0005;border:2px solid #6b5644;border-radius:10px;padding:6px 9px}
 .ovstats div{display:flex;justify-content:space-between;gap:6px;font-size:.74rem;border-bottom:1px solid #ffffff10;padding:2px 0}
 .ovstats span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ovstats span i{font-style:normal;display:inline-block;width:16px}.ovstats b{font-variant-numeric:tabular-nums;white-space:nowrap}
-.ovhead{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.ovname{display:flex;flex-direction:column;gap:1px}.ovname b{font-size:1.1rem}.ovname small{font-size:.74rem;color:var(--muted)}
+.ovhead{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:center}.ovname{display:flex;flex-direction:column;gap:1px}.ovname b{font-size:1.1rem}.ovname small{font-size:.74rem;color:var(--muted)}
 .ovsec{background:#0005;border:2px solid #6b5644;border-radius:10px;padding:5px 7px;display:flex;flex-direction:column;gap:4px}.ovsec>b{font-size:.8rem;color:#ffd447}
 .osolo{display:flex;align-items:center;gap:10px;justify-content:space-between}.osolo b{font-size:1rem}
 .ovbtns{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ovbtns .btn{font-size:.82rem;padding:8px 4px;white-space:nowrap}
@@ -636,6 +636,16 @@ canvas#cv{border:4px solid var(--frame);border-radius:8px;box-shadow:0 0 0 2px v
 .lbsw{display:flex;gap:4px;background:var(--std);border:2px solid var(--stl);border-radius:8px;padding:3px}
 .lbsw button{flex:1;border:0;border-radius:6px;padding:7px;background:none;color:#b8a488;font-family:var(--display);font-size:.9rem;letter-spacing:.02em;cursor:pointer}
 .lbsw button.on{background:linear-gradient(#6b5644,#4a3a2e);color:#ffe7a8;text-shadow:0 1px 0 #000}
+.ttl{display:inline-block;padding:1px 8px;border-radius:999px;font-weight:900;font-size:.68rem;border:2px solid #1c1008;color:#1c1008;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;font-style:normal;line-height:1.35;vertical-align:middle}
+.ttl.sm{font-size:.6rem;padding:0 6px;align-self:flex-start}
+.ttl.t0{background:linear-gradient(#f2b880,#b87333)}.ttl.t1{background:linear-gradient(#fff,#b9c3cf)}.ttl.t2{background:linear-gradient(#fff3a0,#f5b800)}.ttl.t3{background:linear-gradient(110deg,#fff,#7fe3ff 40%,#c07bff 70%,#fff);color:#0d1a3a}
+.ttl.tx{background:#3a2a1e;color:#b8a488;border-color:#6b5644}
+.ttlbtn{background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:4px;font:inherit;color:#b8a488;max-width:100%}.ttlbtn i{font-style:normal;font-size:.7rem}.ttlbtn.ovt{align-self:center;margin:-4px auto 0}.ttlbtn.ovt .ttl{font-size:.8rem;padding:2px 12px}
+.ovtfr{width:80px;height:80px;flex:none}.ovname{min-width:0}
+.lbtf{width:46px;height:46px}.lb.lbt button{grid-template-columns:26px 46px 1fr;gap:0 8px}.lb.lbt .rk,.lb.lbt .lbtf{grid-row:span 2}.lb.lbt .vl{grid-column:3;font-size:.74rem;white-space:normal}.lb.lbt .ttl.sm{max-width:none}.lb.lbt .nm{gap:1px}
+.ttlg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.ttlc{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--std);border:3px solid var(--stl);border-radius:10px;padding:6px;cursor:pointer;color:#fff;font:inherit;min-width:0}
+.ttlc canvas{width:96px;height:96px}.ttlc small{color:#b8a488;font-weight:800;font-size:.66rem}.ttlc.on{border-color:#ffd447;box-shadow:0 0 10px #ffd44788}.ttlc:disabled{opacity:.5;cursor:default}.ttlc:disabled canvas{filter:grayscale(.8)}
 .lb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;max-height:52vh;overflow-y:auto}
 .lb button{width:100%;display:grid;grid-template-columns:34px 1fr auto;gap:8px;align-items:center;text-align:left;cursor:pointer;color:#f4e6cc;font-family:var(--body);
   background:var(--std);border:2px solid var(--stl);border-radius:7px;padding:6px 10px}
@@ -1654,7 +1664,7 @@ Object.assign(EN,{
 'Die Kiste war voll: Mehr als 8 Stunden zählen nicht.':'The chest was full: more than 8 hours do not count.','ohne dich weitergekämpft.':'without you.',
 'Neue Seltenheit!':'New rarity!','Startguthaben':'Starting bonus',
 // Tutorial
-'Opa Stachel':'Grandpa Spike','🗝 Truhe öffnen':'🗝 Open chest','Dieses Relikt ist schon auf höchster Stufe.':'This relic is already at max level.','In einem Build':'In a build','Holzrohr':'Wooden Tube','Stachelrohr':'Spiked Tube','Eisen-Bazooka':'Iron Bazooka','Kristallkanone':'Crystal Cannon','Sonnenkanone':'Sun Cannon','Blutmondkanone':'Blood Moon Cannon','Urzeitkanone':'Primeval Cannon','Sternenwerfer':'Star Launcher','Götterkanone':'God Cannon','Ätherkanone':'Aether Cannon','Ewigkeitskanone':'Eternity Cannon','Urknallkanone':'Big Bang Cannon','Astralkanone':'Astral Cannon','Prismakanone':'Prism Cannon','Polarlichtkanone':'Aurora Cannon','Sonnenkernkanone':'Suncore Cannon','Allmachtskanone':'Omnipotence Cannon','Sandsturmkanone':'Sandstorm Cannon','🧭 Expedition':'🧭 Expedition','🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'🏆 All areas cleared – carry on in the 🧭 Expedition','Stark:':'Strong:','Schwach:':'Weak:','Waffe (Relikt)':'Weapon (relic)','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
+'Opa Stachel':'Grandpa Spike','🏅 Titel & Rahmen':'🏅 Titles & frames','Neue Titel gibt es bei Kapitel 50, 60, 75 und 100 – danach alle 25 Kapitel. Andere sehen deinen Titel in der Rangliste und im Profil.':'New titles at chapter 50, 60, 75 and 100 – then every 25 chapters. Others see your title in the leaderboard and your profile.','Antippen zum Tragen':'Tap to wear','✔ Aktiv':'✔ Active','🏅 Titel ab Kapitel 50':'🏅 Titles from chapter 50','Wüstenläufer':'Desert Runner','Dornenmeister':'Thorn Master','Sandsturm-Bezwinger':'Sandstorm Conqueror','Kaktus-Legende':'Cactus Legend','🗝 Truhe öffnen':'🗝 Open chest','Dieses Relikt ist schon auf höchster Stufe.':'This relic is already at max level.','In einem Build':'In a build','Holzrohr':'Wooden Tube','Stachelrohr':'Spiked Tube','Eisen-Bazooka':'Iron Bazooka','Kristallkanone':'Crystal Cannon','Sonnenkanone':'Sun Cannon','Blutmondkanone':'Blood Moon Cannon','Urzeitkanone':'Primeval Cannon','Sternenwerfer':'Star Launcher','Götterkanone':'God Cannon','Ätherkanone':'Aether Cannon','Ewigkeitskanone':'Eternity Cannon','Urknallkanone':'Big Bang Cannon','Astralkanone':'Astral Cannon','Prismakanone':'Prism Cannon','Polarlichtkanone':'Aurora Cannon','Sonnenkernkanone':'Suncore Cannon','Allmachtskanone':'Omnipotence Cannon','Sandsturmkanone':'Sandstorm Cannon','🧭 Expedition':'🧭 Expedition','🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'🏆 All areas cleared – carry on in the 🧭 Expedition','Stark:':'Strong:','Schwach:':'Weak:','Waffe (Relikt)':'Weapon (relic)','noch nicht beschworen':'not summoned yet','✦ Höchste Stufe ✦':'✦ Max level ✦','🏺 Relikte':'🏺 Relics','✨ Beschwören':'✨ Summon','⬆ Aufwerten':'⬆ Upgrade','Anlegen':'Equip','✓ Angelegt':'✓ Equipped','Höchste Stufe':'Max level','Relikte kann man nicht verkaufen':'Relics cannot be sold',
 'Sandsturmklinge':'Sandstorm Blade','Krone des Wüstenkönigs':'Crown of the Desert King','Dornenpanzer':'Thorn Armour','Spiegelschild':'Mirror Shield','Glutfäuste':'Ember Fists','Fata-Morgana-Stiefel':'Mirage Boots','Oasenmantel':'Oasis Cloak','Sonnenamulett':'Sun Amulet','Kettenring':'Chain Ring','👑 Unverwundbar!':'👑 Invulnerable!','Höchstes Level!':'Max level!','⬆ Leveln':'⬆ Level up','✨ Wüstensplitter gibt es auf der 🧭 Expedition.':'✨ Desert shards come from the 🧭 Expedition.','Scharfschütze':'Sharpshooter','Dickhaut':'Thick skin','Wirbelwind':'Whirlwind','Blütenzauber':'Bloom magic','Volltreffer':'Bullseye','Wüstenhaut':'Desert skin','Mondkraft':'Moon power','Goldregen':'Gold rain','Glutherz':'Ember heart','Uralte Kraft':'Ancient power','🔥 Hitzewelle':'🔥 Heatwave','🦂 Rudel':'🦂 Pack','🌪 Sandsturm':'🌪 Sandstorm','🛡 Gepanzert':'🛡 Armoured','💔 Keine Herzen':'💔 No hearts','Stehenbleiben kostet Leben':'standing still costs life','2 Gegner mehr pro Welle':'2 more enemies per wave','Du siehst nur einen Kreis um dich':'you only see a circle around you','Gegner haben 30 % mehr Leben':'enemies have 30 % more life','Es erscheinen keine Herzen':'no hearts appear',
 '🧭 Expedition':'🧭 Expedition','deine höchste Stufe':'your highest level','Keine Erschwernisse – ab Stufe 2 kommt jede Stufe eine dazu.':'No handicaps – from level 2 each level adds one.','Zurück':'Back','Kampf':'Fight','normale Gegner':'normal enemies','Elite-Lager':'Elite camp','schwer – mehr Beute':'hard – more loot','Heilquelle':'Healing spring','kein Kampf – heilt dich':'no fight – heals you','Händler':'Trader','Stärkungen kaufen':'buy boosts','Schatzkammer':'Treasure room','Kampf + Truhe':'fight + chest','Unbekannt':'Unknown','Überraschung!':'Surprise!','Boss':'Boss','letztes Gebiet':'last area',
 '🧳 Wandernder Händler':'🧳 Wandering trader','+20 % Angriff':'+20 % attack','+25 % max. Leben':'+25 % max life','40 % Leben heilen':'heal 40 % life','+15 % Angriffstempo':'+15 % attack speed','✓ gekauft':'✓ bought','Weiter':'Continue',
@@ -1925,7 +1935,7 @@ const RX=[
   [/^⚔ Im Kampf immer: (\d+) % weniger Schaden$/,(m)=>'⚔ Always in battle: '+m[1]+' % less damage'],[/^⚔ Im Kampf immer: (\d+) % schnellere Schläge$/,(m)=>'⚔ Always in battle: '+m[1]+' % faster hits'],
   [/^Danke! (.+) bekommt eine Belohnung per Post\.$/,(m)=>'Thanks! '+m[1]+' gets a reward by mail.'],[/^👀 (.+)$/,(m)=>'👀 '+m[1]],
   [/^🧭 Gebiet (\d+)\/(\d+)(.*)$/,(m)=>'🧭 Area '+m[1]+'/'+m[2]+m[3].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ')],[/^🧭 Gebiet (\d+) \/ (\d+): (.+)$/,(m)=>'🧭 Area '+m[1]+' / '+m[2]+': '+m[3]],[/^(🏜 Treibsand|🌋 Lava-Spalten|⛰ Enge Schlucht|💧 Oase|🏛 Ruinen): (.+)$/,(m)=>({'🏜 Treibsand':'🏜 Quicksand: slows you down a lot','🌋 Lava-Spalten':'🌋 Lava cracks: embers burn – don’t stand in them','⛰ Enge Schlucht':'⛰ Narrow canyon: little room to dodge','💧 Oase':'💧 Oasis: water slows you but heals slowly','🏛 Ruinen':'🏛 Ruins: lots of pillars for cover'})[m[1]]],[/^💀 Elite-Lager: (\d+) Elite-Gegner!$/,(m)=>'💀 Elite camp: '+m[1]+' elite enemies!'],[/^Bezahlt wird mit den Münzen, die du in dieser Expedition gesammelt hast: (.+)$/,(m)=>'You pay with the coins collected on this expedition: '+m[1]],[/^([\d.,]+(?: Tsd\.| Mio\.| Mrd\.)?) Münzen$/,(m)=>m[1]+' coins'],[/^Wildnis-Stufe (\d+)(.*)$/,(m)=>'Wild level '+m[1]+m[2]],[/^leichter als deine höchste Stufe (\d+)$/,(m)=>'easier than your highest level '+m[1]],[/^🔓 Wildnis-Stufe (\d+) ist jetzt frei(.*)$/,(m)=>'🔓 Wild level '+m[1]+' is unlocked'+m[2].replace(' – neu: ',' – new: ')],[/^Stufe (\d+) ▶$/,(m)=>'Level '+m[1]+' ▶'],[/^🧭 S(\d+) · Gebiet (.+)$/,(m)=>'🧭 L'+m[1]+' · Area '+m[2].replace(' · Tor offen',' · Gate open').replace(' · Welle ',' · Wave ').replace(' · Heilquelle',' · Healing spring').replace(' · Händler',' · Trader')],
-  [/^4 Gebiete · dein Leben bleibt · Gegner (.+) · Beute (.+)$/,(m)=>'4 areas · your life carries over · enemies '+m[1].replace('Stärke-Stufen','power levels').replace('normal','normal')+' · loot '+m[2]],[/^⭐ Kaktus-Level (\d+)(.*)$/,(m)=>'⭐ Cactus level '+m[1]+m[2].replace(' 🎖 Neuer Talent-Rang!',' 🎖 New talent rank!')],[/^\+(\d+) % Angriff und Leben$/,(m)=>'+'+m[1]+' % attack and life'],[/^🎖 (.+) · Rang (\d+)$/,(m)=>'🎖 '+m[1]+' · rank '+m[2]],[/^⬆ (\d+× )?Max$/,(m)=>'⬆ '+(m[1]||'')+'Max'],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
+  [/^4 Gebiete · dein Leben bleibt · Gegner (.+) · Beute (.+)$/,(m)=>'4 areas · your life carries over · enemies '+m[1].replace('Stärke-Stufen','power levels').replace('normal','normal')+' · loot '+m[2]],[/^⭐ Kaktus-Level (\d+)(.*)$/,(m)=>'⭐ Cactus level '+m[1]+m[2].replace(' 🎖 Neuer Talent-Rang!',' 🎖 New talent rank!')],[/^\+(\d+) % Angriff und Leben$/,(m)=>'+'+m[1]+' % attack and life'],[/^🎖 (.+) · Rang (\d+)$/,(m)=>'🎖 '+m[1]+' · rank '+m[2]],[/^⬆ (\d+× )?Max$/,(m)=>'⬆ '+(m[1]||'')+'Max'],[/^🔒 ab Kapitel (\d+)$/,(m)=>'🔒 from chapter '+m[1]],[/^Kaktus-Legende ([IVX]+)$/,(m)=>'Cactus Legend '+m[1]],[/^🏅 Neuer Titel: (.+) – im Profil auswählen$/,(m)=>'🏅 New title: '+m[1]+' – choose it in your profile'],[/^👑 Letztes Gebiet: (.+)$/,(m)=>'👑 Last area: '+m[1]],
   [/^Besiegt in Gebiet (\d+)!$/,(m)=>'Defeated in area '+m[1]+'!'],[/^Geschafft: (\d+) von (\d+) Gebieten\.$/,(m)=>'Cleared: '+m[1]+' of '+m[2]+' areas.'],[/^Alle (\d+) Gebiete und der Boss sind besiegt\.$/,(m)=>'All '+m[1]+' areas and the boss are defeated.'],
   [/^4 Gebiete · Leben bleibt(.*)$/,(m)=>'4 areas · life carries over'+m[1].replace(' · Rekord ',' · best ')],
   [/^dein Dünger: (\d+)$/,(m)=>'your fertiliser: '+m[1]],[/^🌱 (.+)s Beet$/,(m)=>'🌱 '+m[1]+"'s bed"],[/^Tippe auf die Gärtnerei, um (.+)s Beet zu gießen oder zu düngen\.$/,(m)=>'Tap the garden to water or fertilise '+m[1]+"'s bed."],
@@ -1994,7 +2004,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2594,9 +2604,71 @@ function makeEnemy(isBoss){
     atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(6*cPow(S.stage)*(isBoss?15:1))};   // Balance v6: doppelt so viele Münzen pro Gegner
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
-const chapCap=()=>(S.chap||0)>=48?1e9:((S.chap||0)+1)*20;   // 21.11.2026: nach allen 48 Kapiteln geht es endlos weiter
+const chapCap=()=>((S.chap||0)+1)*20;   // 21.11.2026: Kapitel gehen endlos weiter (49, 50, …) – Gebiet erst nach dem Kapitel
+// 21.11.2026: Titel & Rahmen für Kapitel-Meilensteine (50 Bronze · 60 Silber · 75 Gold · 100 Diamant · danach alle 25 ein Stern mehr)
+const TTL=[{c:50,n:'Wüstenläufer',en:'Desert Runner'},{c:60,n:'Dornenmeister',en:'Thorn Master'},{c:75,n:'Sandsturm-Bezwinger',en:'Sandstorm Conqueror'},{c:100,n:'Kaktus-Legende',en:'Cactus Legend'}];
+const TTL_PAL=[['#5a3214','#b87333','#f2b880'],['#4a525c','#b9c3cf','#ffffff'],['#7a4c00','#f5b800','#fff3a0'],['#2a4f9a','#7fe3ff','#ffffff']];
+const ROM=['','II','III','IV','V','VI','VII','VIII','IX','X'];
+// alle Titel, die man bei Kapitel ch hat (Index 0..3 + Legende-Stufen)
+function ttlList(ch){ch=ch||0;const L=[];TTL.forEach((T,i)=>{if(ch>=T.c)L.push({id:'t'+i,t:i,st:0,n:T.n,en:T.en});});
+  for(let k=1;100+25*k<=ch;k++)L.push({id:'l'+k,t:3,st:k,n:'Kaktus-Legende '+ROM[Math.min(9,k)],en:'Cactus Legend '+ROM[Math.min(9,k)]});return L;}
+function ttlOf(ch,pick){const L=ttlList(ch);if(!L.length)return null;return L.find(x=>x.id===pick)||L[L.length-1];}
+function ttlName(T){return T?(typeof KKL!=='undefined'&&KKL.cur==='en'?T.en:T.n):'';}
+// Titel-Schild (HTML) und Rahmen-Canvas zeichnen
+function ttlBadge(ch,pick,cls){const T=ttlOf(ch,pick);return T?`<span class="ttl t${T.t}${cls?' '+cls:''}">${ttlName(T)}</span>`:'';}
+// Kaktus mit Rahmen in ein quadratisches Canvas (W×W) zeichnen; ohne Titel nur der Kaktus
+function ttlPortrait(cv,ch,pick,char,gear){const g=cv.getContext('2d'),W=cv.width,T=ttlOf(ch,pick);g.clearRect(0,0,W,W);
+  const bg=g.createRadialGradient(W/2,W*.55,W*.05,W/2,W*.55,W*.48);bg.addColorStop(0,'#4a3a5a');bg.addColorStop(1,'#1c1424');g.fillStyle=bg;
+  g.beginPath();g.roundRect(W*.1,W*.1,W*.8,W*.8,W*.08);g.fill();
+  g.save();g.beginPath();g.roundRect(W*.1,W*.1,W*.8,W*.8,W*.08);g.clip();g.translate(W/2,W*.84);const k=W/(W<120?112:120);g.scale(k,k);
+  try{drawCactus(g,char||DEFAULT_CH,{x:0,y:0,gear:gear||{}});}catch(e){}g.restore();
+  if(T)drawTFrame(g,T.t,T.st,W,performance.now()/1000);}
+// Titel-Auswahl im Profil
+function ttlPick(back){const ch=S.chap||0,L=ttlList(ch),cur=ttlOf(ch,S.ttl);
+  const all=[...TTL.map((T,i)=>({id:'t'+i,t:i,st:0,n:T.n,c:T.c}))];const nx=Math.max(1,Math.floor((ch-100)/25)+1);for(let k=1;k<=Math.max(1,nx);k++)all.push({id:'l'+k,t:3,st:k,n:'Kaktus-Legende '+ROM[Math.min(9,k)],c:100+25*k});
+  $('card').innerHTML=`<h2>🏅 Titel &amp; Rahmen</h2><p class="hint" style="margin:0">Neue Titel gibt es bei Kapitel 50, 60, 75 und 100 – danach alle 25 Kapitel. Andere sehen deinen Titel in der Rangliste und im Profil.</p>
+    <div class="ttlg">${all.map(T=>{const has=ch>=T.c,on=cur&&cur.id===T.id;return`<button type="button" class="ttlc${on?' on':''}" data-tid="${T.id}" ${has?'':'disabled'}><canvas width="150" height="150" data-tfr="${T.t},${T.st}"></canvas>
+      <span class="ttl t${T.t}">${T.n}</span><small>${has?(on?'✔ Aktiv':'Antippen zum Tragen'):'🔒 ab Kapitel '+T.c}</small></button>`;}).join('')}</div>
+    <div class="row"><button class="btn" id="ttlX" type="button">Zurück</button></div>`;
+  $('modal').hidden=false;
+  $('card').querySelectorAll('canvas[data-tfr]').forEach(cv=>{const [t,st]=cv.dataset.tfr.split(',').map(Number),T={t,st},g=cv.getContext('2d');
+    ttlPortrait(cv,0,null,S.char,S.gear);drawTFrame(g,t,st,cv.width,.4);});
+  $('card').querySelectorAll('[data-tid]').forEach(b=>b.onclick=()=>{if(b.disabled)return;S.ttl=b.dataset.tid;save();lastHud='';try{onSave();}catch(e){}ttlPick(back);});
+  $('ttlX').onclick=back;}
+function drawTFrame(g,t,st,W,tm){const P=TTL_PAL[t],b=W*.085,r=W*.14;tm=tm||0;
+  const rr=(x,y,w,h,q,keep)=>{if(!keep)g.beginPath();g.moveTo(x+q,y);g.arcTo(x+w,y,x+w,y+h,q);g.arcTo(x+w,y+h,x,y+h,q);g.arcTo(x,y+h,x,y,q);g.arcTo(x,y,x+w,y,q);g.closePath();};
+  const o=W*.05,lg=g.createLinearGradient(0,0,W,W);lg.addColorStop(0,P[2]);lg.addColorStop(.35,P[1]);lg.addColorStop(.6,P[0]);lg.addColorStop(.8,P[1]);lg.addColorStop(1,P[2]);
+  // Dornen außen (ab Silber)
+  if(t>=1){g.fillStyle=P[0];const n=4;for(let s=0;s<4;s++)for(let k=1;k<=n;k++){const f=k/(n+1),a=s*Math.PI/2;g.save();g.translate(W/2,W/2);g.rotate(a);const x=-W/2+o+f*(W-2*o),y=-W/2+o;
+    g.beginPath();g.moveTo(x-W*.025,y+1);g.lineTo(x,y-W*.045);g.lineTo(x+W*.025,y+1);g.closePath();g.fill();g.restore();}}
+  g.save();rr(o,o,W-2*o,W-2*o,r);rr(o+b,o+b,W-2*o-2*b,W-2*o-2*b,r*.6,1);g.fillStyle=lg;g.fill('evenodd');
+  g.lineWidth=W*.012;g.strokeStyle='#1c1008';rr(o,o,W-2*o,W-2*o,r);g.stroke();rr(o+b,o+b,W-2*o-2*b,W-2*o-2*b,r*.6);g.stroke();
+  g.strokeStyle=P[2]+'aa';g.lineWidth=W*.008;rr(o+b*.35,o+b*.35,W-2*o-b*.7,W-2*o-b*.7,r*.8);g.stroke();g.restore();
+  const cs=[[o+b/2,o+b/2],[W-o-b/2,o+b/2],[o+b/2,W-o-b/2],[W-o-b/2,W-o-b/2]];
+  if(t===0||t===1)cs.forEach(([x,y])=>{const q=g.createRadialGradient(x-W*.008,y-W*.008,1,x,y,W*.03);q.addColorStop(0,P[2]);q.addColorStop(1,P[0]);g.fillStyle=q;g.beginPath();g.arc(x,y,W*.028,0,7);g.fill();g.strokeStyle='#1c1008';g.lineWidth=W*.008;g.stroke();});
+  if(t===2)cs.forEach(([x,y])=>{for(let k=0;k<5;k++){const a=k*1.2566-1.57;g.fillStyle='#ff7eb6';g.beginPath();g.ellipse(x+Math.cos(a)*W*.025,y+Math.sin(a)*W*.025,W*.022,W*.013,a,0,7);g.fill();g.strokeStyle='#7a1d4a';g.lineWidth=W*.005;g.stroke();}
+    g.fillStyle='#ffe066';g.beginPath();g.arc(x,y,W*.014,0,7);g.fill();});
+  if(t===3)cs.forEach(([x,y],i)=>{const s=W*.042;g.save();g.translate(x,y);g.beginPath();g.moveTo(0,-s);g.lineTo(s*.8,0);g.lineTo(0,s);g.lineTo(-s*.8,0);g.closePath();
+    const q=g.createLinearGradient(-s,-s,s,s);q.addColorStop(0,'#ffffff');q.addColorStop(.5,i%2?'#c07bff':'#5fd0ff');q.addColorStop(1,'#2a4f9a');g.fillStyle=q;g.fill();g.strokeStyle='#0d1a3a';g.lineWidth=W*.008;g.stroke();
+    g.strokeStyle='#ffffffaa';g.lineWidth=W*.005;g.beginPath();g.moveTo(-s*.8,0);g.lineTo(s*.8,0);g.moveTo(0,-s);g.lineTo(0,s);g.stroke();g.restore();});
+  // Wappen oben: Gold = kleiner Kaktus, Diamant = Krone mit Edelstein
+  if(t>=2){const x=W/2,y=o+b/2;g.save();g.translate(x,y);
+    if(t===2){g.fillStyle=P[1];g.strokeStyle='#1c1008';g.lineWidth=W*.008;g.beginPath();g.ellipse(0,0,W*.075,W*.045,0,0,7);g.fill();g.stroke();
+      g.fillStyle='#3f9a3a';g.beginPath();g.roundRect(-W*.012,-W*.032,W*.024,W*.058,W*.012);g.fill();g.beginPath();g.roundRect(-W*.04,-W*.012,W*.02,W*.03,W*.01);g.roundRect(W*.02,-W*.022,W*.02,W*.03,W*.01);g.fill();}
+    else{g.fillStyle=P[1];g.strokeStyle='#0d1a3a';g.lineWidth=W*.008;g.beginPath();g.moveTo(-W*.085,W*.03);g.lineTo(-W*.085,-W*.03);g.lineTo(-W*.045,0);g.lineTo(0,-W*.055);g.lineTo(W*.045,0);g.lineTo(W*.085,-W*.03);g.lineTo(W*.085,W*.03);g.closePath();
+      const q=g.createLinearGradient(0,-W*.06,0,W*.03);q.addColorStop(0,'#fff6b0');q.addColorStop(1,'#e0a000');g.fillStyle=q;g.fill();g.stroke();
+      g.fillStyle='#ff3d6e';g.beginPath();g.arc(0,W*.008,W*.016,0,7);g.fill();g.stroke();}
+    g.restore();}
+  // Legende II, III …: Sterne unten
+  if(st>0){const n=Math.min(9,st),sp=W*.06,x0=W/2-(n-1)*sp/2,y=W-o-b/2;for(let k=0;k<n;k++){g.save();g.translate(x0+k*sp,y);g.beginPath();for(let j=0;j<10;j++){const a=j*Math.PI/5-Math.PI/2,R=j%2?W*.012:W*.028;g.lineTo(Math.cos(a)*R,Math.sin(a)*R);}g.closePath();
+    g.fillStyle='#ffe066';g.fill();g.strokeStyle='#5a3a00';g.lineWidth=W*.006;g.stroke();g.restore();}}
+  // Diamant: wandernde Glitzer
+  if(t===3)for(let k=0;k<4;k++){const p=((tm*.25+k/4)%1),per=4*(W-2*o-2*r),d=p*per,L=W-2*o-2*r;let x,y;
+    if(d<L){x=o+r+d;y=o;}else if(d<2*L){x=W-o;y=o+r+d-L;}else if(d<3*L){x=W-o-r-(d-2*L);y=W-o;}else{x=o;y=W-o-r-(d-3*L);}
+    const a=.5+.5*Math.sin(tm*6+k*2),s=W*.03*a;g.fillStyle='#ffffff';g.beginPath();g.moveTo(x,y-s);g.lineTo(x+s*.25,y-s*.25);g.lineTo(x+s,y);g.lineTo(x+s*.25,y+s*.25);g.lineTo(x,y+s);g.lineTo(x-s*.25,y+s*.25);g.lineTo(x-s,y);g.lineTo(x-s*.25,y-s*.25);g.closePath();g.fill();}
+}
 let chapHintT=0;
-function startBoss(){if(S.stage>=chapCap()){S.kills=KILL_GOAL;if(performance.now()-chapHintT>20000){chapHintT=performance.now();banner={txt:(S.chap||0)>=48?'🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'Kapitel '+((S.chap||0)+1)+' schaffen, um weiterzukommen',t:3};}return;}boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
+function startBoss(){if(S.stage>=chapCap()){S.kills=KILL_GOAL;if(performance.now()-chapHintT>20000){chapHintT=performance.now();banner={txt:'Kapitel '+((S.chap||0)+1)+' schaffen, um weiterzukommen',t:3};}return;}boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
 
 const alive=()=>enemies.filter(e=>!e.dying);
 const front=()=>alive().reduce((a,e)=>!a||e.x<a.x?e:a,null);
@@ -3708,7 +3780,7 @@ function hud(){
    $('elYou').innerHTML=w&&w.rel?row(REL_EL[w.rel][0].includes(Wd.weak)?Wd.weak:REL_EL[w.rel][0][0],'Waffe (Relikt)',(wm>1?'<em class="pill up">+50%</em>':wm<1?'<em class="pill down">−40%</em>':'normal'))+row(Wd.atkEl,'Resistenz','<em class="pill '+(rs>0?'up':'down')+'">'+rs+'%</em>'):row(w&&w.el,'Waffe',w&&w.el?ELEM[w.el].n+(w.el===Wd.weak?' <em class="pill up">+50%</em>':w.el===Wd.atkEl?' <em class="pill down">−40%</em>':''):'<em class="dim">ohne</em>')+
      row(Wd.atkEl,'Resistenz','<em class="pill '+(rs?'up':'down')+'">'+rs+'%</em>');}
   const bReady=!boss&&S.kills>=KILL_GOAL;
-  const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&(S.chap||0)>=48?'Wildnis-Stufe '+(S.xpLv||1):atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
+  const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
   $('stageBox').classList.toggle('ready',bReady);$('stageBox').tabIndex=bReady?0:-1;
   $('bar').classList.toggle('boss',boss);
   $('barFill').style.width=(boss?100:S.kills/KILL_GOAL*100)+'%';
@@ -4213,6 +4285,7 @@ function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=
     <div class="ovhead"><button class="ovpic sm" type="button" id="ovPic" style="--rc:${RAR[K.r].c}"><canvas width="160" height="160" data-kt="${K.id}"></canvas><em>📋 Werte</em></button>
       <div class="ovname"><b>${esc2(ch.name)}</b><small style="color:${RAR[K.r].c}">${K.n} · ⭐ Lv ${klLv()}</small><small>⚔ Stärke ${fmt(powerNow())}</small>
         <small>Beste Stage ${S.best||0} · Kapitel ${S.chap||0} · ⭐ ${chStarSum()}</small></div></div>
+    ${ttlList(S.chap).length?`<button type="button" class="ttlbtn ovt" id="ovTtl">${ttlBadge(S.chap,S.ttl)} <i>✎</i></button>`:`<button type="button" class="ttlbtn ovt" id="ovTtl"><span class="ttl tx">🏅 Titel ab Kapitel 50</span></button>`}
     <div class="ovsec"><b>📊 Erfolge & Sammlung</b><div class="ovstats"><span><i>🏆</i><b>${achCount()} / ${ACH.length*3}</b><small>Erfolge</small></span><span><i>📖</i><b>+${albPages()} %</b><small>Album-Angriff</small></span>
       <span><i>🏛</i><b>Lv ${vLv('rat')}</b><small>Rathaus</small></span></div></div>
     <div class="ovsec"><b>🐾 Haustier</b><div class="ovpet">${(()=>{petInit();const id=(S.petEq||[])[0],P=PETS.find(x=>x.id===id),o=id&&S.pets[id];return P&&o?`<canvas width="120" height="96" data-ovpet="${id}"></canvas><span><b>${P.n} · Lv ${o.lv}</b><small>${petEff(id,o.lv)}</small></span>`:'<span><small>Kein Haustier dabei</small></span>';})()}</div></div>
@@ -4222,9 +4295,11 @@ function profileOverview(){const ch=S.char||DEFAULT_CH,K=curKt(),on=skOn(),ktUp=
       <button class="btn" type="button" data-ovon="freunde">👥 Freunde</button><button class="btn" type="button" data-ovon="liste">🏆 Rangliste</button></div>
     <div class="row"><button class="btn" id="ovX" type="button">Schließen</button></div></div>`;
   $('modal').hidden=false;ovDraw();
+  {const oh=$('card').querySelector('.ovhead');if(oh){const c=document.createElement('canvas');c.width=c.height=200;c.className='ovtfr';oh.prepend(c);ttlPortrait(c,S.chap,S.ttl,S.char,S.gear);}}
   $('card').querySelectorAll('[data-ovpet]').forEach(cv=>drawPet(cv.getContext('2d'),cv.dataset.ovpet,60,84,2.6,0));
   $('ovX').onclick=()=>{$('modal').hidden=true;};
   $('ovEd').onclick=()=>{$('modal').hidden=true;openEditor();};
+  $('ovTtl').onclick=()=>ttlPick(()=>{lastHud='';profileOverview();});
   const back=()=>{lastHud='';profileOverview();};
   $('ovKt').onclick=()=>ktOverview(back);
   $('card').querySelectorAll('[data-ovon]').forEach(b=>b.onclick=()=>{olOpen=true;olSolo='profil';olTab=b.dataset.ovon;friendBack=null;$('card').classList.add('wide');
@@ -4504,7 +4579,7 @@ async function rpc(fn,body){
 }
 function powerNow(){const s=heroStats();return Math.round(s.atk*4+s.hp*.5+s.block*20+s.crit*20);}
 function cardNow(){const g={};for(const k in S.gear){const it=S.gear[k];if(it)g[k]={slot:it.slot,r:it.r,name:it.name,el:it.el||null,v:it.v,lvl:it.lvl,res:it.res||null};}
-  return{char:S.char,gear:g,ws:wsTotal(),glv:S.glv};}
+  return{char:S.char,gear:g,ws:wsTotal(),glv:S.glv,chap:S.chap||0,ttl:S.ttl||null};}
 async function onEnsure(){
   if(ON.code&&ON.key)return true;if(!S.char)return false;
   const r=await rpc('kk_new_profile',{p_name:S.char.name});ON.code=r.code;ON.key=r.key;saveOn();return true;
@@ -4999,15 +5074,15 @@ function renderOnline(){
     const medal=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':String(i+1);
     body=`<div class="lbsw"><button type="button" class="${lbBy==='best'?'on':''}" data-lb="best">Höchste Stage</button><button type="button" class="${lbBy==='power'?'on':''}" data-lb="power">Kampfkraft</button></div>
       ${lbErr?`<p class="hint warn">${lbErr}</p>`:!lbData?'<p class="hint">Lade Bestenliste …</p>':!lbData.length?'<p class="hint">Noch niemand eingetragen. Sei der Erste!</p>':
-      `<ol class="lb">${lbData.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
-        <span class="rk">${medal(i)}</span><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}${r.code===ON.code?' <em>(du)</em>':''}</b><small>${r.cls||''}</small><small class="seen">${seenTxt(r.updated_at)}</small></span>
+      `<ol class="lb lbt">${lbData.map((r,i)=>`<li class="${r.code===ON.code?'me':''}${i<3?' top':''}"><button type="button" data-fc="${r.code}">
+        <span class="rk">${medal(i)}</span><canvas class="lbtf" width="96" height="96" data-lbi="${i}"></canvas><span class="nm"><b>${String(r.name).replace(/</g,'&lt;')}${r.code===ON.code?' <em>(du)</em>':''}</b>${ttlBadge(r.code===ON.code?S.chap:r.chap,r.code===ON.code?S.ttl:r.ttl,'sm')||`<small>${r.cls||''}</small>`}<small class="seen">${seenTxt(r.updated_at)}</small></span>
         <span class="vl">${lbBy==='best'?stageName(r.best):fmt(r.power)}</span></button></li>`).join('')}</ol>`}
       ${lbData?`<p class="hint">Stand ${agoTxt(lbAt)} · <button type="button" class="lnk" id="lbRe">aktualisieren</button> · Antippen zeigt das Profil</p>`:''}`;
   }else{
     body=`${friendBack?`<button type="button" class="lnk back" id="fBack">← zurück zu ${friendBack==='gilde'?'Allianz':friendBack==='boss'?'Weltboss':friendBack==='abs'?'Allianzboss':'Rangliste'}</button>`:''}<div class="ofind"><input id="oFriend" class="oin" maxlength="7" placeholder="Freundescode, z. B. KXT-4PQ" autocomplete="off" spellcheck="false"><button class="sbtn go" type="button" id="oFind">Ansehen</button></div>
       ${friendErr?`<p class="hint warn">${friendErr}</p>`:''}
       ${friend?`<div class="fcard"><canvas id="fcv" width="240" height="260"></canvas><div>
-        <b class="fname">${String(friend.name).replace(/</g,'&lt;')}</b><small>${friend.cls||''} · ${fmtCode(friend.code)}${friend.guild?' · ['+esc2(friend.guild.tag)+'] '+esc2(friend.guild.name):''}</small>
+        <b class="fname">${String(friend.name).replace(/</g,'&lt;')}</b>${ttlBadge(friend.card&&friend.card.chap,friend.card&&friend.card.ttl)}<small>${friend.cls||''} · ${fmtCode(friend.code)}${friend.guild?' · ['+esc2(friend.guild.tag)+'] '+esc2(friend.guild.name):''}</small>
         <span>Höchste Stage: <b>${stageName(friend.best)}</b></span><span>Kampfkraft: <b>${fmt(friend.power)}</b></span>
         <span>Schmiede Lv ${(friend.card&&(friend.card.ws||0))||0} · Gärtnerei Lv ${(friend.card&&friend.card.glv)||1}</span>
         <span class="fgear">${SLOTS.map(sl=>{const it=friend.card&&friend.card.gear&&friend.card.gear[sl.id];return`<i style="--rc:${it?RAR[it.r].c:'#4a3a2e'}" title="${sl.n}${it?': '+it.name:''}"></i>`;}).join('')}</span>
@@ -5022,6 +5097,7 @@ function renderOnline(){
   {const ag=$('abGo');if(ag)ag.onclick=()=>wbAttack(ab);if($('abcv'))drawWb(ab);const ac=$('abClaim');if(ac)ac.onclick=abClaim;}
   {const wc=$('wbClaim');if(wc)wc.onclick=wbClaim;}
   $('card').querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{lbBy=b.dataset.lb;lbData=null;renderOnline();loadLb();});
+  $('card').querySelectorAll('canvas[data-lbi]').forEach(c=>{const r=lbData&&lbData[+c.dataset.lbi];if(!r)return;const me=r.code===ON.code;ttlPortrait(c,me?S.chap:r.chap,me?S.ttl:r.ttl,me?S.char:r.ch,me?S.gear:r.gear);});
   $('card').querySelectorAll('[data-fc]').forEach(b=>b.onclick=async()=>{friendBack=olTab==='freunde'?null:olTab;olTab='freunde';friendErr='';try{friend=await rpc('kk_profile',{p_code:b.dataset.fc});}catch(e){friend=null;friendErr='Keine Verbindung.';}renderOnline();});
   {const rb=$('lbRe');if(rb)rb.onclick=()=>{lbData=null;renderOnline();loadLb();};}
   $('oClose').onclick=()=>{if(wb.busy||ab.busy)return;olOpen=false;olSolo=false;$('modal').hidden=true;$('card').classList.remove('wide');lastHud='';};
@@ -5051,7 +5127,8 @@ function renderOnline(){
     $('oFind').onclick=go;$('oFriend').onkeydown=e=>{if(e.key==='Enter')go();};
     if(friend){const cv2=$('fcv'),g=cv2.getContext('2d');g.save();g.translate(120,226);g.scale(2.2,2.2);
       const gear={};const fg=(friend.card&&friend.card.gear)||{};for(const k in fg)gear[k]=fg[k];
-      drawCactus(g,(friend.card&&friend.card.char)||DEFAULT_CH,{x:0,y:0,gear});g.restore();}
+      drawCactus(g,(friend.card&&friend.card.char)||DEFAULT_CH,{x:0,y:0,gear});g.restore();
+      {const T=friend.card&&ttlOf(friend.card.chap,friend.card.ttl);if(T){g.save();g.translate(0,10);drawTFrame(g,T.t,T.st,240,.4);g.restore();}}}
   }
 }
 $('allyBtn').onclick=()=>{if(ALLY_OFF){banner={txt:'🔒 Allianzen pausiert',t:2.4};return;}if(!$('modal').hidden||editing)return;olOpen=true;olSolo='ally';olTab='gilde';friendBack=null;loadGuild();$('card').classList.add('wide');$('modal').hidden=false;lastHud='';renderOnline();}; // 11.11.2026: nur die Allianz, ohne Reiter
@@ -5377,7 +5454,7 @@ $('bossAutoBtn').onclick=()=>setBossAuto(S.bossAuto===false);
 setBossAuto(true); // 11.11.2026: Boss-Kampf startet immer automatisch
 const tryBoss=()=>{if(!boss&&S.kills>=KILL_GOAL&&$('modal').hidden){startBoss();lastHud='';}};
 // 11.11.2026: Tipp auf das Gebiet öffnet die Weltkarte (Boss startet ohnehin automatisch)
-$('stageBox').onclick=()=>{if($('modal').hidden&&!editing&&S.char){if((S.chap||0)>=48&&S.stage>=chapCap())xpPick();else wmOpen();}};$('stageBox').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('stageBox').onclick();}};
+$('stageBox').onclick=()=>{if($('modal').hidden&&!editing&&S.char){wmOpen();}};$('stageBox').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('stageBox').onclick();}};
 // ---------- Weltkarte: 12 Gebiete je Schwierigkeit, für jedes geschaffte Gebiet eine Truhe zum Abholen ----------
 let wmDiff=null;
 const wmGi=(d,w)=>d*WORLDS.length+w;                               // fortlaufende Gebietsnummer über alle Schwierigkeiten
@@ -6558,6 +6635,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn180',date:'2026-11-21',title:'Kapitel ohne Ende & Titel',hero:['🏅 Neue Kapitel und Titel','Nach Kapitel 48 geht es mit Kapitel 49, 50, 51 … weiter – jedes wieder mit drei Sternen. Ein neues Gebiet öffnet sich erst, wenn du das Kapitel geschafft hast.'],
+   items:()=>[['Titel & Rahmen:','Bei Kapitel 50 (Bronze), 60 (Silber), 75 (Gold) und 100 (Diamant) gibt es einen Titel mit Rahmen – danach alle 25 Kapitel einen Stern mehr.'],['Für alle sichtbar:','Dein Titel und Rahmen erscheinen in der Rangliste, in der Kapitel-Rangliste und in deinem Profil.'],['Auswählen:','Im Profil auf den Titel tippen und einen freigeschalteten aussuchen.']],
+  en:{title:'Endless chapters & titles',hero:['🏅 New chapters and titles','After chapter 48 it continues with chapter 49, 50, 51 … – each with three stars again. A new area only opens once you have beaten its chapter.'],
+   items:()=>[['Titles & frames:','At chapter 50 (bronze), 60 (silver), 75 (gold) and 100 (diamond) you get a title with a frame – then one more star every 25 chapters.'],['Visible to all:','Your title and frame show in the leaderboard, the chapter leaderboard and your profile.'],['Choose:','Tap the title in your profile and pick an unlocked one.']]}},
   {id:'pn179',date:'2026-11-21',title:'Endlos weiter',hero:['♾ Die Gebiete hören nicht mehr auf','Nach allen 48 Kapiteln geht es jetzt endlos weiter – Gebiet 49, 50, 51 … mit immer stärkeren Gegnern und besserer Beute.'],
    items:()=>[['Schwierigkeit:','Nach „Ultra schwer“ folgen Ultra schwer II, III und so weiter.'],['Beute:','Neue Ausrüstung wächst mit deinem Fortschritt mit.']],
   en:{title:'Endless',hero:['♾ Areas no longer end','After all 48 chapters it now goes on endlessly – area 49, 50, 51 … with ever stronger enemies and better loot.'],
@@ -7943,7 +8024,7 @@ function axOpen(pvp,chg,ex){if(AX.open)return;const d=document.createElement('di
     <div class="axmsg" id="axMsg" hidden></div><div class="axsk" id="axSk"></div><div class="axact" id="axAct"></div><div class="axpick" id="axPick" hidden></div>`;
   document.body.appendChild(d);
   const cv2=$('axCv'),g=cv2.getContext('2d'),dpr=Math.min(2,window.devicePixelRatio||1);
-  const cg=chg||Math.min(48,(S.chap||0)+1);const A=Object.assign(AX,{ev:null,evA:0,evAtk:1,xg:[],xm:[],xb:[],wm:null,xsh:0,xshA:0,mtT:null,wmT:null,ex:ex||null,gate:null,tr:null,exNext:0,t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):ex?(XP_UNLOCK-1)*20+22+(ex.lv-1)*25:(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:ex?ex.wpa:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
+  const cg=chg||(S.chap||0)+1;const A=Object.assign(AX,{ev:null,evA:0,evAtk:1,xg:[],xm:[],xb:[],wm:null,xsh:0,xshA:0,mtT:null,wmT:null,ex:ex||null,gate:null,tr:null,exNext:0,t0:performance.now(),hz:[],slow:1,pvp:pvp||null,rep:false,pk:[],pkT:null,pt:[],winT:null,flash:0,chg:cg,st:pvp?Math.max(1,Math.min(960,pvp.best||1)):ex?(XP_UNLOCK-1)*20+22+(ex.lv-1)*25:(cg-1)*20+10,open:true,g,cv:cv2,W:0,H:0,dpr,hero:null,en:[],sh:[],es:[],fx:[],wave:0,waves:pvp?2:ex?ex.wpa:5,state:'go',joy:null,last:performance.now(),cd:0,msgT:0,sk:{}});
   const size=()=>{A.W=innerWidth;A.H=innerHeight;cv2.width=A.W*dpr;cv2.height=A.H*dpr;cv2.style.width=A.W+'px';cv2.style.height=A.H+'px';};size();addEventListener('resize',size);
   axBuild();axActInit();if(ex){setTimeout(()=>opa('ex'),400);xpTerHint();}else if(!pvp)setTimeout(()=>opa('chap'),400);
   const hs=heroStats();A.hero={x:A.W/2,y:A.H*.72,hp:hs.hp,max:hs.hp,atk:hs.atk,spd:hs.spd,crit:hs.crit,critM:hs.critM,hit:0,face:1,moving:false};
@@ -7976,7 +8057,7 @@ function axPick(){const A=AX;A.state='pick';A.sh=[];A.es=[];
 function axGain(boss){const A=AX,gb=A.pvp?Math.max(1,Math.ceil((A.pvp.best||1)/20)):A.chg,c=Math.round(6*cPow(A.st)*(boss?300:30));A.rew=A.rew||{caps:0,kak:0,coins:0};
   A.rew.caps+=boss?20+2*gb:3+Math.floor(gb/2);A.rew.coins+=c;if(boss)A.rew.kak+=3+Math.floor(gb/4);}
 function axEnd(won){const A=AX;if(A.pvp)return vlEnd(won);if(A.ex)return xpEnd(won);let st=null;if(won){axGain(true);qInc('chap',1);st=chStars(A);A.rew.ps=1;}
-  if(A.pet&&A.pet.id==='kafer'&&A.rew){const m=1+.1+.04*A.pet.lv,R=A.rew;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}const newG=won&&A.chg>(S.chap||0);if(newG){S.chap=A.chg;save();lastHud='';}const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
+  if(A.pet&&A.pet.id==='kafer'&&A.rew){const m=1+.1+.04*A.pet.lv,R=A.rew;R.coins=Math.round(R.coins*m);R.caps=Math.round(R.caps*m);R.kak=Math.round(R.kak*m);}const newG=won&&A.chg>(S.chap||0);if(newG){const nT=ttlList(S.chap).length;S.chap=A.chg;save();lastHud='';const L=ttlList(S.chap);if(L.length>nT){const T=L[L.length-1];setTimeout(()=>{banner={txt:'🏅 Neuer Titel: '+ttlName(T)+' – im Profil auswählen',t:4};},1200);}}const R=A.rew||{caps:0,kak:0,coins:0},any=R.caps||R.kak||R.coins;
   const P=$('axPick');P.innerHTML=`<div class="axend ${won?'won':'lost'}"><h3>${won?'Kapitel '+A.chg+' geschafft! 🎉':'Besiegt!'}</h3>${st?st.html:''}${newG?`<p class="axunl">🔓 Gebiet ${A.chg+1} ist jetzt frei – dein Kaktus kämpft dort weiter.</p>`:''}
     <small>${won?'Alle '+A.waves+' Wellen und der Boss sind besiegt.':'Geschafft: '+(A.wave-1)+' von '+A.waves+' Wellen.'}</small>
     <div class="axrew">${any?`${R.coins?`<span><i>${GC}</i><b>+${fmt(R.coins)}</b><small>Münzen</small></span>`:''}${R.caps?`<span><i>🌱</i><b>+${fmt(R.caps)}</b><small>Samenkapseln</small></span>`:''}${R.kak?`<span><i>🌵</i><b>+${fmt(R.kak)}</b><small>Kakteen</small></span>`:''}${R.ps?`<span><i>🥚</i><b>+${R.ps}</b><small>Haustier-Samen</small></span>`:''}`:'<em>Diesmal keine Beute.</em>'}</div>
@@ -8164,14 +8245,14 @@ async function chBoard(tab,g){$('card').innerHTML='<h2>🏆 Kapitel-Rangliste</h
   if(ON.code){const me=L.find(x=>x.code===ON.code);if(me){me.stars=chStarSum();me.chap=S.chap||0;me.sec=(S.cht||{})[g]||null;}}
   const rows=tab==='st'?[...L].sort((a,b)=>b.stars-a.stars||b.chap-a.chap):L.filter(x=>x.sec).sort((a,b)=>a.sec-b.sec);
   $('card').innerHTML=`<h2>🏆 Kapitel-Rangliste</h2><div class="row"><button class="btn${tab==='st'?' go':''}" id="cbSt" type="button">⭐ Sterne</button><button class="btn${tab==='t'?' go':''}" id="cbT" type="button">⏱ Bestzeit</button></div>
-    ${tab==='t'?`<div class="row cbnav"><button class="sbtn" id="cbP" ${g<=1?'disabled':''}>◀</button><b>Kapitel ${g}</b><button class="sbtn" id="cbN" ${g>=48?'disabled':''}>▶</button></div>`:''}
-    <div class="vups chlist">${rows.length?rows.map((r,i)=>`<div class="vup" style="--rc:${r.code===ON.code?'#ffd447':['#ffd447','#c0c0c0','#cd7f32'][i]||'#4a3a2c'}"><span><b>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${esc2(r.name)}</b><small>${tab==='st'?'Kapitel '+r.chap:'Kapitel '+g}</small></span><b class="cbv">${tab==='st'?'⭐ '+r.stars:'⏱ '+fmtS(r.sec)}</b></div>`).join(''):'<p class="hint">Noch keine Zeiten – schaff das Kapitel als Erster!</p>'}</div>
+    ${tab==='t'?`<div class="row cbnav"><button class="sbtn" id="cbP" ${g<=1?'disabled':''}>◀</button><b>Kapitel ${g}</b><button class="sbtn" id="cbN" ${g>=Math.max(48,S.chap||0)?'disabled':''}>▶</button></div>`:''}
+    <div class="vups chlist">${rows.length?rows.map((r,i)=>`<div class="vup" style="--rc:${r.code===ON.code?'#ffd447':['#ffd447','#c0c0c0','#cd7f32'][i]||'#4a3a2c'}"><span><b>${['🥇','🥈','🥉'][i]||(i+1)+'.'} ${esc2(r.name)}</b><small>${tab==='st'?'Kapitel '+r.chap:'Kapitel '+g} ${ttlBadge(r.code===ON.code?S.chap:r.chap,r.code===ON.code?S.ttl:r.ttl,'sm')}</small></span><b class="cbv">${tab==='st'?'⭐ '+r.stars:'⏱ '+fmtS(r.sec)}</b></div>`).join(''):'<p class="hint">Noch keine Zeiten – schaff das Kapitel als Erster!</p>'}</div>
     <div class="row"><button class="btn" id="cbX" type="button">Zurück</button></div>`;
   $('cbSt').onclick=()=>chBoard('st',g);$('cbT').onclick=()=>chBoard('t',g);$('cbX').onclick=()=>chPick();
   if($('cbP'))$('cbP').onclick=()=>chBoard('t',g-1);if($('cbN'))$('cbN').onclick=()=>chBoard('t',g+1);}
-function chPick(){const top=Math.min(48,(S.chap||0)+1);chOpen=true;$('modal').hidden=false;
+function chPick(){const top=(S.chap||0)+1;chOpen=true;$('modal').hidden=false;
   let rows='';for(let g=top;g>=1;g--){const st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],n=(S.chs||{})[g]||0;
-    rows+=`<div class="vup" style="--rc:${g===top&&g>(S.chap||0)?'#ffd447':'#6b5644'}"><span><b>Kapitel ${g} · ${Wd.n}</b><small>${DIFFS[diffIdx(st)].n} · <em class="chs">${'⭐'.repeat(n)}${'☆'.repeat(3-n)}</em></small></span>
+    rows+=`<div class="vup" style="--rc:${g===top&&g>(S.chap||0)?'#ffd447':'#6b5644'}"><span><b>Kapitel ${g} · ${Wd.n}</b><small>${diffOf(st).n} · <em class="chs">${'⭐'.repeat(n)}${'☆'.repeat(3-n)}</em></small></span>
       <button type="button" class="sbtn go" data-chg="${g}">${g>(S.chap||0)?'Spielen':'Nochmal'}</button></div>`;}
   $('card').innerHTML=`<h2>🎮 Kapitel</h2><p class="hint" style="margin:0">⭐ ${chStarSum()} / ${top*3} · Sterne für: geschafft · unter 3 Minuten · mindestens halbes Leben. Jeder neue Stern gibt einmalig Kakteen und Kapseln.</p>
     <div class="vups chlist">${rows}</div><div class="row"><button class="btn go" id="chLb" type="button">🏆 Rangliste</button><button class="btn" id="chX" type="button">Schließen</button></div>`;
@@ -8387,8 +8468,8 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
 // 14.11.2026: Kapitel-Knopf unter dem Kampffeld – das nächste Kapitel schaltet das nächste Gebiet frei
-function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='Wildnis-Stufe '+(S.xpLv||1)+(S.spl?' · ✨ '+fmt(S.spl):'');}}}const b=$('chapBtn');if(!b)return;const g=Math.min(48,(S.chap||0)+1),st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
-  $('chapT').textContent='Kapitel '+g+(chStarSum()?'  ·  ⭐ '+chStarSum():'');$('chapS').textContent=Wd.n+' · '+DIFFS[diffIdx(st)].n;b.classList.toggle('need',need);b.hidden=!S.char;}
+function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='Wildnis-Stufe '+(S.xpLv||1)+(S.spl?' · ✨ '+fmt(S.spl):'');}}}const b=$('chapBtn');if(!b)return;const g=(S.chap||0)+1,st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
+  $('chapT').textContent='Kapitel '+g+(chStarSum()?'  ·  ⭐ '+chStarSum():'');$('chapS').textContent=Wd.n+' · '+diffOf(st).n;b.classList.toggle('need',need);b.hidden=!S.char;}
 $('xpBtn').onclick=()=>xpPick();
 $('chapBtn').onclick=e=>{if(!$('modal').hidden||editing||!S.char)return;if(e.target.closest('em'))axOpen();else chPick();};
 chapHud();setInterval(chapHud,1000);
