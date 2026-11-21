@@ -2028,7 +2028,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -4429,8 +4429,8 @@ const INV_SORTS=[['rar','Seltenheit'],['slot','Platz'],['el','Element'],['neu','
 const itemEl=it=>it.el||(it.res&&it.res.el)||'';
 const EL_ORDER=['gift','eis','feuer','blitz','schatten','licht'];
 const invSort=()=>S.invSort||'rar';
-function invOrder(){const sOrd=id=>SLOTS.findIndex(x=>x.id===id);
-  let idx=S.inv.map((_,i)=>i);if(S.invFilter)idx=idx.filter(i=>S.inv[i].slot===S.invFilter);
+function invOrder(all){const sOrd=id=>SLOTS.findIndex(x=>x.id===id);
+  let idx=S.inv.map((_,i)=>i);if(all)return idx.sort((a,b)=>sOrd(S.inv[a].slot)-sOrd(S.inv[b].slot)||S.inv[b].r-S.inv[a].r||itemScore(S.inv[b])-itemScore(S.inv[a]));if(S.invFilter)idx=idx.filter(i=>S.inv[i].slot===S.invFilter);
   if(S.invEl)idx=idx.filter(i=>itemEl(S.inv[i])===S.invEl);
   const m=invSort();
   if(m==='neu')return idx.reverse();
@@ -6689,6 +6689,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn188',date:'2026-11-21',title:'Schmiede zeigt alles',hero:['⚒ Ganzes Inventar beim Zerlegen','Die Schmiede zeigt beim Zerlegen jetzt immer alle deine Teile – auch wenn du im Inventar gerade z. B. nur Ringe ausgewählt hast.'],
+   items:()=>[],
+  en:{title:'Forge shows everything',hero:['⚒ Whole inventory when salvaging','When salvaging, the forge now always shows all your items – even if your inventory is currently filtered, e.g. to rings only.'],
+   items:()=>[]}},
   {id:'pn187',date:'2026-11-21',title:'Zerlegen nach Wahl',hero:['⚒ Du entscheidest, was zerlegt wird','In der Schmiede unter „Zerlegen“ siehst du jetzt dein ganzes Inventar. Tippe einzelne Teile an oder lass dir alle schlechteren markieren – dann alles zusammen zerlegen.'],
    items:()=>[['Geschützt:','Relikte, ⭐ Favoriten, Teile in Builds und veredelte Teile kann man dort nicht auswählen.']],
   en:{title:'Salvage what you choose',hero:['⚒ You decide what gets salvaged','Under "Salvage" in the forge you now see your whole inventory. Tap single items or let it mark all worse ones – then salvage them together.'],
@@ -7124,7 +7128,7 @@ function renderForge(H){const lv=vLv('schm'),B=VB.find(x=>x.id==='schm'),V=vInit
         <span class="sfbar"><i style="width:${L/REF_MAX*100}%"></i><em>✦ ${L} / ${REF_MAX}</em></span><small class="sfval">+${fmtV(sl,itemV(it))}${mx?'':` → <em>+${fmtV(sl,nv)}</em>`}</small></span>
         <button type="button" class="sfgo${ok?' go':''}" data-vref="${sl.id}" ${ok?'':'disabled'}>${mx?'Max ✦'+REF_MAX:`✦${L+1}<small class="${ok?'':'no'}">${fmt(c)} Kapseln</small>`}</button></div>`;}).join('');}
   else if(sfTab==='scrap'){// 21.11.2026: ganzes Inventar zum Auswählen – einzeln antippen oder „Schlechtere markieren“, dann zusammen zerlegen
-    ensureIds();const ord=invOrder().map(i=>S.inv[i]).filter(Boolean),lockOf=it=>it.rel?'🏺':it.fav?'⭐':inBuild(it.id)?'B':it.ref?'✦':'';
+    ensureIds();const ord=invOrder(1).map(i=>S.inv[i]).filter(Boolean),lockOf=it=>it.rel?'🏺':it.fav?'⭐':inBuild(it.id)?'B':it.ref?'✦':'';
     for(const id of [...sfMarks])if(!ord.some(it=>it.id===id&&!lockOf(it)))sfMarks.delete(id);
     const sel=ord.filter(it=>sfMarks.has(it.id)),o=sel.reduce((a,it)=>a+oreFor(it,lv)+Math.floor(.7*(it.oreIn||0)),0),c=sel.reduce((a,it)=>a+sellValue(it),0),nw=vWorse().length;
     body=`<div class="sfinfo">Tippe Teile an, die du zerlegen willst, oder lass dir alle schlechteren markieren. Geschützt (nicht wählbar): 🏺 Relikte, ⭐ Favoriten, B Teile in Builds, ✦ veredelte Teile.${lv>1?' Die Schmiede-Stufe gibt <b>+'+(lv*10-10)+' %</b> Erz.':''}</div>
@@ -7146,7 +7150,7 @@ function renderForge(H){const lv=vLv('schm'),B=VB.find(x=>x.id==='schm'),V=vInit
     <div class="sfbody" id="sfBody" data-tab="${sfTab}">${body}</div></div>`;
   const sb=$('sfBody');sb.scrollTop=keep;
   H.querySelectorAll('canvas[data-sfi]').forEach(cv=>{const it=S.gear[cv.dataset.sfi];if(it)drawItemIcon(cv.getContext('2d'),it,cv.width);});
-  {const w=sfTab==='scrap'?invOrder().map(i=>S.inv[i]).filter(Boolean):[];H.querySelectorAll('canvas[data-sfw]').forEach(cv=>{const it=w[+cv.dataset.sfw];if(it)drawItemIcon(cv.getContext('2d'),it,cv.width);});}
+  {const w=sfTab==='scrap'?invOrder(1).map(i=>S.inv[i]).filter(Boolean):[];H.querySelectorAll('canvas[data-sfw]').forEach(cv=>{const it=w[+cv.dataset.sfw];if(it)drawItemIcon(cv.getContext('2d'),it,cv.width);});}
   H.querySelectorAll('[data-sfm]').forEach(b=>b.onclick=()=>{const id=b.dataset.sfm;if(sfMarks.has(id))sfMarks.delete(id);else sfMarks.add(id);renderDorf();});
   {const a=$('sfWorse');if(a)a.onclick=()=>{for(const it of vWorse())sfMarks.add(it.id);renderDorf();};const n=$('sfNone');if(n)n.onclick=()=>{sfMarks.clear();renderDorf();};}
   $('sfBack').onclick=()=>{vSel=null;renderDorf();};
