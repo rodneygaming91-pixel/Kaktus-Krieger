@@ -1994,7 +1994,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2032,7 +2032,7 @@ const inDiff=st=>((Math.max(1,st)-1)%STAGES_PER_DIFF)+1;
 const RGATE=[1,1,2,4,7,10,14,18,22,26,29,32,35,38,41,44,48];
 // 14.11.2026: Begleiter und Fähigkeiten sind vorerst komplett raus – sie werden neu aufgebaut
 const NO_DR=true,NO_SK=true;
-const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=16+(gx-48)/4;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
+const needR=st=>{const gx=(Math.max(1,st)-1)/20+1;let rc=gx<=49?16+(gx-48)/4:16.25+(gx-49)/12;for(let r=1;r<16;r++){if(gx<RGATE[r+1]){rc=r+(gx-RGATE[r])/(RGATE[r+1]-RGATE[r]);break;}}return Math.max(0,rc-1);};
 const UPS=0.05;                                  // 15.11.2026: jeder ⭐ aus der Dorf-Schmiede: +5 % auf den Wert des Teils (nur Angriff/Leben)
 // 15.11.2026: Gegner rechnen erst ab Stage 480 (hinter allen jetzigen Spielern) mit verbesserten Teilen – bis 8 ⭐ bei Stage 800
 const upTarget=st=>Math.min(8,Math.max(0,(st-480)/40));
@@ -2594,7 +2594,7 @@ function makeEnemy(isBoss){
     atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(6*cPow(S.stage)*(isBoss?15:1))};   // Balance v6: doppelt so viele Münzen pro Gegner
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
-const chapCap=()=>((S.chap||0)+1)*20;
+const chapCap=()=>(S.chap||0)>=48?1e9:((S.chap||0)+1)*20;   // 21.11.2026: nach allen 48 Kapiteln geht es endlos weiter
 let chapHintT=0;
 function startBoss(){if(S.stage>=chapCap()){S.kills=KILL_GOAL;if(performance.now()-chapHintT>20000){chapHintT=performance.now();banner={txt:(S.chap||0)>=48?'🏆 Alle Gebiete geschafft – weiter geht es auf der 🧭 Expedition':'Kapitel '+((S.chap||0)+1)+' schaffen, um weiterzukommen',t:3};}return;}boss=true;bossT=30;enemies=enemies.filter(e=>e.dying);enemies.push(makeEnemy(true));banner={txt:'BOSS: '+world().boss.n,t:2};}
 
@@ -3699,7 +3699,7 @@ function hud(){
   // neue, leere Figur sofort zeichnen (sonst blitzt sie im Energiesparmodus kurz leer auf)
   drawDoll();
   $('coins').textContent=fmt(S.coins);$('kak').textContent=fmt(S.kak||0);
-  $('stageName').textContent=WORLDS[worldIdx(S.stage)].n;{const D=diffOf(S.stage),t2=$('diffTag');const END=(S.chap||0)>=48;t2.textContent=END?'🧭 Expedition':'Gebiet '+gebOf(S.stage)+' · Stage '+(((S.stage-1)%20)+1);t2.style.setProperty('--dc',END?'#5ab8ff':D.c);t2.classList.toggle('endg',END);}
+  $('stageName').textContent=WORLDS[worldIdx(S.stage)].n;{const D=diffOf(S.stage),t2=$('diffTag');const END=false;t2.textContent=END?'🧭 Expedition':'Gebiet '+gebOf(S.stage)+' · Stage '+(((S.stage-1)%20)+1);t2.style.setProperty('--dc',END?'#5ab8ff':D.c);t2.classList.toggle('endg',END);}
   {const Wd=world(),w=S.gear.waffe,rs=heroStats().res[Wd.atkEl]||0;
    const eb=el=>el?`<i class="eb" style="--ec:${ELEM[el].c}">${ELEM[el].ico}</i>`:'<i class="eb off">–</i>';
    const row=(el,lab,val)=>`<div class="er">${eb(el)}<span><small>${lab}</small><b>${val}</b></span></div>`;
@@ -6558,6 +6558,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn179',date:'2026-11-21',title:'Endlos weiter',hero:['♾ Die Gebiete hören nicht mehr auf','Nach allen 48 Kapiteln geht es jetzt endlos weiter – Gebiet 49, 50, 51 … mit immer stärkeren Gegnern und besserer Beute.'],
+   items:()=>[['Schwierigkeit:','Nach „Ultra schwer“ folgen Ultra schwer II, III und so weiter.'],['Beute:','Neue Ausrüstung wächst mit deinem Fortschritt mit.']],
+  en:{title:'Endless',hero:['♾ Areas no longer end','After all 48 chapters it now goes on endlessly – area 49, 50, 51 … with ever stronger enemies and better loot.'],
+   items:()=>[['Difficulty:','After "Ultra hard" come Ultra hard II, III and so on.'],['Loot:','New gear grows with your progress.']]}},
   {id:'pn178',date:'2026-11-21',title:'Relikt-Schlüssel',hero:['🗝 Schlüssel statt Fragment','Jede gewonnene Expedition gibt jetzt einen Relikt-Schlüssel. Im 🏺 Relikte-Fenster öffnest du damit die Truhe des Relikts, das du willst – darin ist genau ein Fragment.'],
    items:()=>[['Kein Zufall:','Du entscheidest selbst, welches Relikt dein Fragment bekommt.'],['Sammeln:','Schlüssel kannst du aufheben und später einsetzen. Deine bisherigen Fragmente bleiben erhalten.']],
   en:{title:'Relic keys',hero:['🗝 Keys instead of fragments','Every won expedition now gives a relic key. In the 🏺 Relics window you use it to open the chest of the relic you want – it holds exactly one fragment.'],
