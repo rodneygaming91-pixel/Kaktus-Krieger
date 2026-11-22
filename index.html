@@ -1460,7 +1460,6 @@ header .who.plate b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-
 .elstrip .elbox .er small{font-size:.5rem;letter-spacing:.03em;text-transform:none;font-weight:900;color:#c8b8a0}
 .elstrip em.pill.mid{background:#4a3a2e;color:#e8d4b0;border-color:#6b5644}
 .elstrip em.pill{font-style:normal;white-space:nowrap}
-.eltip{margin:4px 10px 0;padding:4px 10px;border-radius:10px;background:#2a2010;border:1.5px dashed #b8862e88;color:#ffe7a8;font-size:.68rem;font-weight:800;line-height:1.3}
 .foot .fst{background:linear-gradient(#2a1f16,#1a120c);border:2px solid #5a4430;box-shadow:inset 0 1px 0 #ffffff14,0 2px 0 #0008;padding:4px 8px}
 .foot .fst em{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.78rem!important;flex:none}
 .foot .fst:nth-child(1) em{background:radial-gradient(circle at 35% 30%,#ff9a6a,#c23a1a);color:#fff!important}
@@ -1494,7 +1493,7 @@ body{background:
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="fright"><button class="chestbtn fchest" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
-  <div class="elstrip"><div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div></div><div class="eltip" id="elTip" hidden></div>
+  <div class="elstrip"><div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <div class="chaprow"><button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
@@ -3942,9 +3941,7 @@ function hud(){
    const wm=weMul(Wd.weak,Wd.atkEl);
    const wv=wm>1?pill(1,'▲ +50 %'):wm<1?pill(-1,'▼ −40 %'):pill(0,'normal');
    $('elYou').innerHTML=(w&&w.rel?row(REL_EL[w.rel][0].includes(Wd.weak)?Wd.weak:REL_EL[w.rel][0][0],'Deine Waffe 🏺',wv):row(w&&w.el,'Deine Waffe',w&&w.el?wv:'<em class="dim">ohne Element</em>'))+
-     row(Wd.atkEl,'Dein Schutz',pill(rs,(rs>0?'▲ ':rs<0?'▼ ':'')+rs+' %'));
-   {const tp=$('elTip');if(tp){const tips=[];if(wm<=1)tips.push(`eine ${ELEM[Wd.weak].ico} ${ELEM[Wd.weak].n}-Waffe macht hier +50 %`);if(rs<=0)tips.push(`Ausrüstung mit ${ELEM[Wd.atkEl].ico} ${ELEM[Wd.atkEl].n}-Schutz hilft gegen diese Gegner`);
-     tp.hidden=!tips.length;tp.innerHTML=tips.length?'💡 Tipp: '+tips.join(' · '):'';}}}
+     row(Wd.atkEl,'Dein Schutz',pill(rs,(rs>0?'▲ ':rs<0?'▼ ':'')+rs+' %'));}
   const bReady=!boss&&S.kills>=KILL_GOAL;
   const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
   $('stageBox').classList.toggle('ready',bReady);$('stageBox').tabIndex=bReady?0:-1;
@@ -7034,9 +7031,9 @@ const PATCHES=[
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
   {id:'pn204',date:'2026-11-22',title:'Kleine Korrekturen',hero:['🔧 Boss und Kacheln','Boss-Leben und Zeit stehen jetzt in der Gebiet-Leiste, der Boss kommt gleich ins Bild und die Kacheln schneiden nichts mehr ab.'],
-   items:()=>[['Tipp:','Unter der Element-Leiste steht ein 💡 Tipp, wenn deine Waffe oder dein Schutz hier keinen Vorteil hat.']],
+   items:()=>[],
   en:{title:'Small fixes',hero:['🔧 Boss and tiles','Boss life and time now sit in the area bar, the boss walks into view right away and the tiles no longer cut text off.'],
-   items:()=>[['Tip:','Below the element bar a 💡 tip appears when your weapon or protection has no advantage here.']]}},
+   items:()=>[]}},
   {id:'pn203',date:'2026-11-22',title:'Schöner und klarer',hero:['🎨 Feinschliff überall','Wetter in der Kampfbox, eine verständlichere Element-Leiste, farbige Werte und eine neue untere Leiste.'],
    items:()=>[['Wetter:','Schnee am Frostgipfel, Regen und Blitze in der Gewittersteppe, Funken in Lava und Glut, Sporen im Sumpf, Nebel an der Küste, Staub in der Wüste.'],['Element-Leiste:','„Gegner sind / Schwach gegen“ und „Deine Waffe / Dein Schutz“ mit ▲ grün für Vorteil und ▼ rot für Nachteil.'],['Optik:','Farbige Symbole bei Angriff, Leben und Tempo, ein leichtes Wüstenmuster im Hintergrund und eine leuchtende untere Leiste.']],
   en:{title:'Prettier and clearer',hero:['🎨 Polish everywhere','Weather in the battle box, a clearer element bar, coloured stats and a new bottom bar.'],
