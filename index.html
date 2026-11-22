@@ -46,7 +46,7 @@ h1 span{color:var(--bloom)}
 .bar{height:10px;background:var(--dusk);border-radius:6px;overflow:hidden}
 .bar>div{height:100%;width:0;background:var(--sand);transition:width .2s}
 .bar.boss>div{background:var(--bloom)}
-#cv{width:100%;aspect-ratio:480/300;max-width:100%;border-radius:14px;display:block;background:#241540;image-rendering:auto}
+#cv{width:100%;aspect-ratio:480/205;max-width:100%;border-radius:14px;display:block;background:#241540;image-rendering:auto}
 .foot{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;gap:12px;flex-wrap:wrap}
 .foot b{color:var(--text);font-variant-numeric:tabular-nums}
 .capsule{display:flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:14px;padding:14px 18px;
@@ -1411,6 +1411,26 @@ html.fixhome body.vfull .game{overflow:hidden!important}
 .axbtns{display:flex;gap:8px}.axbtns .btn{flex:1;text-align:center;justify-content:center}
 .axmsg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);background:#000b;color:#fff;border-radius:14px;padding:12px 18px;text-align:center;font-weight:900;font-size:1.1rem;pointer-events:auto}
 .axmsg .btn{margin-top:10px}
+
+/* 22.11.2026: neue Kampfbox – flacher, Messingrahmen mit Nieten, schmale Leisten statt großer Kästen */
+canvas#cv{border:0;border-radius:14px;box-shadow:0 0 0 3px #1c120c,0 0 0 6px #b8862e,0 0 0 8px #1c120c,0 8px 0 2px #0008}
+.field{margin:10px 8px 6px;border-radius:14px}
+.field::before{content:"";position:absolute;inset:0;border-radius:14px;pointer-events:none;z-index:1;box-shadow:inset 0 0 0 2px #ffe7a830,inset 0 -36px 36px -30px #0007,inset 0 28px 28px -24px #0009}
+.field::after{content:"";position:absolute;inset:-7px;pointer-events:none;z-index:1;border-radius:18px;
+  background:radial-gradient(circle at 7px 7px,#ffe7a8 0 2px,#8a5a1a 2.5px 4px,transparent 4.5px),radial-gradient(circle at calc(100% - 7px) 7px,#ffe7a8 0 2px,#8a5a1a 2.5px 4px,transparent 4.5px),
+  radial-gradient(circle at 7px calc(100% - 7px),#ffe7a8 0 2px,#8a5a1a 2.5px 4px,transparent 4.5px),radial-gradient(circle at calc(100% - 7px) calc(100% - 7px),#ffe7a8 0 2px,#8a5a1a 2.5px 4px,transparent 4.5px)}
+.field .stagebox{top:6px!important;left:8px;transform:none;width:auto;max-width:62%;display:grid!important;grid-template-columns:auto auto;align-items:center;column-gap:6px;row-gap:3px;padding:3px 8px 4px!important;border-radius:9px;
+  background:linear-gradient(90deg,#1c120ce6,#1c120c99);border:0;box-shadow:inset 0 0 0 1.5px #b8862e88,0 2px 6px #0006;z-index:2}
+.field .stagebox::before,.field .stagebox::after{display:none}
+.field .stagebox .dtag{position:static;transform:none;font-size:.5rem;padding:0 5px;justify-self:start}
+.field .stagebox b{font-size:.78rem!important;text-shadow:0 1px 0 #000}
+.field .stagebox .bar{width:70px;height:4px!important;border:0;background:#0009}
+.field .stagebox small{font-size:.5rem!important;letter-spacing:.04em}
+.field .fright{top:6px;right:8px;z-index:2}
+.field .fchest{flex-direction:row!important;align-items:center;gap:4px;min-width:0!important;padding:2px 9px 2px 6px!important;border-radius:999px;background:linear-gradient(90deg,#1c120c99,#1c120ce6);border:0;box-shadow:inset 0 0 0 1.5px #b8862e88,0 2px 6px #0006}
+.field .fchest b{font-size:.85rem!important}.field .fchest span{font-size:.62rem!important}
+.field .fbr{right:8px;bottom:7px;z-index:2}
+.field .x2btn{transform:scale(.8);transform-origin:right bottom}
 </style>
 
 <div class="game">
@@ -2050,7 +2070,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2493,7 +2513,9 @@ const cv=document.getElementById('cv'),c=cv.getContext('2d');
 const W=480,H=300,GROUND=238,HX=68; // 11.11.2026: Kaktus und Begleiter etwas weiter links (vorher 90)
 c.scale(2,2);
 let eco=!!S.eco;const ECO_MS=40;
-function applyEco(){const k=eco?1:2;if(cv.width!==480*k){cv.width=480*k;cv.height=300*k;c.setTransform(k,0,0,k,0,0);}
+// 22.11.2026: Kampfbox flacher – oben wird ein Stück Himmel abgeschnitten (Bild 480×205 statt 480×300)
+const CV_CROP=95,CV_H=205;
+function applyEco(){const k=eco?1:2;if(cv.width!==480*k||cv.height!==CV_H*k){cv.width=480*k;cv.height=CV_H*k;c.setTransform(k,0,0,k,0,-CV_CROP*k);}
   const tg=document.getElementById('ecoTag');if(tg)tg.hidden=!eco;}
 applyEco();
 const $=id=>document.getElementById(id);
@@ -6942,6 +6964,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn200',date:'2026-11-22',title:'Neue Kampfbox',hero:['🖼 Kampfbox im neuen Look','Die Kampfbox ist flacher und hat einen Messingrahmen mit Nieten. Gebiet, Fortschritt und Truhe stehen jetzt in schmalen Leisten oben im Bild.'],
+   items:()=>[['Mehr Platz:','Kapitel und Expedition rücken weiter nach oben.']],
+  en:{title:'New battle box',hero:['🖼 Battle box with a new look','The battle box is flatter and has a brass frame with rivets. Area, progress and chest now sit in slim bars at the top of the picture.'],
+   items:()=>[['More room:','Chapter and expedition move further up.']]}},
   {id:'pn199',date:'2026-11-22',title:'Alle Teile verbessern',hero:['⭐ Schmiede für alle 9 Plätze','In der Schmiede kannst du jetzt auch Schild, Schuhe, Umhang und Ring mit ⭐ verbessern – jeder ⭐ gibt +5 % auf den Wert.'],
    items:()=>[['Grenzen bleiben:','Schutz und Krit gehen weiterhin höchstens bis 60 %.']],
   en:{title:'Upgrade every item',hero:['⭐ Forge for all 9 slots','In the forge you can now also upgrade shield, shoes, cape and ring with ⭐ – each ⭐ gives +5 % to the value.'],
