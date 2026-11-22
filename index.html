@@ -1426,11 +1426,16 @@ canvas#cv{border:0;border-radius:14px;box-shadow:0 0 0 3px #1c120c,0 0 0 6px #b8
 .field .stagebox b{font-size:.78rem!important;text-shadow:0 1px 0 #000}
 .field .stagebox .bar{width:70px;height:4px!important;border:0;background:#0009}
 .field .stagebox small{font-size:.5rem!important;letter-spacing:.04em}
+.field .stagebox small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;text-transform:none!important;letter-spacing:.01em!important;font-size:.56rem!important}
+.field .stagebox{max-width:74%!important}
+.field .stagebox.ready{animation:bossready2 1s ease-in-out infinite alternate}@keyframes bossready2{to{transform:scale(1.04)}}
+.field .stagebox{transform-origin:left center}
 .field .fright{top:6px;right:8px;z-index:2}
 .field .fchest{flex-direction:row!important;align-items:center;gap:4px;min-width:0!important;padding:2px 9px 2px 6px!important;border-radius:999px;background:linear-gradient(90deg,#1c120c99,#1c120ce6);border:0;box-shadow:inset 0 0 0 1.5px #b8862e88,0 2px 6px #0006}
 .field .fchest b{font-size:.85rem!important}.field .fchest span{font-size:.62rem!important}
 .field .fbr{right:8px;bottom:7px;z-index:2}
-.field .x2btn{transform:scale(.8);transform-origin:right bottom}
+.field .x2btn{transform:scale(.7);transform-origin:right bottom}
+.field .fbr{bottom:5px!important;right:6px!important}
 
 /* 22.11.2026: Startseite aufgeräumt – Kopfzeile, flacher Beschwören-Knopf, Kapitel und Expedition als Kacheln nebeneinander */
 header{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)!important}
@@ -1448,13 +1453,14 @@ header .who.plate b{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-
 .chaprow .chapbtn>i{font-size:26px;grid-row:1;grid-column:1}
 .chaprow .chapbtn>span{grid-row:1;grid-column:2;min-width:0}
 .chaprow .chapbtn b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chaprow .chapbtn small{font-size:10.5px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chaprow .chapbtn small{font-size:10.5px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .chaprow .chapbtn em{grid-row:2;grid-column:1/3;text-align:center;padding:8px 10px;font-size:14px;border-radius:11px;box-shadow:inset 0 2px 0 #ffffff50,0 2px 0 #0006}
 
 /* 22.11.2026: Element-Leiste, Werte-Leiste, Hintergrund, untere Leiste, Schrift */
 .elstrip .elbox .er small{font-size:.5rem;letter-spacing:.03em;text-transform:none;font-weight:900;color:#c8b8a0}
 .elstrip em.pill.mid{background:#4a3a2e;color:#e8d4b0;border-color:#6b5644}
 .elstrip em.pill{font-style:normal;white-space:nowrap}
+.eltip{margin:4px 10px 0;padding:4px 10px;border-radius:10px;background:#2a2010;border:1.5px dashed #b8862e88;color:#ffe7a8;font-size:.68rem;font-weight:800;line-height:1.3}
 .foot .fst{background:linear-gradient(#2a1f16,#1a120c);border:2px solid #5a4430;box-shadow:inset 0 1px 0 #ffffff14,0 2px 0 #0008;padding:4px 8px}
 .foot .fst em{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.78rem!important;flex:none}
 .foot .fst:nth-child(1) em{background:radial-gradient(circle at 35% 30%,#ff9a6a,#c23a1a);color:#fff!important}
@@ -1488,7 +1494,7 @@ body{background:
   <div class="field"><canvas id="cv" width="960" height="600"></canvas>
     <div class="fright"><button class="chestbtn fchest" id="chestBtn" type="button" title="Spielzeit-Truhen" aria-label="Spielzeit-Truhen"><b>🎁</b><span id="chestTxt">15:00</span></button></div>
     <div class="stagebox" id="stageBox" role="button" tabindex="-1"><i class="dtag" id="diffTag">Leicht</i><b id="stageName">Dornental 1-1</b><div class="bar" id="bar"><div id="barFill"></div></div><small id="killTxt">0 / 30 besiegt</small></div><div class="fbl" id="tutMods"><div class="mods" id="mods" aria-label="Fähigkeiten"></div><button class="mauto" id="modAutoBtn" type="button" aria-pressed="true" title="Fähigkeiten automatisch einsetzen"><span>SKILLS</span> AUTO<b id="modAutoState" class="sr">an</b></button></div><div class="fbr"><button class="x2btn" id="x2Btn" type="button" aria-pressed="false"><b>×2</b><small id="x2Sub">▶ Video</small></button><button class="mauto" id="bossAutoBtn" type="button" aria-pressed="true" title="Boss automatisch starten"><span>BOSS</span> AUTO</button></div></div>
-  <div class="elstrip"><div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div></div>
+  <div class="elstrip"><div class="elbox l" id="elEnemy"></div><div class="elbox r" id="elYou"></div></div><div class="eltip" id="elTip" hidden></div>
   <div class="diffrow" id="diffRow" role="group" aria-label="Schwierigkeit"></div>
   <div class="diffhint" id="diffHint" hidden></div>
   <div class="chaprow"><button type="button" class="chapbtn" id="chapBtn"><i>🎮</i><span><b id="chapT">Kapitel 1</b><small id="chapS">Dornental</small></span><em>Spielen ▶</em></button>
@@ -2114,7 +2120,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,pn204:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -2714,7 +2720,7 @@ const world=()=>WORLDS[worldIdx(S.stage)];
 function makeEnemy(isBoss){
   const W0=world(),ty=isBoss?W0.boss:W0.e[Math.floor(Math.random()*W0.e.length)];
   const p=pow(S.stage),max=24*ty.hp*p;
-  return{ty,boss:isBoss,x:W+30+rnd(0,40),y:ty.kind==='bird'?GROUND-(isBoss?80:60+rnd(0,20)):GROUND,hp:max,max,atk:6*ty.atk*p*(isBoss?.56:1),   // Balance v5: Bosse treffen 30 % schwächer
+  return{ty,boss:isBoss,x:isBoss?W-70:W+30+rnd(0,40),y:ty.kind==='bird'?GROUND-(isBoss?80:60+rnd(0,20)):GROUND,hp:max,max,atk:6*ty.atk*p*(isBoss?.56:1),   // Balance v5: Bosse treffen 30 % schwächer
     atkT:rnd(.6,1.2),hit:0,dying:0,coin:Math.ceil(6*cPow(S.stage)*(isBoss?15:1))};   // Balance v6: doppelt so viele Münzen pro Gegner
 }
 function spawnWave(){const n=2+Math.floor(Math.random()*3);for(let i=0;i<n;i++){const e=makeEnemy(false);e.x+=i*46;enemies.push(e);}}
@@ -3896,8 +3902,8 @@ function draw(){
   drawWeather();
   for(const f of floats){c.globalAlpha=Math.min(1,f.t*2);c.fillStyle='#170f2e';c.fillText(f.txt,f.x+1,f.y+1);c.fillStyle=f.col;c.fillText(f.txt,f.x,f.y);}c.globalAlpha=1;
   const b=alive().find(e=>e.boss);
-  if(b){c.fillStyle='#170f2ecc';c.fillRect(110,74,260,22);bar(116,86,248,6,b.hp/b.max,'#ff6fae');
-    c.font='800 10px Nunito, system-ui, sans-serif';c.fillStyle='#f4ecff';c.textAlign='left';c.fillText(b.ty.n,116,83);c.textAlign='right';c.fillText(Math.ceil(bossT)+' s',364,83);}
+  // 22.11.2026: Boss-Leben und Zeit stehen jetzt in der Gebiet-Leiste (vorher halb verdeckt oben im Bild)
+  if(b){const f=$('barFill'),k=$('killTxt'),txt='👑 '+(typeof tr==='function'?tr(b.ty.n):b.ty.n)+' · '+Math.ceil(bossT)+' s';if(f)f.style.width=Math.max(0,b.hp/b.max*100)+'%';if(k&&k.textContent!==txt)k.textContent=txt;}
   if(banner){c.globalAlpha=Math.min(1,banner.t*2);c.font='26px "Lilita One", "Arial Black", sans-serif';c.textAlign='center';
     {const by=H*.5,bw=Math.min(W-20,c.measureText(banner.txt).width+40);c.fillStyle='#1a1008cc';c.beginPath();c.roundRect(W/2-bw/2,by-30,bw,42,12);c.fill();c.strokeStyle='#c9963d';c.lineWidth=2;c.stroke();
     c.fillStyle='#170f2e';c.fillText(banner.txt,W/2+2,by+2);c.fillStyle='#ffd98a';c.fillText(banner.txt,W/2,by);}c.globalAlpha=1;}
@@ -3936,7 +3942,9 @@ function hud(){
    const wm=weMul(Wd.weak,Wd.atkEl);
    const wv=wm>1?pill(1,'▲ +50 %'):wm<1?pill(-1,'▼ −40 %'):pill(0,'normal');
    $('elYou').innerHTML=(w&&w.rel?row(REL_EL[w.rel][0].includes(Wd.weak)?Wd.weak:REL_EL[w.rel][0][0],'Deine Waffe 🏺',wv):row(w&&w.el,'Deine Waffe',w&&w.el?wv:'<em class="dim">ohne Element</em>'))+
-     row(Wd.atkEl,'Dein Schutz',pill(rs,(rs>0?'▲ ':rs<0?'▼ ':'')+rs+' %'));}
+     row(Wd.atkEl,'Dein Schutz',pill(rs,(rs>0?'▲ ':rs<0?'▼ ':'')+rs+' %'));
+   {const tp=$('elTip');if(tp){const tips=[];if(wm<=1)tips.push(`eine ${ELEM[Wd.weak].ico} ${ELEM[Wd.weak].n}-Waffe macht hier +50 %`);if(rs<=0)tips.push(`Ausrüstung mit ${ELEM[Wd.atkEl].ico} ${ELEM[Wd.atkEl].n}-Schutz hilft gegen diese Gegner`);
+     tp.hidden=!tips.length;tp.innerHTML=tips.length?'💡 Tipp: '+tips.join(' · '):'';}}}
   const bReady=!boss&&S.kills>=KILL_GOAL;
   const atCap=!boss&&S.stage>=chapCap();$('killTxt').textContent=boss?'Boss-Kampf':atCap&&bReady?'🎮 Kapitel '+((S.chap||0)+1)+' schaffen':bReady?'Boss bereit · antippen':S.kills+' / '+KILL_GOAL+' besiegt';
   $('stageBox').classList.toggle('ready',bReady);$('stageBox').tabIndex=bReady?0:-1;
@@ -7025,6 +7033,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn204',date:'2026-11-22',title:'Kleine Korrekturen',hero:['🔧 Boss und Kacheln','Boss-Leben und Zeit stehen jetzt in der Gebiet-Leiste, der Boss kommt gleich ins Bild und die Kacheln schneiden nichts mehr ab.'],
+   items:()=>[['Tipp:','Unter der Element-Leiste steht ein 💡 Tipp, wenn deine Waffe oder dein Schutz hier keinen Vorteil hat.']],
+  en:{title:'Small fixes',hero:['🔧 Boss and tiles','Boss life and time now sit in the area bar, the boss walks into view right away and the tiles no longer cut text off.'],
+   items:()=>[['Tip:','Below the element bar a 💡 tip appears when your weapon or protection has no advantage here.']]}},
   {id:'pn203',date:'2026-11-22',title:'Schöner und klarer',hero:['🎨 Feinschliff überall','Wetter in der Kampfbox, eine verständlichere Element-Leiste, farbige Werte und eine neue untere Leiste.'],
    items:()=>[['Wetter:','Schnee am Frostgipfel, Regen und Blitze in der Gewittersteppe, Funken in Lava und Glut, Sporen im Sumpf, Nebel an der Küste, Staub in der Wüste.'],['Element-Leiste:','„Gegner sind / Schwach gegen“ und „Deine Waffe / Dein Schutz“ mit ▲ grün für Vorteil und ▼ rot für Nachteil.'],['Optik:','Farbige Symbole bei Angriff, Leben und Tempo, ein leichtes Wüstenmuster im Hintergrund und eine leuchtende untere Leiste.']],
   en:{title:'Prettier and clearer',hero:['🎨 Polish everywhere','Weather in the battle box, a clearer element bar, coloured stats and a new bottom bar.'],
@@ -9017,8 +9029,8 @@ function axDraw(){const A=AX,g=A.g,h=A.hero;g.setTransform(A.dpr,0,0,A.dpr,0,0);
   // Joystick zeichnen
   if(A.joy){const j=A.joy,l=Math.hypot(j.dx,j.dy),k=l>50?50/l:1;g.globalAlpha=.5;g.fillStyle='#000';g.beginPath();g.arc(j.x0,j.y0,50,0,7);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(j.x0+j.dx*k,j.y0+j.dy*k,22,0,7);g.fill();g.globalAlpha=1;}}
 // 14.11.2026: Kapitel-Knopf unter dem Kampffeld – das nächste Kapitel schaltet das nächste Gebiet frei
-function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.textContent='Wildnis-Stufe '+(S.xpLv||1)+(S.spl?' · ✨ '+fmt(S.spl):'');}}}const b=$('chapBtn');if(!b)return;const g=(S.chap||0)+1,st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
-  $('chapT').textContent='Kapitel '+g;$('chapS').textContent=(chStarSum()?'⭐ '+chStarSum()+' · ':'')+Wd.n+' · '+diffOf(st).n;b.classList.toggle('need',need);b.hidden=!S.char;}
+function chapHud(){{const xb=$('xpBtn');if(xb){const on=(S.chap||0)>=XP_UNLOCK||maint.dev;xb.hidden=!on;if(on){const s2=$('xpS');if(s2)s2.innerHTML='Stufe '+(S.xpLv||1)+(S.spl?' · ✨ '+fmt(S.spl):'');}}}const b=$('chapBtn');if(!b)return;const g=(S.chap||0)+1,st=(g-1)*20+10,Wd=WORLDS[worldIdx(st)],need=S.stage>=chapCap();
+  $('chapT').textContent='Kapitel '+g;$('chapS').innerHTML=(chStarSum()?'⭐ '+chStarSum()+'<br>':'')+Wd.n+' · '+diffOf(st).n.replace('Ultra schwer','Ultra');b.classList.toggle('need',need);b.hidden=!S.char;}
 $('xpBtn').onclick=()=>xpPick();
 $('chapBtn').onclick=e=>{if(!$('modal').hidden||editing||!S.char)return;if(e.target.closest('em'))axOpen();else chPick();};
 chapHud();setInterval(chapHud,1000);
