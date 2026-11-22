@@ -2189,7 +2189,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,pn204:true,pn205:true,pn206:true,pn207:true,pn208:true,pn209:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,pn204:true,pn205:true,pn206:true,pn207:true,pn208:true,pn209:true,pn210:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -6375,12 +6375,12 @@ function soonBox(t,ico,txt){if(!$('modal').hidden||editing)return;$('modal').hid
 // ---------- 22.11.2026: Horde – Tower Defense vor der Dorfmauer ----------
 // 3 Versuche pro Tag. Gegner laufen durch den Canyon zur Mauer; mit erbeuteten Münzen baust du Türme auf Bauplätzen.
 const HD_FREE=3;
-const HDT={st:{n:'Stachelturm',i:'🌵',c:60,rg:95,rate:L=>1.4+.12*L,dmg:L=>9*Math.pow(1.6,L-1),d:'schnell · ein Ziel'},
-  fe:{n:'Feuerturm',i:'🔥',c:100,rg:80,rate:()=>.62,dmg:L=>13*Math.pow(1.6,L-1),aoe:34,d:'Flächenschaden'},
-  ei:{n:'Eisturm',i:'❄️',c:80,rg:78,rate:()=>.9,dmg:L=>4*Math.pow(1.6,L-1),aoe:30,slow:L=>.35+.06*L,d:'verlangsamt'}};
+const HDT={st:{n:'Stachelturm',i:'🌵',c:60,rg:110,rate:L=>1.4+.12*L,dmg:L=>9*Math.pow(1.6,L-1),d:'schnell · ein Ziel'},
+  fe:{n:'Feuerturm',i:'🔥',c:100,rg:95,rate:()=>.62,dmg:L=>13*Math.pow(1.6,L-1),aoe:34,d:'Flächenschaden'},
+  ei:{n:'Eisturm',i:'❄️',c:80,rg:95,rate:()=>.9,dmg:L=>4*Math.pow(1.6,L-1),aoe:30,slow:L=>.35+.06*L,d:'verlangsamt'}};
 const HD_MAXL=5,hdUpC=(k,L)=>Math.round(HDT[k].c*.8*L);
 const HD_PATH=[[185,-.03],[190,.12],[110,.24],[100,.38],[250,.5],[270,.64],[160,.75],[185,.9],[185,1]];
-const HD_PADS=[[60,.17],[290,.2],[160,.32],[60,.45],[300,.41],[200,.6],[60,.66],[320,.75],[255,.86]];
+const HD_PADF=[.08,.18,.28,.38,.48,.58,.68,.77,.86];
 function hdState(){const d=ptDay();if(!S.hd)S.hd={day:d,used:0,best:0,top:0};const H=S.hd;if(H.day!==d){H.day=d;H.used=0;H.best=0;}return H;}
 const hdLeft=()=>Math.max(0,HD_FREE-hdState().used);
 const hdWallMax=()=>600+150*vLv('mauer');
@@ -6392,9 +6392,22 @@ function hdClose(){hd=null;const ov=$('hdOv');if(ov){ov.hidden=true;ov.innerHTML
 function hdStart(){const H=hdState();if(H.used>=HD_FREE)return;H.used++;save();
   const wi=worldIdx(Math.max(1,S.best||1));
   Object.assign(hd,{st:'run',w:0,wave:null,coins:150,wall:hdWallMax(),wmax:hdWallMax(),en:[],tw:{},pr:[],fx:[],sel:-1,sp:1,kills:0,wi,between:true,auto:0,give:0});hdUi();}
+let hdGC=null;
 function hdGeo(){const cv=$('hdCv');const rw=cv&&cv.parentElement.clientWidth||360,rh=cv&&cv.parentElement.clientHeight||520,W=360,H=Math.max(440,Math.min(760,Math.round(360*rh/rw)));
-  const wy=H-92,pts=HD_PATH.map(([x,f])=>[x,f*wy]);let L=0;const seg=[];for(let i=0;i<pts.length-1;i++){const l=Math.hypot(pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]);seg.push(l);L+=l;}
-  return{W,H,wy,pts,seg,L,pads:HD_PADS.map(([x,f])=>[x,f*wy])};}
+  if(hdGC&&hdGC.H===H)return hdGC;
+  // Weg genau so abtasten, wie er gezeichnet wird (weiche Kurven), damit die Gegner auf dem Weg laufen
+  const wy=H-92,R=HD_PATH.map(([x,f])=>[x,f*wy]),pts=[R[0].slice()];let cur=R[0];
+  for(let i=1;i<R.length-1;i++){const m=[(R[i][0]+R[i+1][0])/2,(R[i][1]+R[i+1][1])/2];for(let q=1;q<=14;q++){const u=q/14,a=(1-u)*(1-u),b=2*(1-u)*u,c=u*u;pts.push([a*cur[0]+b*R[i][0]+c*m[0],a*cur[1]+b*R[i][1]+c*m[1]]);}cur=m;}
+  pts.push(R[R.length-1].slice());
+  let L=0;const seg=[],cum=[0];for(let i=0;i<pts.length-1;i++){const l=Math.hypot(pts[i+1][0]-pts[i][0],pts[i+1][1]-pts[i][1]);seg.push(l);L+=l;cum.push(L);}
+  const pdist=(x,y)=>{let m=1e9;for(let i=0;i<pts.length-1;i++){const [ax,ay]=pts[i],[bx,by]=pts[i+1],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1,u=Math.max(0,Math.min(1,((x-ax)*dx+(y-ay)*dy)/l2));m=Math.min(m,Math.hypot(x-ax-dx*u,y-ay-dy*u));}return m;};
+  // Bauplätze direkt neben dem Weg (abwechselnd links/rechts), nie auf dem Weg und nicht übereinander
+  const pads=[];let side=1;
+  for(const f of HD_PADF){const d=f*L;let k=0;while(k<cum.length-2&&cum[k+1]<d)k++;const [ax,ay]=pts[k],[bx,by]=pts[k+1],l=Math.hypot(bx-ax,by-ay)||1,u=(d-cum[k])/l,px=ax+(bx-ax)*u,py=ay+(by-ay)*u,nx=-(by-ay)/l,ny=(bx-ax)/l;
+    let best=null;for(const sd of [side,-side]){for(const off of [44,52,38]){const x=Math.max(26,Math.min(W-26,px+nx*off*sd)),y=Math.max(40,Math.min(wy-105,py+ny*off*sd*.8));
+      if(pdist(x,y)>=32&&pads.every(p=>Math.hypot(p[0]-x,p[1]-y)>50)){best=[x,y];break;}}if(best)break;}
+    if(best){pads.push(best);side=-side;}}
+  return hdGC={W,H,wy,pts,seg,L,pads,raw:R};}
 function hdAt(G,d){let i=0;while(i<G.seg.length-1&&d>G.seg[i]){d-=G.seg[i];i++;}const u=Math.min(1,d/G.seg[i]),a=G.pts[i],b=G.pts[i+1];return[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u];}
 function hdWave(){const w=++hd.w,W=WORLDS[hd.wi],n=Math.min(40,6+2*w),q=[];
   for(let i=0;i<n;i++)q.push(W.e[(i*7+w)%W.e.length]);if(w%5===0)q.push(Object.assign({},W.boss,{boss:1}));
@@ -7263,6 +7276,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn210',date:'2026-11-22',title:'Horde: Türme treffen jetzt',hero:['🎯 Horde verbessert','Die Bauplätze liegen jetzt direkt am Weg und die Gegner laufen genau auf dem Weg – so erreichen deine Türme die Gegner zuverlässig.'],
+   items:()=>['📍 Alle Bauplätze direkt neben dem Weg','🐛 Gegner laufen in den Kurven nicht mehr neben dem Weg','📏 Größere Reichweite für alle Türme'],
+  en:{title:'Horde: towers now hit',hero:['🎯 Horde improved','Build spots are now right next to the road and enemies walk exactly on it – so your towers reliably reach them.'],
+   items:()=>['📍 All build spots right next to the road','🐛 Enemies no longer leave the road in curves','📏 Larger range for all towers']}},
   {id:'pn209',date:'2026-11-22',title:'Neuer Modus: Horde',hero:['⚔ Horde – verteidige deine Mauer','Unter „Mehr“ gibt es den neuen Modus Horde: Gegnerwellen stürmen auf deine Dorfmauer zu – baue Türme und halte so viele Wellen wie möglich durch.'],
    items:()=>['🌵 Stachelturm, 🔥 Feuerturm und ❄️ Eisturm – bauen und bis Stufe 5 verbessern, mit den Münzen der besiegten Gegner','🧱 Die Mauer hält mehr aus, je höher deine Mauer-Stufe im Dorf ist','👑 Alle 5 Wellen kommt ein Boss','🎁 Belohnung je geschaffter Welle: Münzen, Erz und Samenkapseln · 3 Versuche pro Tag'],
   en:{title:'New mode: Horde',hero:['⚔ Horde – defend your wall','Under "More" there is the new Horde mode: waves of enemies storm your village wall – build towers and hold out as many waves as you can.'],
