@@ -2196,7 +2196,7 @@ document.addEventListener('scroll',e=>{if(!document.documentElement.classList.co
 const KILL_GOAL=30;
 // ---------- Spielstand ----------
 // Merker für alle Anpassungen – nur ganz neue Spielstände bekommen sie gleich gesetzt
-const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,pn204:true,pn205:true,pn206:true,pn207:true,pn208:true,pn209:true,pn210:true,pn211:true,pn212:true,pn213:true,pn214:true,pn215:true,pn216:true,pn217:true,pn218:true,pn219:true,pn220:true,pn221:true,pn222:true,pn223:true,pn224:true,pn225:true,pn226:true,pn227:true,pn228:true,pn229:true,pn230:true,pn231:true,pn232:true,cnew:true};
+const ALL_FIXES={r2:true,r3:true,r4:true,v2:true,v3:true,v4:true,v5:true,v6:true,v7:true,v8:true,v9:true,pn10:true,pn11:true,pn12:true,pn13:true,pn14:true,pn15:true,pn16:true,pn17:true,pn18:true,pn19:true,pn20:true,pn21:true,pn22:true,pn23:true,pn24:true,pn25:true,pn26:true,pn27:true,pn28:true,pn29:true,pn30:true,pn31:true,pn32:true,pn33:true,pn34:true,pn35:true,pn36:true,pn37:true,pn38:true,pn39:true,pn40:true,pn41:true,pn42:true,pn43:true,pn44:true,pn45:true,pn46:true,pn47:true,pn48:true,pn49:true,pn50:true,pn51:true,pn52:true,pn53:true,pn54:true,pn55:true,pn56:true,pn57:true,pn58:true,pn59:true,pn60:true,pn61:true,pn62:true,pn63:true,pn64:true,pn65:true,pn66:true,pn67:true,pn68:true,pn69:true,pn70:true,pn71:true,pn72:true,pn73:true,pn74:true,pn75:true,pn76:true,pn77:true,pn78:true,pn79:true,pn80:true,pn81:true,pn82:true,pn83:true,pn84:true,pn85:true,pn86:true,pn87:true,pn88:true,pn89:true,pn90:true,pn91:true,pn92:true,pn93:true,pn94:true,pn95:true,pn96:true,pn97:true,pn98:true,pn99:true,pn100:true,pn101:true,pn102:true,pn103:true,pn104:true,pn105:true,pn106:true,pn107:true,pn108:true,pn109:true,pn110:true,pn111:true,pn112:true,pn113:true,pn114:true,pn115:true,pn116:true,pn117:true,pn118:true,pn119:true,pn120:true,pn121:true,pn122:true,pn123:true,pn124:true,pn125:true,pn126:true,pn127:true,pn128:true,pn129:true,pn130:true,pn131:true,pn132:true,pn133:true,pn134:true,pn135:true,pn136:true,pn137:true,pn138:true,pn139:true,pn140:true,pn141:true,pn142:true,pn143:true,pn144:true,pn145:true,pn146:true,pn147:true,pn148:true,pn149:true,pn150:true,pn151:true,pn152:true,pn153:true,pn154:true,pn155:true,pn156:true,pn157:true,pn158:true,pn159:true,pn160:true,pn161:true,pn162:true,pn163:true,pn164:true,pn165:true,pn166:true,pn167:true,pn168:true,pn169:true,pn170:true,pn171:true,pn172:true,pn173:true,pn174:true,pn175:true,pn176:true,pn177:true,pn178:true,pn179:true,pn180:true,pn181:true,pn182:true,pn183:true,pn184:true,pn185:true,pn186:true,pn187:true,pn188:true,pn189:true,pn190:true,pn191:true,pn192:true,pn193:true,pn194:true,pn195:true,pn196:true,pn197:true,pn198:true,pn199:true,pn200:true,pn201:true,pn202:true,pn203:true,pn204:true,pn205:true,pn206:true,pn207:true,pn208:true,pn209:true,pn210:true,pn211:true,pn212:true,pn213:true,pn214:true,pn215:true,pn216:true,pn217:true,pn218:true,pn219:true,pn220:true,pn221:true,pn222:true,pn223:true,pn224:true,pn225:true,pn226:true,pn227:true,pn228:true,pn229:true,pn230:true,pn231:true,pn232:true,pn233:true,cnew:true};
 const newState=()=>Object.assign(fresh(),ALL_FIXES);
 function fresh(){return{kak:0,ws:{},char:null,hq:{},dr:{},drEq:[],coins:0,stage:1,kills:0,best:1,caps:3,gear:{},glv:1,gUp:0,auto:{on:false,stopAt:3},seen:[0],inv:[]};}
 let S=fresh();
@@ -6825,7 +6825,7 @@ const KM_PADS=[
   {id:'bag2',ico:'🎒',n:'Rucksack +10',c:700,r:[9.7,12.6,1.6,1.4],rw:{kak:25}},
   {id:'help2',ico:'👷',n:'Presse-Helfer',c:900,r:[1.0,10.6,1.5,1.2],rw:{caps:600}},
   {id:'help3',ico:'👷',n:'Saft-Träger',c:1200,r:[4.4,12.1,1.5,1.2],rw:{kak:30}},
-  {id:'lager',ico:'📦',n:'Markt-Lager',c:1000,r:[10.2,9.2,1.7,1.4],rw:{caps:500}},
+  {id:'lager',ico:'📦',n:'Markt-Lager',c:1000,r:[9.6,9.6,1.6,1.4],rw:{caps:500}},
   {id:'bak',ico:'🥐',n:'Bäckerei-Gelände',c:1500,r:[10.4,1.0,1.5,1.4],rw:{kak:30}},
   {id:'miller',ico:'👷',n:'Müller',c:1800,r:[10.4,1.0,1.5,1.4],rw:{caps:800}},
   {id:'f4',ico:'🌵',n:'Bäckerei-Feld',c:2000,r:[12.4,10.8,2.8,2.4],rw:{kak:35}},
@@ -6833,8 +6833,8 @@ const KM_PADS=[
   {id:'carrier',ico:'👷',n:'Kaktus-Träger',c:2500,r:[12.3,6.4,1.4,1.2],rw:{caps:900}},
   {id:'flour',ico:'👷',n:'Mehl-Träger',c:2800,r:[14.9,5.0,1.4,1.2],rw:{caps:1000}},
   {id:'seller',ico:'👷',n:'Bäckerei-Verkäufer',c:3500,r:[16.9,5.0,1.4,1.2],rw:{kak:50}},
-  {id:'lager2',ico:'📦',n:'Bäckerei-Lager',c:4000,r:[18.5,11.3,1.4,1.3],rw:{kak:45}},
-  {id:'oven2',ico:'🔥',n:'Großer Ofen',c:5000,r:[19.0,4.6,1.4,1.2],rw:{caps:1500}}];
+  {id:'lager2',ico:'📦',n:'Bäckerei-Lager',c:4000,r:[17.6,5.0,1.6,1.4],rw:{kak:45}},
+  {id:'oven2',ico:'🔥',n:'Großer Ofen',c:5000,r:[14.9,6.2,1.4,1.2],rw:{caps:1500}}];
 // 27.11.2026: Kaktus-Bäckerei – Mühle (Kaktus → Mehl), Ofen (Mehl → Brötchen, Mehl + Saft → Kuchen), eigene Theke
 const KB_MILL=[13,.6,2.2,2.2],KB_MIN=[12.85,3.05,1.0,.8],KB_MWS=[14.0,3.05,.9,.8],KB_MOUT=[15.45,1.4,.9,.9],
   KB_OVEN=[17.3,.7,2.0,1.6],KB_OIN=[16.55,2.5,1.0,.8],KB_OWS=[17.75,2.5,.9,.8],KB_OOUT=[18.85,2.5,1.0,.8],
@@ -6844,12 +6844,16 @@ const KM_SWS=[5.3,4.5,.9,.8],KM_PWS=[6.5,9.0,.85,.8];
 const KM_PRICE={k:5,j:14,b:30,c:80},KM_TW=64,KM_TH=37;
 let km=null;
 // 27.11.2026: Lager – jedes Produkt hat ein eigenes Lager, das man ausbauen kann (mehr Platz am Stand/an der Theke)
-const KM_LAG=[10.2,9.2,1.7,1.4],KB_LAG=[18.5,11.3,1.4,1.3],KLG_MAX=5,
-  KLG={k:{n:'Kakteen-Lager',ico:'🌵',b:30,s:15,c:300,lag:'lager',r:[8.9,8.9,1.1,1.1]},j:{n:'Saft-Lager',ico:'🧃',b:20,s:10,c:450,lag:'lager',r:[10.6,10.85,1.1,1.1]},
-      b:{n:'Brötchen-Lager',ico:'🥖',b:20,s:10,c:800,lag:'lager2',r:[17.0,10.4,1.1,1.1]},c:{n:'Kuchen-Lager',ico:'🎂',b:10,s:5,c:1200,lag:'lager2',r:[18.55,12.65,1.2,.85]}};
+// Lager: vorne REIN (stapelt sich sichtbar hoch), hinten RAUS – je Produkt ein eigenes Regal, ausbaubar
+const KLG_MAX=5,KLG_X={k:8.9,j:10.9,b:16.8,c:18.8},KLG_Y={k:8.95,j:8.95,b:4.25,c:4.25},
+  KLG={k:{n:'Kakteen-Lager',ico:'🌵',b:40,s:20,c:300,lag:'lager'},j:{n:'Saft-Lager',ico:'🧃',b:30,s:15,c:450,lag:'lager'},
+      b:{n:'Brötchen-Lager',ico:'🥖',b:30,s:15,c:800,lag:'lager2'},c:{n:'Kuchen-Lager',ico:'🎂',b:15,s:8,c:1200,lag:'lager2'}};
+for(const it in KLG){const x=KLG_X[it],y=KLG_Y[it];Object.assign(KLG[it],{out:[x,y-.25,1.1,.8],rack:[x,y+.9,1.1,.9],in:[x,y+1.9,1.1,.8],r:[x,y+2.85,1.1,.95]});}
+const KM_LAG=[9.1,8.95,2.7,3.7],KB_LAG=[17.0,4.25,2.7,3.7];
+const klgOn=it=>kmHas(KLG[it].lag)&&(it!=='j'||kmHas('press'));
 const klgLv=it=>((kmS().lv||{})[it]||0),klgCap=(it,l=klgLv(it))=>KLG[it].b+KLG[it].s*l,klgCost=it=>KLG[it].c*Math.pow(2,klgLv(it));
-const kmSC=()=>({k:klgCap('k'),j:klgCap('j')}),kbSC=()=>({b:klgCap('b'),c:klgCap('c')});
-function kmUpPads(){const out=[];for(const it in KLG){const L=KLG[it];if(!kmHas(L.lag)||klgLv(it)>=KLG_MAX||(it==='j'&&!kmHas('press')))continue;const l=klgLv(it);out.push({id:'L'+it,up:it,ico:L.ico,n:L.n+' → '+klgCap(it,l+1),c:klgCost(it),r:L.r});}return out;}
+const kmSC=()=>({k:30,j:20}),kbSC=()=>({b:20,c:10});
+function kmUpPads(){const out=[];for(const it in KLG){const L=KLG[it];if(!klgOn(it)||klgLv(it)>=KLG_MAX)continue;const l=klgLv(it);out.push({id:'L'+it,up:it,ico:'⬆'+L.ico,n:'Lager → '+klgCap(it,l+1)+' Platz',c:klgCost(it),r:L.r});}return out;}
 function kmS(){if(!S.km)S.km={money:0,unl:[],paid:{},cash:0,stock:{k:0,j:0},pin:0,pout:0,t:Date.now()};const K=S.km;if(!K.bk)K.bk={mIn:0,mOut:0,oIn:0,oJ:0,oOut:{b:0,c:0},st:{b:0,c:0},cash:0,mt:0,ot:0,nxt:'b'};return K;}
 const kmHas=id=>kmS().unl.includes(id);
 function kmFields(){const F=[[1.4,.6,3.6,2.4]];if(kmHas('f2'))F.push([1.4,3.6,3.6,2.4]);if(kmHas('f3'))F.push([5.6,.6,3.4,2.4]);if(kmHas('f4'))F.push([12.4,10.8,2.8,2.4]);return F;}
@@ -6896,7 +6900,7 @@ function kmStep(dt){const A=km,K=kmS();if(!A)return;
   if(A.joy&&A.joy.d>8){const sp=(kmHas('spd')?4.4:3.3)*Math.min(1,A.joy.d/40),ux=A.joy.dx/A.joy.d,uy=A.joy.dy/A.joy.d;
     let gx=ux/(KM_TW/2)+uy/(KM_TH/2),gy=uy/(KM_TH/2)-ux/(KM_TW/2);const l=Math.hypot(gx,gy)||1;gx/=l;gy/=l;
     let nx=A.x+gx*sp*dt,ny=A.y+gy*sp*dt;nx=Math.max(0,Math.min(kmHas('bak')?20:12,nx));ny=Math.max(0,Math.min(13.5,ny));
-    const blk=[KM_STAND].concat(kmHas('press')?[KM_PRESS]:[],kmHas('bak')?[KB_MILL,KB_OVEN,KB_CNT]:[],kmHas('lager')?[KM_LAG]:[],kmHas('lager2')?[KB_LAG]:[]);for(const b of blk)if(!kmIn(A.x,A.y,b,.15)&&kmIn(nx,ny,b,.15)){if(!kmIn(nx,A.y,b,.15))ny=A.y;else if(!kmIn(A.x,ny,b,.15))nx=A.x;else{nx=A.x;ny=A.y;}}
+    const blk=[KM_STAND].concat(kmHas('press')?[KM_PRESS]:[],kmHas('bak')?[KB_MILL,KB_OVEN,KB_CNT]:[],['k','j','b','c'].filter(klgOn).map(it=>KLG[it].rack));for(const b of blk)if(!kmIn(A.x,A.y,b,.15)&&kmIn(nx,ny,b,.15)){if(!kmIn(nx,A.y,b,.15))ny=A.y;else if(!kmIn(A.x,ny,b,.15))nx=A.x;else{nx=A.x;ny=A.y;}}
     A.x=nx;A.y=ny;A.walk=1;}else A.walk=0;
   A.cx+=(A.x-A.cx)*Math.min(1,dt*6);A.cy+=(A.y-A.cy)*Math.min(1,dt*6);
   // Pflanzen wachsen nach (8 s)
@@ -6905,6 +6909,11 @@ function kmStep(dt){const A=km,K=kmS();if(!A)return;
   const cap=kmCap();A.hcd-=dt;if(A.hcd<=0&&A.carry.length<cap){const p=A.plants.find(p=>p.g>=1&&Math.hypot(p.x-A.x,p.y-A.y)<.6);if(p){p.g=0;A.carry.push('k');A.hcd=.12;A.fx.push({x:p.x,y:p.y,txt:'+1',col:'#9af07a',t:.6});}}
   // Ablegen am Stand
   A.dcd-=dt;if(A.dcd<=0&&A.carry.length&&kmIn(A.x,A.y,KM_DROP,.2)){let ix=-1;for(let i=A.carry.length-1;i>=0;i--)if((K.stock[A.carry[i]]||0)<kmSC()[A.carry[i]]){ix=i;break;}if(ix>=0){const it=A.carry.splice(ix,1)[0];K.stock[it]=(K.stock[it]||0)+1;A.dcd=.07;A.fly.push({x:A.x,y:A.y,tx:KM_STAND[0]+KM_STAND[2]*.7,ty:KM_STAND[1]+.5,it,t:0});}}
+  // Lager: vorne rein, hinten raus
+  if(!K.lg)K.lg={k:0,j:0,b:0,c:0};
+  if(A.dcd<=0)for(const it in KLG){if(!klgOn(it))continue;const L=KLG[it];
+    if(kmIn(A.x,A.y,L.in,.2)){const i=A.carry.lastIndexOf(it);if(i>=0&&(K.lg[it]||0)<klgCap(it)){A.carry.splice(i,1);K.lg[it]=(K.lg[it]||0)+1;A.dcd=.06;A.fly.push({x:A.x,y:A.y,tx:L.rack[0]+.55,ty:L.rack[1]+.45,it,t:0});}break;}
+    if(kmIn(A.x,A.y,L.out,.2)){if((K.lg[it]||0)>0&&A.carry.length<kmCap()){K.lg[it]--;A.carry.push(it);A.dcd=.07;}break;}}
   // Saftpresse: Kakteen rein, Saft raus
   if(kmHas('press')){if(A.dcd<=0&&kmIn(A.x,A.y,KM_PIN,.2)&&A.carry.includes('k')&&K.pin<20){A.carry.splice(A.carry.lastIndexOf('k'),1);K.pin++;A.dcd=.08;}
     A.pWork=kmHas('presser')||kmIn(A.x,A.y,KM_PWS,.15);if(A.pWork&&K.pin>0&&K.pout<24){A.pcd-=dt;if(A.pcd<=0){K.pin--;K.pout++;A.pcd=1.4;}}
@@ -6923,7 +6932,7 @@ function kmStep(dt){const A=km,K=kmS();if(!A)return;
   // Ausbau-Flächen
   for(const p of kmPadsVis().concat(kmUpPads())){const r=p.r;if(!kmIn(A.x,A.y,[r[0]+.3,r[1]+.3,r[2]-.6,r[3]-.6]))continue;const paid=K.paid[p.id]||0;if(K.money<=0)continue;const pay=Math.min(K.money,p.c-paid,Math.max(1,Math.ceil(p.c*dt/1.6)));K.money-=pay;K.paid[p.id]=paid+pay;
     if(K.paid[p.id]>=p.c&&p.up){K.paid[p.id]=0;if(!K.lv)K.lv={};K.lv[p.up]=(K.lv[p.up]||0)+1;A.fx.push({x:r[0]+r[2]/2,y:r[1]+r[3]/2,txt:'📦 '+KLG[p.up].n+' Stufe '+(K.lv[p.up]+1)+'! Platz: '+klgCap(p.up),col:'#ffd447',t:2.5,big:1});save();kmUi();continue;}
-    if(K.paid[p.id]>=p.c){K.unl.push(p.id);kmBgC=null;kmBuild();if(p.id==='press'&&kmIn(A.x,A.y,KM_PRESS,.15)){A.y=KM_PRESS[1]+KM_PRESS[3]+.5;}if(p.id==='lager'&&kmIn(A.x,A.y,KM_LAG,.15)){A.y=KM_LAG[1]+KM_LAG[3]+.6;}if(p.id==='lager2'&&kmIn(A.x,A.y,KB_LAG,.15)){A.x=KB_LAG[0]-.6;}const R=p.rw;if(R.kak)S.kak=(S.kak||0)+R.kak;if(R.caps)S.caps+=R.caps;
+    if(K.paid[p.id]>=p.c){K.unl.push(p.id);kmBgC=null;kmBuild();if(p.id==='press'&&kmIn(A.x,A.y,KM_PRESS,.15)){A.y=KM_PRESS[1]+KM_PRESS[3]+.5;}for(const it in KLG)if(klgOn(it)&&kmIn(A.x,A.y,KLG[it].rack,.15)){A.y=KLG[it].in[1]+.4;}const R=p.rw;if(R.kak)S.kak=(S.kak||0)+R.kak;if(R.caps)S.caps+=R.caps;
       A.fx.push({x:r[0]+r[2]/2,y:r[1]+r[3]/2,txt:p.ico+' '+p.n+'! 🎁 '+(R.kak?R.kak+' 🌵':R.caps+' Kapseln'),col:'#ffd447',t:2.5,big:1});save();kmUi();}}
   // Helfer: Ernte → Stand · Ernte → Presse · Saft Presse → Stand
   const hmove=(h,tx,ty)=>{const dx=tx-h.x,dy=ty-h.y,l=Math.hypot(dx,dy);if(l<.2)return true;h.x+=dx/l*2.2*dt;h.y+=dy/l*2.2*dt;h.walk=1;return false;};
@@ -7001,22 +7010,23 @@ function kmDraw(){const cv=$('kmCv');if(!cv||!km)return;const rw=cv.parentElemen
   for(const p of A.plants)add(p.x+p.y+.01,()=>{const [cx,cy]=P(p.x,p.y,6),s=.3+.7*p.g;g.fillStyle='rgba(60,30,10,.3)';g.beginPath();g.ellipse(cx+3,cy+2,9*s+2,4*s+1,0,0,7);g.fill();
     const gr=g.createLinearGradient(cx-8*s,0,cx+8*s,0);gr.addColorStop(0,'#8af07a');gr.addColorStop(1,'#2a7a2a');g.fillStyle=gr;g.beginPath();g.roundRect(cx-6*s,cy-30*s,12*s,30*s,6*s);g.fill();if(s>.55){g.beginPath();g.roundRect(cx-14*s,cy-22*s,7*s,12*s,3.5*s);g.fill();g.beginPath();g.roundRect(cx+7*s,cy-25*s,7*s,12*s,3.5*s);g.fill();}
     if(p.g>=1){g.fillStyle='#ff6a9a';g.beginPath();g.arc(cx,cy-31,3,0,7);g.fill();}});
-  // Lager-Schuppen
-  for(const [Z,on,its] of [[KM_LAG,kmHas('lager'),['k','j']],[KB_LAG,kmHas('lager2'),['b','c']]]){if(!on)continue;const [sx,sy,sw,sd]=Z;add(sx+sy+sw+sd,()=>{const st=it=>it==='b'||it==='c'?K.bk.st[it]:(K.stock[it]||0);
-    box(sx,sy,sw,sd,40,'#b88a50','#8a5a30','#a8743e');
-    // Bretter
-    g.strokeStyle='#00000022';g.lineWidth=1;for(let i=1;i<5;i++){const a=P(sx,sy+sd,i*8),b=P(sx+sw,sy+sd,i*8),c2=P(sx+sw,sy,i*8);g.beginPath();g.moveTo(...a);g.lineTo(...b);g.lineTo(...c2);g.stroke();}
-    // Satteldach
-    const e1=P(sx-.12,sy-.12,40),e2=P(sx+sw+.12,sy-.12,40),f1=P(sx-.12,sy+sd+.12,40),f2=P(sx+sw+.12,sy+sd+.12,40),r1=P(sx-.12,sy+sd/2,62),r2=P(sx+sw+.12,sy+sd/2,62);
-    g.fillStyle='#8a3a2a';g.beginPath();g.moveTo(...e1);g.lineTo(...e2);g.lineTo(...r2);g.lineTo(...r1);g.fill();
-    const gb=[P(sx+sw,sy,40),P(sx+sw,sy+sd,40),P(sx+sw,sy+sd/2,62)];g.fillStyle='#9a6434';g.beginPath();g.moveTo(...gb[0]);g.lineTo(...gb[1]);g.lineTo(...gb[2]);g.fill();
-    g.fillStyle='#c85a3a';g.beginPath();g.moveTo(...f1);g.lineTo(...f2);g.lineTo(...r2);g.lineTo(...r1);g.fill();g.strokeStyle='#a84a2e';g.lineWidth=1.5;for(let i=1;i<4;i++){const u=i/4,a=[f1[0]+(r1[0]-f1[0])*u,f1[1]+(r1[1]-f1[1])*u],b=[f2[0]+(r2[0]-f2[0])*u,f2[1]+(r2[1]-f2[1])*u];g.beginPath();g.moveTo(...a);g.lineTo(...b);g.stroke();}
-    // Zwei Fächer an der Vorderseite: Symbol + Füllstand
-    its.forEach((it,n)=>{const x0=sx+.12+n*sw/2,x1=x0+sw/2-.24,a=P(x0,sy+sd,6),b=P(x1,sy+sd,6),c2=P(x1,sy+sd,32),d=P(x0,sy+sd,32),u=Math.min(1,st(it)/klgCap(it));
-      g.fillStyle='#3a2414';g.beginPath();g.moveTo(...a);g.lineTo(...b);g.lineTo(...c2);g.lineTo(...d);g.fill();
-      g.fillStyle=it==='j'?'#6ad04a':it==='k'?'#3a9a3a':it==='b'?'#d8903a':'#f0a0c8';g.beginPath();g.moveTo(...a);g.lineTo(...b);g.lineTo(b[0],b[1]-(b[1]-c2[1])*u);g.lineTo(a[0],a[1]-(a[1]-d[1])*u);g.fill();
-      const m=P((x0+x1)/2,sy+sd,19);g.font='13px system-ui';g.textAlign='center';g.fillText(KLG[it].ico,m[0],m[1]+5);});
-    const [lx,ly]=P(sx+sw/2,sy+sd/2,98);lbl(lx,ly,'📦 Lager · '+its.filter(it=>it!=='j'||kmHas('press')).map(it=>KLG[it].ico+' '+st(it)+'/'+klgCap(it)+' (St. '+(klgLv(it)+1)+')').join(' · '));});}
+  // Lager-Regale: vorne REIN, hinten RAUS, Ware stapelt sich hoch
+  for(const it in KLG){if(!klgOn(it))continue;const L=KLG[it],n=(K.lg||{})[it]||0,cap=klgCap(it);
+    zoneD(L.in,'#3aa82a',L.ico+' REIN',A.carry.includes(it));zoneD(L.out,'#2a7ad0',L.ico+' RAUS',n>0);{const r=L.out,[cx,cy]=P(r[0]+r[2]/2,r[1]+r[3]/2);add(999,()=>{const txt=L.ico+' RAUS';g.font='900 10px Nunito,system-ui';const tw=g.measureText(txt).width+14;g.fillStyle='#2a7ad0';g.beginPath();g.roundRect(cx+18-tw/2,cy-12,tw,18,9);g.fill();g.strokeStyle='#fff';g.lineWidth=1.5;g.stroke();g.fillStyle='#fff';g.textAlign='center';g.fillText(txt,cx+18,cy+1);});}
+    const [sx,sy,sw,sd]=L.rack;add(sx+sy+sw+sd,()=>{const H=24+Math.min(5,klgLv(it))*5;
+      // Bodenplatte + Pfosten hinten
+      box(sx,sy,sw,sd,4,'#b88a50','#7a5030','#9a6a3a');g.fillStyle='#6a4220';for(const [x,y] of [[sx,sy],[sx+sw,sy]]){const [px,py]=P(x,y);g.fillRect(px-2,py-4-H*2,4,H*2);}
+      // Ware: Säulen, die mit der Menge hochwachsen
+      const cols=[[.25,.3],[.65,.3],[.25,.65],[.65,.65],[.85,.5],[.45,.5]],per=Math.ceil(cap/cols.length),hgt=it==='j'?8:it==='c'?7:6;
+      cols.forEach(([u,v],ci)=>{const m=Math.max(0,Math.min(per,n-ci*per)),[bx,by]=P(sx+u*sw,sy+v*sd,4);const vis=Math.min(m,Math.floor(H*2/hgt));
+        for(let q=0;q<vis;q++){const y0=by-q*hgt;if(it==='k'){const gr=g.createLinearGradient(bx-5,0,bx+5,0);gr.addColorStop(0,'#8af07a');gr.addColorStop(1,'#2a7a2a');g.fillStyle=gr;g.beginPath();g.roundRect(bx-5,y0-hgt,10,hgt-.5,3);g.fill();}
+          else if(it==='j'){g.fillStyle='#e8f8d8';g.fillRect(bx-4,y0-hgt,8,hgt-1);g.fillStyle='#6ad04a';g.fillRect(bx-4,y0-hgt/2,8,hgt/2-1);}
+          else if(it==='b'){g.fillStyle='#c8803a';g.beginPath();g.ellipse(bx,y0-hgt/2,6,hgt/2,0,0,7);g.fill();g.fillStyle='#f4d08a';g.fillRect(bx-3,y0-hgt/2-1,6,1.5);}
+          else{g.fillStyle='#f4e8f0';g.fillRect(bx-6,y0-hgt,12,hgt-1);g.fillStyle='#6ad04a';g.fillRect(bx-6,y0-hgt,12,2);g.fillStyle='#ff6a9a';g.fillRect(bx-1,y0-hgt-2,2,2);}}});
+      // Pfosten vorne + Querlatten
+      g.fillStyle='#7a4a24';for(const [x,y] of [[sx,sy+sd],[sx+sw,sy+sd]]){const [px,py]=P(x,y);g.fillRect(px-2,py-4-H*2,4,H*2);}
+      g.strokeStyle='#8a5a30';g.lineWidth=3;for(const z of [H,H*2]){const a=P(sx,sy+sd,4+z),b=P(sx+sw,sy+sd,4+z),c2=P(sx+sw,sy,4+z),e=P(sx,sy,4+z);g.beginPath();g.moveTo(...a);g.lineTo(...b);g.lineTo(...c2);g.lineTo(...e);g.closePath();g.stroke();}
+      const [lx,ly]=P(sx+sw/2,sy+sd/2,4+H*2+18);lbl(lx,ly,L.ico+' '+n+'/'+cap,n>=cap?'#ff9a6a':'#ffe7b8');});}
   // Verkaufsstand
   {const [sx,sy,sw,sd]=KM_STAND;add(sx+sy+sw+sd,()=>{box(sx,sy,sw,sd,26,'#d8a060','#8a5a2a','#a86a34');
     const nk=Math.min(K.stock.k,12),nj=Math.min(K.stock.j||0,8);for(let i=0;i<nk;i++){const [x,y]=P(sx+.3+(i%6)*.48,sy+.3+Math.floor(i/6)*.45,26);const gr=g.createLinearGradient(x-5,0,x+5,0);gr.addColorStop(0,'#8af07a');gr.addColorStop(1,'#2a7a2a');g.fillStyle=gr;g.beginPath();g.roundRect(x-5,y-14,10,14,5);g.fill();}
@@ -7090,7 +7100,7 @@ function kmDraw(){const cv=$('kmCv');if(!cv||!km)return;const rw=cv.parentElemen
   // Ausbau-Flächen
   for(const p of kmPadsVis().concat(kmUpPads())){const r=p.r,paid=K.paid[p.id]||0;add(p.up?r[0]+r[1]+r[2]+r[3]+3:r[0]+r[1]-.02,()=>{const q=[P(r[0],r[1]),P(r[0]+r[2],r[1]),P(r[0]+r[2],r[1]+r[3]),P(r[0],r[1]+r[3])];g.fillStyle='#ffffff26';g.beginPath();q.forEach((pp,i)=>i?g.lineTo(...pp):g.moveTo(...pp));g.closePath();g.fill();g.strokeStyle='#ffffffd0';g.lineWidth=3;g.setLineDash([10,7]);g.lineJoin='round';g.stroke();g.setLineDash([]);
     const [cx,cy]=P(r[0]+r[2]/2,r[1]+r[3]/2);g.font='24px system-ui';g.textAlign='center';g.fillText(p.ico,cx,cy-2);g.fillStyle='#1a120bd8';g.beginPath();g.roundRect(cx-32,cy+6,64,20,10);g.fill();
-    if(paid>0){g.fillStyle='#ffd44755';g.beginPath();g.roundRect(cx-32,cy+6,64*paid/p.c,20,10);g.fill();}g.fillStyle='#ffd447';g.font='900 12px Nunito,system-ui';g.fillText('🪙 '+fmt(Math.max(0,p.c-paid)),cx,cy+20);g.fillStyle='#fff';g.font='900 10px Nunito,system-ui';g.strokeStyle='#3a2414';g.lineWidth=3;g.strokeText(p.n,cx,cy-30);g.fillText(p.n,cx,cy-30);});}
+    if(paid>0){g.fillStyle='#ffd44755';g.beginPath();g.roundRect(cx-32,cy+6,64*paid/p.c,20,10);g.fill();}g.fillStyle='#ffd447';g.font='900 12px Nunito,system-ui';g.fillText('🪙 '+fmt(Math.max(0,p.c-paid)),cx,cy+20);g.fillStyle='#fff';g.font='900 10px Nunito,system-ui';g.strokeStyle='#3a2414';g.lineWidth=3;const ny=p.up?cy+40:cy-30;g.strokeText(p.n,cx,ny);g.fillText(p.n,cx,ny);});}
   // Kunden
   A.cust.forEach((c,i)=>add(c.x+c.y+.2,()=>{const [cx,cy]=P(c.x,c.y);g.fillStyle='rgba(70,35,10,.28)';g.beginPath();g.ellipse(cx+3,cy+2,13,5,0,0,7);g.fill();g.save();g.translate(cx,cy);g.scale(.6,.6);drawCactus(g,{shape:c.sp,color:c.col,eyes:'normal',hat:'ohne'},{x:0,y:0,walk:!!c.walk,bob:c.walk?Math.abs(Math.sin(t*10+i))*-4:0,view:'f',gear:{}});g.restore();
     if(c.st!=='out'){const txt=(!A.sWork&&i===0?'🔔 ':'')+(c.want==='j'?'🧃':'🌵')+' '+(c.n-c.got);g.fillStyle='#fff';g.beginPath();g.roundRect(cx-22,cy-100,44,24,12);g.fill();g.beginPath();g.moveTo(cx-4,cy-77);g.lineTo(cx,cy-70);g.lineTo(cx+5,cy-77);g.fill();g.fillStyle='#3a2414';g.font='900 12px Nunito,system-ui';g.textAlign='center';g.fillText(txt,cx,cy-84);}
@@ -7903,6 +7913,10 @@ const PATCHES=[
    hero:['🐉 Angriffe werden gezählt','Bei sehr hoher Kampfkraft wurden Angriffe auf den Welt- und Allianz-Boss nicht gezählt. Das ist behoben.'],
    items:()=>[['Nicht verloren:','Die fehlgeschlagenen Angriffe wurden nicht verbraucht – du hast sie heute noch.'],
      ['Kein Verlassen mehr:','Während ein Boss-Kampf läuft, sind die anderen Knöpfe im Fenster gesperrt, bis der Kampf vorbei ist.']]},
+  {id:'pn233',date:'2026-11-27',title:'Kaktus-Markt: echte Lager',hero:['📦 Vorne rein, hinten raus','Die Lager sind jetzt echte Regale: Vorne legst du Ware rein und sie stapelt sich sichtbar hoch – hinten nimmst du sie wieder raus, wenn du sie brauchst.'],
+   items:()=>['📦 Je Produkt ein eigenes Regal: 🌵 Kakteen und 🧃 Saft am Markt, 🥖 Brötchen und 🎂 Kuchen bei der Bäckerei','🟩 REIN vorne: Ware ablegen · 🟦 RAUS hinten: Ware mitnehmen','⬆ Ausbau vergrößert jetzt das Lager selbst: 🌵 40 → 140 · 🧃 30 → 105 · 🥖 30 → 105 · 🎂 15 → 55','🏪 Stand und Theke haben wieder ihre normale Größe'],
+  en:{title:'Cactus Market: real storage',hero:['📦 In at the front, out at the back','Storage is now a real rack: put goods in at the front and watch them stack up – take them out at the back whenever you need them.'],
+   items:()=>['📦 One rack per product: 🌵 cacti and 🧃 juice at the market, 🥖 buns and 🎂 cakes at the bakery','🟩 IN at the front: drop goods · 🟦 OUT at the back: pick goods up','⬆ Upgrades now enlarge the storage itself: 🌵 40 → 140 · 🧃 30 → 105 · 🥖 30 → 105 · 🎂 15 → 55','🏪 Stand and counter are back to their normal size']}},
   {id:'pn232',date:'2026-11-27',title:'Kaktus-Markt: Bäckerei-Feld & Kaktus-Träger',hero:['🌵 Kakteen für die Mühle','Die Bäckerei bekommt ein eigenes Kaktusfeld und einen Arbeiter, der die Kakteen von dort zur Mühle bringt.'],
    items:()=>['🌵 Neues Bäckerei-Feld (2.000 🪙) unten links bei der Bäckerei','👷 Kaktus-Träger (2.500 🪙): erntet das Bäckerei-Feld und bringt die Kakteen zur Mühle','🌾 Die Markt-Helfer lassen das Bäckerei-Feld in Ruhe – das ist nur für die Mühle'],
   en:{title:'Cactus Market: bakery field & cactus carrier',hero:['🌵 Cacti for the mill','The bakery gets its own cactus field and a worker who brings the cacti from there to the mill.'],
